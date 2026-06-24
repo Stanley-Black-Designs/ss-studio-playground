@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parallax Image Slider — Stanley Smith Studios</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    body {
+      background: #0c0c0d;
+      font-family: 'DM Sans', sans-serif;
+      height: 100dvh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Push below chrome */
+    .demo-stage {
+      padding-top: 50px;
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+
+    /* ── Parallax Slider (exact Osmo CSS) ── */
+    .parallax-slider__group,
+    .parallax-slider__collection {
+      width: 100%;
+    }
+
+    .parallax-slider__list {
+      width: 100%;
+      display: flex;
+      overflow: hidden;
+    }
+
+    .parallax-slider__item {
+      flex: none;
+      padding-left: 1em;
+      padding-right: 1em;
+      position: relative;
+    }
+
+    .parallax-slider__item-inner {
+      aspect-ratio: 3 / 2;
+      border-radius: .5em;
+      width: 32em;
+      position: relative;
+      overflow: clip;
+    }
+
+    .parallax-slider__item-img {
+      object-fit: cover;
+      -webkit-user-select: none;
+      user-select: none;
+      width: 160%;
+      max-width: none;
+      height: 100%;
+      position: absolute;
+      left: -30%;
+    }
+
+    .parallax-slider__item-visual {
+      will-change: transform;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      inset: 0%;
+    }
+
+    @media screen and (max-width: 767px) {
+      .parallax-slider__item { padding-left: .5em; padding-right: .5em; }
+      .parallax-slider__item-inner { width: 45vw; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="demo-chrome">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to Playground
+      </a>
+      <div class="demo-chrome__sep"></div>
+      <span class="demo-chrome__title">Parallax Image Slider (Smooothy)</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">
+      Have a project in mind?
+    </a>
+  </div>
+
+  <div class="demo-stage">
+    <div data-parallax-init class="parallax-slider__group">
+      <div class="parallax-slider__collection">
+        <div data-parallax-infinite="true" data-parallax-slider data-parallax-amount="10" data-parallax-snap="false" class="parallax-slider__list">
+          <div class="parallax-slider__item">
+            <div class="parallax-slider__item-inner">
+              <div data-parallax-inner class="parallax-slider__item-visual">
+                <img src="https://cdn.prod.website-files.com/6a22d30444bf3a9f911e68b9/6a22d94b60b1ba0e3492cc90_Sleek%20Black%20Sports%20Car.avif" draggable="false" alt="" class="parallax-slider__item-img">
+              </div>
+            </div>
+          </div>
+          <div class="parallax-slider__item">
+            <div class="parallax-slider__item-inner">
+              <div data-parallax-inner class="parallax-slider__item-visual">
+                <img src="https://cdn.prod.website-files.com/6a22d30444bf3a9f911e68b9/6a22d94bccbaad3404e09921_Astronaut%20Amidst%20Crowd.avif" draggable="false" alt="" class="parallax-slider__item-img">
+              </div>
+            </div>
+          </div>
+          <div class="parallax-slider__item">
+            <div class="parallax-slider__item-inner">
+              <div data-parallax-inner class="parallax-slider__item-visual">
+                <img src="https://cdn.prod.website-files.com/6a22d30444bf3a9f911e68b9/6a22d94b7b950434ca8c1076_Textured%20Stone%20Block.avif" draggable="false" alt="" class="parallax-slider__item-img">
+              </div>
+            </div>
+          </div>
+          <div class="parallax-slider__item">
+            <div class="parallax-slider__item-inner">
+              <div data-parallax-inner class="parallax-slider__item-visual">
+                <img src="https://cdn.prod.website-files.com/6a22d30444bf3a9f911e68b9/6a22d94ce1355dd6de4b06ae_Portrait%20of%20a%20Woman.avif" draggable="false" alt="" class="parallax-slider__item-img">
+              </div>
+            </div>
+          </div>
+          <div class="parallax-slider__item">
+            <div class="parallax-slider__item-inner">
+              <div data-parallax-inner class="parallax-slider__item-visual">
+                <img src="https://cdn.prod.website-files.com/6a22d30444bf3a9f911e68b9/6a22d94b6422798654ba5b42_Digital%20Urban%20Fusion.avif" draggable="false" alt="" class="parallax-slider__item-img">
+              </div>
+            </div>
+          </div>
+          <div class="parallax-slider__item">
+            <div class="parallax-slider__item-inner">
+              <div data-parallax-inner class="parallax-slider__item-visual">
+                <img src="https://cdn.prod.website-files.com/6a22d30444bf3a9f911e68b9/6a22d94b60b1ba0e3492cc90_Sleek%20Black%20Sports%20Car.avif" draggable="false" alt="" class="parallax-slider__item-img">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script src="https://unpkg.com/smooothy"></script>
+  <script>
+    function initParallaxImageSlider() {
+      document.querySelectorAll("[data-parallax-init]").forEach((root) => {
+        const wrapper = root.querySelector("[data-parallax-slider]");
+        if (!wrapper) return;
+        const parallaxItems = [...wrapper.children].map((slide) => slide.querySelector("[data-parallax-inner]"));
+        const amountAttr = wrapper.getAttribute("data-parallax-amount");
+        const amount = amountAttr !== null ? parseFloat(amountAttr) : 12;
+        const snap = wrapper.getAttribute("data-parallax-snap") !== "false";
+        const infinite = wrapper.getAttribute("data-parallax-infinite") !== "false";
+        const lerpAttr = wrapper.getAttribute("data-parallax-lerp");
+        const lerp = lerpAttr !== null ? parseFloat(lerpAttr) : 0.3;
+        const maxOffset = 25;
+        const slider = new Smooothy(wrapper, {
+          infinite, snap, lerpFactor: lerp,
+          onUpdate: ({ parallaxValues }) => {
+            parallaxItems.forEach((item, i) => {
+              if (!item) return;
+              const offset = gsap.utils.clamp(-maxOffset, maxOffset, parallaxValues[i] * amount);
+              item.style.transform = `translateX(${offset}%)`;
+            });
+          },
+        });
+        gsap.ticker.add(() => slider.update());
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => { initParallaxImageSlider(); });
+  </script>
+</body>
+</html>

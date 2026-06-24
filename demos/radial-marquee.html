@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radial Cards Marquee — Stanley Smith Studios</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    body {
+      background: #0c0c0d;
+      color: #f0f0f0;
+      font-family: 'DM Sans', sans-serif;
+      overflow: hidden;
+      height: 100dvh;
+    }
+
+    /* Push content below the fixed chrome */
+    .demo-stage {
+      padding-top: 50px;
+      height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* ── Radial Cards Marquee (exact Osmo code) ── */
+    .radial-cards-marquee {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .radial-cards-marquee__collection {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    [data-radial-cards-marquee-list] {
+      --total: 12;
+      --radius: 52em;
+      --duration: 60s;
+
+      display: grid;
+      transform-origin: 50% var(--radius);
+      animation: rotate360 var(--duration) linear infinite;
+    }
+
+    [data-radial-cards-marquee-list] > * {
+      grid-area: 1 / 1;
+      transform-origin: 50% var(--radius);
+      transform: rotate(calc(360deg / var(--total) * (var(--card) - 1)));
+    }
+
+    @keyframes rotate360 {
+      to { transform: rotate(-360deg); }
+    }
+
+    [data-radial-cards-marquee-list] > :nth-child(1)  { --card: 1; }
+    [data-radial-cards-marquee-list] > :nth-child(2)  { --card: 2; }
+    [data-radial-cards-marquee-list] > :nth-child(3)  { --card: 3; }
+    [data-radial-cards-marquee-list] > :nth-child(4)  { --card: 4; }
+    [data-radial-cards-marquee-list] > :nth-child(5)  { --card: 5; }
+    [data-radial-cards-marquee-list] > :nth-child(6)  { --card: 6; }
+    [data-radial-cards-marquee-list] > :nth-child(7)  { --card: 7; }
+    [data-radial-cards-marquee-list] > :nth-child(8)  { --card: 8; }
+    [data-radial-cards-marquee-list] > :nth-child(9)  { --card: 9; }
+    [data-radial-cards-marquee-list] > :nth-child(10) { --card: 10; }
+    [data-radial-cards-marquee-list] > :nth-child(11) { --card: 11; }
+    [data-radial-cards-marquee-list] > :nth-child(12) { --card: 12; }
+
+    .demo-card {
+      color: #f4f4f4;
+      background-color: #201d1d;
+      border-radius: .375em;
+      width: 18.125em;
+      padding: .5em;
+    }
+
+    .demo-card__visual { width: 100%; }
+
+    .demo-card__info {
+      width: 100%;
+      padding: .75em .5em .375em;
+    }
+
+    .demo-card__media {
+      border-radius: .1875em;
+      width: 100%;
+      position: relative;
+    }
+
+    .demo-card__media-before { padding-top: 62.5%; }
+
+    .demo-card__h {
+      letter-spacing: -.01em;
+      margin: 0;
+      font-size: .8125em;
+      font-weight: 400;
+      line-height: 1.2;
+    }
+
+    .cover-image {
+      object-fit: cover;
+      border-radius: inherit;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Chrome bar -->
+  <div class="demo-chrome">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to Playground
+      </a>
+      <div class="demo-chrome__sep"></div>
+      <span class="demo-chrome__title">Radial Cards Marquee (CSS)</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">
+      Have a project in mind?
+    </a>
+  </div>
+
+  <div class="demo-stage">
+    <div class="radial-cards-marquee">
+      <div class="radial-cards-marquee__collection">
+        <div data-radial-cards-marquee-list="" class="radial-cards-marquee__list">
+          <div class="radial-cards-marquee__item">
+            <div class="demo-card">
+              <div class="demo-card__visual">
+                <div class="demo-card__media">
+                  <div class="demo-card__media-before"></div>
+                  <img src="https://cdn.prod.website-files.com/6a37c705a4a90c92c1e3dd2f/6a37c9bbc7ceaf29c174a45b_pixelate-image-render-effect-1440x900.avif" loading="lazy" alt="" class="cover-image">
+                </div>
+              </div>
+              <div class="demo-card__info"><h3 class="demo-card__h">Pixelate Image Render Effect</h3></div>
+            </div>
+          </div>
+          <div class="radial-cards-marquee__item">
+            <div class="demo-card">
+              <div class="demo-card__visual">
+                <div class="demo-card__media">
+                  <div class="demo-card__media-before"></div>
+                  <img src="https://cdn.prod.website-files.com/6a37c705a4a90c92c1e3dd2f/6a37c9bb0d7234217629ac90_directional-list-hover-1440x900.avif" loading="lazy" alt="" class="cover-image">
+                </div>
+              </div>
+              <div class="demo-card__info"><h3 class="demo-card__h">Directional List Hover</h3></div>
+            </div>
+          </div>
+          <div class="radial-cards-marquee__item">
+            <div class="demo-card">
+              <div class="demo-card__visual">
+                <div class="demo-card__media">
+                  <div class="demo-card__media-before"></div>
+                  <img src="https://cdn.prod.website-files.com/6a37c705a4a90c92c1e3dd2f/6a37c9bbf139279efda387fc_flick-cards-slider-1440x900.avif" loading="lazy" alt="" class="cover-image">
+                </div>
+              </div>
+              <div class="demo-card__info"><h3 class="demo-card__h">Flick Cards Slider</h3></div>
+            </div>
+          </div>
+          <div class="radial-cards-marquee__item">
+            <div class="demo-card">
+              <div class="demo-card__visual">
+                <div class="demo-card__media">
+                  <div class="demo-card__media-before"></div>
+                  <img src="https://cdn.prod.website-files.com/6a37c705a4a90c92c1e3dd2f/6a37c9bbc6bd247aa8b009dc_face-follow-cursor-1440x900.avif" loading="lazy" alt="" class="cover-image">
+                </div>
+              </div>
+              <div class="demo-card__info"><h3 class="demo-card__h">Face Follow Cursor (Mascot)</h3></div>
+            </div>
+          </div>
+          <!-- 8 more clones to hit 12 total — JS handles this automatically -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function initRadialCardsMarquee() {
+      document.querySelectorAll('[data-radial-cards-marquee-list]').forEach((list) => {
+        const total = parseInt(getComputedStyle(list).getPropertyValue('--total'), 10);
+        const originals = [...list.children];
+        if (!total || !originals.length) return;
+        while (list.children.length > total) list.lastElementChild.remove();
+        for (let i = list.children.length; i < total; i++) {
+          const clone = originals[i % originals.length].cloneNode(true);
+          clone.setAttribute('aria-hidden', 'true');
+          list.appendChild(clone);
+        }
+        [...list.children].forEach((item, i) => item.style.setProperty('--card', i + 1));
+        const update = () => {
+          const visible = [...list.children].some((item) => {
+            const rect = item.getBoundingClientRect();
+            return rect.bottom > 0 && rect.right > 0 && rect.top < innerHeight && rect.left < innerWidth;
+          });
+          list.style.animationPlayState = visible ? 'running' : 'paused';
+        };
+        addEventListener('scroll', update, { passive: true });
+        addEventListener('resize', update);
+        update();
+      });
+    }
+    document.addEventListener('DOMContentLoaded', () => { initRadialCardsMarquee(); });
+  </script>
+</body>
+</html>

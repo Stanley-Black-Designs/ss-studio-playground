@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Cards Tornado — Stanley Smith Studios</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    body {
+      background: #0c0c0d;
+      color: #f0f0f0;
+      font-family: 'DM Sans', sans-serif;
+      overflow: hidden;
+      height: 100dvh;
+    }
+
+    .demo-stage {
+      padding-top: 50px;
+      height: 100dvh;
+    }
+
+    /* ── 3D Cards Tornado (exact Osmo CSS) ── */
+    .cards-tornado {
+      cursor: grab;
+      touch-action: none;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: clip;
+    }
+
+    .cards-tornado__collection {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .cards-tornado__list {
+      font-size: clamp(.5em, .75vw, 1.5em);
+      width: 100%;
+      height: 100%;
+      perspective: 75em;
+      transform-style: preserve-3d;
+      position: relative;
+    }
+
+    .cards-tornado__item {
+      transform-style: preserve-3d;
+      backface-visibility: visible;
+      will-change: transform, filter;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .demo-card {
+      aspect-ratio: 4 / 5;
+      pointer-events: none;
+      -webkit-user-select: none;
+      user-select: none;
+      background-color: #222;
+      border-radius: 1em;
+      width: 18em;
+      position: relative;
+    }
+
+    .cover-image {
+      object-fit: cover;
+      border-radius: inherit;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="demo-chrome">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to Playground
+      </a>
+      <div class="demo-chrome__sep"></div>
+      <span class="demo-chrome__title">3D Cards Tornado</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">
+      Have a project in mind?
+    </a>
+  </div>
+
+  <div class="demo-stage">
+    <div data-3d-tornado-init="" class="cards-tornado">
+      <div class="cards-tornado__collection">
+        <div data-3d-tornado-list="" class="cards-tornado__list">
+          <div data-3d-tornado-item="" class="cards-tornado__item">
+            <div draggable="false" class="demo-card"><img src="https://cdn.prod.website-files.com/6a29211ed53fb474353e0c9f/6a2c07aef8bb2296c518b0ec_Shadowed_Silhouette_on_Rugged_Terrain.avif" loading="lazy" alt="" class="cover-image"></div>
+          </div>
+          <div data-3d-tornado-item="" class="cards-tornado__item">
+            <div draggable="false" class="demo-card"><img src="https://cdn.prod.website-files.com/6a29211ed53fb474353e0c9f/6a2c07af2d72b691e62b852e_Elegant_Reflection_in_Soft_Natural_Light.avif" loading="lazy" alt="" class="cover-image"></div>
+          </div>
+          <div data-3d-tornado-item="" class="cards-tornado__item">
+            <div draggable="false" class="demo-card"><img src="https://cdn.prod.website-files.com/6a29211ed53fb474353e0c9f/6a2c07ae21453cfd94dcabd0_Focused_Cyclist_Portrait_in_Golden_Hour_Light.avif" loading="lazy" alt="" class="cover-image"></div>
+          </div>
+          <div data-3d-tornado-item="" class="cards-tornado__item">
+            <div draggable="false" class="demo-card"><img src="https://cdn.prod.website-files.com/6a29211ed53fb474353e0c9f/6a2c08c8d011c9c2e761b40b_Minimalist_Tennis_Court_with_Yellow_Balls.avif" loading="lazy" alt="" class="cover-image"></div>
+          </div>
+          <div data-3d-tornado-item="" class="cards-tornado__item">
+            <div draggable="false" class="demo-card"><img src="https://cdn.prod.website-files.com/6a29211ed53fb474353e0c9f/6a2c08c8ec2c5e98cd970711_Fresh_Fig_Still_Life_with_Halved_Fruit_on_Soft_Neutral_Background.avif" loading="lazy" alt="" class="cover-image"></div>
+          </div>
+          <div data-3d-tornado-item="" class="cards-tornado__item">
+            <div draggable="false" class="demo-card"><img src="https://cdn.prod.website-files.com/6a29211ed53fb474353e0c9f/6a2c07af2b69b6a3c677c7ff_Delicate_Green_Stem_with_Buds.avif" loading="lazy" alt="" class="cover-image"></div>
+          </div>
+          <div data-3d-tornado-item="" class="cards-tornado__item">
+            <div draggable="false" class="demo-card"><img src="https://cdn.prod.website-files.com/6a29211ed53fb474353e0c9f/6a2c07ae7f564388635a4c0e_Serene_Portrait_of_a_Woman_in_Warm_Tones.avif" loading="lazy" alt="" class="cover-image"></div>
+          </div>
+          <div data-3d-tornado-item="" class="cards-tornado__item">
+            <div draggable="false" class="demo-card"><img src="https://cdn.prod.website-files.com/6a29211ed53fb474353e0c9f/6a2c07ae8a875732ce5ccecf_Sailboat_on_Tranquil_Ocean_Under_Clear_Sky.avif" loading="lazy" alt="" class="cover-image"></div>
+          </div>
+          <div data-3d-tornado-item="" class="cards-tornado__item">
+            <div draggable="false" class="demo-card"><img src="https://cdn.prod.website-files.com/6a29211ed53fb474353e0c9f/6a2c07afd4e6fcd11cb42009_Close-Up_of_an_Eye_with_Freckles.avif" loading="lazy" alt="" class="cover-image"></div>
+          </div>
+          <div data-3d-tornado-item="" class="cards-tornado__item">
+            <div draggable="false" class="demo-card"><img src="https://cdn.prod.website-files.com/6a29211ed53fb474353e0c9f/6a2c07aed011c9c2e7613daa_Close-up_of_Lush_Green_Leaves_with_Textured_Patterns.avif" loading="lazy" alt="" class="cover-image"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/Observer.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+  <script>
+    gsap.registerPlugin(Observer, ScrollTrigger);
+
+    function init3DCardsTornado() {
+      const containers = gsap.utils.toArray('[data-3d-tornado-init]');
+      const rotationAngle = 30;
+      const cardYSpacing = 0.3;
+      const edgeOffset = 2;
+      const orbitDepth = 35;
+      const autoSpeed = 0.00325;
+      const scrollSpeed = 0.015;
+      const dragMultiplier = 5;
+      const scrollEase = 0.1;
+      const maxSpeed = 0.2;
+      const edgeScale = 0.5;
+      const edgeEase = gsap.parseEase("power2.inOut");
+      const minScale = 1;
+      const backDarkness = 0.75;
+      const backBlur = 0.5;
+
+      containers.forEach((container) => {
+        const list = container.querySelector('[data-3d-tornado-list]');
+        const originalCards = gsap.utils.toArray('[data-3d-tornado-item]', list).map((card) => card.cloneNode(true));
+        if (!list || !originalCards.length) return;
+
+        let inputObserver;
+        let resizeTimer;
+
+        const state = { amount: 0, progress: 0, velocity: autoSpeed, direction: 1, cardHeight: 0, cardGap: 0, em: 16, isActive: false, cards: [] };
+
+        function getCardAmount() {
+          const containerHalfHeight = container.offsetHeight * 0.5;
+          const edgeOffsetDistance = state.cardHeight * edgeOffset;
+          const fadeDistance = state.cardHeight * edgeScale;
+          const neededDistance = containerHalfHeight + edgeOffsetDistance + fadeDistance;
+          const cardsPerSide = Math.ceil(neededDistance / state.cardGap) + 1;
+          const neededAmount = cardsPerSide * 2 + 1;
+          const batchCount = Math.ceil(neededAmount / originalCards.length);
+          return originalCards.length * batchCount;
+        }
+
+        function buildCards() {
+          list.innerHTML = "";
+          const measureCard = originalCards[0].cloneNode(true);
+          list.appendChild(measureCard);
+          state.cardHeight = measureCard.offsetHeight;
+          state.cardGap = state.cardHeight * cardYSpacing;
+          state.em = parseFloat(getComputedStyle(measureCard).fontSize);
+          state.amount = getCardAmount();
+          list.innerHTML = "";
+          for (let i = 0; i < state.amount; i++) {
+            const card = originalCards[i % originalCards.length].cloneNode(true);
+            card.dataset.index = i;
+            list.appendChild(card);
+          }
+          state.cards = gsap.utils.toArray('[data-3d-tornado-item]', list);
+        }
+
+        function getEdgeScale(y) {
+          const containerHalfHeight = container.offsetHeight * 0.5;
+          const edgeOffsetDistance = state.cardHeight * edgeOffset;
+          const fadeDistance = state.cardHeight * edgeScale;
+          const distanceFromCenter = Math.abs(y);
+          const fadeStart = containerHalfHeight + edgeOffsetDistance;
+          const progress = gsap.utils.clamp(0, 1, (fadeStart - distanceFromCenter) / fadeDistance);
+          return edgeEase(progress);
+        }
+
+        function render() {
+          const radius = orbitDepth * state.em;
+          state.cards.forEach((card) => {
+            const startIndex = parseFloat(card.dataset.index);
+            const loopIndex = ((startIndex + state.progress) % state.amount + state.amount) % state.amount;
+            const index = loopIndex > state.amount * 0.5 ? loopIndex - state.amount : loopIndex;
+            const angleDeg = index * rotationAngle;
+            const angleRad = angleDeg * Math.PI / 180;
+            const center = 1 - Math.min(Math.abs(index) / (state.amount * 0.5), 1);
+            const y = index * state.cardGap;
+            const baseScale = minScale + center * (1 - minScale);
+            const scale = baseScale * getEdgeScale(y);
+            const backAmount = gsap.utils.clamp(0, 1, (1 - Math.cos(angleRad)) * 0.5);
+            const brightness = 1 - backAmount * backDarkness;
+            const blur = backAmount * backBlur;
+            gsap.set(card, { xPercent: -50, yPercent: -50, x: Math.sin(angleRad) * radius, y, z: (Math.cos(angleRad) - 1) * radius, rotateY: angleDeg, scale, filter: `brightness(${brightness}) blur(${blur}em)`, autoAlpha: 1, zIndex: Math.round(center * 1000) });
+          });
+        }
+
+        function tick() {
+          if (!state.isActive) return;
+          const targetVelocity = autoSpeed * state.direction;
+          state.velocity = gsap.utils.interpolate(state.velocity, targetVelocity, scrollEase);
+          state.progress += state.velocity;
+          render();
+        }
+
+        function handleInput(self) {
+          if (!state.isActive) return;
+          const delta = self.event.type === 'wheel' ? self.deltaY : Math.abs(self.deltaX) > Math.abs(self.deltaY) ? self.deltaX * dragMultiplier : self.deltaY * dragMultiplier;
+          if (!delta) return;
+          state.direction = delta > 0 ? 1 : -1;
+          state.velocity += delta * scrollSpeed / 100;
+          state.velocity = gsap.utils.clamp(-maxSpeed, maxSpeed, state.velocity);
+        }
+
+        function setActive(isActive) {
+          state.isActive = isActive;
+          if (!inputObserver) return;
+          isActive ? inputObserver.enable() : inputObserver.disable();
+        }
+
+        buildCards();
+        render();
+
+        inputObserver = Observer.create({ target: window, type: 'wheel,touch,pointer', preventDefault: false, lockAxis: true, onChange: handleInput, onPress: () => { container.style.cursor = 'grabbing'; }, onRelease: () => { container.style.cursor = 'grab'; } });
+
+        ScrollTrigger.create({ trigger: container, start: "top bottom", end: "bottom top", onEnter: () => setActive(true), onEnterBack: () => setActive(true), onLeave: () => setActive(false), onLeaveBack: () => setActive(false) });
+
+        setActive(ScrollTrigger.isInViewport(container));
+        gsap.ticker.add(tick);
+
+        window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => { buildCards(); render(); ScrollTrigger.refresh(); }, 150); });
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => { init3DCardsTornado(); });
+  </script>
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infinite Draggable Grid — Stanley Smith Studios</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    body {
+      background: #0c0c0d;
+      font-family: 'DM Sans', sans-serif;
+      overflow: hidden;
+      height: 100dvh;
+    }
+
+    .demo-stage {
+      padding-top: 50px;
+      height: 100dvh;
+    }
+
+    /* ── Infinite Grid (exact Osmo CSS) ── */
+    .infinite-grid {
+      touch-action: none;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: clip;
+      cursor: grab;
+      transition: opacity 0.5s ease;
+      opacity: 1;
+    }
+
+    .infinite-grid[data-infinite-grid-status="loading"] { opacity: 0; }
+    .infinite-grid[data-infinite-grid-status="dragging"] { cursor: grabbing; }
+
+    .infinite-grid__collection {
+      will-change: transform;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+    }
+
+    .infinite-grid__list {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .infinite-grid__item {
+      aspect-ratio: 1;
+      will-change: transform;
+      backface-visibility: hidden;
+      justify-content: center;
+      align-items: center;
+      width: 13em;
+      padding: 2.25em;
+      font-size: clamp(1.5em, 2vw, 3em);
+      display: flex;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .infinite-grid__card {
+      -webkit-user-select: none;
+      user-select: none;
+      will-change: transform;
+      backface-visibility: hidden;
+      border-radius: .125em;
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .infinite-grid__card-img {
+      pointer-events: none;
+      object-fit: cover;
+      border-radius: inherit;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="demo-chrome">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to Playground
+      </a>
+      <div class="demo-chrome__sep"></div>
+      <span class="demo-chrome__title">Infinite Draggable Grid (Masonry)</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">
+      Have a project in mind?
+    </a>
+  </div>
+
+  <div class="demo-stage">
+    <section data-infinite-grid-status="loading" data-infinite-grid-init="" class="infinite-grid">
+      <div data-infinite-grid-collection="" class="infinite-grid__collection">
+        <div data-infinite-grid-list="" class="infinite-grid__list">
+          <div data-infinite-grid-item="" class="infinite-grid__item">
+            <div data-infinite-grid-card="" class="infinite-grid__card">
+              <img src="https://cdn.prod.website-files.com/6a104f200add13895f052c90/6a10689e692e794fdc9e0fdd_11.avif" loading="lazy" alt="" class="infinite-grid__card-img">
+            </div>
+          </div>
+          <div data-infinite-grid-item="" class="infinite-grid__item">
+            <div data-infinite-grid-card="" class="infinite-grid__card">
+              <img src="https://cdn.prod.website-files.com/6a104f200add13895f052c90/6a10689fb76299b0280b5faf_6.avif" loading="lazy" alt="" class="infinite-grid__card-img">
+            </div>
+          </div>
+          <div data-infinite-grid-item="" class="infinite-grid__item">
+            <div data-infinite-grid-card="" class="infinite-grid__card">
+              <img src="https://cdn.prod.website-files.com/6a104f200add13895f052c90/6a1068a09ccb7e65dd56d905_3.avif" loading="lazy" alt="" class="infinite-grid__card-img">
+            </div>
+          </div>
+          <div data-infinite-grid-item="" class="infinite-grid__item">
+            <div data-infinite-grid-card="" class="infinite-grid__card">
+              <img src="https://cdn.prod.website-files.com/6a104f200add13895f052c90/6a10689f9c648e1e1ceb98f0_7.avif" loading="lazy" alt="" class="infinite-grid__card-img">
+            </div>
+          </div>
+          <div data-infinite-grid-item="" class="infinite-grid__item">
+            <div data-infinite-grid-card="" class="infinite-grid__card">
+              <img src="https://cdn.prod.website-files.com/6a104f200add13895f052c90/6a10689e397074f1d161ee54_5.avif" loading="lazy" alt="" class="infinite-grid__card-img">
+            </div>
+          </div>
+          <div data-infinite-grid-item="" class="infinite-grid__item">
+            <div data-infinite-grid-card="" class="infinite-grid__card">
+              <img src="https://cdn.prod.website-files.com/6a104f200add13895f052c90/6a10689fc0f51ce665115042_8.avif" loading="lazy" alt="" class="infinite-grid__card-img">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/Observer.min.js"></script>
+  <script>
+    gsap.registerPlugin(Observer);
+
+    function initInfiniteCardsGrid() {
+      const wrappers = document.querySelectorAll('[data-infinite-grid-init]');
+      const wheelSpeed = 0.6;
+      const dragSpeed = 1.2;
+      const gridOverscan = 1;
+      const startOffsetY = 0.33;
+      const positionLerp = 0.05;
+      const xToYInfluence = 0.2;
+      const columnSpeedPattern = [1, 1, 0.9];
+      const minCardScale = 0.5;
+      const scaleLerp = 0.02;
+
+      wrappers.forEach((wrapper) => {
+        const collection = wrapper.querySelector('[data-infinite-grid-collection]');
+        const sourceList = wrapper.querySelector('[data-infinite-grid-list]');
+        const originalItems = Array.from(sourceList.querySelectorAll('[data-infinite-grid-item]')).map((item) => item.cloneNode(true));
+        if (!collection || !sourceList || !originalItems.length) return;
+
+        let observer;
+        let cards = [];
+        let cardElements = [];
+        const timers = {};
+        const size = {};
+        const pos = {};
+        const scale = { current: 1, target: 1 };
+
+        function setStatus(status) { wrapper.setAttribute('data-infinite-grid-status', status); }
+        function wrapValue(value, size) { return ((value % size) + size) % size; }
+        function createColumnSpeeds(columns) { return Array.from({ length: columns }, (_, i) => columnSpeedPattern[i % columnSpeedPattern.length]); }
+
+        function createItemIndexes(columns, rows) {
+          const total = originalItems.length;
+          const indexes = Array.from({ length: rows }, () => []);
+          const used = Array(total).fill(0);
+          const centerColumn = Math.floor(columns / 2);
+          const centerRow = Math.floor(rows / 2);
+          const cells = [];
+          for (let row = 0; row < rows; row++) for (let column = 0; column < columns; column++) cells.push({ row, column, distance: Math.abs(row - centerRow) + Math.abs(column - centerColumn) });
+          cells.sort((a, b) => a.distance - b.distance);
+          cells.forEach(({ row, column }) => {
+            const blocked = [indexes[row][column - 1], indexes[row][column + 1], row > 0 ? indexes[row - 1][column] : undefined, row < rows - 1 ? indexes[row + 1][column] : undefined, row > 0 ? indexes[row - 1][column - 1] : undefined, row > 0 ? indexes[row - 1][column + 1] : undefined, row < rows - 1 ? indexes[row + 1][column - 1] : undefined, row < rows - 1 ? indexes[row + 1][column + 1] : undefined];
+            const seed = (row * 17 + column * 31) % total;
+            let bestIndex = 0, bestScore = Infinity;
+            for (let i = 0; i < total; i++) {
+              const itemIndex = (i + seed) % total;
+              let score = used[itemIndex] * 10 + Math.abs(itemIndex - seed) * 0.01;
+              if (total > 1 && blocked.includes(itemIndex)) score += 1000;
+              if (score < bestScore) { bestScore = score; bestIndex = itemIndex; }
+            }
+            indexes[row][column] = bestIndex;
+            used[bestIndex]++;
+          });
+          return indexes;
+        }
+
+        function buildGrid() {
+          if (observer) observer.kill();
+          clearTimeout(timers.resize); clearTimeout(timers.scroll); clearTimeout(timers.scale);
+          gsap.ticker.remove(updateGrid);
+          setStatus('loading');
+          sourceList.innerHTML = '';
+          const measureItem = originalItems[0].cloneNode(true);
+          measureItem.style.position = 'absolute'; measureItem.style.visibility = 'hidden'; measureItem.style.pointerEvents = 'none';
+          wrapper.appendChild(measureItem);
+          const rect = measureItem.getBoundingClientRect();
+          size.itemW = rect.width; size.itemH = rect.height;
+          measureItem.remove();
+          if (!size.itemW || !size.itemH) return;
+          const columns = Math.max(1, Math.ceil(wrapper.clientWidth / size.itemW) + gridOverscan * 2);
+          const rows = Math.max(Math.ceil(wrapper.clientHeight / size.itemH) + gridOverscan * 2, Math.ceil(originalItems.length / columns));
+          const itemIndexes = createItemIndexes(columns, rows);
+          const columnSpeeds = createColumnSpeeds(columns);
+          const fragment = document.createDocumentFragment();
+          const centerColumn = Math.floor(columns / 2);
+          const centerRow = Math.floor(rows / 2);
+          size.totalW = columns * size.itemW; size.totalH = rows * size.itemH;
+          cards = []; cardElements = [];
+          gsap.set(collection, { x: 0, y: 0, force3D: true });
+          collection.style.width = `${size.totalW}px`; collection.style.height = `${size.totalH}px`;
+          for (let row = 0; row < rows; row++) {
+            for (let column = 0; column < columns; column++) {
+              const item = originalItems[itemIndexes[row][column]].cloneNode(true);
+              const card = item.querySelector('[data-infinite-grid-card]');
+              cards.push({ baseX: column * size.itemW, baseY: row * size.itemH, startY: (column - centerColumn) * size.itemH * startOffsetY, ySpeed: columnSpeeds[column], xSetter: gsap.quickSetter(item, 'x', 'px'), ySetter: gsap.quickSetter(item, 'y', 'px') });
+              if (card) cardElements.push(card);
+              if (cards.length > originalItems.length) item.setAttribute('aria-hidden', 'true');
+              fragment.appendChild(item);
+            }
+          }
+          sourceList.appendChild(fragment);
+          gsap.set(cardElements, { force3D: true });
+          pos.startX = wrapper.clientWidth * 0.5 - centerColumn * size.itemW - size.itemW * 0.5;
+          pos.startY = wrapper.clientHeight * 0.5 - centerRow * size.itemH - size.itemH * 0.5;
+          pos.x = pos.startX; pos.y = pos.startY; pos.targetX = pos.x; pos.targetY = pos.y;
+          scale.current = 1; scale.target = 1;
+          updateGrid();
+          gsap.ticker.add(updateGrid);
+          requestAnimationFrame(() => { setStatus('idle'); });
+          observer = Observer.create({ target: wrapper, type: 'wheel,touch,pointer', preventDefault: true, dragMinimum: 3, onPress() { setStatus('dragging'); }, onRelease() { setStatus('idle'); }, onStop() { setStatus('idle'); }, onChange: handleMovement });
+        }
+
+        function updateGrid() {
+          pos.x += (pos.targetX - pos.x) * positionLerp;
+          pos.y += (pos.targetY - pos.y) * positionLerp;
+          scale.current += (scale.target - scale.current) * scaleLerp;
+          const offsetX = size.itemW * gridOverscan;
+          const offsetY = size.itemH * gridOverscan;
+          const scrollY = pos.y - pos.startY;
+          cards.forEach(({ baseX, baseY, startY, ySpeed, xSetter, ySetter }) => {
+            xSetter(wrapValue(baseX + pos.x + offsetX, size.totalW) - offsetX);
+            ySetter(wrapValue(baseY + pos.startY + startY + scrollY * ySpeed + offsetY, size.totalH) - offsetY);
+          });
+          gsap.set(cardElements, { scale: scale.current });
+        }
+
+        function handleMovement(self) {
+          const isWheel = self.event.type === 'wheel';
+          const speed = isWheel ? wheelSpeed : dragSpeed;
+          const deltaX = gsap.utils.clamp(-80, 80, self.deltaX * speed);
+          const deltaY = gsap.utils.clamp(-80, 80, self.deltaY * speed);
+          const moveX = isWheel ? -deltaX : deltaX;
+          const moveY = isWheel ? -deltaY : deltaY;
+          const strength = gsap.utils.clamp(0, 1, Math.max(Math.abs(deltaX), Math.abs(deltaY)) / 80);
+          if (isWheel) { setStatus('scrolling'); clearTimeout(timers.scroll); timers.scroll = setTimeout(() => { setStatus('idle'); }, 200); }
+          scale.target = gsap.utils.interpolate(1, minCardScale, strength);
+          clearTimeout(timers.scale); timers.scale = setTimeout(() => { scale.target = 1; }, 120);
+          pos.targetX += moveX; pos.targetY += moveY + moveX * xToYInfluence;
+        }
+
+        function handleMouseLeave() { setStatus('idle'); scale.target = 1; if (observer) { observer.disable(); observer.enable(); } }
+
+        window.addEventListener('resize', () => { clearTimeout(timers.resize); timers.resize = setTimeout(buildGrid, 200); });
+        document.documentElement.addEventListener('mouseleave', handleMouseLeave);
+        buildGrid();
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => { initInfiniteCardsGrid(); });
+  </script>
+</body>
+</html>
