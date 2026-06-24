@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Depth Tiles Infinite Loop — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    body { background: #0c0d10; margin: 0; overflow: hidden; height: 100dvh; font-family: 'Inter', sans-serif; }
+    .demo-stage { padding-top: 50px; height: 100dvh; }
+    .depth-tiles { justify-content: center; align-items: center; width: 100%; height: 100%; display: flex; position: relative; overflow: clip; }
+    .depth-tiles__collection { justify-content: center; align-items: center; display: flex; position: relative; }
+    .depth-tiles__list { place-items: center; display: grid; }
+    .depth-tiles__item { will-change: transform, opacity, filter; grid-area: 1/1; justify-content: center; align-items: center; width: max-content; height: max-content; display: flex; }
+    .demo-card { aspect-ratio: 1; color: #fff; border-radius: 1.5em; width: clamp(16em, 25vw, 32em); position: relative; transition: transform 0.4s cubic-bezier(0.35,1.5,0.6,1); transform: scale(1) rotate(0.001deg); }
+    [data-depth-tiles-item]:hover .demo-card { transform: scale(0.95) rotate(0.001deg); }
+    .demo-card.is--dark { color: #201d1d; }
+    .demo-card__info { gap: .5em; align-items: center; width: 100%; padding: 1.5em; font-size: clamp(.8em,1.25vw,1em); display: flex; position: absolute; bottom: 0; left: 0; }
+    .demo-card__dot { background-color: currentColor; border-radius: 100em; width: .5em; height: .5em; }
+    .demo-card__p { letter-spacing: -.02em; margin-bottom: 0; font-size: 1.125em; font-weight: 400; }
+    .cover-image { object-fit: cover; border-radius: inherit; width: 100%; height: 100%; position: absolute; top: 0; left: 0; }
+  </style>
+</head>
+<body>
+  <div class="demo-chrome">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <div class="demo-chrome__sep"></div>
+      <span class="demo-chrome__title">Depth Tiles Infinite Loop</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+  <div class="demo-stage">
+    <div data-depth-tiles-init="" class="depth-tiles">
+      <div data-depth-tiles-collection="" class="depth-tiles__collection">
+        <div data-depth-tiles-list="" class="depth-tiles__list">
+          <div data-depth-tiles-item="" class="depth-tiles__item"><div class="demo-card"><img src="https://cdn.prod.website-files.com/69f9ff693f593ac2db509f4a/69f9ff693f593ac2db509f76_Organic%20Textured%20Surface.avif" loading="lazy" alt="" class="cover-image"><div class="demo-card__info"><div class="demo-card__dot"></div><p class="demo-card__p">023 / Material</p></div></div></div>
+          <div data-depth-tiles-item="" class="depth-tiles__item"><div class="demo-card"><img src="https://cdn.prod.website-files.com/69f9ff693f593ac2db509f4a/69fa10c01dae2b9879b077e8_image-1.avif" loading="lazy" alt="" class="cover-image"><div class="demo-card__info"><div class="demo-card__dot"></div><p class="demo-card__p">081 / Glass</p></div></div></div>
+          <div data-depth-tiles-item="" class="depth-tiles__item"><div class="demo-card is--dark"><img src="https://cdn.prod.website-files.com/69f9ff693f593ac2db509f4a/6a0efae4d29e0661dc2aa2b5_74aeba9ca1016d6ee87c57eba4a11b93_draw.avif" loading="lazy" alt="" class="cover-image"><div class="demo-card__info"><div class="demo-card__dot"></div><p class="demo-card__p">320 / Doodle</p></div></div></div>
+          <div data-depth-tiles-item="" class="depth-tiles__item"><div class="demo-card"><img src="https://cdn.prod.website-files.com/69f9ff693f593ac2db509f4a/69f9ff693f593ac2db509f75_Intricate%20Leaf%20Veins.avif" loading="lazy" alt="" class="cover-image"><div class="demo-card__info"><div class="demo-card__dot"></div><p class="demo-card__p">902 / Edges</p></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/CustomEase.min.js"></script>
+  <script>
+    gsap.registerPlugin(CustomEase, ScrollTrigger);
+    CustomEase.create("depth","M0,0 C0.6,0 0,1 1,1");
+    function initDepthTiles(){document.querySelectorAll("[data-depth-tiles-init]").forEach((container)=>{const list=container.querySelector("[data-depth-tiles-list]");const tiles=container.querySelectorAll("[data-depth-tiles-item]");const tileCount=tiles.length;if(tileCount<2)return;const xMultiplier=0.65,backScale=0.5,backOpacity=1,backDarkness=1,sideRotateY=5,perspective=75,moveDuration=1.5,startDelay=0.5,pauseDuration=0.125;const state={progress:0};let isActive=false,isHovering=false,hasStarted=false,stepTimeline,delayedCall,startDelayedCall,activeTileIndex=-1;gsap.set(list,{perspective:`${perspective}em`});gsap.set(tiles,{transformStyle:"preserve-3d",transformPerspective:perspective*16});function getRelativeIndex(index){let relative=index-state.progress;relative=((relative+tileCount/2)%tileCount+tileCount)%tileCount-tileCount/2;return gsap.utils.clamp(-2,2,relative);}function getActiveIndex(){return((Math.round(state.progress)%tileCount)+tileCount)%tileCount;}function updateTileStatus(){const cur=getActiveIndex();if(cur===activeTileIndex)return;activeTileIndex=cur;tiles.forEach((t,i)=>t.setAttribute("data-depth-tiles-item-status",i===activeTileIndex?"active":"not-active"));}function renderDepth(){const tileWidth=tiles[0].offsetWidth,radiusX=tileWidth*xMultiplier;updateTileStatus();tiles.forEach((tile,index)=>{const relative=getRelativeIndex(index),angle=(relative/2)*Math.PI,orbitX=Math.sin(angle)*radiusX,orbitDepth=(Math.cos(angle)+1)/2,x=relative<=-2||relative>=2?0:orbitX,scale=gsap.utils.interpolate(backScale,1,orbitDepth),opacity=gsap.utils.interpolate(backOpacity,1,orbitDepth),brightness=gsap.utils.interpolate(backDarkness,1,orbitDepth),rotateY=Math.sin(angle)*-sideRotateY,zIndex=Math.round(gsap.utils.interpolate(1,1000,orbitDepth));gsap.set(tile,{x,scale,opacity,rotateY,filter:`brightness(${brightness})`,zIndex});});}function goToNextTile(){if(!isActive||isHovering)return;stepTimeline=gsap.timeline({paused:true,onComplete:()=>{if(isActive&&!isHovering)delayedCall=gsap.delayedCall(pauseDuration,goToNextTile);}});stepTimeline.to(state,{progress:state.progress+1,duration:moveDuration,ease:"depth",onUpdate:renderDepth});stepTimeline.play();}function pauseDepth(){isActive=false;if(stepTimeline)stepTimeline.pause();if(delayedCall)delayedCall.pause();if(startDelayedCall)startDelayedCall.pause();}function playDepth(){isActive=true;if(isHovering)return;if(!hasStarted){hasStarted=true;startDelayedCall=gsap.delayedCall(startDelay,goToNextTile);return;}if(stepTimeline&&stepTimeline.progress()<1){stepTimeline.play();}else{goToNextTile();}}list.addEventListener("pointerover",(e)=>{if(!e.target.closest("[data-depth-tiles-item]"))return;isHovering=true;if(delayedCall)delayedCall.pause();if(startDelayedCall)startDelayedCall.pause();});list.addEventListener("pointerleave",()=>{isHovering=false;if(!isActive)return;if(!hasStarted){playDepth();return;}if(stepTimeline&&stepTimeline.progress()<1){stepTimeline.play();}else{goToNextTile();}});renderDepth();ScrollTrigger.create({trigger:container,start:"top bottom",end:"bottom top",onToggle:(self)=>self.isActive?playDepth():pauseDepth()});});}
+    document.addEventListener("DOMContentLoaded",()=>{initDepthTiles();});
+  </script>
+</body>
+</html>

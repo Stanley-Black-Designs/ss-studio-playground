@@ -30,7 +30,7 @@
     <p class="intro-body">A small taste of the motion and interaction work I build for clients. Hover each component to preview it — click to explore it in full.</p>
     <div class="intro-actions">
 
-      <div class="btn-wrap" id="copyWrap">
+      <div class="btn-wrap btn-wrap--primary" id="copyWrap">
         <div class="btn-magnetic">
           <a class="btn-magnetic__click" data-magnetic-strength="40" data-magnetic-strength-inner="20" style="cursor:pointer;">
             <div class="btn-magnetic__fill"></div>
@@ -67,7 +67,7 @@
 
   <div class="section-label-row">
     <span class="section-label">Interaction Demos</span>
-    <span class="section-label-count">4 components</span>
+    <span class="section-label-count">8 components</span>
   </div>
 
   <main class="playground-grid">
@@ -75,7 +75,7 @@
     <article class="pg-card" data-href="demos/radial-marquee.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="radial-cards-marquee.avif" alt="Radial Cards Marquee" loading="eager">
-        <video class="pg-card__video" src="videos/radial-marquee.mp4" muted loop playsinline preload="metadata"></video>
+        <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/radial-marquee.mp4"></video>
         <div class="pg-card__overlay"><span class="pg-card__open-label">Open demo <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5l7-7M4 2.5h5.5V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
       </div>
       <div class="pg-card__info">
@@ -88,7 +88,7 @@
     <article class="pg-card" data-href="demos/3d-tornado.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="3d-tornado.avif" alt="3D Cards Tornado" loading="eager">
-        <video class="pg-card__video" src="videos/3d-tornado.mp4" muted loop playsinline preload="metadata"></video>
+        <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/3d-tornado.mp4"></video>
         <div class="pg-card__overlay"><span class="pg-card__open-label">Open demo <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5l7-7M4 2.5h5.5V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
       </div>
       <div class="pg-card__info">
@@ -101,7 +101,7 @@
     <article class="pg-card" data-href="demos/infinite-grid.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="infinite-grid.avif" alt="Infinite Draggable Grid" loading="eager">
-        <video class="pg-card__video" src="videos/infinite-grid.mp4" muted loop playsinline preload="metadata"></video>
+        <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/infinite-grid.mp4"></video>
         <div class="pg-card__overlay"><span class="pg-card__open-label">Open demo <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5l7-7M4 2.5h5.5V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
       </div>
       <div class="pg-card__info">
@@ -114,7 +114,7 @@
     <article class="pg-card" data-href="demos/parallax-slider.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="parallax-slider.avif" alt="Parallax Image Slider" loading="eager">
-        <video class="pg-card__video" src="videos/parallax-slider.mp4" muted loop playsinline preload="metadata"></video>
+        <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/parallax-slider.mp4"></video>
         <div class="pg-card__overlay"><span class="pg-card__open-label">Open demo <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5l7-7M4 2.5h5.5V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
       </div>
       <div class="pg-card__info">
@@ -124,15 +124,67 @@
       </div>
     </article>
 
+    <article class="pg-card" data-href="demos/layered-slider.html">
+      <div class="pg-card__media">
+        <img class="pg-card__thumb" src="layered-slider.avif" alt="Layered Image Slider" loading="lazy">
+        <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/layered-slider.mp4"></video>
+        <div class="pg-card__overlay"><span class="pg-card__open-label">Open demo <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5l7-7M4 2.5h5.5V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+      </div>
+      <div class="pg-card__info">
+        <h2 class="pg-card__title">Layered Image Slider</h2>
+        <p class="pg-card__desc">Full-bleed background crossfades with a floating foreground image card and animated title strip.</p>
+        <div class="pg-card__meta"><span class="pg-card__tech">GSAP</span><span class="pg-card__tech">CustomEase</span><span class="pg-card__tech">Autoplay</span></div>
+      </div>
+    </article>
+
+    <article class="pg-card" data-href="demos/depth-tiles.html">
+      <div class="pg-card__media">
+        <img class="pg-card__thumb" src="depth-tiles.avif" alt="Depth Tiles Infinite Loop" loading="lazy">
+        <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/depth-tiles.mp4"></video>
+        <div class="pg-card__overlay"><span class="pg-card__open-label">Open demo <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5l7-7M4 2.5h5.5V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+      </div>
+      <div class="pg-card__info">
+        <h2 class="pg-card__title">Depth Tiles Infinite Loop</h2>
+        <p class="pg-card__desc">Cards cycle through a 3D depth orbit — scaling, blurring, and darkening as they recede.</p>
+        <div class="pg-card__meta"><span class="pg-card__tech">GSAP</span><span class="pg-card__tech">ScrollTrigger</span><span class="pg-card__tech">3D Depth</span></div>
+      </div>
+    </article>
+
+    <article class="pg-card" data-href="demos/orbit-tiles.html">
+      <div class="pg-card__media">
+        <img class="pg-card__thumb" src="orbit-tiles.avif" alt="Orbit Tiles Infinite Loop" loading="lazy">
+        <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/orbit-tiles.mp4"></video>
+        <div class="pg-card__overlay"><span class="pg-card__open-label">Open demo <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5l7-7M4 2.5h5.5V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+      </div>
+      <div class="pg-card__info">
+        <h2 class="pg-card__title">Orbit Tiles Infinite Loop</h2>
+        <p class="pg-card__desc">Images orbit in a continuous 3D loop with staggered movement and depth blur.</p>
+        <div class="pg-card__meta"><span class="pg-card__tech">GSAP</span><span class="pg-card__tech">ScrollTrigger</span><span class="pg-card__tech">Orbit</span></div>
+      </div>
+    </article>
+
+    <article class="pg-card" data-href="demos/cascading-slider.html">
+      <div class="pg-card__media">
+        <img class="pg-card__thumb" src="cascading-slider.avif" alt="Cascading Slider" loading="lazy">
+        <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/cascading-slider.mp4"></video>
+        <div class="pg-card__overlay"><span class="pg-card__open-label">Open demo <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5l7-7M4 2.5h5.5V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+      </div>
+      <div class="pg-card__info">
+        <h2 class="pg-card__title">Cascading Slider</h2>
+        <p class="pg-card__desc">A multi-slide carousel using clip-path to reveal and stack content in a cascading layout.</p>
+        <div class="pg-card__meta"><span class="pg-card__tech">GSAP</span><span class="pg-card__tech">Clip-path</span><span class="pg-card__tech">Carousel</span></div>
+      </div>
+    </article>
+
   </main>
 
   <section class="cta-band">
     <div class="cta-band__inner">
-      <p class="cta-band__label">Interested in working together?</p>
+      <p class="cta-band__eyebrow"><span class="eyebrow-dot"></span>Interested in working together?</p>
       <h2 class="cta-band__headline">Let's talk about your project.</h2>
       <div class="cta-band__actions">
 
-        <div class="btn-wrap" id="copyWrap2">
+        <div class="btn-wrap btn-wrap--primary" id="copyWrap2">
           <div class="btn-magnetic">
             <a class="btn-magnetic__click" data-magnetic-strength="40" data-magnetic-strength-inner="20" style="cursor:pointer;">
               <div class="btn-magnetic__fill"></div>
@@ -176,6 +228,7 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
   <script src="main.js"></script>
 </body>
 </html>

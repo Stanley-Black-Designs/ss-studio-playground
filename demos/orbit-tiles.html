@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orbit Tiles Infinite Loop — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    body { background: #0c0d10; margin: 0; overflow: hidden; height: 100dvh; font-family: 'Inter', sans-serif; }
+    .demo-stage { padding-top: 50px; height: 100dvh; }
+    .orbit-tiles { justify-content: center; align-items: center; width: 100%; height: 100%; display: flex; position: relative; overflow: clip; }
+    .orbit-tiles__collection { justify-content: center; align-items: center; display: flex; position: relative; }
+    .orbit-tiles__list { place-items: center; display: grid; }
+    .orbit-tiles__item { will-change: transform,opacity,filter; grid-area: 1/1; justify-content: center; align-items: center; width: max-content; height: max-content; display: flex; }
+    .demo-card { aspect-ratio: 4/3; border-radius: 0.65em; width: clamp(16em,25vw,32em); position: relative; }
+    .cover-image { object-fit: cover; border-radius: inherit; width: 100%; height: 100%; position: absolute; top: 0; left: 0; }
+  </style>
+</head>
+<body>
+  <div class="demo-chrome">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <div class="demo-chrome__sep"></div>
+      <span class="demo-chrome__title">Orbit Tiles Infinite Loop</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+  <div class="demo-stage">
+    <div data-orbit-tiles-init="" class="orbit-tiles">
+      <div data-orbit-tiles-collection="" class="orbit-tiles__collection">
+        <div data-orbit-tiles-list="" class="orbit-tiles__list">
+          <div data-orbit-tiles-item="" class="orbit-tiles__item"><div class="demo-card"><img src="https://cdn.prod.website-files.com/69f8734cb3f6e933a8e50121/69f879f8571dc895a0bea874_serene-woman-with-flowers-beafd.avif" loading="lazy" alt="" class="cover-image"></div></div>
+          <div data-orbit-tiles-item="" class="orbit-tiles__item"><div class="demo-card"><img src="https://cdn.prod.website-files.com/69f8734cb3f6e933a8e50121/69f8776231204174f1671a7c_13e8de8f22f5fc08ededce8943422e1f_Close-up%20of%20Basketball.avif" loading="lazy" alt="" class="cover-image"></div></div>
+          <div data-orbit-tiles-item="" class="orbit-tiles__item"><div class="demo-card"><img src="https://cdn.prod.website-files.com/69f8734cb3f6e933a8e50121/69f87c4f0df4bcb0aee7b459_futuristic-blue-spheres-qb9rz.avif" loading="lazy" alt="" class="cover-image"></div></div>
+          <div data-orbit-tiles-item="" class="orbit-tiles__item"><div class="demo-card"><img src="https://cdn.prod.website-files.com/69f8734cb3f6e933a8e50121/69f87ad4d9444f02158d1f93_multicolored-jacket-portrait-msr1h.avif" loading="lazy" alt="" class="cover-image"></div></div>
+          <div data-orbit-tiles-item="" class="orbit-tiles__item"><div class="demo-card"><img src="https://cdn.prod.website-files.com/69f8734cb3f6e933a8e50121/69f879f5b599c8331c24a16f_a17ca47b9ff9b454658f5e70e11a7b5e_dynamic-pose-drawing-1cy6f.avif" loading="lazy" alt="" class="cover-image"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/CustomEase.min.js"></script>
+  <script>
+    gsap.registerPlugin(CustomEase,ScrollTrigger);CustomEase.create("osmo","M0,0 C0.625,0.05 0,1 1,1");
+    function initOrbitTiles(){document.querySelectorAll("[data-orbit-tiles-init]").forEach((container)=>{const list=container.querySelector("[data-orbit-tiles-list]");const tiles=container.querySelectorAll("[data-orbit-tiles-item]");const tileCount=tiles.length;if(tileCount<2)return;const radiusXMultiplier=1,radiusYMultiplier=0,blurMultiplier=0.04,minScale=0.2,minOpacity=1,minDarkness=0.3,moveDuration=2.5,pauseDuration=0,staggerAmount=moveDuration*0.03,linearRotateDuration=24;const tileStates=Array.from(tiles,()=>({progress:0}));let isActive=false,stepTimeline,delayedCall,activeTileIndex=-1;function getActiveIndex(){return tileStates.reduce((closest,state,index)=>{const current=Math.min(((index-state.progress)%tileCount+tileCount)%tileCount,tileCount-(((index-state.progress)%tileCount+tileCount)%tileCount));const previous=Math.min(((closest-tileStates[closest].progress)%tileCount+tileCount)%tileCount,tileCount-(((closest-tileStates[closest].progress)%tileCount+tileCount)%tileCount));return current<previous?index:closest;},0);}function updateTileStatus(){const cur=getActiveIndex();if(cur===activeTileIndex)return;activeTileIndex=cur;tiles.forEach((t,i)=>t.setAttribute("data-orbit-tiles-item-status",i===activeTileIndex?"active":"not-active"));}function renderOrbit(){const tileWidth=tiles[0].offsetWidth,radiusX=tileWidth*radiusXMultiplier,radiusY=tileWidth*radiusYMultiplier,maxBlur=tileWidth*blurMultiplier;updateTileStatus();tiles.forEach((tile,index)=>{const angle=((index-tileStates[index].progress)/tileCount)*Math.PI*2,depth=(Math.cos(angle)+1)/2,adjustedDepth=Math.pow(depth,1.3),scale=gsap.utils.interpolate(minScale,1,adjustedDepth),opacity=gsap.utils.interpolate(minOpacity,1,adjustedDepth),blur=gsap.utils.interpolate(maxBlur,0,adjustedDepth),brightness=gsap.utils.interpolate(minDarkness,1,adjustedDepth);gsap.set(tile,{x:Math.sin(angle)*radiusX,y:Math.cos(angle)*radiusY,scale,opacity,filter:`blur(${blur}px) brightness(${brightness})`,zIndex:Math.round(adjustedDepth*1000)});});}const rotations=!list||linearRotateDuration===0?[]:[gsap.to(list,{rotate:360,duration:linearRotateDuration,ease:"none",repeat:-1,paused:true}),gsap.to(tiles,{rotate:-360,duration:linearRotateDuration,ease:"none",repeat:-1,paused:true})];function goToNextTile(){if(!isActive)return;const activeIndex=getActiveIndex();const orderedStates=tileStates.map((state,index)=>({state,offset:(index-activeIndex+tileCount)%tileCount})).sort((a,b)=>a.offset-b.offset);stepTimeline=gsap.timeline({paused:true,onComplete:()=>{if(isActive)delayedCall=gsap.delayedCall(pauseDuration,goToNextTile);}});orderedStates.forEach(({state},index)=>{stepTimeline.to(state,{progress:state.progress+1,duration:moveDuration,ease:"osmo",onUpdate:renderOrbit},index*staggerAmount);});stepTimeline.play();}function pauseOrbit(){isActive=false;if(stepTimeline)stepTimeline.pause();if(delayedCall)delayedCall.pause();rotations.forEach(r=>r.pause());}function playOrbit(){isActive=true;rotations.forEach(r=>r.play());if(stepTimeline&&stepTimeline.progress()<1){stepTimeline.play();}else{goToNextTile();}}renderOrbit();if(pauseDuration>0)new ResizeObserver(renderOrbit).observe(container);ScrollTrigger.create({trigger:container,start:"top bottom",end:"bottom top",onToggle:(self)=>self.isActive?playOrbit():pauseOrbit()});});}
+    document.addEventListener("DOMContentLoaded",()=>{initOrbitTiles();});
+  </script>
+</body>
+</html>

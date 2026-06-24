@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cascading Slider — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    body { background: #0c0d10; margin: 0; height: 100dvh; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; }
+    .demo-stage { padding-top: 50px; flex: 1; display: flex; align-items: center; justify-content: center; padding-left: 32px; padding-right: 32px; }
+    [data-cascading-viewport] { --gap: 0.5em; }
+    [data-cascading-slide] { --clip: 0; --radius: 0.75em; }
+    .cascading-slider { width: 100%; max-width: 90em; position: relative; }
+    .cascading-slider__collection { width: 100%; }
+    .cascading-slider__list { width: 100%; height: 35em; position: relative; overflow: hidden; }
+    .cascading-slider__item { color: #fff; cursor: pointer; will-change: transform,clip-path; clip-path: inset(0px calc(var(--clip) * 1px) round var(--radius)); user-select: none; -webkit-user-select: none; height: 100%; position: absolute; inset: 0% auto auto 0%; }
+    .cascading-slider__item[data-status="active"] { cursor: default; }
+    .cascading-slider__item-inner { width: 100%; height: 100%; position: relative; overflow: hidden; }
+    .cascading-slider__item-bg { z-index: 0; position: absolute; inset: 0%; }
+    .cascading-slider__img { object-fit: cover; width: 100%; height: 100%; position: absolute; inset: 0%; }
+    .cascading-slider__item-content { z-index: 2; background-image: linear-gradient(0deg,#0009,#0000); padding: 2em 2em 3em 2.5em; position: absolute; inset: auto 0% 0%; }
+    .cascading-slider__h { opacity: 0; letter-spacing: -.03em; margin: 0; font-family: 'Inter', sans-serif; font-size: 2.75em; font-weight: 400; line-height: 1; transition: all .3s cubic-bezier(.645,.045,.355,1); transform: translate(0,.25em); transition-delay: 0ms; }
+    [data-cascading-slide][data-status="active"] .cascading-slider__h { transition-delay: 400ms; opacity: 1; transform: translate(0,0); }
+    .cascading-slider__nav { gap: 1em; flex-flow: row; justify-content: center; align-items: center; margin-top: 2em; margin-left: auto; margin-right: auto; display: flex; }
+    .cascading-slider__button { color: #fff; background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: .25em; justify-content: center; align-items: center; width: 3em; height: 3em; padding: .75em; display: flex; cursor: pointer; transition: background 0.2s; }
+    .cascading-slider__button:hover { background-color: rgba(255,255,255,0.18); }
+    .cascading-slider__button-arrow.is--prev { transform: rotate(-180deg); }
+    @media (max-width: 767px) { .cascading-slider__list { height: 20em; } .cascading-slider__h { font-size: 1.5em; } }
+  </style>
+</head>
+<body>
+  <div class="demo-chrome">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <div class="demo-chrome__sep"></div>
+      <span class="demo-chrome__title">Cascading Slider</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+  <div class="demo-stage">
+    <div data-cascading-slider-wrap class="cascading-slider" aria-label="Featured content" aria-roledescription="carousel">
+      <div class="cascading-slider__collection">
+        <div data-cascading-viewport class="cascading-slider__list">
+          <div aria-roledescription="slide" data-cascading-slide role="group" class="cascading-slider__item"><div class="cascading-slider__item-inner"><div class="cascading-slider__item-bg"><img src="https://cdn.prod.website-files.com/699ecbb03f86e84bad7a74f3/699eea7d454cb9d5091ac8ce_cascading-carousel-3.avif" loading="eager" draggable="false" class="cascading-slider__img"></div><div class="cascading-slider__item-content"><h3 class="cascading-slider__h">Annual overview</h3></div></div></div>
+          <div aria-roledescription="slide" data-cascading-slide role="group" class="cascading-slider__item"><div class="cascading-slider__item-inner"><div class="cascading-slider__item-bg"><img src="https://cdn.prod.website-files.com/699ecbb03f86e84bad7a74f3/699eec227ff9240c1e047cf3_cascading-carousel-2.avif" loading="lazy" draggable="false" class="cascading-slider__img"></div><div class="cascading-slider__item-content"><h3 class="cascading-slider__h">Sustainability efforts</h3></div></div></div>
+          <div aria-roledescription="slide" data-cascading-slide role="group" class="cascading-slider__item"><div class="cascading-slider__item-inner"><div class="cascading-slider__item-bg"><img src="https://cdn.prod.website-files.com/699ecbb03f86e84bad7a74f3/699eea7d6333786f72559958_cascading-carousel-5.avif" loading="lazy" draggable="false" class="cascading-slider__img"></div><div class="cascading-slider__item-content"><h3 class="cascading-slider__h">Product development</h3></div></div></div>
+          <div aria-roledescription="slide" data-cascading-slide role="group" class="cascading-slider__item"><div class="cascading-slider__item-inner"><div class="cascading-slider__item-bg"><img src="https://cdn.prod.website-files.com/699ecbb03f86e84bad7a74f3/699eea7d9bf91f87ca962997_cascading-carousel-1.avif" loading="lazy" draggable="false" class="cascading-slider__img"></div><div class="cascading-slider__item-content"><h3 class="cascading-slider__h">Infrastructure</h3></div></div></div>
+          <div aria-roledescription="slide" data-cascading-slide role="group" class="cascading-slider__item"><div class="cascading-slider__item-inner"><div class="cascading-slider__item-bg"><img src="https://cdn.prod.website-files.com/699ecbb03f86e84bad7a74f3/699eea7d882b31c7ce3a35be_cascading-carousel-4.avif" loading="lazy" draggable="false" class="cascading-slider__img"></div><div class="cascading-slider__item-content"><h3 class="cascading-slider__h">Enterprises</h3></div></div></div>
+        </div>
+      </div>
+      <nav aria-label="slider navigation" class="cascading-slider__nav">
+        <button data-cascading-slider-prev aria-label="previous slide" class="cascading-slider__button"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="cascading-slider__button-arrow is--prev"><path d="M14 19L21 12L14 5" stroke="currentColor" stroke-miterlimit="10" stroke-width="1.5"></path><path d="M21 12H2" stroke="currentColor" stroke-miterlimit="10" stroke-width="1.5"></path></svg></button>
+        <button data-cascading-slider-next aria-label="next slide" class="cascading-slider__button"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="cascading-slider__button-arrow"><path d="M14 19L21 12L14 5" stroke="currentColor" stroke-miterlimit="10" stroke-width="1.5"></path><path d="M21 12H2" stroke="currentColor" stroke-miterlimit="10" stroke-width="1.5"></path></svg></button>
+      </nav>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script>
+    function initCascadingSlider(){const duration=0.65,ease='power3.inOut',breakpoints=[{maxWidth:479,activeWidth:0.78,siblingWidth:0.08},{maxWidth:767,activeWidth:0.70,siblingWidth:0.10},{maxWidth:991,activeWidth:0.60,siblingWidth:0.10},{maxWidth:Infinity,activeWidth:0.60,siblingWidth:0.13}];const wrappers=document.querySelectorAll('[data-cascading-slider-wrap]');wrappers.forEach(setupInstance);function setupInstance(wrapper){const viewport=wrapper.querySelector('[data-cascading-viewport]');const prevButton=wrapper.querySelector('[data-cascading-slider-prev]');const nextButton=wrapper.querySelector('[data-cascading-slider-next]');const slides=Array.from(viewport.querySelectorAll('[data-cascading-slide]'));let totalSlides=slides.length;if(totalSlides===0)return;if(totalSlides<9){const originalSlides=slides.slice();while(slides.length<9){originalSlides.forEach(function(original){const clone=original.cloneNode(true);clone.setAttribute('data-clone','');viewport.appendChild(clone);slides.push(clone);});}totalSlides=slides.length;}let activeIndex=0,isAnimating=false,slideWidth=0,slotCenters={},slotWidths={};function readGap(){const raw=getComputedStyle(viewport).getPropertyValue('--gap').trim();if(!raw)return 0;const temp=document.createElement('div');temp.style.width=raw;temp.style.position='absolute';temp.style.visibility='hidden';viewport.appendChild(temp);const px=temp.offsetWidth;viewport.removeChild(temp);return px;}function getSettings(){const w=window.innerWidth;for(let i=0;i<breakpoints.length;i++){if(w<=breakpoints[i].maxWidth)return breakpoints[i];}return breakpoints[breakpoints.length-1];}function getOffset(slideIndex,fromIndex){if(fromIndex===undefined)fromIndex=activeIndex;let distance=slideIndex-fromIndex;const half=totalSlides/2;if(distance>half)distance-=totalSlides;if(distance<-half)distance+=totalSlides;return distance;}function measure(){const settings=getSettings(),viewportWidth=viewport.offsetWidth,gap=readGap(),activeSlideWidth=viewportWidth*settings.activeWidth,siblingSlideWidth=viewportWidth*settings.siblingWidth,farSlideWidth=Math.max(0,(viewportWidth-activeSlideWidth-2*siblingSlideWidth-4*gap)/2);slideWidth=activeSlideWidth;const visibleSlots=[{slot:-2,width:farSlideWidth},{slot:-1,width:siblingSlideWidth},{slot:0,width:activeSlideWidth},{slot:1,width:siblingSlideWidth},{slot:2,width:farSlideWidth}];let x=0;visibleSlots.forEach(function(def,i){slotCenters[String(def.slot)]=x+def.width/2;slotWidths[String(def.slot)]=def.width;if(i<visibleSlots.length-1)x+=def.width+gap;});slotCenters['-3']=slotCenters['-2']-farSlideWidth/2-gap-farSlideWidth/2;slotWidths['-3']=farSlideWidth;slotCenters['3']=slotCenters['2']+farSlideWidth/2+gap+farSlideWidth/2;slotWidths['3']=farSlideWidth;slides.forEach(function(slide){slide.style.width=slideWidth+'px';});}function getSlideProps(offset){const clamped=Math.max(-3,Math.min(3,offset)),slotWidth=slotWidths[String(clamped)],clipAmount=Math.max(0,(slideWidth-slotWidth)/2),translateX=slotCenters[String(clamped)]-slideWidth/2;return{x:translateX,'--clip':clipAmount,zIndex:10-Math.abs(clamped)};}function layout(animate,previousIndex){slides.forEach(function(slide,index){const offset=getOffset(index);if(offset<-3||offset>3){if(animate&&previousIndex!==undefined){const previousOffset=getOffset(index,previousIndex);if(previousOffset>=-2&&previousOffset<=2){const exitSlot=previousOffset<0?-3:3;gsap.to(slide,Object.assign({},getSlideProps(exitSlot),{duration,ease,overwrite:true}));return;}}const parkSlot=offset<0?-3:3;gsap.set(slide,getSlideProps(parkSlot));return;}const props=getSlideProps(offset);slide.setAttribute('data-status',offset===0?'active':'inactive');if(animate){gsap.to(slide,Object.assign({},props,{duration,ease,overwrite:true}));}else{gsap.set(slide,props);}});}function goTo(targetIndex){const normalizedTarget=((targetIndex%totalSlides)+totalSlides)%totalSlides;if(isAnimating||normalizedTarget===activeIndex)return;isAnimating=true;const previousIndex=activeIndex,travelDirection=getOffset(normalizedTarget,previousIndex)>0?1:-1;slides.forEach(function(slide,index){const currentOffset=getOffset(index,previousIndex),nextOffset=getOffset(index,normalizedTarget),wasInRange=currentOffset>=-3&&currentOffset<=3,willBeVisible=nextOffset>=-2&&nextOffset<=2;if(!wasInRange&&willBeVisible){const entrySlot=travelDirection>0?3:-3;gsap.set(slide,getSlideProps(entrySlot));}const wasInvisible=Math.abs(currentOffset)>=3,willBeStaging=Math.abs(nextOffset)===3,crossesSides=currentOffset*nextOffset<0;if(wasInvisible&&willBeStaging&&crossesSides){gsap.set(slide,getSlideProps(nextOffset>0?3:-3));}});activeIndex=normalizedTarget;layout(true,previousIndex);gsap.delayedCall(duration+0.05,function(){isAnimating=false;});}if(prevButton)prevButton.addEventListener('click',function(){goTo(activeIndex-1);});if(nextButton)nextButton.addEventListener('click',function(){goTo(activeIndex+1);});slides.forEach(function(slide,index){slide.addEventListener('click',function(){if(index!==activeIndex)goTo(index);});});document.addEventListener('keydown',function(event){if(event.key==='ArrowLeft')goTo(activeIndex-1);if(event.key==='ArrowRight')goTo(activeIndex+1);});let resizeTimer;window.addEventListener('resize',function(){clearTimeout(resizeTimer);resizeTimer=setTimeout(function(){measure();layout(false);},100);});measure();layout(false);}}
+    document.addEventListener('DOMContentLoaded',function(){initCascadingSlider();});
+  </script>
+</body>
+</html>

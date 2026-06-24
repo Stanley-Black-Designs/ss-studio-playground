@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layered Image Slider — Stanley Smith Studios</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    body { background: #0c0d10; font-family: 'Inter', sans-serif; overflow: hidden; height: 100dvh; margin: 0; }
+    .demo-stage { padding-top: 50px; height: 100dvh; }
+
+    .layered-slider { color: #fff; user-select: none; -webkit-user-select: none; padding-bottom: 15em; position: relative; overflow: clip; font-size: clamp(10px, 1vw, 16px); }
+    .layered-slider__container { width: 100%; position: relative; }
+    .layered-slider__bg-collection { z-index: 0; position: absolute; inset: 0%; overflow: clip; }
+    .layered-slider__bg-item { width: 100%; height: 100%; position: absolute; inset: 0%; }
+    .layered-slider__bg-img { object-fit: cover; user-select: none; -webkit-user-select: none; width: 100%; height: 100%; display: block; }
+    .layered-slider__bg-dark { z-index: 2; background-color: #00000026; position: absolute; inset: 0%; }
+    .layered-slider__text-collection { z-index: 3; justify-content: center; align-items: center; width: 100%; padding-top: 28em; padding-bottom: 28em; display: flex; position: relative; }
+    .layered-slider__text-list { justify-content: center; align-items: center; width: 100%; height: 100%; display: flex; }
+    .layered-slider__text-item { text-align: center; cursor: pointer; max-width: 80%; position: absolute; }
+    .layered-slider__text-title { letter-spacing: -.05em; color: inherit; font-family: 'Neue Montreal', 'Inter', sans-serif; font-size: 4em; line-height: .8; text-decoration: none; }
+    .layered-slider__mask-collection { z-index: 3; aspect-ratio: 4/5; border-radius: .75em; width: 20em; position: absolute; bottom: 0; left: 50%; overflow: hidden; transform: translate(-50%, 30%); }
+    .layered-slider__mask-list { position: absolute; inset: 0%; }
+    .layered-slider__mask-item { flex: none; width: 100%; height: 100%; position: absolute; inset: 0%; overflow: hidden; }
+    .layered-slider__mask-img { pointer-events: none; object-fit: cover; user-select: none; -webkit-user-select: none; width: 100%; height: 100%; display: block; }
+    .layered-slider__overlay { z-index: 4; pointer-events: none; flex-flow: column; justify-content: space-between; align-items: center; width: 100%; max-width: 120em; margin: auto; padding: 2em; display: flex; position: absolute; top: 0; bottom: 0; }
+    .layered-slider__overlay-top { gap: .5em; pointer-events: auto; justify-content: center; align-items: center; display: flex; }
+    .layered-slider__progress { background-color: #ffffff40; border-radius: 10em; width: 6em; height: 2px; overflow: hidden; }
+    .layered-slider__progress-inner { transform-origin: 0%; width: 100%; height: 100%; background-color: #fff; transform: scale3d(0,1,1); }
+    .layered-slider__span { font-size: .875em; }
+    .layered-slider__overlay-btm { justify-content: flex-end; align-items: center; width: 100%; display: flex; }
+    .layered-slider__nav { gap: .5em; pointer-events: auto; justify-content: center; align-items: center; display: flex; }
+    .layered-slider__nav-button { background-color: transparent; border: 1px solid #ffffff4d; border-radius: 100em; justify-content: center; align-items: center; width: 3em; height: 3em; padding: .75em; display: flex; cursor: pointer; color: #fff; }
+    .layered-slider__nav-icon { width: 100%; height: 100%; }
+    @media (max-width: 767px) { .layered-slider__text-title { font-size: 2.5em; } .layered-slider__overlay { padding: 1em; } .layered-slider__overlay-btm { justify-content: center; } .layered-slider__nav { justify-content: space-between; width: 100%; } }
+    @media (max-width: 479px) { .layered-slider__mask-collection { width: 14em; } }
+  </style>
+</head>
+<body>
+  <div class="demo-chrome">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <div class="demo-chrome__sep"></div>
+      <span class="demo-chrome__title">Layered Image Slider</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+  <div class="demo-stage">
+    <section data-layered-slider-init data-layered-slider-autoplay="5" class="layered-slider">
+      <div class="layered-slider__container">
+        <div class="layered-slider__bg-collection">
+          <div class="layered-slider__bg-list">
+            <div data-layered-slider-bg class="layered-slider__bg-item"><img src="https://cdn.prod.website-files.com/6a3bc96f083881db3c94dcc9/6a3bca488c96bc23f32d94f4_Sailing_Serenity_A_Tranquil_Seascape%201.avif" class="layered-slider__bg-img"></div>
+            <div data-layered-slider-bg class="layered-slider__bg-item"><img src="https://cdn.prod.website-files.com/6a3bc96f083881db3c94dcc9/6a3bca487d3aa008e754e70c_Contemplative_Air_Traveler_in_Warm_Window_Light%201.avif" class="layered-slider__bg-img"></div>
+            <div data-layered-slider-bg class="layered-slider__bg-item"><img src="https://cdn.prod.website-files.com/6a3bc96f083881db3c94dcc9/6a3bca484b7f802500cb4a0a_Minimal_Aircraft_Cockpit_Detail_in_Silver_Tones%201.avif" class="layered-slider__bg-img"></div>
+            <div data-layered-slider-bg class="layered-slider__bg-item"><img src="https://cdn.prod.website-files.com/6a3bc96f083881db3c94dcc9/6a3bca4864384c3e2dcceab2_Sprinter_in_Motion%2C_Minimal_Studio_Silhouette%20(1)%201.avif" class="layered-slider__bg-img"></div>
+            <div data-layered-slider-bg class="layered-slider__bg-item"><img src="https://cdn.prod.website-files.com/6a3bc96f083881db3c94dcc9/6a3bca48da64712e3ab84f4a_Golden_Hour_Herd_of_Highland_Cattle%201.avif" class="layered-slider__bg-img"></div>
+          </div>
+        </div>
+        <div class="layered-slider__bg-dark"></div>
+        <div class="layered-slider__text-collection">
+          <div class="layered-slider__text-list">
+            <div data-layered-slider-title class="layered-slider__text-item"><a href="#" class="layered-slider__text-title">Dream Yachts</a></div>
+            <div data-layered-slider-title class="layered-slider__text-item"><a href="#" class="layered-slider__text-title">Expedia</a></div>
+            <div data-layered-slider-title class="layered-slider__text-item"><a href="#" class="layered-slider__text-title">Rimowa</a></div>
+            <div data-layered-slider-title class="layered-slider__text-item"><a href="#" class="layered-slider__text-title">Nike F/W '25</a></div>
+            <div data-layered-slider-title class="layered-slider__text-item"><a href="#" class="layered-slider__text-title">National Geographic</a></div>
+          </div>
+        </div>
+        <div data-layered-slider-mask class="layered-slider__mask-collection">
+          <div class="layered-slider__mask-list">
+            <div data-layered-slider-mask-item class="layered-slider__mask-item"><img src="https://cdn.prod.website-files.com/6a3bc96f083881db3c94dcc9/6a3bca4839182129f51c4236_Woman_Swimming_Beside_Sunlit_Yacht_Deck%201.avif" draggable="false" class="layered-slider__mask-img"></div>
+            <div data-layered-slider-mask-item class="layered-slider__mask-item"><img src="https://cdn.prod.website-files.com/6a3bc96f083881db3c94dcc9/6a3bca483d85d9fe88cd11f9_Sunlit_Travel_Still_Life_with_Scarf%2C_Postcard_and_Lime_Soda%201.avif" draggable="false" class="layered-slider__mask-img"></div>
+            <div data-layered-slider-mask-item class="layered-slider__mask-item"><img src="https://cdn.prod.website-files.com/6a3bc96f083881db3c94dcc9/6a3bca49163e1af4bc2b17e3_Minimal_Black_Hard-Shell_Carry-On_Suitcase%201.avif" draggable="false" class="layered-slider__mask-img"></div>
+            <div data-layered-slider-mask-item class="layered-slider__mask-item"><img src="https://cdn.prod.website-files.com/6a3bc96f083881db3c94dcc9/6a3bca480dbfac6c8265eb05_Moody_Side-Profile_Portrait_with_Black_Wraparound_Sunglasses%201.avif" draggable="false" class="layered-slider__mask-img"></div>
+            <div data-layered-slider-mask-item class="layered-slider__mask-item"><img src="https://cdn.prod.website-files.com/6a3bc96f083881db3c94dcc9/6a3bca48a56db91810a63e77_Textured_Rock_Surface_with_Water_Reflection%201.avif" draggable="false" class="layered-slider__mask-img"></div>
+          </div>
+        </div>
+        <div class="layered-slider__overlay">
+          <div class="layered-slider__overlay-top">
+            <span data-layered-slider-current class="layered-slider__span">01</span>
+            <div class="layered-slider__progress"><div data-layered-slider-fill class="layered-slider__progress-inner"></div></div>
+            <span data-layered-slider-total class="layered-slider__span">05</span>
+          </div>
+          <div class="layered-slider__overlay-btm">
+            <div class="layered-slider__nav">
+              <button data-layered-slider-prev class="layered-slider__nav-button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="100%" class="layered-slider__nav-icon"><path d="M15 6l-6 6 6 6"></path></svg></button>
+              <button data-layered-slider-next class="layered-slider__nav-button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="100%" class="layered-slider__nav-icon"><path d="M9 6l6 6-6 6"></path></svg></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/Observer.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/CustomEase.min.js"></script>
+  <script>
+    function initLayeredImageSlider() {
+      gsap.registerPlugin(Observer, CustomEase);
+      CustomEase.create("osmo", "M0,0 C0.625,0.05 0,1 1,1");
+      document.querySelectorAll("[data-layered-slider-init]").forEach((root) => {
+        if (root._layeredSlider) root._layeredSlider.destroy();
+        const titles = [...root.querySelectorAll("[data-layered-slider-title]")];
+        if (!titles.length) return;
+        const count = titles.length;
+        const backgrounds = [...root.querySelectorAll("[data-layered-slider-bg]")];
+        const maskItems = [...root.querySelectorAll("[data-layered-slider-mask-item]")];
+        const maskFrame = root.querySelector("[data-layered-slider-mask]");
+        const fill = root.querySelector("[data-layered-slider-fill]");
+        const currentEl = root.querySelector("[data-layered-slider-current]");
+        const totalEl = root.querySelector("[data-layered-slider-total]");
+        const prevBtn = root.querySelector("[data-layered-slider-prev]");
+        const nextBtn = root.querySelector("[data-layered-slider-next]");
+        const controls = [...new Set([...titles, ...root.querySelectorAll("a, button")])];
+        const autoplayAttr = root.getAttribute("data-layered-slider-autoplay");
+        const autoplay = autoplayAttr !== null ? parseFloat(autoplayAttr) : 5;
+        const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const clamp = gsap.utils.clamp;
+        const wrap = (distance) => distance - count * Math.round(distance / count);
+        const transitionDuration = 1; const backgroundZoom = 0; const titleGap = 0.5; const titleSpacing = 40;
+        if (totalEl) totalEl.textContent = String(count).padStart(2, "0");
+        let titleStep = 0; let maskStep = 0;
+        const measure = () => { const widestTitle = Math.max(...titles.map((t) => t.offsetWidth)); titleStep = Math.max(root.clientWidth * titleGap, widestTitle + titleSpacing); maskStep = maskFrame ? maskFrame.clientWidth : root.clientWidth; };
+        measure();
+        const state = { progress: 0 }; let activeIndex = -1;
+        const setActive = (prev, idx) => { [backgrounds, titles, maskItems].forEach((list) => { if (prev >= 0 && list[prev]) list[prev].removeAttribute("data-active"); if (list[idx]) list[idx].setAttribute("data-active", ""); }); };
+        const render = (progress) => {
+          const centeredIndex = ((Math.round(progress) % count) + count) % count;
+          for (let i = 0; i < count; i++) {
+            const offset = wrap(i - progress); const distance = Math.abs(offset);
+            const bg = backgrounds[i];
+            if (bg) { const op = clamp(0, 1, 1 - distance); gsap.set(bg, { opacity: op, scale: 1 + backgroundZoom - backgroundZoom * op, zIndex: Math.round(op * 100) }); }
+            gsap.set(titles[i], { x: offset * titleStep, opacity: i === centeredIndex ? 1 : 0.4, pointerEvents: "auto" });
+            const mi = maskItems[i]; if (mi) gsap.set(mi, { x: offset * maskStep });
+          }
+          if (centeredIndex !== activeIndex) { const prev = activeIndex; activeIndex = centeredIndex; setActive(prev, centeredIndex); if (currentEl) currentEl.textContent = String(centeredIndex + 1).padStart(2, "0"); }
+        };
+        let hovering = 0; let autoTween = null;
+        const startAutoplay = () => { if (!autoTween) return; autoTween.restart(); if (hovering > 0) autoTween.pause(); };
+        let slideTween = null; let current = 0;
+        function goTo(delta) { current += delta; if (slideTween) slideTween.kill(); slideTween = gsap.to(state, { progress: current, duration: reduced ? 0 : transitionDuration, ease: "osmo", onUpdate: () => render(state.progress) }); startAutoplay(); }
+        function goToIndex(i) { const delta = wrap(i - current); if (delta !== 0) goTo(delta); }
+        if (autoplay > 0 && !reduced && fill) { gsap.set(fill, { scaleX: 0, transformOrigin: "left center" }); autoTween = gsap.to(fill, { scaleX: 1, duration: autoplay, ease: "none", paused: true, onComplete: () => goTo(1) }); }
+        let gestureUsed = false;
+        const observer = Observer.create({ target: root, type: "touch,pointer", dragMinimum: 10, tolerance: 25, lockAxis: true, onDragStart() { gestureUsed = false; }, onLeft() { if (!gestureUsed) { gestureUsed = true; goTo(1); } }, onRight() { if (!gestureUsed) { gestureUsed = true; goTo(-1); } } });
+        const onPrev = () => goTo(-1); const onNext = () => goTo(1);
+        if (prevBtn) prevBtn.addEventListener("click", onPrev);
+        if (nextBtn) nextBtn.addEventListener("click", onNext);
+        const onTitleClick = (e) => { const i = titles.indexOf(e.currentTarget); if (i === activeIndex) return; e.preventDefault(); goToIndex(i); };
+        titles.forEach((t) => t.addEventListener("click", onTitleClick));
+        const onEnter = () => { hovering++; if (autoTween) autoTween.pause(); };
+        const onLeave = () => { hovering = Math.max(0, hovering - 1); if (autoTween && hovering === 0) autoTween.resume(); };
+        controls.forEach((el) => { el.addEventListener("pointerenter", onEnter); el.addEventListener("pointerleave", onLeave); });
+        const onResize = () => { measure(); render(state.progress); };
+        window.addEventListener("resize", onResize);
+        if (document.fonts) document.fonts.ready.then(onResize);
+        render(0); startAutoplay();
+        root._layeredSlider = { goTo, destroy() { observer.kill(); if (slideTween) slideTween.kill(); if (autoTween) autoTween.kill(); window.removeEventListener("resize", onResize); if (prevBtn) prevBtn.removeEventListener("click", onPrev); if (nextBtn) nextBtn.removeEventListener("click", onNext); titles.forEach((t) => t.removeEventListener("click", onTitleClick)); controls.forEach((el) => { el.removeEventListener("pointerenter", onEnter); el.removeEventListener("pointerleave", onLeave); }); root._layeredSlider = null; } };
+      });
+    }
+    document.addEventListener("DOMContentLoaded", () => { initLayeredImageSlider(); });
+  </script>
+</body>
+</html>
