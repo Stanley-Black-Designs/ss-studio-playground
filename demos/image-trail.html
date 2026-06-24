@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rotating Image Trail — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0c0d10; font-family: 'Inter', sans-serif; height: 100dvh; overflow: hidden; }
+    .demo-stage { padding-top: 50px; height: 100dvh; display: flex; align-items: center; justify-content: center; }
+    .hint { color: rgba(240,240,242,0.35); font-size: 14px; letter-spacing: 0.05em; text-transform: uppercase; pointer-events: none; user-select: none; }
+    [data-trail-area] { width: 100%; height: 100%; position: absolute; inset: 0; }
+    .rotating-image-trail__collection { opacity: 0; pointer-events: none; }
+    .rotating-image-trail__list { display: flex; flex-wrap: wrap; gap: 1em; }
+    .rotating-image-trail__item { z-index: 10; pointer-events: none; user-select: none; -webkit-user-select: none; }
+    .rotating-image-trail__card { aspect-ratio: 3/4; width: 10vw; position: relative; }
+    .rotating-image-trail__card-img { object-fit: cover; width: 100%; height: 100%; display: block; position: absolute; top: 0; left: 0; }
+    [data-trail-item="hidden"] { transform: translate(-50%,-50%) scale(0) rotate(-20deg); position: absolute; }
+    [data-trail-item="visible"] { transform: translate(-50%,-50%) scale(1) rotate(0.001deg); transition: transform 0.4s cubic-bezier(0.625,0.05,0,1); position: absolute; }
+    [data-trail-item="transition-out"] { transform: translate(-50%,-50%) scale(0) rotate(180deg); transition: transform 0.8s cubic-bezier(0.625,0,0.875,0); position: absolute; }
+  </style>
+</head>
+<body>
+  <div class="demo-chrome">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <div class="demo-chrome__sep"></div><span class="demo-chrome__title">Rotating Image Trail</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+  <div class="demo-stage">
+    <p class="hint">Move your cursor around</p>
+    <div data-trail-area="" class="rotating-image-trail">
+      <div data-trail-collection="" class="rotating-image-trail__collection">
+        <div class="rotating-image-trail__list">
+          <div data-trail-item="" class="rotating-image-trail__item"><div class="rotating-image-trail__card"><img src="https://cdn.prod.website-files.com/6932993a27f964dfe176d82d/6932ce8da6d03b0b3e124448_QmdGkQSqqBC5iYSaebPsFoaSWtjhaMQNWpVnWoGJeATp2h.avif" loading="eager" alt="" class="rotating-image-trail__card-img"></div></div>
+          <div data-trail-item="" class="rotating-image-trail__item"><div class="rotating-image-trail__card"><img src="https://cdn.prod.website-files.com/6932993a27f964dfe176d82d/6932ce8d31f5065ad1b56f28_QmdGkQSqqBC5iYSaebPsFoaSWtjhaMQNWpVnWoGJeATp2h-1.avif" loading="eager" alt="" class="rotating-image-trail__card-img"></div></div>
+          <div data-trail-item="" class="rotating-image-trail__item"><div class="rotating-image-trail__card"><img src="https://cdn.prod.website-files.com/6932993a27f964dfe176d82d/6932ce8db16589054bdbb90c_QmdGkQSqqBC5iYSaebPsFoaSWtjhaMQNWpVnWoGJeATp2h-2.avif" loading="eager" alt="" class="rotating-image-trail__card-img"></div></div>
+          <div data-trail-item="" class="rotating-image-trail__item"><div class="rotating-image-trail__card"><img src="https://cdn.prod.website-files.com/6932993a27f964dfe176d82d/6932ce8df30cf8d00c003f71_QmdGkQSqqBC5iYSaebPsFoaSWtjhaMQNWpVnWoGJeATp2h-3.avif" loading="eager" alt="" class="rotating-image-trail__card-img"></div></div>
+          <div data-trail-item="" class="rotating-image-trail__item"><div class="rotating-image-trail__card"><img src="https://cdn.prod.website-files.com/6932993a27f964dfe176d82d/6932ce8d93dc505b20189674_QmdGkQSqqBC5iYSaebPsFoaSWtjhaMQNWpVnWoGJeATp2h-4.avif" loading="eager" alt="" class="rotating-image-trail__card-img"></div></div>
+          <div data-trail-item="" class="rotating-image-trail__item"><div class="rotating-image-trail__card"><img src="https://cdn.prod.website-files.com/6932993a27f964dfe176d82d/6932ce8dbae50223e708bd7d_QmdGkQSqqBC5iYSaebPsFoaSWtjhaMQNWpVnWoGJeATp2h-5.avif" loading="eager" alt="" class="rotating-image-trail__card-img"></div></div>
+          <div data-trail-item="" class="rotating-image-trail__item"><div class="rotating-image-trail__card"><img src="https://cdn.prod.website-files.com/6932993a27f964dfe176d82d/6932ce8d771505aebebe7fc5_QmdGkQSqqBC5iYSaebPsFoaSWtjhaMQNWpVnWoGJeATp2h-6.avif" loading="eager" alt="" class="rotating-image-trail__card-img"></div></div>
+          <div data-trail-item="" class="rotating-image-trail__item"><div class="rotating-image-trail__card"><img src="https://cdn.prod.website-files.com/6932993a27f964dfe176d82d/6932ce8df133e02803a28424_QmdGkQSqqBC5iYSaebPsFoaSWtjhaMQNWpVnWoGJeATp2h-7.avif" loading="eager" alt="" class="rotating-image-trail__card-img"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function initRotatingImageTrail(){var area=document.querySelector("[data-trail-area]");if(!area)return;var collection=area.querySelector("[data-trail-collection]");if(!collection)return;var items=collection.querySelectorAll("[data-trail-item]");if(!items.length)return;var index=0,lastCloneX=null,lastCloneY=null;var cardWidth=items[0].getBoundingClientRect().width;var stepDistance=cardWidth*0.5;function spawnTrailItem(x,y){var original=items[index];var clone=original.cloneNode(true);clone.style.left=x+"px";clone.style.top=y+"px";clone.setAttribute("data-trail-item","hidden");area.appendChild(clone);void clone.getBoundingClientRect();clone.setAttribute("data-trail-item","visible");setTimeout(function(){clone.setAttribute("data-trail-item","transition-out");},400);setTimeout(function(){clone.remove();},1200);index=(index+1)%items.length;lastCloneX=x;lastCloneY=y;}
+    area.addEventListener("mousemove",function(event){var rect=area.getBoundingClientRect();var x=event.clientX-rect.left;var y=event.clientY-rect.top;if(x<0||y<0||x>rect.width||y>rect.height){lastCloneX=null;lastCloneY=null;return;}if(lastCloneX===null||lastCloneY===null){spawnTrailItem(x,y);return;}var dx=x-lastCloneX,dy=y-lastCloneY,distance=Math.sqrt(dx*dx+dy*dy);if(distance>=stepDistance){spawnTrailItem(x,y);}});}
+    document.addEventListener("DOMContentLoaded",function(){initRotatingImageTrail();});
+  </script>
+</body>
+</html>

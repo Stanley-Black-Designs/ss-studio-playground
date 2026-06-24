@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Big Typo Scroll Preview — Stanley Smith Studios</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.2.3/dist/lenis.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #c9ccc5; font-family: 'Inter', sans-serif; padding-top: 50px; }
+    .typo-scroll { color: #2b2b2b; background-color: #c9ccc5; width: 100vw; position: relative; overflow: clip; }
+    .typo-scroll__collection { flex-flow: column; align-items: center; width: 100%; height: 100%; display: flex; }
+    .typo-scroll__list { flex-flow: column; width: 100%; display: flex; }
+    .typo-scroll__item { width: 100%; }
+    .typo-scroll__link { color: inherit; justify-content: center; width: 100%; text-decoration: none; display: flex; }
+    .typo-scroll__h { text-align: center; letter-spacing: -.05em; text-transform: uppercase; white-space: nowrap; margin: 0; font-size: 7.5vw; line-height: .9; }
+    [data-typo-scroll-item="active"] .typo-scroll__h { z-index: 2; color: #6B6B6B; mix-blend-mode: difference; }
+    .typo-scroll__media { aspect-ratio: 3/4; pointer-events: none; width: 17.5vw; position: fixed; top: 50%; left: 50%; overflow: hidden; transform: translate(-50%,-50%); --po: 1.5em; transition: clip-path 1.2s cubic-bezier(0.16,1,0.3,1); clip-path: polygon(calc(0% + var(--po)) calc(0% + var(--po)),calc(100% - var(--po)) calc(0% + var(--po)),calc(100% - var(--po)) calc(100% - var(--po)),calc(0% + var(--po)) calc(100% - var(--po))); opacity: 0; }
+    [data-typo-scroll-item="active"] .typo-scroll__media { clip-path: polygon(0% 0%,100% 0%,100% 100%,0% 100%); opacity: 1; }
+    .typo-scroll__media.is--3-2 { aspect-ratio: 3/2; width: 25vw; }
+    .typo-scroll__media.is--2-3 { aspect-ratio: 2/3; width: 16.5vw; }
+    .typo-scroll__media.is--1-1 { aspect-ratio: 1; width: 20vw; }
+    .typo-scroll__img { object-fit: cover; width: 100%; height: 100%; max-height: 100%; }
+    .typo-scroll__p { backdrop-filter: blur(1em); -webkit-backdrop-filter: blur(1em); color: #f4f4f4; text-align: center; white-space: nowrap; background-color: rgba(32,29,29,0.2); margin-bottom: 0; padding: .25em; font-family: monospace; font-size: .75em; position: absolute; bottom: 2em; left: 50%; transform: translate(-50%); }
+    @media (max-width:991px){ .typo-scroll__h { font-size: 11vw; } .typo-scroll__media { width: 52.5vw; } .typo-scroll__media.is--3-2 { width: 75vw; } .typo-scroll__media.is--2-3 { width: 49.5vw; } .typo-scroll__media.is--1-1 { width: 60vw; } }
+    @media (hover:none) and (pointer:coarse){ [data-typo-scroll-item="active"] .typo-scroll__media { pointer-events: all; } }
+  </style>
+</head>
+<body>
+  <div class="demo-chrome">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <div class="demo-chrome__sep"></div><span class="demo-chrome__title">Big Typo Scroll Preview (Infinite)</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+  <section data-typo-scroll-init="" data-typo-scroll-infinite="true" class="typo-scroll">
+    <div class="typo-scroll__collection">
+      <div data-typo-scroll-list="" class="typo-scroll__list">
+        <div data-typo-scroll-item="" class="typo-scroll__item"><a href="#" class="typo-scroll__link"><h3 class="typo-scroll__h">OSMO SUPPLY</h3><div class="typo-scroll__media"><img src="https://cdn.prod.website-files.com/693a7f8f14a0becb25db9e8f/693a879acaa2379a19c9dbc1_image%2026.avif" loading="lazy" alt="" class="typo-scroll__img"><p class="typo-scroll__p">[ OPEN CASE ]</p></div></a></div>
+        <div data-typo-scroll-item="" class="typo-scroll__item"><a href="#" class="typo-scroll__link"><h3 class="typo-scroll__h">Mara Lynt</h3><div class="typo-scroll__media is--3-2"><img src="https://cdn.prod.website-files.com/693a7f8f14a0becb25db9e8f/693a879a40b0a52832601f51_image%2017.avif" loading="lazy" alt="" class="typo-scroll__img"><p class="typo-scroll__p">[ OPEN CASE ]</p></div></a></div>
+        <div data-typo-scroll-item="" class="typo-scroll__item"><a href="#" class="typo-scroll__link"><h3 class="typo-scroll__h">Kavirö</h3><div class="typo-scroll__media is--2-3"><img src="https://cdn.prod.website-files.com/693a7f8f14a0becb25db9e8f/693a879a6755543b199a941a_image%2021.avif" loading="lazy" alt="" class="typo-scroll__img"><p class="typo-scroll__p">[ OPEN CASE ]</p></div></a></div>
+        <div data-typo-scroll-item="" class="typo-scroll__item"><a href="#" class="typo-scroll__link"><h3 class="typo-scroll__h">Solara Works</h3><div class="typo-scroll__media is--1-1"><img src="https://cdn.prod.website-files.com/693a7f8f14a0becb25db9e8f/693a8799fb46f896d7c81f9b_image%2030.avif" loading="lazy" alt="" class="typo-scroll__img"><p class="typo-scroll__p">[ OPEN CASE ]</p></div></a></div>
+      </div>
+    </div>
+  </section>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.2.3/dist/lenis.min.js"></script>
+  <script>
+    var lenis=null;
+    function initTypoScrollPreview(){var containers=document.querySelectorAll('[data-typo-scroll-init]');if(!containers.length)return;var hasInfinite=false;containers.forEach(function(container){var isInfinite=container.getAttribute('data-typo-scroll-infinite')==='true';if(isInfinite){hasInfinite=true;var list=container.querySelector('[data-typo-scroll-list]');if(list){var clone=list.cloneNode(true);clone.style.overflow='hidden';clone.style.height='100dvh';container.appendChild(clone);}}});lenis=new Lenis({autoRaf:true,infinite:hasInfinite,syncTouch:hasInfinite});if('fonts' in document&&document.fonts.ready){document.fonts.ready.then(function(){if(lenis)lenis.resize();});}var isTouchDevice=('ontouchstart' in window)||(navigator.maxTouchPoints>0)||(navigator.msMaxTouchPoints>0);if(isTouchDevice){function updateActiveItems(){var viewportCenterY=window.innerHeight/2;containers.forEach(function(container){var items=container.querySelectorAll('[data-typo-scroll-item]');if(!items.length)return;var containerRect=container.getBoundingClientRect();if(viewportCenterY<containerRect.top||viewportCenterY>containerRect.bottom){items.forEach(function(item){item.setAttribute('data-typo-scroll-item','');});return;}var closestItem=null,closestDistance=Infinity;items.forEach(function(item){var rect=item.getBoundingClientRect();if(rect.bottom<0||rect.top>window.innerHeight)return;var itemCenterY=rect.top+rect.height/2;var distance=Math.abs(viewportCenterY-itemCenterY);if(distance<closestDistance){closestDistance=distance;closestItem=item;}});if(!closestItem){items.forEach(function(item){item.setAttribute('data-typo-scroll-item','');});return;}items.forEach(function(item){item.setAttribute('data-typo-scroll-item',item===closestItem?'active':'');});});requestAnimationFrame(updateActiveItems);}requestAnimationFrame(updateActiveItems);}else{containers.forEach(function(container){var items=container.querySelectorAll('[data-typo-scroll-item]');if(!items.length)return;function setActive(target){items.forEach(function(item){item.setAttribute('data-typo-scroll-item',item===target?'active':'');});}function clearActive(){items.forEach(function(item){item.setAttribute('data-typo-scroll-item','');});}items.forEach(function(item){item.addEventListener('mouseenter',function(){setActive(item);});});container.addEventListener('mouseleave',function(){clearActive();});});}}
+    document.addEventListener('DOMContentLoaded',function(){initTypoScrollPreview();});
+  </script>
+</body>
+</html>

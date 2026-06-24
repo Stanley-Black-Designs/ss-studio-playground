@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image to Background Zoom — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #353d35; font-family: 'Inter', sans-serif; }
+    .background-zoom { color: #f4f4f4; background-color: #353d35; flex-flow: column; justify-content: center; align-items: center; min-height: 100svh; padding-top: calc(50dvh - 15em); padding-left: 1em; padding-right: 1em; display: flex; overflow: clip; }
+    .background-zoom__h { text-align: center; letter-spacing: -.04em; max-width: 7em; margin-top: 0; margin-bottom: -.375em; font-family: 'Inter', sans-serif; font-size: 7.5em; font-weight: 400; line-height: .95; }
+    .background-zoom__h.is--margin-top { margin-top: 33dvh; }
+    .background-zoom__h1-span { color: #aba994; }
+    .background-zoom__start { aspect-ratio: 1; border-radius: 16em; width: 16em; position: relative; }
+    .background-zoom__content { border-radius: inherit; will-change: width,height,transform; background-color: #aba994; width: 100%; height: 100%; position: absolute; top: 0; left: 0; overflow: hidden; }
+    .background-zoom__img { object-fit: cover; width: 100%; height: 100%; position: absolute; }
+    .background-zoom__pod { color: #ff4800; text-align: center; letter-spacing: -.02em; width: 100%; font-size: 1.25em; font-weight: 900; line-height: 1; position: absolute; top: 1.25em; }
+    .background-zoom__play { width: 4em; height: 4em; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+    .background-zoom__play-svg { width: 100%; }
+    .background-zoom__dark { opacity: 0; background-color: #0d0f0d; width: 100%; height: 100%; position: absolute; top: 0; left: 0; }
+    .background-zoom__end { width: 100vw; height: 100dvh; }
+    .background-zoom__text { gap: 2em; flex-flow: column; align-items: center; width: 100%; padding-bottom: calc(50dvh - 12em); display: flex; position: relative; }
+    .background-zoom-after { color: #353d35; background-color: #f4f4f4; justify-content: center; align-items: center; width: 100%; min-height: 100dvh; padding: 1em; display: flex; position: relative; }
+    .background-zoom-after__pod { color: #ff4800; text-align: center; letter-spacing: -.02em; width: 100%; font-size: 1.25em; font-weight: 900; line-height: 1; position: absolute; bottom: 1.25em; }
+    @media (max-width:767px){ .background-zoom__h { font-size: 3.75em; } }
+    /* push content below chrome bar */
+    body { padding-top: 50px; }
+  </style>
+</head>
+<body>
+  <div class="demo-chrome">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <div class="demo-chrome__sep"></div><span class="demo-chrome__title">Image to Background (Zoom)</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+  <section data-bg-zoom-init="" class="background-zoom">
+    <div class="background-zoom__title"><h1 class="background-zoom__h">Image to Background<span class="background-zoom__h1-span"> (Zoom)</span></h1></div>
+    <div data-bg-zoom-start="" class="background-zoom__start">
+      <div data-bg-zoom-content="" class="background-zoom__content">
+        <img width="1440" data-bg-zoom-img="" alt="" src="https://cdn.prod.website-files.com/6943c8b7a3a82b904e7497bd/6943c8e062a0c0a68d04e6c1_futuristic-pod-vehicle.avif" loading="lazy" class="background-zoom__img">
+        <p class="background-zoom__pod">PØDRICK</p>
+        <div class="background-zoom__play"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 66 66" fill="none" class="background-zoom__play-svg"><circle cx="33" cy="33" r="33" fill="#F4F4F4"></circle><path d="M25.5 33V26.0785C25.5 24.1544 27.5826 22.9515 29.2493 23.9131L35.25 27.375L41.2465 30.8345C42.9141 31.7966 42.9141 34.2034 41.2465 35.1655L35.25 38.625L29.2493 42.0869C27.5826 43.0485 25.5 41.8456 25.5 39.9215V33Z" fill="#201D1D"></path></svg></div>
+        <div data-bg-zoom-dark="" class="background-zoom__dark"></div>
+      </div>
+    </div>
+    <div data-bg-zoom-end="" class="background-zoom__end"></div>
+    <div class="background-zoom__text">
+      <h2 class="background-zoom__h">This is the after phase of the <br><span class="background-zoom__h1-span">(Zoom)</span></h2>
+      <h2 class="background-zoom__h is--margin-top">more...</h2>
+      <h2 class="background-zoom__h is--margin-top">and more!</h2>
+    </div>
+  </section>
+  <section class="background-zoom-after">
+    <p class="background-zoom-after__pod">PØDRICK</p>
+    <h2 class="background-zoom__h">And we reached the end!</h2>
+  </section>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/Flip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger,Flip);
+    function initBackgroundZoom(){const containers=document.querySelectorAll("[data-bg-zoom-init]");if(!containers.length)return;let masterTimeline;const getScrollRange=({trigger,start,endTrigger,end})=>{const st=ScrollTrigger.create({trigger,start,endTrigger,end});const range=Math.max(1,st.end-st.start);st.kill();return range;};const bgZoomTimeline=()=>{if(masterTimeline)masterTimeline.kill();masterTimeline=gsap.timeline({defaults:{ease:"none"},scrollTrigger:{trigger:containers[0].querySelector("[data-bg-zoom-start]")||containers[0],start:"clamp(top bottom)",endTrigger:containers[containers.length-1],end:"bottom top",scrub:true,invalidateOnRefresh:true}});containers.forEach((container)=>{const startEl=container.querySelector("[data-bg-zoom-start]");const endEl=container.querySelector("[data-bg-zoom-end]");const contentEl=container.querySelector("[data-bg-zoom-content]");const darkEl=container.querySelector("[data-bg-zoom-dark]");const imgEl=container.querySelector("[data-bg-zoom-img]");if(!startEl||!endEl||!contentEl)return;const startRadius=getComputedStyle(startEl).borderRadius;const endRadius=getComputedStyle(endEl).borderRadius;const hasRadius=startRadius!=="0px"||endRadius!=="0px";contentEl.style.overflow=hasRadius?"hidden":"";if(hasRadius)gsap.set(contentEl,{borderRadius:startRadius});Flip.fit(contentEl,startEl,{scale:false});const zoomScrollRange=getScrollRange({trigger:startEl,start:"clamp(top bottom)",endTrigger:endEl,end:"center center"});const afterScrollRange=getScrollRange({trigger:endEl,start:"center center",endTrigger:container,end:"bottom top"});masterTimeline.add(Flip.fit(contentEl,endEl,{duration:zoomScrollRange,ease:"none",scale:false}));if(hasRadius){masterTimeline.to(contentEl,{borderRadius:endRadius,duration:zoomScrollRange},"<");}masterTimeline.to(contentEl,{y:`+=${afterScrollRange}`,duration:afterScrollRange});if(darkEl){gsap.set(darkEl,{opacity:0});masterTimeline.to(darkEl,{opacity:0.75,duration:afterScrollRange*0.25},"<");}if(imgEl){gsap.set(imgEl,{scale:1,transformOrigin:"50% 50%"});masterTimeline.to(imgEl,{scale:1.25,yPercent:-10,duration:afterScrollRange},"<");}});ScrollTrigger.refresh();};bgZoomTimeline();let resizeTimer;window.addEventListener("resize",()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(bgZoomTimeline,100);});}
+    document.addEventListener('DOMContentLoaded',function(){initBackgroundZoom();});
+  </script>
+</body>
+</html>

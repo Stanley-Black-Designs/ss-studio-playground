@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stacking Cards Parallax — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0c0d10; font-family: 'Inter', sans-serif; padding-top: 50px; }
+    .stacking-cards__collection { width: 100%; }
+    .stacking-cards__list { flex-flow: column; display: flex; }
+    .stacking-cards__item { color: #fff; border-top-left-radius: 1em; border-top-right-radius: 1em; flex-flow: column; justify-content: center; align-items: center; width: 100%; min-height: 100vh; margin-top: -1em; padding-top: 5em; padding-bottom: 5em; display: flex; position: relative; }
+    .stacking-cards__item.is--green { background-color: #1a261e; }
+    .stacking-cards__item.is--purple { background-color: #544a58; }
+    .stacking-cards__item.is--blue { background-color: #1a232e; }
+    .stacking-cards__item.is--brown { background-color: #62594c; }
+    .stacking-cards__item.is--red { background-color: #1f1715; }
+    .stacking-cards__item-h { text-align: center; text-transform: uppercase; margin: 0; font-size: 10vw; font-weight: 700; line-height: .8; }
+    .stacking-card__heading-faded { opacity: .5; }
+    .stacking-cards__item-img { aspect-ratio: 1; border-radius: .75em; width: 30vw; margin-top: -1vw; }
+    .stacking-cards__item-top { justify-content: space-between; align-items: center; display: flex; position: absolute; top: 2.5em; left: 2.5em; right: 2.5em; }
+    .stacking-card__top-span { font-size: 1em; font-weight: 500; }
+  </style>
+</head>
+<body>
+  <div class="demo-chrome">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <div class="demo-chrome__sep"></div><span class="demo-chrome__title">Stacking Cards Parallax</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+  <div class="stacking-cards__collection">
+    <div class="stacking-cards__list">
+      <div data-stacking-cards-item="" class="stacking-cards__item is--green"><h1 class="stacking-cards__item-h"><span class="stacking-card__heading-faded">emerald</span><br>new beginnings</h1><img src="https://cdn.prod.website-files.com/68a581f419b751517e3d40c0/68a58a5f107533572d9566ce_Glass%20and%20Marble%20Cube%20Composition.avif" data-stacking-cards-img="" class="stacking-cards__item-img"><div class="stacking-cards__item-top"><span class="stacking-card__top-span">Gemstones</span><span class="stacking-card__top-span">01 / 05</span></div></div>
+      <div data-stacking-cards-item="" class="stacking-cards__item is--purple"><h1 class="stacking-cards__item-h"><span class="stacking-card__heading-faded">amethyst</span><br>supports good health</h1><img src="https://cdn.prod.website-files.com/68a581f419b751517e3d40c0/68a58a5ff31697ad7106fc1d_Minimalist%20Stacked%20Cubes%20(1).avif" data-stacking-cards-img="" class="stacking-cards__item-img"><div class="stacking-cards__item-top"><span class="stacking-card__top-span">Gemstones</span><span class="stacking-card__top-span">02 / 05</span></div></div>
+      <div data-stacking-cards-item="" class="stacking-cards__item is--blue"><h1 class="stacking-cards__item-h"><span class="stacking-card__heading-faded">sapphire</span><br>wisdom &amp; learning</h1><img src="https://cdn.prod.website-files.com/68a581f419b751517e3d40c0/68a58a5fe3e373d4afe5f860_Stacked%20Cubes%20on%20Marble.avif" data-stacking-cards-img="" class="stacking-cards__item-img"><div class="stacking-cards__item-top"><span class="stacking-card__top-span">Gemstones</span><span class="stacking-card__top-span">03 / 05</span></div></div>
+      <div data-stacking-cards-item="" class="stacking-cards__item is--brown"><h1 class="stacking-cards__item-h"><span class="stacking-card__heading-faded">topaz</span><br>re-motivating</h1><img src="https://cdn.prod.website-files.com/68a581f419b751517e3d40c0/68a58a5f732de55938114f5f_Minimalist%20Stacked%20Cubes.avif" data-stacking-cards-img="" class="stacking-cards__item-img"><div class="stacking-cards__item-top"><span class="stacking-card__top-span">Gemstones</span><span class="stacking-card__top-span">04 / 05</span></div></div>
+      <div data-stacking-cards-item="" class="stacking-cards__item is--red"><h1 class="stacking-cards__item-h"><span class="stacking-card__heading-faded">rose quartz</span><br>peace and love</h1><img src="https://cdn.prod.website-files.com/68a581f419b751517e3d40c0/68a58a5ff1fd91f3ae23c706_Geometric%20Blocks%20Arrangement.avif" data-stacking-cards-img="" class="stacking-cards__item-img"><div class="stacking-cards__item-top"><span class="stacking-card__top-span">Gemstones</span><span class="stacking-card__top-span">05 / 05</span></div></div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+    function initStackingCardsParallax(){const cards=document.querySelectorAll("[data-stacking-cards-item]");if(cards.length<2)return;cards.forEach((card,i)=>{if(i===0)return;const previousCard=cards[i-1];if(!previousCard)return;const previousCardImage=previousCard.querySelector("[data-stacking-cards-img]");let tl=gsap.timeline({defaults:{ease:"none",duration:1},scrollTrigger:{trigger:card,start:"top bottom",end:"top top",scrub:true,invalidateOnRefresh:true}});tl.fromTo(previousCard,{yPercent:0},{yPercent:50}).fromTo(previousCardImage,{rotate:0,yPercent:0},{rotate:-5,yPercent:-25},"<");});}
+    document.addEventListener("DOMContentLoaded",()=>{initStackingCardsParallax();});
+  </script>
+</body>
+</html>
