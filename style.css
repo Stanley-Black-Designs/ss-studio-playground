@@ -65,8 +65,8 @@ img, video { display: block; max-width: 100%; }
 .btn-wrap--primary .btn-magnetic__text-p { color: #fff; }
 
 /* Ghost — visible border, proper text color */
-.btn-wrap--ghost .btn-magnetic__fill { background-color: transparent; border: 1.5px solid rgba(255,255,255,0.30); }
-.btn-wrap--ghost .btn-magnetic__click:hover .btn-magnetic__fill { background-color: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.55); }
+.btn-wrap--ghost .btn-magnetic__fill { background-color: transparent; border: 1.5px solid #3a3d45; }
+.btn-wrap--ghost .btn-magnetic__click:hover .btn-magnetic__fill { background-color: rgba(255,255,255,0.06); border-color: #555a66; }
 .btn-wrap--ghost .btn-magnetic__text-p { color: rgba(240,240,242,0.75); }
 .btn-wrap--ghost .btn-magnetic__click:hover .btn-magnetic__text-p { color: #fff; }
 
