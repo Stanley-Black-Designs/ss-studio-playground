@@ -7,11 +7,10 @@
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <!-- HEADER -->
   <header class="site-header">
     <div class="header-inner">
       <a href="https://stanleysmithstudios.com" class="logo" target="_blank" rel="noopener">
@@ -25,169 +24,158 @@
     </div>
   </header>
 
-  <!-- INTRO -->
   <section class="intro">
-    <div class="intro-inner">
-      <div class="intro-eyebrow">
-        <span class="eyebrow-dot"></span>
-        Motion & Interaction
+    <div class="intro-eyebrow"><span class="eyebrow-dot"></span>Motion & Interaction</div>
+    <h1 class="intro-headline">Built to move.<br><em>Designed to convert.</em></h1>
+    <p class="intro-body">A small taste of the motion and interaction work I build for clients. Hover each component to preview it — click to explore it in full.</p>
+    <div class="intro-actions">
+
+      <div class="btn-wrap" id="copyWrap">
+        <div class="btn-magnetic">
+          <a class="btn-magnetic__click" data-magnetic-strength="40" data-magnetic-strength-inner="20" style="cursor:pointer;">
+            <div class="btn-magnetic__fill"></div>
+            <div data-magnetic-inner-target="" class="btn-magnetic__content">
+              <div class="btn-magnetic__text">
+                <p class="btn-magnetic__text-p">
+                  <span class="copy-label" style="display:inline-flex;align-items:center;gap:7px;"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="4.5" width="8" height="9" rx="1" stroke="currentColor" stroke-width="1.4"/><path d="M4.5 4.5V3a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H11" stroke="currentColor" stroke-width="1.4"/></svg>Copy email</span>
+                  <span class="copy-confirm" style="display:none;align-items:center;gap:6px;"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Copied!</span>
+                </p>
+                <p class="btn-magnetic__text-p is--duplicate" aria-hidden="true"><span style="display:inline-flex;align-items:center;gap:7px;"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="4.5" width="8" height="9" rx="1" stroke="currentColor" stroke-width="1.4"/><path d="M4.5 4.5V3a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H11" stroke="currentColor" stroke-width="1.4"/></svg>Copy email</span></p>
+              </div>
+            </div>
+          </a>
+        </div>
       </div>
-      <h1 class="intro-headline">
-        Built to move.<br>
-        <em>Designed to convert.</em>
-      </h1>
-      <p class="intro-body">
-        A live sample of the interaction patterns and motion work I build for clients.
-        Each component below is production-ready — hover to preview, click to explore the full demo.
-      </p>
-      <div class="intro-actions">
-        <button class="btn btn--primary btn--copy" id="copyEmailBtn">
-          <span class="copy-label">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="4.5" width="8" height="9" rx="1" stroke="currentColor" stroke-width="1.4"/><path d="M4.5 4.5V3a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H11" stroke="currentColor" stroke-width="1.4"/></svg>
-            Copy email
-          </span>
-          <span class="copy-confirm">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Copied!
-          </span>
-        </button>
-        <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="btn btn--secondary">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="2.5" width="11" height="10" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M1.5 6h11M4.5 1v3M9.5 1v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-          Schedule a call
-        </a>
+
+      <div class="btn-wrap btn-wrap--ghost">
+        <div class="btn-magnetic">
+          <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="btn-magnetic__click" data-magnetic-strength="40" data-magnetic-strength-inner="20">
+            <div class="btn-magnetic__fill"></div>
+            <div data-magnetic-inner-target="" class="btn-magnetic__content">
+              <div class="btn-magnetic__text">
+                <p class="btn-magnetic__text-p" style="display:inline-flex;align-items:center;gap:7px;"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="2.5" width="11" height="10" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M1.5 6h11M4.5 1v3M9.5 1v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>Schedule a call</p>
+                <p class="btn-magnetic__text-p is--duplicate" aria-hidden="true" style="display:inline-flex;align-items:center;gap:7px;"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="2.5" width="11" height="10" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M1.5 6h11M4.5 1v3M9.5 1v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>Schedule a call</p>
+              </div>
+            </div>
+          </a>
+        </div>
       </div>
+
     </div>
     <div class="intro-rule"></div>
   </section>
 
-  <!-- SECTION LABEL -->
   <div class="section-label-row">
-    <span class="section-label">Motion Components</span>
-    <span class="section-label-count">4 demos</span>
+    <span class="section-label">Interaction Demos</span>
+    <span class="section-label-count">4 components</span>
   </div>
 
-  <!-- GRID -->
   <main class="playground-grid">
 
     <article class="pg-card" data-href="demos/radial-marquee.html">
       <div class="pg-card__media">
-        <img class="pg-card__thumb" src="radial-cards-marquee.avif" alt="Radial Cards Marquee preview" loading="eager">
-        <video class="pg-card__video" src="videos/radial-marquee.mp4" muted loop playsinline preload="none"></video>
-        <div class="pg-card__overlay">
-          <span class="pg-card__open-label">
-            Open demo
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5l7-7M4 2.5h5.5V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
-        </div>
-        <span class="pg-card__tag">CSS only</span>
+        <img class="pg-card__thumb" src="radial-cards-marquee.avif" alt="Radial Cards Marquee" loading="eager">
+        <video class="pg-card__video" src="videos/radial-marquee.mp4" muted loop playsinline preload="metadata"></video>
+        <div class="pg-card__overlay"><span class="pg-card__open-label">Open demo <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5l7-7M4 2.5h5.5V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
       </div>
       <div class="pg-card__info">
         <h2 class="pg-card__title">Radial Cards Marquee</h2>
-        <p class="pg-card__desc">Cards orbit in a continuous circle — pure CSS, no JavaScript required.</p>
-        <div class="pg-card__meta">
-          <span class="pg-card__tech">CSS Animation</span>
-          <span class="pg-card__tech">Marquee</span>
-        </div>
+        <p class="pg-card__desc">Cards orbit in a continuous circle — pure CSS, zero JavaScript.</p>
+        <div class="pg-card__meta"><span class="pg-card__tech">CSS Animation</span><span class="pg-card__tech">Marquee</span></div>
       </div>
     </article>
 
     <article class="pg-card" data-href="demos/3d-tornado.html">
       <div class="pg-card__media">
-        <img class="pg-card__thumb" src="3d-tornado.avif" alt="3D Cards Tornado preview" loading="eager">
-        <video class="pg-card__video" src="videos/3d-tornado.mp4" muted loop playsinline preload="none"></video>
-        <div class="pg-card__overlay">
-          <span class="pg-card__open-label">
-            Open demo
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5l7-7M4 2.5h5.5V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
-        </div>
+        <img class="pg-card__thumb" src="3d-tornado.avif" alt="3D Cards Tornado" loading="eager">
+        <video class="pg-card__video" src="videos/3d-tornado.mp4" muted loop playsinline preload="metadata"></video>
+        <div class="pg-card__overlay"><span class="pg-card__open-label">Open demo <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5l7-7M4 2.5h5.5V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
       </div>
       <div class="pg-card__info">
         <h2 class="pg-card__title">3D Cards Tornado</h2>
         <p class="pg-card__desc">Scroll or drag to spin a 3D card stack — depth, blur, and perspective all in sync.</p>
-        <div class="pg-card__meta">
-          <span class="pg-card__tech">GSAP</span>
-          <span class="pg-card__tech">3D / CSS Perspective</span>
-        </div>
+        <div class="pg-card__meta"><span class="pg-card__tech">GSAP</span><span class="pg-card__tech">3D Perspective</span></div>
       </div>
     </article>
 
     <article class="pg-card" data-href="demos/infinite-grid.html">
       <div class="pg-card__media">
-        <img class="pg-card__thumb" src="infinite-grid.avif" alt="Infinite Draggable Grid preview" loading="eager">
-        <video class="pg-card__video" src="videos/infinite-grid.mp4" muted loop playsinline preload="none"></video>
-        <div class="pg-card__overlay">
-          <span class="pg-card__open-label">
-            Open demo
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5l7-7M4 2.5h5.5V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
-        </div>
+        <img class="pg-card__thumb" src="infinite-grid.avif" alt="Infinite Draggable Grid" loading="eager">
+        <video class="pg-card__video" src="videos/infinite-grid.mp4" muted loop playsinline preload="metadata"></video>
+        <div class="pg-card__overlay"><span class="pg-card__open-label">Open demo <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5l7-7M4 2.5h5.5V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
       </div>
       <div class="pg-card__info">
         <h2 class="pg-card__title">Infinite Draggable Grid</h2>
-        <p class="pg-card__desc">A masonry image grid you can drag infinitely in any direction — smooth, looping, and responsive.</p>
-        <div class="pg-card__meta">
-          <span class="pg-card__tech">GSAP</span>
-          <span class="pg-card__tech">Observer</span>
-          <span class="pg-card__tech">Infinite Loop</span>
-        </div>
+        <p class="pg-card__desc">A masonry image grid you can drag infinitely in any direction — smooth, looping, responsive.</p>
+        <div class="pg-card__meta"><span class="pg-card__tech">GSAP</span><span class="pg-card__tech">Observer</span><span class="pg-card__tech">Infinite Loop</span></div>
       </div>
     </article>
 
     <article class="pg-card" data-href="demos/parallax-slider.html">
       <div class="pg-card__media">
-        <img class="pg-card__thumb" src="parallax-slider.avif" alt="Parallax Image Slider preview" loading="eager">
-        <video class="pg-card__video" src="videos/parallax-slider.mp4" muted loop playsinline preload="none"></video>
-        <div class="pg-card__overlay">
-          <span class="pg-card__open-label">
-            Open demo
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5l7-7M4 2.5h5.5V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
-        </div>
+        <img class="pg-card__thumb" src="parallax-slider.avif" alt="Parallax Image Slider" loading="eager">
+        <video class="pg-card__video" src="videos/parallax-slider.mp4" muted loop playsinline preload="metadata"></video>
+        <div class="pg-card__overlay"><span class="pg-card__open-label">Open demo <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5l7-7M4 2.5h5.5V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
       </div>
       <div class="pg-card__info">
         <h2 class="pg-card__title">Parallax Image Slider</h2>
-        <p class="pg-card__desc">A draggable slider where each image has an independent parallax layer for depth.</p>
-        <div class="pg-card__meta">
-          <span class="pg-card__tech">GSAP</span>
-          <span class="pg-card__tech">Smooothy</span>
-          <span class="pg-card__tech">Parallax</span>
-        </div>
+        <p class="pg-card__desc">A draggable slider where each image has its own parallax layer for depth.</p>
+        <div class="pg-card__meta"><span class="pg-card__tech">GSAP</span><span class="pg-card__tech">Smooothy</span><span class="pg-card__tech">Parallax</span></div>
       </div>
     </article>
 
   </main>
 
-  <!-- CTA BAND -->
   <section class="cta-band">
     <div class="cta-band__inner">
-      <p class="cta-band__label">Ready to build something like this?</p>
+      <p class="cta-band__label">Interested in working together?</p>
       <h2 class="cta-band__headline">Let's talk about your project.</h2>
       <div class="cta-band__actions">
-        <button class="btn btn--primary btn--large btn--copy" id="copyEmailBtn2">
-          <span class="copy-label">
-            <svg width="16" height="16" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="4.5" width="8" height="9" rx="1" stroke="currentColor" stroke-width="1.4"/><path d="M4.5 4.5V3a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H11" stroke="currentColor" stroke-width="1.4"/></svg>
-            Copy email
-          </span>
-          <span class="copy-confirm">
-            <svg width="16" height="16" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Copied!
-          </span>
-        </button>
-        <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="btn btn--secondary btn--large">
-          <svg width="16" height="16" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="2.5" width="11" height="10" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M1.5 6h11M4.5 1v3M9.5 1v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-          Schedule a call
-        </a>
+
+        <div class="btn-wrap" id="copyWrap2">
+          <div class="btn-magnetic">
+            <a class="btn-magnetic__click" data-magnetic-strength="40" data-magnetic-strength-inner="20" style="cursor:pointer;">
+              <div class="btn-magnetic__fill"></div>
+              <div data-magnetic-inner-target="" class="btn-magnetic__content">
+                <div class="btn-magnetic__text">
+                  <p class="btn-magnetic__text-p">
+                    <span class="copy-label" style="display:inline-flex;align-items:center;gap:7px;"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="4.5" width="8" height="9" rx="1" stroke="currentColor" stroke-width="1.4"/><path d="M4.5 4.5V3a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H11" stroke="currentColor" stroke-width="1.4"/></svg>Copy email</span>
+                    <span class="copy-confirm" style="display:none;align-items:center;gap:6px;"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Copied!</span>
+                  </p>
+                  <p class="btn-magnetic__text-p is--duplicate" aria-hidden="true"><span style="display:inline-flex;align-items:center;gap:7px;"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="4.5" width="8" height="9" rx="1" stroke="currentColor" stroke-width="1.4"/><path d="M4.5 4.5V3a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H11" stroke="currentColor" stroke-width="1.4"/></svg>Copy email</span></p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="btn-wrap btn-wrap--ghost">
+          <div class="btn-magnetic">
+            <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="btn-magnetic__click" data-magnetic-strength="40" data-magnetic-strength-inner="20">
+              <div class="btn-magnetic__fill"></div>
+              <div data-magnetic-inner-target="" class="btn-magnetic__content">
+                <div class="btn-magnetic__text">
+                  <p class="btn-magnetic__text-p" style="display:inline-flex;align-items:center;gap:7px;"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="2.5" width="11" height="10" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M1.5 6h11M4.5 1v3M9.5 1v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>Schedule a call</p>
+                  <p class="btn-magnetic__text-p is--duplicate" aria-hidden="true" style="display:inline-flex;align-items:center;gap:7px;"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="2.5" width="11" height="10" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M1.5 6h11M4.5 1v3M9.5 1v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>Schedule a call</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer class="site-footer">
     <span>© 2026 Stanley Smith Studios</span>
-    <span>Cape Town · South Africa</span>
+    <div class="footer-location">
+      <span>Cape Town · South Africa</span>
+      <span class="footer-time" id="cptTime"></span>
+    </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
   <script src="main.js"></script>
 </body>
 </html>
