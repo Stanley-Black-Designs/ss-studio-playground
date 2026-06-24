@@ -103,7 +103,7 @@ img, video { display: block; max-width: 100%; }
   background-clip: text;
 }
 
-.intro-body { font-family: var(--font-body); font-size: 16px; font-weight: 300; color: var(--text-secondary); line-height: 1.72; max-width: 480px; margin-bottom: 52px; }
+.intro-body { font-family: var(--font-body); font-size: 16px; font-weight: 300; color: var(--text-secondary); line-height: 1.72; max-width: 500px; margin-bottom: 52px; }
 .intro-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .intro-rule { margin-top: 80px; height: 1px; background: var(--border); }
 
