@@ -8,18 +8,44 @@
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     body{background:#f0f0f0;color:#201d1d;font-family:'Inter',sans-serif;padding-top:50px}
-    .cards-stack{padding-top:15dvh;padding-bottom:15dvh}
+
+    .section-label{display:flex;align-items:center;justify-content:center;padding:60px 2em 20px;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(32,29,29,0.4)}
+
+    /* ── Shared card styles ── */
     .container{max-width:90em;margin:0 auto;padding:0 2em}
+    .cards-stack{padding-top:5dvh;padding-bottom:15dvh}
     .cards-stack__list{gap:5em;flex-flow:column;justify-content:center;align-items:center;width:100%;display:flex}
     .cards-stack__item{flex:none;width:100%;max-width:25em;position:sticky;top:5em}
-    .cards-stack-card{aspect-ratio:2/3;background-color:#fff;border-radius:2em;flex-flow:column;justify-content:space-between;width:100%;padding:2.5em;display:flex}
+    .cards-stack__item.is--wide{max-width:60em}
+    .cards-stack-card{background-color:#fff;border-radius:2em;flex-flow:column;justify-content:space-between;width:100%;padding:2.5em;display:flex}
     .cards-stack-card.is--green{background-color:#b1ae91}
     .cards-stack-card.is--dark{color:#fff;background-color:#201d1d}
+    .cards-stack-card.is--blue{color:#fff;background-color:#0064E7}
     .cards-stack-card__number{font-size:6.75em;font-weight:500;line-height:.95}
     .cards-stack-card__h{letter-spacing:-.04em;margin:0;font-size:3.375em;font-weight:600;line-height:.95}
+    .cards-stack-card__h.is--l{font-size:4.5em}
     .cards-stack-card__services{flex-flow:column;justify-content:flex-end;min-height:11em;display:flex}
     .cards-stack-card__services-p{letter-spacing:-.01em;margin-bottom:0;font-size:1.125em;font-weight:500;line-height:1.4}
-    @media (max-width:767px){.cards-stack-card{font-size:.8em}}
+
+    /* Variant 1: portrait cards */
+    .cards-stack-card--portrait{aspect-ratio:2/3}
+
+    /* Variant 2: wide cards */
+    .cards-stack-card--wide{aspect-ratio:5/3}
+
+    /* divider between variants */
+    .variant-divider{height:1px;background:rgba(32,29,29,0.12);margin:0 2em}
+
+    @media (max-width:991px){
+      .cards-stack-card--wide{aspect-ratio:5/4}
+      .cards-stack__item.is--wide{max-width:25em}
+    }
+    @media (max-width:767px){
+      .cards-stack-card{font-size:.8em}
+      .cards-stack-card--wide{aspect-ratio:2/3}
+      .cards-stack-card__h.is--l{font-size:3.375em}
+      .section-label{padding-top:40px}
+    }
   </style>
 </head>
 <body>
@@ -30,24 +56,204 @@
     </div>
     <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
   </div>
-  <section data-stacking-cards-init="" data-stacking-cards-desktop="true" data-stacking-cards-tablet="true" data-stacking-cards-mobile="true" data-stacking-cards-desktop-x="-13.75em, 0em, 13em" data-stacking-cards-desktop-y="2.125em, 0em, 4.5em" data-stacking-cards-desktop-rotate="-5, 2, 6" class="cards-stack">
+
+  <!-- ── VARIANT 1: Portrait cards (offset stack) ── -->
+  <p class="section-label">Variant 1 — Offset Stack</p>
+  <section
+    data-stacking-cards-init=""
+    data-stacking-cards-desktop="true"
+    data-stacking-cards-tablet="true"
+    data-stacking-cards-mobile="true"
+    data-stacking-cards-desktop-x="-13.75em, 0em, 13em"
+    data-stacking-cards-desktop-y="2.125em, 0em, 4.5em"
+    data-stacking-cards-desktop-rotate="-5, 2, 6"
+    data-stacking-cards-tablet-x="-8em, 0em, 8em"
+    data-stacking-cards-tablet-y="1.5em, 0em, 3em"
+    data-stacking-cards-tablet-rotate="-4, 2, 5"
+    data-stacking-cards-mobile-x="0em, 0em, 0em"
+    data-stacking-cards-mobile-y="0em, 0em, 0em"
+    data-stacking-cards-mobile-rotate="-2, 1, 3"
+    class="cards-stack">
     <div class="container">
       <div class="cards-stack__collection">
         <div data-stacking-card-stack="" class="cards-stack__list">
-          <div data-slot-parent="" data-stacking-card="" class="cards-stack__item"><div data-stacking-card-target="" class="cards-stack-card"><div class="cards-stack-card__start"><span class="cards-stack-card__number">1.</span></div><div class="cards-stack-card__end"><h3 class="cards-stack-card__h">Web Design</h3><div class="cards-stack-card__services"><p class="cards-stack-card__services-p">UI/UX Design</p><p class="cards-stack-card__services-p">Motion & Interaction</p><p class="cards-stack-card__services-p">Webflow Development</p></div></div></div></div>
-          <div data-slot-parent="" data-stacking-card="" class="cards-stack__item"><div data-stacking-card-target="" class="cards-stack-card is--green"><div class="cards-stack-card__start"><span class="cards-stack-card__number">2.</span></div><div class="cards-stack-card__end"><h3 class="cards-stack-card__h">SEO & Growth</h3><div class="cards-stack-card__services"><p class="cards-stack-card__services-p">Technical SEO</p><p class="cards-stack-card__services-p">Content Strategy</p><p class="cards-stack-card__services-p">AEO / GEO</p></div></div></div></div>
-          <div data-slot-parent="" data-stacking-card="" class="cards-stack__item"><div data-stacking-card-target="" class="cards-stack-card is--dark"><div class="cards-stack-card__start"><span class="cards-stack-card__number">3.</span></div><div class="cards-stack-card__end"><h3 class="cards-stack-card__h">CRO & UX</h3><div class="cards-stack-card__services"><p class="cards-stack-card__services-p">Conversion Audits</p><p class="cards-stack-card__services-p">A/B Strategy</p><p class="cards-stack-card__services-p">User Flow Optimisation</p></div></div></div></div>
+          <div data-slot-parent="" data-stacking-card="" class="cards-stack__item">
+            <div data-stacking-card-target="" class="cards-stack-card cards-stack-card--portrait">
+              <div><span class="cards-stack-card__number">1.</span></div>
+              <div><h3 class="cards-stack-card__h">Web Design</h3><div class="cards-stack-card__services"><p class="cards-stack-card__services-p">UI/UX Design</p><p class="cards-stack-card__services-p">Motion & Interaction</p><p class="cards-stack-card__services-p">Webflow Development</p></div></div>
+            </div>
+          </div>
+          <div data-slot-parent="" data-stacking-card="" class="cards-stack__item">
+            <div data-stacking-card-target="" class="cards-stack-card cards-stack-card--portrait is--green">
+              <div><span class="cards-stack-card__number">2.</span></div>
+              <div><h3 class="cards-stack-card__h">SEO & Growth</h3><div class="cards-stack-card__services"><p class="cards-stack-card__services-p">Technical SEO</p><p class="cards-stack-card__services-p">Content Strategy</p><p class="cards-stack-card__services-p">AEO / GEO</p></div></div>
+            </div>
+          </div>
+          <div data-slot-parent="" data-stacking-card="" class="cards-stack__item">
+            <div data-stacking-card-target="" class="cards-stack-card cards-stack-card--portrait is--dark">
+              <div><span class="cards-stack-card__number">3.</span></div>
+              <div><h3 class="cards-stack-card__h">CRO & UX</h3><div class="cards-stack-card__services"><p class="cards-stack-card__services-p">Conversion Audits</p><p class="cards-stack-card__services-p">A/B Strategy</p><p class="cards-stack-card__services-p">User Flow Optimisation</p></div></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
+
+  <div class="variant-divider"></div>
+
+  <!-- ── VARIANT 2: Wide cards (vertical stack, no offset) ── -->
+  <p class="section-label">Variant 2 — Wide Stack</p>
+  <section
+    data-stacking-cards-init=""
+    data-stacking-cards-desktop="true"
+    data-stacking-cards-tablet="true"
+    data-stacking-cards-mobile="true"
+    data-stacking-cards-desktop-x="0em, 0em, 0em"
+    data-stacking-cards-desktop-y="0em, 0em, 0em"
+    data-stacking-cards-desktop-rotate="0, 0, 0"
+    class="cards-stack">
+    <div class="container">
+      <div class="cards-stack__collection">
+        <div data-stacking-card-stack="" class="cards-stack__list">
+          <div data-stacking-card="" class="cards-stack__item is--wide">
+            <div data-stacking-card-target="" class="cards-stack-card cards-stack-card--wide">
+              <div><span class="cards-stack-card__number">1.</span></div>
+              <div><h3 class="cards-stack-card__h is--l">Web Design</h3><div class="cards-stack-card__services"><p class="cards-stack-card__services-p">UI/UX Design</p><p class="cards-stack-card__services-p">Motion & Interaction</p><p class="cards-stack-card__services-p">Webflow Development</p></div></div>
+            </div>
+          </div>
+          <div data-stacking-card="" class="cards-stack__item is--wide">
+            <div data-stacking-card-target="" class="cards-stack-card cards-stack-card--wide is--green">
+              <div><span class="cards-stack-card__number">2.</span></div>
+              <div><h3 class="cards-stack-card__h is--l">SEO & Growth</h3><div class="cards-stack-card__services"><p class="cards-stack-card__services-p">Technical SEO</p><p class="cards-stack-card__services-p">Content Strategy</p><p class="cards-stack-card__services-p">AEO / GEO</p></div></div>
+            </div>
+          </div>
+          <div data-stacking-card="" class="cards-stack__item is--wide">
+            <div data-stacking-card-target="" class="cards-stack-card cards-stack-card--wide is--dark">
+              <div><span class="cards-stack-card__number">3.</span></div>
+              <div><h3 class="cards-stack-card__h is--l">CRO & UX</h3><div class="cards-stack-card__services"><p class="cards-stack-card__services-p">Conversion Audits</p><p class="cards-stack-card__services-p">A/B Strategy</p><p class="cards-stack-card__services-p">User Flow Optimisation</p></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
   <script>
     gsap.registerPlugin(ScrollTrigger);
-    function initStackingStickyCardsBounce(){const cardsSections=document.querySelectorAll('[data-stacking-cards-init]');const currentTier=getCurrentViewportTier();window.viewportTier=currentTier;ScrollTrigger.getAll().forEach(trigger=>{cardsSections.forEach(section=>{if(section.contains(trigger.trigger))trigger.kill();});});cardsSections.forEach(section=>{section.querySelectorAll('[data-stacking-card-target]').forEach(el=>{gsap.killTweensOf(el);gsap.set(el,{clearProps:'all'});});});cardsSections.forEach(section=>{const tier=currentTier;const isEnabled=(tier==='desktop'&&section.dataset.stackingCardsDesktop==='true')||(tier==='tablet'&&section.dataset.stackingCardsTablet==='true')||((tier==='mobile-portrait'||tier==='mobile-landscape')&&section.dataset.stackingCardsMobile==='true');if(!isEnabled)return;const cards=Array.from(section.querySelectorAll('[data-stacking-card]'));if(!cards.length)return;const stickyTop=parseFloat(getComputedStyle(cards[0]).top)||0;const rotateValues=(()=>{if(tier==='desktop')return parseRotateValues(section,'data-stacking-cards-desktop-rotate');if(tier==='tablet')return parseRotateValues(section,'data-stacking-cards-tablet-rotate');return parseRotateValues(section,'data-stacking-cards-mobile-rotate');})();const xValues=(()=>{if(tier==='desktop')return parseAxisValues(section,'data-stacking-cards-desktop-x');if(tier==='tablet')return parseAxisValues(section,'data-stacking-cards-tablet-x');return parseAxisValues(section,'data-stacking-cards-mobile-x');})();const yValues=(()=>{if(tier==='desktop')return parseAxisValues(section,'data-stacking-cards-desktop-y');if(tier==='tablet')return parseAxisValues(section,'data-stacking-cards-tablet-y');return parseAxisValues(section,'data-stacking-cards-mobile-y');})();cards.forEach((card,index)=>{const targetEl=card.querySelector('[data-stacking-card-target]');if(!targetEl)return;const rotate=rotateValues[index%rotateValues.length];const x=xValues[index%xValues.length];const y=yValues[index%yValues.length];gsap.set(targetEl,{rotate:0,x:0,y:0,scale:1,zIndex:cards.length-index});gsap.to(targetEl,{rotate,x,y,ease:'power1.in',overwrite:'auto',scrollTrigger:{id:`stacking-rotate-${index}`,trigger:card,start:'top 75%',end:`top-=${stickyTop} top`,scrub:true}});ScrollTrigger.create({id:`stacking-bounce-${index}`,trigger:card,start:`top-=${stickyTop} top`,onEnter:()=>pulseElement(targetEl)});});});ScrollTrigger.refresh();function parseRotateValues(section,attr){const fallback=[0,4,-4];const values=(section.getAttribute(attr)||'').split(',').map(val=>parseFloat(val.trim()));return values.length>=1&&values.every(v=>!isNaN(v))?values:fallback;}function parseAxisValues(section,attr){const raw=section.getAttribute(attr);if(!raw)return['0em','0em','0em'];const values=raw.split(',').map(val=>val.trim()).filter(val=>val!=='');return values.length?values:['0em','0em','0em'];}if(!window._hasStackingResizeListener){let last=getCurrentViewportTier();window.addEventListener('resize',debounceOnWidthChange(()=>{const next=getCurrentViewportTier();if(last!==next){ScrollTrigger.getAll().forEach(t=>{if(t.vars?.id?.startsWith('stacking'))t.kill();});cardsSections.forEach(section=>{section.querySelectorAll('[data-stacking-card-target]').forEach(el=>{gsap.killTweensOf(el);gsap.set(el,{clearProps:'all'});});});initStackingStickyCardsBounce();}last=next;window.viewportTier=next;},250));window._hasStackingResizeListener=true;}function getCurrentViewportTier(){const width=window.innerWidth;if(width<=479)return'mobile-portrait';if(width<=767)return'mobile-landscape';if(width<=991)return'tablet';return'desktop';}function pulseElement(targetEl){const width=targetEl.offsetWidth,height=targetEl.offsetHeight,fontSize=parseFloat(getComputedStyle(targetEl).fontSize),stretchPx=1.5*fontSize,targetScaleX=(width+stretchPx)/width,targetScaleY=(height-stretchPx*0.33)/height;const tl=gsap.timeline();tl.to(targetEl,{scaleX:targetScaleX,scaleY:targetScaleY,duration:0.1,ease:'power1.out'}).to(targetEl,{scaleX:1,scaleY:1,duration:1,ease:'elastic.out(1, 0.3)']);}}
-    function debounceOnWidthChange(fn,ms){let last=innerWidth,timer;return function(...args){clearTimeout(timer);timer=setTimeout(()=>{if(innerWidth!==last){last=innerWidth;fn.apply(this,args);}},ms);};}
-    document.addEventListener('DOMContentLoaded',function(){initStackingStickyCardsBounce();});
+
+    function initStackingStickyCardsBounce() {
+      const cardsSections = document.querySelectorAll('[data-stacking-cards-init]');
+      const currentTier = getCurrentViewportTier();
+
+      // Kill previous triggers
+      ScrollTrigger.getAll().forEach(trigger => {
+        cardsSections.forEach(section => {
+          if (section.contains(trigger.trigger)) trigger.kill();
+        });
+      });
+
+      cardsSections.forEach(section => {
+        section.querySelectorAll('[data-stacking-card-target]').forEach(el => {
+          gsap.killTweensOf(el);
+          gsap.set(el, { clearProps: 'all' });
+        });
+      });
+
+      cardsSections.forEach(section => {
+        const tier = currentTier;
+        const isEnabled =
+          (tier === 'desktop' && section.dataset.stackingCardsDesktop === 'true') ||
+          (tier === 'tablet' && section.dataset.stackingCardsTablet === 'true') ||
+          ((tier === 'mobile-portrait' || tier === 'mobile-landscape') && section.dataset.stackingCardsMobile === 'true');
+
+        if (!isEnabled) return;
+
+        const cards = Array.from(section.querySelectorAll('[data-stacking-card]'));
+        if (!cards.length) return;
+
+        const stickyTop = parseFloat(getComputedStyle(cards[0]).top) || 0;
+
+        const rotateValues = parseAttr(section, `data-stacking-cards-${tier === 'desktop' ? 'desktop' : tier === 'tablet' ? 'tablet' : 'mobile'}-rotate`, [0, 4, -4], 'rotate');
+        const xValues = parseAttr(section, `data-stacking-cards-${tier === 'desktop' ? 'desktop' : tier === 'tablet' ? 'tablet' : 'mobile'}-x`, ['0em', '0em', '0em'], 'axis');
+        const yValues = parseAttr(section, `data-stacking-cards-${tier === 'desktop' ? 'desktop' : tier === 'tablet' ? 'tablet' : 'mobile'}-y`, ['0em', '0em', '0em'], 'axis');
+
+        cards.forEach((card, index) => {
+          const targetEl = card.querySelector('[data-stacking-card-target]');
+          if (!targetEl) return;
+
+          const rotate = rotateValues[index % rotateValues.length];
+          const x = xValues[index % xValues.length];
+          const y = yValues[index % yValues.length];
+
+          gsap.set(targetEl, { rotate: 0, x: 0, y: 0, scale: 1, zIndex: cards.length - index });
+
+          gsap.to(targetEl, {
+            rotate, x, y,
+            ease: 'power1.in',
+            overwrite: 'auto',
+            scrollTrigger: {
+              id: `stacking-rotate-${section.dataset.stackingId}-${index}`,
+              trigger: card,
+              start: 'top 75%',
+              end: `top-=${stickyTop} top`,
+              scrub: true
+            }
+          });
+
+          ScrollTrigger.create({
+            id: `stacking-bounce-${section.dataset.stackingId}-${index}`,
+            trigger: card,
+            start: `top-=${stickyTop} top`,
+            onEnter: () => pulseElement(targetEl)
+          });
+        });
+      });
+
+      ScrollTrigger.refresh();
+    }
+
+    // Give each section a unique ID for trigger scoping
+    document.querySelectorAll('[data-stacking-cards-init]').forEach((s, i) => s.dataset.stackingId = i);
+
+    function parseAttr(section, attr, fallback, type) {
+      const raw = section.getAttribute(attr);
+      if (!raw) return fallback;
+      const parts = raw.split(',').map(v => v.trim()).filter(Boolean);
+      if (!parts.length) return fallback;
+      if (type === 'rotate') {
+        const nums = parts.map(v => parseFloat(v));
+        return nums.every(n => !isNaN(n)) ? nums : fallback;
+      }
+      return parts;
+    }
+
+    function getCurrentViewportTier() {
+      const w = window.innerWidth;
+      if (w <= 479) return 'mobile-portrait';
+      if (w <= 767) return 'mobile-landscape';
+      if (w <= 991) return 'tablet';
+      return 'desktop';
+    }
+
+    function pulseElement(el) {
+      const w = el.offsetWidth, h = el.offsetHeight;
+      const fs = parseFloat(getComputedStyle(el).fontSize);
+      const stretch = 1.5 * fs;
+      const tl = gsap.timeline();
+      tl.to(el, { scaleX: (w + stretch) / w, scaleY: (h - stretch * 0.33) / h, duration: 0.1, ease: 'power1.out' })
+        .to(el, { scaleX: 1, scaleY: 1, duration: 1, ease: 'elastic.out(1, 0.3)' });
+    }
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(initStackingStickyCardsBounce, 250);
+    });
+
+    document.addEventListener('DOMContentLoaded', initStackingStickyCardsBounce);
   </script>
 </body>
 </html>
