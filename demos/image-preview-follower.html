@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Preview Cursor Follower — Stanley Smith Studios</title>
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #f5f4f0;
+      color: #111;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      cursor: none;
+    }
+
+    .follower-page {
+      padding: 80px 0 120px;
+      max-width: 900px;
+      margin: 0 auto;
+      padding-left: clamp(1.5rem, 5vw, 4rem);
+      padding-right: clamp(1.5rem, 5vw, 4rem);
+    }
+
+    .follower-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(17,17,17,0.4);
+      margin-bottom: 3rem;
+    }
+
+    .follower-list {
+      list-style: none;
+      border-top: 1px solid rgba(17,17,17,0.12);
+    }
+
+    [data-follower-item] {
+      position: relative;
+      border-bottom: 1px solid rgba(17,17,17,0.12);
+      padding: 2.5rem 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+      transition: opacity 0.3s;
+    }
+
+    [data-follower-item]:hover .item-title {
+      letter-spacing: 0.04em;
+    }
+
+    .item-title {
+      font-size: clamp(2.2rem, 5vw, 4.5rem);
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      transition: letter-spacing 0.4s ease;
+    }
+
+    .item-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.25rem;
+      flex-shrink: 0;
+    }
+
+    .item-category {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(17,17,17,0.4);
+    }
+
+    .item-location {
+      font-size: 0.85rem;
+      color: rgba(17,17,17,0.55);
+    }
+
+    /* Hidden visual cloned into cursor */
+    [data-follower-visual] {
+      display: none;
+      width: 320px;
+      height: 220px;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      background: #ddd;
+    }
+
+    [data-follower-visual] img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Cursor follower element */
+    #follower-cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      width: 320px;
+      height: 220px;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      opacity: 0;
+      transform: translate(-50%, -50%);
+      will-change: transform;
+    }
+
+    #follower-cursor img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Custom cursor dot */
+    #cursor-dot {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 8px;
+      height: 8px;
+      background: #111;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 10000;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease, opacity 0.2s;
+    }
+
+    @media (max-width: 768px) {
+      body { cursor: auto; }
+      #follower-cursor, #cursor-dot { display: none; }
+      [data-follower-item] { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+      .item-meta { align-items: flex-start; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header class="demo-chrome" style="background: rgba(245,244,240,0.85); backdrop-filter: blur(12px); border-bottom-color: rgba(17,17,17,0.1);">
+    <a class="demo-chrome__back" href="../index.html" style="color: #111; opacity: 0.6;">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back
+    </a>
+    <span class="demo-chrome__title" style="color: #111;">Image Preview Cursor Follower</span>
+    <a class="demo-chrome__cta" href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener">Book a call</a>
+  </header>
+
+  <div id="follower-cursor"></div>
+  <div id="cursor-dot"></div>
+
+  <main class="follower-page">
+    <p class="follower-eyebrow">Selected work — 2024</p>
+
+    <ul class="follower-list">
+
+      <li data-follower-item>
+        <span class="item-title">Prism</span>
+        <div class="item-meta">
+          <span class="item-category">Branding</span>
+          <span class="item-location">Belgium</span>
+        </div>
+        <div data-follower-visual>
+          <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=640&q=80" alt="Prism">
+        </div>
+      </li>
+
+      <li data-follower-item>
+        <span class="item-title">Oracle</span>
+        <div class="item-meta">
+          <span class="item-category">Web Design</span>
+          <span class="item-location">Australia</span>
+        </div>
+        <div data-follower-visual>
+          <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=640&q=80" alt="Oracle">
+        </div>
+      </li>
+
+      <li data-follower-item>
+        <span class="item-title">Mosaic</span>
+        <div class="item-meta">
+          <span class="item-category">Motion</span>
+          <span class="item-location">Spain</span>
+        </div>
+        <div data-follower-visual>
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=640&q=80" alt="Mosaic">
+        </div>
+      </li>
+
+      <li data-follower-item>
+        <span class="item-title">Zenith</span>
+        <div class="item-meta">
+          <span class="item-category">Campaign</span>
+          <span class="item-location">Japan</span>
+        </div>
+        <div data-follower-visual>
+          <img src="https://images.unsplash.com/photo-1480796927426-f609979314bd?w=640&q=80" alt="Zenith">
+        </div>
+      </li>
+
+    </ul>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+  <script>
+    function initPreviewFollower() {
+      const cursor = document.getElementById('follower-cursor');
+      const dot = document.getElementById('cursor-dot');
+      if (!cursor || window.innerWidth <= 768) return;
+
+      const items = document.querySelectorAll('[data-follower-item]');
+      const xTo = gsap.quickTo(cursor, 'x', { duration: 0.55, ease: 'power3.out' });
+      const yTo = gsap.quickTo(cursor, 'y', { duration: 0.55, ease: 'power3.out' });
+      const dotXTo = gsap.quickTo(dot, 'x', { duration: 0.1, ease: 'none' });
+      const dotYTo = gsap.quickTo(dot, 'y', { duration: 0.1, ease: 'none' });
+
+      window.addEventListener('mousemove', (e) => {
+        xTo(e.clientX);
+        yTo(e.clientY);
+        dotXTo(e.clientX);
+        dotYTo(e.clientY);
+      });
+
+      let currentImg = null;
+
+      items.forEach(item => {
+        const visual = item.querySelector('[data-follower-visual]');
+        if (!visual) return;
+        const img = visual.querySelector('img');
+
+        item.addEventListener('mouseenter', () => {
+          // Clone or swap image
+          if (currentImg !== img.src) {
+            cursor.innerHTML = '';
+            const clone = img.cloneNode(true);
+            cursor.appendChild(clone);
+            currentImg = img.src;
+          }
+
+          gsap.killTweensOf(cursor);
+          gsap.to(cursor, { opacity: 1, scale: 1, y: '-50%', duration: 0.4, ease: 'power3.out', overwrite: true });
+          gsap.set(cursor, { yPercent: -50 });
+
+          // Dim other items
+          items.forEach(other => {
+            if (other !== item) gsap.to(other, { opacity: 0.35, duration: 0.3 });
+          });
+        });
+
+        item.addEventListener('mouseleave', () => {
+          gsap.to(cursor, { opacity: 0, duration: 0.3, ease: 'power2.in', overwrite: true });
+          items.forEach(other => gsap.to(other, { opacity: 1, duration: 0.3 }));
+        });
+      });
+    }
+
+    initPreviewFollower();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="lenis-init.js"></script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Image Carousel — Stanley Smith Studios</title>
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0c0d10;
+      color: #f0f0f2;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    .scene-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100vh;
+      perspective: 90vw;
+      overflow: hidden;
+      cursor: grab;
+    }
+
+    .scene-wrap:active { cursor: grabbing; }
+
+    [data-3d-carousel] {
+      width: 80vw;
+      height: 50vw;
+      max-height: 560px;
+      position: relative;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+
+    [data-3d-carousel-panel] {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 13em;
+      height: 39em;
+      transform-origin: 50% 50%;
+      margin-left: -6.5em;
+      overflow: hidden;
+      border-radius: 0.75em;
+    }
+
+    [data-3d-carousel-panel] img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .carousel-hint {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(240,240,242,0.4);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      pointer-events: none;
+    }
+
+    @media (max-width: 768px) {
+      [data-3d-carousel] { width: 100vw; height: 70vw; max-height: none; }
+      [data-3d-carousel-panel] { width: 9em; height: 27em; margin-left: -4.5em; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- demo chrome header -->
+  <header class="demo-chrome">
+    <a class="demo-chrome__back" href="../index.html">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back
+    </a>
+    <span class="demo-chrome__title">3D Image Carousel</span>
+    <a class="demo-chrome__cta" href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener">Book a call</a>
+  </header>
+
+  <div class="scene-wrap">
+    <div data-3d-carousel>
+      <div data-3d-carousel-panel><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=520&q=80" alt=""></div>
+      <div data-3d-carousel-panel><img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=520&q=80" alt=""></div>
+      <div data-3d-carousel-panel><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=520&q=80" alt=""></div>
+      <div data-3d-carousel-panel><img src="https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=520&q=80" alt=""></div>
+      <div data-3d-carousel-panel><img src="https://images.unsplash.com/photo-1470770903676-69b98201ea1c?w=520&q=80" alt=""></div>
+      <div data-3d-carousel-panel><img src="https://images.unsplash.com/photo-1511884642898-4c92249e20b6?w=520&q=80" alt=""></div>
+      <div data-3d-carousel-panel><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=520&q=80" alt=""></div>
+      <div data-3d-carousel-panel><img src="https://images.unsplash.com/photo-1494500764479-0c8f2919a3d8?w=520&q=80" alt=""></div>
+      <div data-3d-carousel-panel><img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=520&q=80" alt=""></div>
+      <div data-3d-carousel-panel><img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=520&q=80" alt=""></div>
+      <div data-3d-carousel-panel><img src="https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=520&q=80" alt=""></div>
+      <div data-3d-carousel-panel><img src="https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=520&q=80" alt=""></div>
+    </div>
+  </div>
+
+  <p class="carousel-hint">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Drag to spin
+  </p>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Draggable.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/InertiaPlugin.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Observer.min.js"></script>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger, Draggable, InertiaPlugin, Observer);
+
+    function init3dImageCarousel() {
+      const carousel = document.querySelector('[data-3d-carousel]');
+      if (!carousel) return;
+
+      const panels = carousel.querySelectorAll('[data-3d-carousel-panel]');
+      const count = panels.length;
+      const calcRadius = () => window.innerWidth * 0.5;
+      let radius = calcRadius();
+      let currentAngle = 0;
+
+      function positionPanels(r) {
+        panels.forEach((panel, i) => {
+          const angle = (360 / count) * i;
+          gsap.set(panel, {
+            rotationY: angle,
+            transformOrigin: '50% 50% ' + (-r) + 'px',
+            z: r
+          });
+        });
+      }
+
+      positionPanels(radius);
+
+      const proxy = { rotation: 0 };
+
+      Draggable.create(proxy, {
+        type: 'rotation',
+        trigger: '.scene-wrap',
+        inertia: true,
+        onDrag: function () {
+          gsap.set(carousel, { rotationY: -this.x / 3 });
+        },
+        onDragEnd: function () {
+          // handled by inertia
+        }
+      });
+
+      // Use a ticker-driven approach for smooth drag
+      let dragProxy = { val: 0 };
+      const sceneWrap = document.querySelector('.scene-wrap');
+
+      let isDragging = false;
+      let startX = 0;
+      let lastX = 0;
+      let velocity = 0;
+      let momentum = 0;
+
+      sceneWrap.addEventListener('pointerdown', (e) => {
+        isDragging = true;
+        startX = e.clientX;
+        lastX = e.clientX;
+        velocity = 0;
+        gsap.killTweensOf(dragProxy);
+        sceneWrap.setPointerCapture(e.pointerId);
+      });
+
+      sceneWrap.addEventListener('pointermove', (e) => {
+        if (!isDragging) return;
+        const dx = e.clientX - lastX;
+        velocity = dx;
+        lastX = e.clientX;
+        currentAngle -= dx * 0.3;
+        gsap.set(carousel, { rotationY: currentAngle });
+      });
+
+      sceneWrap.addEventListener('pointerup', () => {
+        isDragging = false;
+        momentum = velocity * 6;
+        gsap.to(dragProxy, {
+          val: dragProxy.val + momentum,
+          duration: 1.4,
+          ease: 'power3.out',
+          onUpdate: () => {
+            const delta = dragProxy.val - (dragProxy._prev || 0);
+            currentAngle -= delta * 0.3;
+            gsap.set(carousel, { rotationY: currentAngle });
+            dragProxy._prev = dragProxy.val;
+          },
+          onComplete: () => { dragProxy._prev = 0; dragProxy.val = 0; }
+        });
+      });
+
+      // Scroll adds rotational velocity
+      Observer.create({
+        target: window,
+        type: 'wheel',
+        onChangeY: (self) => {
+          currentAngle += self.deltaY * 0.15;
+          gsap.to(carousel, { rotationY: currentAngle, duration: 0.6, ease: 'power2.out' });
+        }
+      });
+
+      window.addEventListener('resize', () => {
+        radius = calcRadius();
+        positionPanels(radius);
+      });
+
+      // Hide hint on first drag
+      const hint = document.querySelector('.carousel-hint');
+      sceneWrap.addEventListener('pointerdown', () => {
+        if (hint) gsap.to(hint, { opacity: 0, duration: 0.4, onComplete: () => hint.remove() });
+      }, { once: true });
+    }
+
+    init3dImageCarousel();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="lenis-init.js"></script>
+</body>
+</html>
