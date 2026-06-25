@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixelated Scroll Transition — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:#0c0d10;font-family:'Inter',sans-serif;padding-top:50px}
+    .pixelated-scroll__section{color:#f2f2f2;justify-content:center;align-items:center;min-height:100svh;display:flex;position:relative;overflow:hidden}
+    .pixelated-scroll__bg{z-index:0;background-color:#000;position:absolute;inset:0%}
+    .pixelated-scroll__bg-img{opacity:.8;object-fit:cover;width:100%;height:100%}
+    .pixelated-scroll__content{z-index:1;position:relative}
+    .pixelated-scroll__h{text-align:center;letter-spacing:-.04em;max-width:8em;margin:0;font-family:'Inter',sans-serif;font-size:6em;font-weight:400;line-height:.95}
+    .pixelated-scroll-transition{z-index:10;pointer-events:none;color:#cecece;position:absolute;inset:auto 0% 0%}
+    [data-pixelated-scroll-panel]{display:flex;flex-direction:row;width:100%}
+    [data-pixelated-scroll-column]{display:flex;flex-direction:column;justify-content:flex-end;align-items:stretch;flex:1 1 0%;min-width:0}
+    [data-pixelated-scroll-pixel]{aspect-ratio:1;width:100%;background-color:currentColor;backface-visibility:hidden;will-change:opacity}
+    .next-section{min-height:100svh;background:#cecece;color:#201d1d;display:flex;align-items:center;justify-content:center}
+    .next-section h2{font-size:4em;font-weight:400;letter-spacing:-.04em;text-align:center}
+  </style>
+</head>
+<body>
+  <div class="demo-chrome">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <div class="demo-chrome__sep"></div><span class="demo-chrome__title">Pixelated Scroll Transition</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+  <section class="pixelated-scroll__section">
+    <div class="pixelated-scroll__bg"><img src="https://cdn.prod.website-files.com/69cd02cf42b48fac06cedde2/69cd111510b7d0ad756eb8da_Futuristic%20Neon%20Helmet.avif" class="pixelated-scroll__bg-img"></div>
+    <div class="pixelated-scroll__content"><h1 class="pixelated-scroll__h">Pixelated<br>Scroll<br>Transition</h1></div>
+    <div data-rows="6" data-pixelated-scroll-transition="" data-columns="16" data-columns-tablet="10" data-columns-mobile="6" class="pixelated-scroll-transition"></div>
+  </section>
+  <section class="next-section"><h2>The section beneath.</h2></section>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+    function initPixelatedScrollTransition(){const defaultColumns=12,defaultRows=6,defaultMode="cover",defaultScrollStart={cover:"bottom bottom",reveal:"top bottom"},defaultScrollEnd={cover:"bottom top",reveal:"top center"},defaultScrub=0.3,defaultPixelDuration=0.1,defaultStaggerAmount=1.5;const panelClass="pixelated-scroll-transition__panel",columnClass="pixelated-scroll-transition__col",pixelClass="pixelated-scroll-transition__pixel";const breakpoints={mobile:"(max-width: 478px)",landscape:"(max-width: 767px)",tablet:"(max-width: 991px)"};const instances=[];let mm=null;function getColumns(w){const base=parseInt(w.dataset.columns,10)||defaultColumns;if(window.matchMedia(breakpoints.mobile).matches)return parseInt(w.dataset.columnsMobile,10)||Math.max(4,Math.round(base*0.4));if(window.matchMedia(breakpoints.landscape).matches)return parseInt(w.dataset.columnsLandscape,10)||Math.max(6,Math.round(base*0.6));if(window.matchMedia(breakpoints.tablet).matches)return parseInt(w.dataset.columnsTablet,10)||Math.max(8,Math.round(base*0.75));return base;}function getMode(w){return w.dataset.mode==="reveal"?"reveal":defaultMode;}function getRows(w){const base=parseInt(w.dataset.rows,10)||defaultRows;if(window.matchMedia(breakpoints.mobile).matches)return parseInt(w.dataset.rowsMobile,10)||base;if(window.matchMedia(breakpoints.landscape).matches)return parseInt(w.dataset.rowsLandscape,10)||base;if(window.matchMedia(breakpoints.tablet).matches)return parseInt(w.dataset.rowsTablet,10)||base;return base;}function getScrollStart(w,mode){return w.dataset.scrollStart||defaultScrollStart[mode];}function getScrollEnd(w,mode){return w.dataset.scrollEnd||defaultScrollEnd[mode];}function buildGrid(w,cols,rows){const panel=document.createElement("div");panel.classList.add(panelClass);panel.setAttribute("data-pixelated-scroll-panel","");const frag=document.createDocumentFragment();for(let c=0;c<cols;c++){const col=document.createElement("div");col.classList.add(columnClass);col.setAttribute("data-pixelated-scroll-column","");for(let r=0;r<rows;r++){const pixel=document.createElement("div");pixel.classList.add(pixelClass);pixel.setAttribute("data-pixelated-scroll-pixel","");col.appendChild(pixel);}frag.appendChild(col);}panel.appendChild(frag);w.appendChild(panel);return{panel};}function collectCells(panel,cols,rows,mode){const columns=panel.querySelectorAll("[data-pixelated-scroll-column]");const cellData=[];for(let r=0;r<rows;r++){columns.forEach((col,c)=>{const pixel=col.children[r];if(!pixel)return;const dist=rows-1-r;const priority=dist*50+Math.random()*300+Math.sin(c*0.3)*30;cellData.push({element:pixel,priority});});}cellData.sort((a,b)=>a.priority-b.priority);return cellData.map(d=>d.element);}function createAnimation(w,cells,section,mode){const tl=gsap.timeline({scrollTrigger:{trigger:section,start:getScrollStart(w,mode),end:getScrollEnd(w,mode),scrub:defaultScrub,invalidateOnRefresh:true}});const fromAlpha=mode==="cover"?0:1,toAlpha=mode==="cover"?1:0;gsap.set(cells,{autoAlpha:fromAlpha});tl.to(cells,{autoAlpha:toAlpha,duration:defaultPixelDuration,stagger:{amount:defaultStaggerAmount,from:"start"},ease:"none"});return tl;}function setupInstance(w){const section=w.closest("section")||w.parentElement;const cols=getColumns(w),rows=getRows(w),mode=getMode(w);const{panel}=buildGrid(w,cols,rows);const cells=collectCells(panel,cols,rows,mode);const tl=createAnimation(w,cells,section,mode);return{w,tl};}function destroyInstance(inst){if(inst.tl){inst.tl.scrollTrigger?.kill();inst.tl.kill();}const panel=inst.w.querySelector("[data-pixelated-scroll-panel]");if(panel)panel.remove();}function buildAll(){const wrappers=document.querySelectorAll("[data-pixelated-scroll-transition]");wrappers.forEach(w=>instances.push(setupInstance(w)));ScrollTrigger.refresh();}function destroyAll(){instances.forEach(destroyInstance);instances.length=0;}const wrappers=document.querySelectorAll("[data-pixelated-scroll-transition]");if(!wrappers.length)return;mm=gsap.matchMedia();mm.add({isDesktop:"(min-width: 992px)",isTablet:"(min-width: 768px) and (max-width: 991px)",isLandscape:"(min-width: 479px) and (max-width: 767px)",isMobile:"(max-width: 478px)",reduceMotion:"(prefers-reduced-motion: reduce)"},(context)=>{if(context.conditions.reduceMotion)return;buildAll();return()=>{destroyAll();};});}
+    document.addEventListener("DOMContentLoaded",()=>{initPixelatedScrollTransition();});
+  </script>
+</body>
+</html>

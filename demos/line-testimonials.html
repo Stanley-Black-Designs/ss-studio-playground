@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Line Reveal Testimonials — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:#f4f4f0;color:#201d1d;font-family:'Inter',sans-serif;padding-top:50px;min-height:100dvh;display:flex;flex-direction:column}
+    .demo-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:60px 40px}
+    .testimonial-lines{gap:1.25em;flex-flow:wrap;justify-content:flex-start;align-items:flex-start;display:flex;width:100%;max-width:70em}
+    .testimonial-lines__controls{gap:1em;flex-flow:row;justify-content:flex-start;align-items:flex-start;width:33.3333%;display:flex}
+    .testimonial-lines__main{gap:5em;flex-flow:column;flex:1;justify-content:flex-start;align-items:flex-start;display:flex}
+    .testimonial-lines__button{background-color:transparent;border:1px solid rgba(0,0,0,0.2);border-radius:.25em;justify-content:center;align-items:center;width:2.5em;height:2.5em;padding:0;display:flex;cursor:pointer}
+    .testimonial-lines__arrow{width:.75em}
+    .testimonial-lines__main-details{gap:1.5em;flex-flow:row;justify-content:flex-start;align-items:center;display:flex}
+    .testimonial-lines__count{width:1ch;display:inline-block}
+    .testimonial-lines__p{margin-bottom:0;font-size:1.25em;line-height:1.2}
+    .testimonial-lines__p.is--faded{opacity:.5}
+    .testimonial-lines__collection{width:100%}
+    .testimonial-lines__list{width:100%;display:grid;position:relative}
+    .testimonial-lines__item{gap:4em;opacity:0;visibility:hidden;flex-flow:column;grid-area:1/1;justify-content:flex-start;align-items:flex-start;width:100%;display:flex;position:relative}
+    .testimonial-lines__item.is--active{opacity:1;visibility:visible}
+    .testimonial-lines__h{letter-spacing:-.02em;width:100%;margin:0;font-size:3em;font-weight:500;line-height:1}
+    .text-line-mask{padding-bottom:.2em;margin-bottom:-.2em}
+    .testimonial-lines__item-details{gap:1.25em;flex-flow:row;justify-content:flex-start;align-items:center;display:flex}
+    .testimonial-lines__item-visual{aspect-ratio:1;border-radius:100em;width:5em;overflow:hidden}
+    .testimonial-lines__item-img{object-fit:cover;width:100%;height:100%}
+    @media (max-width:767px){.testimonial-lines{gap:3em}.testimonial-lines__controls{order:9999;width:100%}.testimonial-lines__main{gap:3em}.testimonial-lines__p{font-size:1em}.testimonial-lines__item{gap:2em}.testimonial-lines__h{font-size:2em}.testimonial-lines__item-visual{width:3.5em}}
+  </style>
+</head>
+<body>
+  <div class="demo-chrome">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <div class="demo-chrome__sep"></div><span class="demo-chrome__title">Line Reveal Testimonials</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+  <div class="demo-stage">
+    <div data-testimonial-wrap="" data-autoplay="true" data-autoplay-duration="5000" class="testimonial-lines">
+      <div class="testimonial-lines__controls">
+        <button data-prev="" aria-label="previous testimonial" class="testimonial-lines__button"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" class="testimonial-lines__arrow"><path d="M5.26512 12L6.43721 10.7746L1.48837 5.28169V6.71831L6.45581 1.22535L5.28372 0L-2.21369e-07 6L5.26512 12ZM12 6.97183V5.02817H1.30232V6.97183H12Z" fill="currentColor"></path></svg></button>
+        <button data-next="" aria-label="next testimonial" class="testimonial-lines__button"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 12 12" fill="none" class="testimonial-lines__arrow"><path d="M6.73488 12L5.56279 10.7746L10.5116 5.28169V6.71831L5.54419 1.22535L6.71628 0L12 6L6.73488 12ZM0 6.97183V5.02817H10.6977V6.97183H0Z" fill="currentColor"></path></svg></button>
+      </div>
+      <div class="testimonial-lines__main">
+        <div class="testimonial-lines__main-details">
+          <p class="testimonial-lines__p is--faded"><span data-current="" class="testimonial-lines__count">1</span> / <span data-total="">5</span></p>
+          <p class="testimonial-lines__p">What our clients say:</p>
+        </div>
+        <div class="testimonial-lines__collection">
+          <div role="list" data-testimonial-list="" class="testimonial-lines__list">
+            <div aria-hidden="false" data-testimonial-item="" role="listitem" class="testimonial-lines__item is--active"><h3 data-testimonial-text="" class="testimonial-lines__h">"After a rough quarter, we needed hands fast. Their team jumped in with clear pricing and flexible coverage for weekend rushes and supplier delays. They've become our first call when operations get tight."</h3><div class="testimonial-lines__item-details"><div data-testimonial-img="" class="testimonial-lines__item-visual"><img src="https://cdn.prod.website-files.com/697946f9c74d6e83502491c6/6979fcf493ed513c80fb67b0_img-1.avif" class="testimonial-lines__item-img"></div><div><p data-testimonial-split="" class="testimonial-lines__p">Mara Kline</p><p data-testimonial-split="" class="testimonial-lines__p is--faded">Northbay Produce Co.</p></div></div></div>
+            <div aria-hidden="true" data-testimonial-item="" role="listitem" class="testimonial-lines__item"><h3 data-testimonial-text="" class="testimonial-lines__h">"We were referred by a partner and liked the straight answers. They helped us stabilize scheduling, fill last-minute gaps, and keep deliveries on time during peak season."</h3><div class="testimonial-lines__item-details"><div data-testimonial-img="" class="testimonial-lines__item-visual"><img src="https://cdn.prod.website-files.com/697946f9c74d6e83502491c6/6979fcf4340be6c44df0fa86_img-2.avif" class="testimonial-lines__item-img"></div><div><p data-testimonial-split="" class="testimonial-lines__p">Devon Reyes</p><p data-testimonial-split="" class="testimonial-lines__p is--faded">Kestrel Courier Group</p></div></div></div>
+            <div aria-hidden="true" data-testimonial-item="" role="listitem" class="testimonial-lines__item"><h3 data-testimonial-text="" class="testimonial-lines__h">"During our expansion, training and onboarding fell behind. They stepped in with consistent staffing, fair rates, and quick turnaround for urgent shifts."</h3><div class="testimonial-lines__item-details"><div data-testimonial-img="" class="testimonial-lines__item-visual"><img src="https://cdn.prod.website-files.com/697946f9c74d6e83502491c6/6979fcf41e2c7bc67c213c31_img-3.avif" class="testimonial-lines__item-img"></div><div><p data-testimonial-split="" class="testimonial-lines__p">Priya Menon</p><p data-testimonial-split="" class="testimonial-lines__p is--faded">Harborview Senior Living</p></div></div></div>
+            <div aria-hidden="true" data-testimonial-item="" role="listitem" class="testimonial-lines__item"><h3 data-testimonial-text="" class="testimonial-lines__h">"We had a sudden equipment outage and couldn't afford downtime. They coordinated extra coverage, kept communication simple, and helped us meet our production commitments."</h3><div class="testimonial-lines__item-details"><div data-testimonial-img="" class="testimonial-lines__item-visual"><img src="https://cdn.prod.website-files.com/697946f9c74d6e83502491c6/6979fcf45f6f900cd99e3701_img-4.avif" class="testimonial-lines__item-img"></div><div><p data-testimonial-split="" class="testimonial-lines__p">Cole Hart</p><p data-testimonial-split="" class="testimonial-lines__p is--faded">Redstone Bottling Works</p></div></div></div>
+            <div aria-hidden="true" data-testimonial-item="" role="listitem" class="testimonial-lines__item"><h3 data-testimonial-text="" class="testimonial-lines__h">"Our busiest months are unpredictable, and hiring temp help is usually a headache. They made it easy — clear terms, flexible availability, and people who actually showed up prepared."</h3><div class="testimonial-lines__item-details"><div data-testimonial-img="" class="testimonial-lines__item-visual"><img src="https://cdn.prod.website-files.com/697946f9c74d6e83502491c6/6979fcf4cb1e0ab479d5809a_img-5.avif" class="testimonial-lines__item-img"></div><div><p data-testimonial-split="" class="testimonial-lines__p">Lina Okafor</p><p data-testimonial-split="" class="testimonial-lines__p is--faded">Juniper Street Catering</p></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/SplitText.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+  <script>
+    gsap.registerPlugin(SplitText, ScrollTrigger);
+    function initLineRevealTestimonials(){const wraps=document.querySelectorAll("[data-testimonial-wrap]");if(!wraps.length)return;const imageClipHidden="circle(0% at 50% 50%)",imageClipVisible="circle(50% at 50% 50%)";wraps.forEach(wrap=>{const list=wrap.querySelector("[data-testimonial-list]");if(!list)return;const items=Array.from(list.querySelectorAll("[data-testimonial-item]"));if(!items.length)return;const btnPrev=wrap.querySelector("[data-prev]"),btnNext=wrap.querySelector("[data-next]"),elCurrent=wrap.querySelector("[data-current]"),elTotal=wrap.querySelector("[data-total]");if(elTotal)elTotal.textContent=String(items.length);let activeIndex=items.findIndex(el=>el.classList.contains("is--active"));if(activeIndex<0)activeIndex=0;let isAnimating=false,reduceMotion=false;const autoplayEnabled=wrap.getAttribute("data-autoplay")==="true";const autoplayDuration=parseInt(wrap.getAttribute("data-autoplay-duration"),10)||4000;let autoplayCall=null,isInView=true;const slides=items.map(item=>({item,image:item.querySelector("[data-testimonial-img]"),splitTargets:[item.querySelector("[data-testimonial-text]"),...item.querySelectorAll("[data-testimonial-split]")].filter(Boolean),splitInstances:[],getLines(){return this.splitInstances.flatMap(i=>i.lines);}}));function setSlideState(idx,isActive){const{item}=slides[idx];item.classList.toggle("is--active",isActive);item.setAttribute("aria-hidden",String(!isActive));gsap.set(item,{autoAlpha:isActive?1:0,pointerEvents:isActive?"auto":"none"});}function updateCounter(){if(elCurrent)elCurrent.textContent=String(activeIndex+1);}function startAutoplay(){if(!autoplayEnabled)return;if(autoplayCall)autoplayCall.kill();autoplayCall=gsap.delayedCall(autoplayDuration/1000,()=>{if(!isInView||isAnimating){startAutoplay();return;}goTo((activeIndex+1)%slides.length);startAutoplay();});}function pauseAutoplay(){if(autoplayCall)autoplayCall.pause();}function resumeAutoplay(){if(!autoplayEnabled)return;if(!autoplayCall)startAutoplay();else autoplayCall.resume();}function resetAutoplay(){if(!autoplayEnabled)return;startAutoplay();}slides.forEach((_,i)=>setSlideState(i,i===activeIndex));updateCounter();gsap.matchMedia().add({reduce:"(prefers-reduced-motion: reduce)"},(context)=>{reduceMotion=context.conditions.reduce;});slides.forEach((slide,slideIndex)=>{slide.splitInstances=slide.splitTargets.map(el=>SplitText.create(el,{type:"lines",mask:"lines",linesClass:"text-line",autoSplit:true,onSplit(self){if(reduceMotion)return;const isActive=slideIndex===activeIndex;gsap.set(self.lines,{yPercent:isActive?0:110});if(slide.image)gsap.set(slide.image,{clipPath:isActive?imageClipVisible:imageClipHidden});}}));});function goTo(nextIndex){if(isAnimating||nextIndex===activeIndex)return;isAnimating=true;const outgoingSlide=slides[activeIndex],incomingSlide=slides[nextIndex];const tl=gsap.timeline({onComplete:()=>{setSlideState(activeIndex,false);setSlideState(nextIndex,true);activeIndex=nextIndex;updateCounter();isAnimating=false;}});if(reduceMotion){tl.to(outgoingSlide.item,{autoAlpha:0,duration:0.4,ease:"power2"},0).fromTo(incomingSlide.item,{autoAlpha:0},{autoAlpha:1,duration:0.4,ease:"power2"},0);return;}const outgoingLines=outgoingSlide.getLines(),incomingLines=incomingSlide.getLines();gsap.set(incomingSlide.item,{autoAlpha:1,pointerEvents:"auto"});gsap.set(incomingLines,{yPercent:110});if(outgoingSlide.image)gsap.set(outgoingSlide.image,{clipPath:imageClipVisible});tl.to(outgoingLines,{yPercent:-110,duration:0.6,ease:"power4.inOut",stagger:{amount:0.25}},0);if(outgoingSlide.image)tl.to(outgoingSlide.image,{clipPath:imageClipHidden,duration:0.6,ease:"power4.inOut"},0);tl.to(incomingLines,{yPercent:0,duration:0.7,ease:"power4.inOut",stagger:{amount:0.4}},">-=0.3");if(incomingSlide.image)tl.fromTo(incomingSlide.image,{clipPath:imageClipHidden},{clipPath:imageClipVisible,duration:0.75,ease:"power4.inOut"},"<");tl.set(outgoingSlide.item,{autoAlpha:0},">");}startAutoplay();if(btnNext)btnNext.addEventListener("click",()=>{resetAutoplay();goTo((activeIndex+1)%slides.length);});if(btnPrev)btnPrev.addEventListener("click",()=>{resetAutoplay();goTo((activeIndex-1+slides.length)%slides.length);});function onKeyDown(e){if(!isInView)return;const t=e.target;const isTypingTarget=t&&(t.tagName==="INPUT"||t.tagName==="TEXTAREA"||t.isContentEditable);if(isTypingTarget)return;if(e.key==="ArrowRight"){e.preventDefault();resetAutoplay();goTo((activeIndex+1)%slides.length);}if(e.key==="ArrowLeft"){e.preventDefault();resetAutoplay();goTo((activeIndex-1+slides.length)%slides.length);}}window.addEventListener("keydown",onKeyDown);ScrollTrigger.create({trigger:wrap,start:"top bottom",end:"bottom top",onEnter:()=>{isInView=true;resumeAutoplay();},onEnterBack:()=>{isInView=true;resumeAutoplay();},onLeave:()=>{isInView=false;pauseAutoplay();},onLeaveBack:()=>{isInView=false;pauseAutoplay();}});});}
+    document.addEventListener("DOMContentLoaded",()=>{initLineRevealTestimonials();});
+  </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Globe — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.20.0/mapbox-gl.css" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:#0c0d10;font-family:'Inter',sans-serif;height:100dvh;overflow:hidden}
+    .demo-stage{padding-top:50px;height:100dvh;display:flex;align-items:center;justify-content:center}
+    .notice{color:rgba(240,240,242,0.55);font-size:14px;line-height:1.6;text-align:center;max-width:420px;padding:0 24px}
+    .notice strong{color:#4f8ef7;display:block;font-size:18px;margin-bottom:12px;font-weight:500}
+    .notice a{color:#4f8ef7;text-decoration:underline}
+  </style>
+</head>
+<body>
+  <div class="demo-chrome">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <div class="demo-chrome__sep"></div><span class="demo-chrome__title">Interactive Globe (Mapbox)</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+  <div class="demo-stage">
+    <div class="notice">
+      <strong>Interactive Globe</strong>
+      This component uses the <a href="https://www.mapbox.com/" target="_blank" rel="noopener">Mapbox GL JS</a> API and requires a project-specific access token to render. When implemented for a client, it features a spinning globe with clickable location pins, a slide-out info panel, and smooth fly-to navigation between offices or points of interest.
+      <br><br>
+      Interested in this for your project? <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener">Let's talk.</a>
+    </div>
+  </div>
+</body>
+</html>
