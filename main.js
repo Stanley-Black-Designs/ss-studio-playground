@@ -168,3 +168,21 @@ if ('IntersectionObserver' in window) {
 }
 
 document.addEventListener('DOMContentLoaded', initMagneticEffect);
+
+// ── INTRO REVEAL ─────────────────────────────────────────────────────────────
+(function () {
+  const eyebrow = document.querySelector('.intro-eyebrow');
+  const headline = document.querySelector('.intro-headline');
+  const body = document.querySelector('.intro-body');
+  const actions = document.querySelector('.intro-actions');
+  const rule = document.querySelector('.intro-rule');
+  if (!eyebrow) return;
+  gsap.set([eyebrow, headline, body, actions], { opacity: 0, y: 30 });
+  if (rule) gsap.set(rule, { opacity: 0 });
+  const tl = gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.1 });
+  tl.to(eyebrow, { opacity: 1, y: 0, duration: 0.75 })
+    .to(headline, { opacity: 1, y: 0, duration: 1.0 }, '-=0.45')
+    .to(body, { opacity: 1, y: 0, duration: 0.75 }, '-=0.55')
+    .to(actions, { opacity: 1, y: 0, duration: 0.75 }, '-=0.5')
+    .to(rule, { opacity: 1, duration: 0.9 }, '-=0.35');
+})();

@@ -7,12 +7,65 @@
   <link rel="stylesheet" href="demo-chrome.css">
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    body{background:#0c0d10;color:#f0f0f2;font-family:'Inter',sans-serif;padding-top:50px;min-height:100dvh}
-    .demo-stage{min-height:calc(100dvh - 50px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:80px;padding:80px 40px}
-    .highlight-title{text-align:center;letter-spacing:-0.03em;text-transform:uppercase;margin:0;font-family:'Inter',sans-serif;font-size:clamp(36px,6vw,80px);font-weight:900;line-height:0.9}
+    html{scroll-behavior:auto}
+    body{background:#0c0d10;color:#f0f0f2;font-family:'Inter',sans-serif;padding-top:50px;overflow-x:hidden}
+
+    /* ── Full-screen sections ── */
+    .hm-section{
+      min-height:100dvh;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      padding:80px 40px;
+      position:relative;
+    }
+    .hm-section--alt{background:#111318}
+
+    /* ── Hero / scroll-down section ── */
+    .hm-hero{text-align:center}
+    .hm-hero__eyebrow{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;
+      color:rgba(240,240,242,0.4);margin-bottom:28px;
+    }
+    .hm-hero__dot{width:5px;height:5px;border-radius:50%;background:#0064E7;flex-shrink:0}
+    .hm-hero__title{
+      font-family:'Inter',sans-serif;font-size:clamp(28px,4vw,48px);font-weight:300;
+      letter-spacing:-0.02em;color:rgba(240,240,242,0.7);margin-bottom:40px;line-height:1.3;
+    }
+    .hm-scroll-arrow{
+      display:flex;flex-direction:column;align-items:center;gap:8px;
+      color:rgba(240,240,242,0.3);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+      animation:bounce 2s ease-in-out infinite;
+    }
+    @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+
+    /* ── Highlight title ── */
+    .highlight-title{
+      text-align:center;letter-spacing:-0.03em;text-transform:uppercase;margin:0;
+      font-family:'Inter',sans-serif;font-size:clamp(32px,5.5vw,78px);font-weight:900;line-height:0.9;
+      max-width:900px;
+    }
+    .highlight-subtitle{
+      font-size:clamp(14px,1.5vw,18px);font-weight:300;color:rgba(240,240,242,0.45);
+      margin-top:32px;text-align:center;max-width:480px;line-height:1.7;
+    }
+
+    /* ── Section label ── */
+    .hm-label{
+      position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
+      font-size:10px;letter-spacing:0.16em;text-transform:uppercase;
+      color:rgba(240,240,242,0.2);white-space:nowrap;
+    }
+
+    /* ── GSAP marker styles ── */
     [data-highlight-marker-reveal]{visibility:hidden}
     [data-highlight-marker-reveal] .highlight-marker-line{width:auto;display:inline-block!important;margin:-0.055em 0px}
     .highlight-marker-bar{position:absolute;inset:-0.055em 0px;z-index:1;pointer-events:none}
+
+    /* ── Divider ── */
+    .hm-divider{width:1px;height:80px;background:rgba(255,255,255,0.08);margin:0 auto}
   </style>
 </head>
 <body>
@@ -23,16 +76,61 @@
     </div>
     <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
   </div>
-  <div class="demo-stage">
+
+  <!-- Section 1: Scroll down -->
+  <section class="hm-section">
+    <div class="hm-hero">
+      <p class="hm-hero__eyebrow"><span class="hm-hero__dot"></span>Scroll to reveal</p>
+      <p class="hm-hero__title">Marker bars sweep away on scroll<br>to reveal the text underneath.</p>
+      <div class="hm-scroll-arrow">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3v14M4 13l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Scroll down
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2 -->
+  <section class="hm-section hm-section--alt">
     <h1 data-highlight-marker-reveal data-marker-direction="right" data-marker-theme="#0064E7" class="highlight-title">Here's a text reveal that looks like a highlight marker</h1>
-    <h2 data-highlight-marker-reveal data-marker-direction="left" data-marker-theme="#4f8ef7" data-marker-stagger="150" class="highlight-title">Motion that makes an impression</h2>
+    <p class="highlight-subtitle">Scroll-triggered marker bars wipe from right to left, uncovering each line of text as it enters the viewport.</p>
+    <span class="hm-label">01 / 05</span>
+  </section>
+
+  <!-- Section 3 -->
+  <section class="hm-section">
+    <h2 data-highlight-marker-reveal data-marker-direction="left" data-marker-theme="#4f8ef7" data-marker-stagger="120" class="highlight-title">Motion that makes an impression</h2>
+    <p class="highlight-subtitle">Clean, purposeful animation that stops visitors in their tracks — and keeps them scrolling.</p>
+    <span class="hm-label">02 / 05</span>
+  </section>
+
+  <!-- Section 4 -->
+  <section class="hm-section hm-section--alt">
     <h2 data-highlight-marker-reveal data-marker-direction="right" data-marker-theme="#ffffff" data-marker-stagger-start="end" class="highlight-title">Built for clients who want more</h2>
-  </div>
+    <p class="highlight-subtitle">Every interaction is crafted to convert — turning passive viewers into active leads.</p>
+    <span class="hm-label">03 / 05</span>
+  </section>
+
+  <!-- Section 5 -->
+  <section class="hm-section">
+    <h2 data-highlight-marker-reveal data-marker-direction="left" data-marker-theme="#0064E7" data-marker-stagger="80" class="highlight-title">Scroll-driven storytelling done right</h2>
+    <p class="highlight-subtitle">Reveal text, images, and UI elements in sync with the user's scroll position for a cinematic experience.</p>
+    <span class="hm-label">04 / 05</span>
+  </section>
+
+  <!-- Section 6 -->
+  <section class="hm-section hm-section--alt">
+    <h2 data-highlight-marker-reveal data-marker-direction="right" data-marker-theme="#C700EF" data-marker-stagger-start="end" data-marker-stagger="100" class="highlight-title">Every detail earns its place</h2>
+    <p class="highlight-subtitle">No fluff, no bloat — just sharp motion design that supports your message and respects your users' time.</p>
+    <span class="hm-label">05 / 05</span>
+  </section>
+
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/SplitText.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="lenis-init.js"></script>
   <script>
-    function initHighlightMarkerTextReveal(){const defaults={direction:"right",theme:"#0064E7",scrollStart:"top 90%",staggerStart:"start",stagger:100,barDuration:0.6,barEase:"power3.inOut"};const colorMap={pink:"#C700EF",white:"#FFFFFF",blue:"#0064E7"};const directionMap={right:{prop:"scaleX",origin:"right center"},left:{prop:"scaleX",origin:"left center"},up:{prop:"scaleY",origin:"center top"},down:{prop:"scaleY",origin:"center bottom"}};function resolveColor(value){if(colorMap[value])return colorMap[value];if(value.startsWith("--"))return getComputedStyle(document.body).getPropertyValue(value).trim()||value;return value;}function createBar(color,origin){const bar=document.createElement("div");bar.className="highlight-marker-bar";Object.assign(bar.style,{backgroundColor:color,transformOrigin:origin});return bar;}function cleanupElement(el){if(!el._highlightMarkerReveal)return;el._highlightMarkerReveal.timeline?.kill();el._highlightMarkerReveal.scrollTrigger?.kill();el._highlightMarkerReveal.split?.revert();el.querySelectorAll(".highlight-marker-bar").forEach(bar=>bar.remove());delete el._highlightMarkerReveal;}let reduceMotion=false;gsap.matchMedia().add({reduce:"(prefers-reduced-motion: reduce)"},(context)=>{reduceMotion=context.conditions.reduce;});if(reduceMotion){document.querySelectorAll("[data-highlight-marker-reveal]").forEach(el=>{gsap.set(el,{autoAlpha:1});});return;}document.querySelectorAll("[data-highlight-marker-reveal]").forEach(cleanupElement);const elements=document.querySelectorAll("[data-highlight-marker-reveal]");if(!elements.length)return;elements.forEach(el=>{const direction=el.getAttribute("data-marker-direction")||defaults.direction;const theme=el.getAttribute("data-marker-theme")||defaults.theme;const scrollStart=el.getAttribute("data-marker-scroll-start")||defaults.scrollStart;const staggerStart=el.getAttribute("data-marker-stagger-start")||defaults.staggerStart;const staggerOffset=(parseFloat(el.getAttribute("data-marker-stagger"))||defaults.stagger)/1000;const color=resolveColor(theme);const dirConfig=directionMap[direction]||directionMap.right;el._highlightMarkerReveal={};const split=SplitText.create(el,{type:"lines",linesClass:"highlight-marker-line",autoSplit:true,onSplit(self){const instance=el._highlightMarkerReveal;instance.timeline?.kill();instance.scrollTrigger?.kill();el.querySelectorAll(".highlight-marker-bar").forEach(bar=>bar.remove());const lines=self.lines;const tl=gsap.timeline({paused:true});lines.forEach((line,i)=>{gsap.set(line,{position:"relative",overflow:"hidden"});const bar=createBar(color,dirConfig.origin);line.appendChild(bar);const staggerIndex=staggerStart==="end"?lines.length-1-i:i;tl.to(bar,{[dirConfig.prop]:0,duration:defaults.barDuration,ease:defaults.barEase},staggerIndex*staggerOffset);});gsap.set(el,{autoAlpha:1});const st=ScrollTrigger.create({trigger:el,start:scrollStart,once:true,onEnter:()=>tl.play()});instance.timeline=tl;instance.scrollTrigger=st;}});el._highlightMarkerReveal.split=split;});}
+    function initHighlightMarkerTextReveal(){const defaults={direction:"right",theme:"#0064E7",scrollStart:"top 88%",staggerStart:"start",stagger:100,barDuration:0.6,barEase:"power3.inOut"};const colorMap={pink:"#C700EF",white:"#FFFFFF",blue:"#0064E7"};const directionMap={right:{prop:"scaleX",origin:"right center"},left:{prop:"scaleX",origin:"left center"},up:{prop:"scaleY",origin:"center top"},down:{prop:"scaleY",origin:"center bottom"}};function resolveColor(value){if(colorMap[value])return colorMap[value];if(value.startsWith("--"))return getComputedStyle(document.body).getPropertyValue(value).trim()||value;return value;}function createBar(color,origin){const bar=document.createElement("div");bar.className="highlight-marker-bar";Object.assign(bar.style,{backgroundColor:color,transformOrigin:origin});return bar;}function cleanupElement(el){if(!el._highlightMarkerReveal)return;el._highlightMarkerReveal.timeline?.kill();el._highlightMarkerReveal.scrollTrigger?.kill();el._highlightMarkerReveal.split?.revert();el.querySelectorAll(".highlight-marker-bar").forEach(bar=>bar.remove());delete el._highlightMarkerReveal;}let reduceMotion=false;gsap.matchMedia().add({reduce:"(prefers-reduced-motion: reduce)"},(context)=>{reduceMotion=context.conditions.reduce;});if(reduceMotion){document.querySelectorAll("[data-highlight-marker-reveal]").forEach(el=>{gsap.set(el,{autoAlpha:1});});return;}document.querySelectorAll("[data-highlight-marker-reveal]").forEach(cleanupElement);const elements=document.querySelectorAll("[data-highlight-marker-reveal]");if(!elements.length)return;elements.forEach(el=>{const direction=el.getAttribute("data-marker-direction")||defaults.direction;const theme=el.getAttribute("data-marker-theme")||defaults.theme;const scrollStart=el.getAttribute("data-marker-scroll-start")||defaults.scrollStart;const staggerStart=el.getAttribute("data-marker-stagger-start")||defaults.staggerStart;const staggerOffset=(parseFloat(el.getAttribute("data-marker-stagger"))||defaults.stagger)/1000;const color=resolveColor(theme);const dirConfig=directionMap[direction]||directionMap.right;el._highlightMarkerReveal={};const split=SplitText.create(el,{type:"lines",linesClass:"highlight-marker-line",autoSplit:true,onSplit(self){const instance=el._highlightMarkerReveal;instance.timeline?.kill();instance.scrollTrigger?.kill();el.querySelectorAll(".highlight-marker-bar").forEach(bar=>bar.remove());const lines=self.lines;const tl=gsap.timeline({paused:true});lines.forEach((line,i)=>{gsap.set(line,{position:"relative",overflow:"hidden"});const bar=createBar(color,dirConfig.origin);line.appendChild(bar);const staggerIndex=staggerStart==="end"?lines.length-1-i:i;tl.to(bar,{[dirConfig.prop]:0,duration:defaults.barDuration,ease:defaults.barEase},staggerIndex*staggerOffset);});gsap.set(el,{autoAlpha:1});const st=ScrollTrigger.create({trigger:el,start:scrollStart,once:true,onEnter:()=>tl.play()});instance.timeline=tl;instance.scrollTrigger=st;}});el._highlightMarkerReveal.split=split;});}
     document.addEventListener("DOMContentLoaded",()=>{document.fonts.ready.then(()=>{initHighlightMarkerTextReveal();});});
   </script>
 </body>

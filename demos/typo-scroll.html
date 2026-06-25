@@ -23,7 +23,16 @@
     .typo-scroll__media.is--1-1 { aspect-ratio: 1; width: 20vw; }
     .typo-scroll__img { object-fit: cover; width: 100%; height: 100%; max-height: 100%; }
     .typo-scroll__p { backdrop-filter: blur(1em); -webkit-backdrop-filter: blur(1em); color: #f4f4f4; text-align: center; white-space: nowrap; background-color: rgba(32,29,29,0.2); margin-bottom: 0; padding: .25em; font-family: monospace; font-size: .75em; position: absolute; bottom: 2em; left: 50%; transform: translate(-50%); }
-    @media (max-width:991px){ .typo-scroll__h { font-size: 11vw; } .typo-scroll__media { width: 52.5vw; } .typo-scroll__media.is--3-2 { width: 75vw; } .typo-scroll__media.is--2-3 { width: 49.5vw; } .typo-scroll__media.is--1-1 { width: 60vw; } }
+    @media (max-width:991px){
+      .typo-scroll__h { font-size: 11vw; white-space: normal; text-align: center; }
+      .typo-scroll__media { width: 52.5vw; }
+      .typo-scroll__media.is--3-2 { width: 75vw; }
+      .typo-scroll__media.is--2-3 { width: 49.5vw; }
+      .typo-scroll__media.is--1-1 { width: 60vw; }
+    }
+    @media (max-width:480px){
+      .typo-scroll__h { font-size: 13vw; }
+    }
     @media (hover:none) and (pointer:coarse){ [data-typo-scroll-item="active"] .typo-scroll__media { pointer-events: all; } }
   </style>
 </head>
@@ -48,7 +57,64 @@
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.2.3/dist/lenis.min.js"></script>
   <script>
     var lenis=null;
-    function initTypoScrollPreview(){var containers=document.querySelectorAll('[data-typo-scroll-init]');if(!containers.length)return;var hasInfinite=false;containers.forEach(function(container){var isInfinite=container.getAttribute('data-typo-scroll-infinite')==='true';if(isInfinite){hasInfinite=true;var list=container.querySelector('[data-typo-scroll-list]');if(list){var clone=list.cloneNode(true);clone.style.overflow='hidden';clone.style.height='100dvh';container.appendChild(clone);}}});lenis=new Lenis({autoRaf:true,infinite:hasInfinite,syncTouch:hasInfinite});if('fonts' in document&&document.fonts.ready){document.fonts.ready.then(function(){if(lenis)lenis.resize();});}var isTouchDevice=('ontouchstart' in window)||(navigator.maxTouchPoints>0)||(navigator.msMaxTouchPoints>0);if(isTouchDevice){function updateActiveItems(){var viewportCenterY=window.innerHeight/2;containers.forEach(function(container){var items=container.querySelectorAll('[data-typo-scroll-item]');if(!items.length)return;var containerRect=container.getBoundingClientRect();if(viewportCenterY<containerRect.top||viewportCenterY>containerRect.bottom){items.forEach(function(item){item.setAttribute('data-typo-scroll-item','');});return;}var closestItem=null,closestDistance=Infinity;items.forEach(function(item){var rect=item.getBoundingClientRect();if(rect.bottom<0||rect.top>window.innerHeight)return;var itemCenterY=rect.top+rect.height/2;var distance=Math.abs(viewportCenterY-itemCenterY);if(distance<closestDistance){closestDistance=distance;closestItem=item;}});if(!closestItem){items.forEach(function(item){item.setAttribute('data-typo-scroll-item','');});return;}items.forEach(function(item){item.setAttribute('data-typo-scroll-item',item===closestItem?'active':'');});});requestAnimationFrame(updateActiveItems);}requestAnimationFrame(updateActiveItems);}else{containers.forEach(function(container){var items=container.querySelectorAll('[data-typo-scroll-item]');if(!items.length)return;function setActive(target){items.forEach(function(item){item.setAttribute('data-typo-scroll-item',item===target?'active':'');});}function clearActive(){items.forEach(function(item){item.setAttribute('data-typo-scroll-item','');});}items.forEach(function(item){item.addEventListener('mouseenter',function(){setActive(item);});});container.addEventListener('mouseleave',function(){clearActive();});});}}
+    function initTypoScrollPreview(){
+      var containers=document.querySelectorAll('[data-typo-scroll-init]');
+      if(!containers.length)return;
+      var hasInfinite=false;
+      containers.forEach(function(container){
+        var isInfinite=container.getAttribute('data-typo-scroll-infinite')==='true';
+        if(isInfinite){
+          hasInfinite=true;
+          var list=container.querySelector('[data-typo-scroll-list]');
+          if(list){
+            var clone=list.cloneNode(true);
+            // Do NOT constrain clone height — it must match the original for Lenis infinite to loop correctly
+            container.appendChild(clone);
+          }
+        }
+      });
+
+      lenis=new Lenis({autoRaf:true,infinite:hasInfinite,syncTouch:hasInfinite});
+      if('fonts' in document&&document.fonts.ready){document.fonts.ready.then(function(){if(lenis)lenis.resize();});}
+
+      var isTouchDevice=('ontouchstart' in window)||(navigator.maxTouchPoints>0)||(navigator.msMaxTouchPoints>0);
+
+      if(isTouchDevice){
+        var lastActiveItem=null;
+        function updateActiveItems(){
+          var viewportCenterY=window.innerHeight/2;
+          containers.forEach(function(container){
+            var items=container.querySelectorAll('[data-typo-scroll-item]');
+            if(!items.length)return;
+            var closestItem=null,closestDistance=Infinity;
+            items.forEach(function(item){
+              var rect=item.getBoundingClientRect();
+              var itemCenterY=rect.top+rect.height/2;
+              var distance=Math.abs(viewportCenterY-itemCenterY);
+              if(distance<closestDistance){closestDistance=distance;closestItem=item;}
+            });
+            // Only update if we found something reasonably close (within 1.5 item heights)
+            if(closestItem&&closestDistance<closestItem.getBoundingClientRect().height*1.5){
+              if(closestItem!==lastActiveItem){
+                items.forEach(function(item){item.setAttribute('data-typo-scroll-item',item===closestItem?'active':'');});
+                lastActiveItem=closestItem;
+              }
+            }
+          });
+          requestAnimationFrame(updateActiveItems);
+        }
+        requestAnimationFrame(updateActiveItems);
+      } else {
+        containers.forEach(function(container){
+          var items=container.querySelectorAll('[data-typo-scroll-item]');
+          if(!items.length)return;
+          function setActive(target){items.forEach(function(item){item.setAttribute('data-typo-scroll-item',item===target?'active':'');});}
+          function clearActive(){items.forEach(function(item){item.setAttribute('data-typo-scroll-item','');});}
+          items.forEach(function(item){item.addEventListener('mouseenter',function(){setActive(item);});});
+          container.addEventListener('mouseleave',function(){clearActive();});
+        });
+      }
+    }
     document.addEventListener('DOMContentLoaded',function(){initTypoScrollPreview();});
   </script>
 </body>

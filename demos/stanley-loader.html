@@ -13,7 +13,7 @@
 
     /* ── Loader section ── */
     .stanley-header{color:#f4f4f4;position:relative;overflow:hidden;height:100dvh}
-    .stanley-header.is--loading.is--hidden{display:none}
+    .stanley-header.is--loading.is--hidden{visibility:hidden}
     .stanley-loader{color:#f4f4f4;justify-content:center;align-items:center;width:100%;height:100%;display:flex;position:absolute;top:0;left:0;overflow:hidden;background:#0c0d10;z-index:2}
     .stanley__h1{white-space:nowrap;justify-content:center;font-size:clamp(48px,10vw,140px);font-weight:500;line-height:.75;display:flex;position:relative}
     .stanley__h1-start{justify-content:flex-end;width:3.4em;display:flex;overflow:hidden}
@@ -122,6 +122,11 @@
     function initStanleyLoader(){
       const container=document.querySelector(".stanley-header");
       if(!container)return;
+
+      // Force layout visibility so GSAP can measure, but keep visually hidden
+      container.style.visibility='hidden';
+      container.classList.remove('is--hidden');
+
       const loadingLetter=container.querySelectorAll(".stanley-loader .stanley__letter");
       const box=container.querySelectorAll(".stanley-loader__box");
       const growingImage=container.querySelectorAll(".stanley__growing-image");
@@ -130,8 +135,17 @@
       const coverImageExtra=container.querySelectorAll(".stanley__cover-image-extra");
       const headerLetter=container.querySelectorAll(".stanley__letter-white");
       const navLinks=container.querySelectorAll(".stanley-nav a span");
-      const tl=gsap.timeline({defaults:{ease:"expo.inOut"},onStart:()=>{container.classList.remove('is--hidden');}});
-      if(loadingLetter.length)tl.from(loadingLetter,{yPercent:100,stagger:0.025,duration:1.25});
+
+      // Set initial states while layout is available but element is hidden
+      if(loadingLetter.length) gsap.set(loadingLetter,{yPercent:110});
+      if(headerLetter.length) gsap.set(headerLetter,{yPercent:110});
+      if(navLinks.length) gsap.set(navLinks,{yPercent:110});
+
+      // Unhide — letters are safely tucked away via overflow:hidden parents
+      container.style.visibility='';
+
+      const tl=gsap.timeline({defaults:{ease:"expo.inOut"}});
+      if(loadingLetter.length)tl.to(loadingLetter,{yPercent:0,stagger:0.025,duration:1.25});
       if(box.length)tl.fromTo(box,{width:"0em"},{width:"1em",duration:1.25},"< 1.25");
       if(growingImage.length)tl.fromTo(growingImage,{width:"0%"},{width:"100%",duration:1.25},"<");
       if(headingStart.length)tl.fromTo(headingStart,{x:"0em"},{x:"-0.05em",duration:1.25},"<");
@@ -139,10 +153,12 @@
       if(coverImageExtra.length)tl.fromTo(coverImageExtra,{opacity:1},{opacity:0,duration:0.05,ease:"none",stagger:0.5},"-=0.05");
       if(growingImage.length)tl.to(growingImage,{width:"100vw",height:"100dvh",duration:2},"< 1.25");
       if(box.length)tl.to(box,{width:"110vw",duration:2},"<");
-      if(headerLetter.length)tl.from(headerLetter,{yPercent:100,duration:1.25,ease:"expo.out",stagger:0.025},"< 1.2");
-      if(navLinks.length)tl.from(navLinks,{yPercent:100,duration:1.25,ease:"expo.out",stagger:0.08},"<");
+      if(headerLetter.length)tl.to(headerLetter,{yPercent:0,duration:1.25,ease:"expo.out",stagger:0.025},"< 1.2");
+      if(navLinks.length)tl.to(navLinks,{yPercent:0,duration:1.25,ease:"expo.out",stagger:0.08},"<");
     }
     document.addEventListener('DOMContentLoaded',()=>{initStanleyLoader();});
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="lenis-init.js"></script>
 </body>
 </html>

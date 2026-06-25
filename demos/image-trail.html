@@ -51,5 +51,7 @@
     area.addEventListener("mousemove",function(event){var rect=area.getBoundingClientRect();var x=event.clientX-rect.left;var y=event.clientY-rect.top;if(x<0||y<0||x>rect.width||y>rect.height){lastCloneX=null;lastCloneY=null;return;}if(lastCloneX===null||lastCloneY===null){spawnTrailItem(x,y);return;}var dx=x-lastCloneX,dy=y-lastCloneY,distance=Math.sqrt(dx*dx+dy*dy);if(distance>=stepDistance){spawnTrailItem(x,y);}});}
     document.addEventListener("DOMContentLoaded",function(){initRotatingImageTrail();});
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="lenis-init.js"></script>
 </body>
 </html>
