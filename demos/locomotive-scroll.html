@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Locomotive Smooth Scroll — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@beta/bundled/locomotive-scroll.css">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:#e2e1df;color:#131313;font-family:'Inter',sans-serif;padding-top:50px;font-size:16px;font-weight:500;line-height:1.4;-webkit-font-smoothing:antialiased}
+    .section{display:flex;align-items:center;justify-content:center;min-height:100svh;position:relative;overflow:hidden}
+    .section--dark{background:#131313;color:#e2e1df}
+    /* Hero */
+    .hero-img-wrap{position:relative;width:clamp(280px,45vw,640px);border-radius:1.25em;overflow:hidden}
+    .hero-img-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+    .hero-title{font-size:clamp(48px,9vw,120px);font-weight:300;letter-spacing:-.03em;line-height:.9;position:absolute;bottom:1.5rem;left:1.5rem;color:#e2e1df}
+    /* Text section */
+    .text-section{padding:10em 2em;max-width:640px;margin:auto}
+    .text-section h2{font-size:clamp(32px,5vw,64px);font-weight:300;letter-spacing:-.03em;line-height:1;margin-bottom:.75em}
+    .text-section p{font-size:1.125em;font-weight:300;opacity:.6;line-height:1.7}
+    /* Three image row */
+    .three-row{display:flex;gap:1.5em;padding:6em 2em;max-width:1200px;margin:auto;width:100%;align-items:flex-end}
+    .three-row__img{border-radius:1em;overflow:hidden;flex:1}
+    .three-row__img img{width:100%;height:100%;object-fit:cover;display:block}
+    .three-row__img:nth-child(1){aspect-ratio:3/4}
+    .three-row__img:nth-child(2){aspect-ratio:4/5;flex:1.4}
+    .three-row__img:nth-child(3){aspect-ratio:3/4}
+    /* Big text */
+    .big-text{font-size:clamp(60px,14vw,180px);font-weight:400;letter-spacing:-.04em;line-height:.85;padding:4em 2rem;text-align:center;opacity:.12}
+    @media (max-width:640px){.three-row{flex-direction:column}.three-row__img{aspect-ratio:4/3!important;flex:none}}
+  </style>
+</head>
+<body>
+  <div class="demo-chrome" style="background:rgba(226,225,223,0.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.1);">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back" style="color:rgba(19,19,19,0.55);"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <div class="demo-chrome__sep" style="background:rgba(0,0,0,0.12);"></div>
+      <span class="demo-chrome__title" style="color:#131313;">Locomotive Smooth Scroll</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+
+  <section class="section">
+    <div class="hero-img-wrap">
+      <img src="https://cdn.prod.website-files.com/684ff678a75ff988336f8a01/684ffb52a76352dfe386aa7f_Vibrant%20Orange%20Planter%20with%20Lush%20Green%20Plant.avif" alt="" data-scroll data-scroll-speed="-0.05">
+      <h1 class="hero-title">Locomotive</h1>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="text-section" data-scroll data-scroll-speed="0.05">
+      <h2>Smooth scroll, built for the modern web.</h2>
+      <p>Locomotive Scroll adds buttery inertia to your page scroll and makes parallax effects as simple as a data attribute. Fast to set up, easy to customize.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="three-row">
+      <div class="three-row__img" data-scroll data-scroll-speed="-0.08">
+        <img src="https://cdn.prod.website-files.com/684ff678a75ff988336f8a01/684ffb52a76352dfe386aa7f_Vibrant%20Orange%20Planter%20with%20Lush%20Green%20Plant.avif" alt="">
+      </div>
+      <div class="three-row__img" data-scroll data-scroll-speed="0.04">
+        <img src="https://cdn.prod.website-files.com/684ff678a75ff988336f8a01/685007551a0a294305dd27be_Textured%20Green%20Surface.avif" alt="">
+      </div>
+      <div class="three-row__img" data-scroll data-scroll-speed="-0.06">
+        <img src="https://cdn.prod.website-files.com/684ff678a75ff988336f8a01/685006f3ccd52b5ab4db7a10_Laptop%20on%20Velvet%20Sofa.avif" alt="">
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <p class="big-text" data-scroll data-scroll-speed="-0.1">SCROLL</p>
+  </section>
+
+  <section class="section">
+    <div class="text-section">
+      <h2>Just scroll.</h2>
+      <p>That's it. Locomotive handles the rest — smooth easing, scroll detection, and parallax all from HTML attributes.</p>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@beta/bundled/locomotive-scroll.min.js"></script>
+  <script>
+    const locomotiveScroll = new LocomotiveScroll();
+  </script>
+</body>
+</html>
