@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sticky Section Tabs — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:#0c0d10;color:#f0f0f2;font-family:'Inter',sans-serif}
+    :root{--nav-height:50px}
+    .container{max-width:90em;margin:0 auto;padding:0 2em}
+    /* Header */
+    .demo-header{background-color:#000;padding-top:25vh;padding-bottom:10vh}
+    .demo-header__title{font-size:clamp(48px,8vw,96px);font-weight:500;line-height:.95;letter-spacing:-.03em;margin:0}
+    /* Sticky Tabs */
+    .sticky-tab-group{overflow:clip}
+    .sticky-tab-group__nav-bg{z-index:2;height:var(--nav-height);background-color:#000;border-bottom:1px solid rgba(255,255,255,0.15);width:100%;position:sticky;top:0;left:0}
+    .sticky-tab{background-color:#131313;position:relative;overflow:clip}
+    .sticky-tab__sticky{z-index:1;top:calc(var(--nav-height) - 1px);flex-flow:column;margin-top:-1px;display:flex;position:sticky;box-shadow:0 .25em .5em 0 rgba(0,0,0,0.4)}
+    .sticky-tab__inner{background-color:#000;border-top:1px solid rgba(255,255,255,0.15);border-bottom:1px solid rgba(255,255,255,0.15);justify-content:space-between;align-items:center;padding-top:1.5em;padding-bottom:1.5em}
+    .sticky-tab__content{justify-content:space-between;align-items:center;display:flex}
+    .sticky-tab__title{margin:0;font-size:clamp(20px,2.25vw,2.25em);font-weight:500;line-height:1}
+    .sticky-tab__body{display:flex;align-items:center;justify-content:center;height:66vh;color:rgba(240,240,242,0.2)}
+    .sticky-tab__body svg{width:6em;height:6em}
+    /* Section + footer */
+    .demo-section{padding:45vh 0}
+    .demo-section__title{font-size:clamp(40px,7em,7em);font-weight:500;line-height:1;letter-spacing:-.03em;margin:0}
+    .demo-footer{border-top:1px solid rgba(255,255,255,0.15);padding:2em 0}
+    .demo-footer__title{font-size:2.25em;font-weight:500;line-height:1;margin:0}
+    @media (max-width:767px){.sticky-tab__title{font-size:1.5em}.demo-section__title{font-size:4em}}
+    @media (max-width:479px){.container{padding:0 1em}}
+  </style>
+</head>
+<body>
+  <!-- Chrome uses position:fixed so sits above sticky content -->
+  <div class="demo-chrome" style="position:fixed;z-index:100;">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <div class="demo-chrome__sep"></div><span class="demo-chrome__title">Sticky Section Tabs</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+
+  <section class="demo-header" style="padding-top:calc(25vh + 50px)">
+    <div class="container">
+      <h1 class="demo-header__title">Sticky<br>Section Tabs</h1>
+    </div>
+  </section>
+
+  <div class="sticky-tab-group">
+    <div class="sticky-tab-group__nav-bg"></div>
+
+    <section class="sticky-tab">
+      <div class="sticky-tab__sticky"><div class="sticky-tab__inner"><div class="container"><div class="sticky-tab__content"><h2 class="sticky-tab__title">Step 1: Concept</h2></div></div></div></div>
+      <div class="container"><div class="sticky-tab__body"><svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M94.8284 53.8578C92.3086 56.3776 88 54.593 88 51.0294V0H72V59.9999C72 66.6273 66.6274 71.9999 60 71.9999H0V87.9999H51.0294C54.5931 87.9999 56.3777 92.3085 53.8579 94.8283L18.3431 130.343L29.6569 141.657L65.1717 106.142C67.684 103.63 71.9745 105.396 72 108.939V160L88.0001 160L88 99.9999C88 93.3725 93.3726 87.9999 100 87.9999H160V71.9999H108.939C105.407 71.9745 103.64 67.7091 106.12 65.1938L106.142 65.1716L141.657 29.6568L130.343 18.3432L94.8284 53.8578Z" fill="currentColor"/></svg></div></div>
+    </section>
+
+    <section class="sticky-tab">
+      <div class="sticky-tab__sticky"><div class="sticky-tab__inner"><div class="container"><div class="sticky-tab__content"><h2 class="sticky-tab__title">Step 2: Design</h2></div></div></div></div>
+      <div class="container"><div class="sticky-tab__body"><svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M94.8284 53.8578C92.3086 56.3776 88 54.593 88 51.0294V0H72V59.9999C72 66.6273 66.6274 71.9999 60 71.9999H0V87.9999H51.0294C54.5931 87.9999 56.3777 92.3085 53.8579 94.8283L18.3431 130.343L29.6569 141.657L65.1717 106.142C67.684 103.63 71.9745 105.396 72 108.939V160L88.0001 160L88 99.9999C88 93.3725 93.3726 87.9999 100 87.9999H160V71.9999H108.939C105.407 71.9745 103.64 67.7091 106.12 65.1938L106.142 65.1716L141.657 29.6568L130.343 18.3432L94.8284 53.8578Z" fill="currentColor"/></svg></div></div>
+    </section>
+
+    <section class="sticky-tab">
+      <div class="sticky-tab__sticky"><div class="sticky-tab__inner"><div class="container"><div class="sticky-tab__content"><h2 class="sticky-tab__title">Step 3: Development</h2></div></div></div></div>
+      <div class="container"><div class="sticky-tab__body"><svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M94.8284 53.8578C92.3086 56.3776 88 54.593 88 51.0294V0H72V59.9999C72 66.6273 66.6274 71.9999 60 71.9999H0V87.9999H51.0294C54.5931 87.9999 56.3777 92.3085 53.8579 94.8283L18.3431 130.343L29.6569 141.657L65.1717 106.142C67.684 103.63 71.9745 105.396 72 108.939V160L88.0001 160L88 99.9999C88 93.3725 93.3726 87.9999 100 87.9999H160V71.9999H108.939C105.407 71.9745 103.64 67.7091 106.12 65.1938L106.142 65.1716L141.657 29.6568L130.343 18.3432L94.8284 53.8578Z" fill="currentColor"/></svg></div></div>
+    </section>
+
+    <section class="sticky-tab">
+      <div class="sticky-tab__sticky"><div class="sticky-tab__inner"><div class="container"><div class="sticky-tab__content"><h2 class="sticky-tab__title">Step 4: Launch 🎉</h2></div></div></div></div>
+      <div class="container"><div class="sticky-tab__body"><svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M94.8284 53.8578C92.3086 56.3776 88 54.593 88 51.0294V0H72V59.9999C72 66.6273 66.6274 71.9999 60 71.9999H0V87.9999H51.0294C54.5931 87.9999 56.3777 92.3085 53.8579 94.8283L18.3431 130.343L29.6569 141.657L65.1717 106.142C67.684 103.63 71.9745 105.396 72 108.939V160L88.0001 160L88 99.9999C88 93.3725 93.3726 87.9999 100 87.9999H160V71.9999H108.939C105.407 71.9745 103.64 67.7091 106.12 65.1938L106.142 65.1716L141.657 29.6568L130.343 18.3432L94.8284 53.8578Z" fill="currentColor"/></svg></div></div>
+    </section>
+  </div>
+
+  <section class="demo-section"><div class="container"><h2 class="demo-section__title">More content below</h2></div></section>
+  <footer class="demo-footer"><div class="container"><h2 class="demo-footer__title">Footer</h2></div></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="lenis-init.js"></script>
+</body>
+</html>
