@@ -5,86 +5,76 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>3D Image Carousel — Stanley Smith Studios</title>
   <link rel="stylesheet" href="demo-chrome.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       background: #0c0d10;
       color: #f0f0f2;
       font-family: 'Inter', sans-serif;
-      overflow-x: hidden;
       min-height: 100vh;
     }
 
-    .scene-wrap {
-      display: flex;
-      align-items: center;
+    .img-carousel__wrap {
       justify-content: center;
+      align-items: center;
       width: 100%;
-      height: 100vh;
-      perspective: 90vw;
-      overflow: hidden;
-      cursor: grab;
+      min-height: 100vh;
+      display: flex;
     }
 
-    .scene-wrap:active { cursor: grabbing; }
-
-    [data-3d-carousel] {
+    .img-carousel__list {
+      z-index: 1;
+      perspective: 90vw;
+      perspective-origin: 50%;
+      transform-style: preserve-3d;
+      justify-content: center;
+      align-items: center;
       width: 80vw;
       height: 50vw;
-      max-height: 560px;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 1vw;
+      display: flex;
       position: relative;
-      transform-style: preserve-3d;
-      will-change: transform;
     }
 
-    [data-3d-carousel-panel] {
-      position: absolute;
-      top: 0;
-      left: 50%;
+    .img-carousel__panel {
+      z-index: 0;
+      flex-direction: column;
+      flex: none;
+      justify-content: space-between;
+      align-items: stretch;
       width: 13em;
       height: 39em;
-      transform-origin: 50% 50%;
-      margin-left: -6.5em;
-      overflow: hidden;
-      border-radius: 0.75em;
-    }
-
-    [data-3d-carousel-panel] img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      pointer-events: none;
-      user-select: none;
-    }
-
-    .carousel-hint {
-      position: fixed;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 0.75rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(240,240,242,0.4);
       display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      pointer-events: none;
+      position: absolute;
     }
 
-    @media (max-width: 768px) {
-      [data-3d-carousel] { width: 100vw; height: 70vw; max-height: none; }
-      [data-3d-carousel-panel] { width: 9em; height: 27em; margin-left: -4.5em; }
+    .img-carousel__panel:nth-of-type(even) {
+      justify-content: center;
+    }
+
+    .img-carousel__item {
+      aspect-ratio: 1;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .img-carousel__img {
+      object-fit: cover;
+      width: 100%;
+      max-width: none;
+      height: 100%;
+      position: absolute;
+      inset: 0%;
     }
   </style>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <!-- demo chrome header -->
   <header class="demo-chrome">
     <a class="demo-chrome__back" href="../index.html">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -94,142 +84,211 @@
     <a class="demo-chrome__cta" href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener">Book a call</a>
   </header>
 
-  <div class="scene-wrap">
-    <div data-3d-carousel>
-      <div data-3d-carousel-panel><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=520&q=80" alt=""></div>
-      <div data-3d-carousel-panel><img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=520&q=80" alt=""></div>
-      <div data-3d-carousel-panel><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=520&q=80" alt=""></div>
-      <div data-3d-carousel-panel><img src="https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=520&q=80" alt=""></div>
-      <div data-3d-carousel-panel><img src="https://images.unsplash.com/photo-1470770903676-69b98201ea1c?w=520&q=80" alt=""></div>
-      <div data-3d-carousel-panel><img src="https://images.unsplash.com/photo-1511884642898-4c92249e20b6?w=520&q=80" alt=""></div>
-      <div data-3d-carousel-panel><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=520&q=80" alt=""></div>
-      <div data-3d-carousel-panel><img src="https://images.unsplash.com/photo-1494500764479-0c8f2919a3d8?w=520&q=80" alt=""></div>
-      <div data-3d-carousel-panel><img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=520&q=80" alt=""></div>
-      <div data-3d-carousel-panel><img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=520&q=80" alt=""></div>
-      <div data-3d-carousel-panel><img src="https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=520&q=80" alt=""></div>
-      <div data-3d-carousel-panel><img src="https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=520&q=80" alt=""></div>
+  <div class="img-carousel__wrap">
+    <div data-3d-carousel-wrap="" class="img-carousel__list">
+      <div data-3d-carousel-panel="" class="img-carousel__panel">
+        <div data-3d-carousel-content="" class="img-carousel__item"><img src="https://cdn.prod.website-files.com/689201b6fcd75d4e39c1bf42/689204d87de67d8f1795c60d_Contemplative%20Portrait%20with%20Bucket%20Hat.avif" class="img-carousel__img"></div>
+        <div data-3d-carousel-content="" class="img-carousel__item"><img src="https://cdn.prod.website-files.com/689201b6fcd75d4e39c1bf42/689204d83a1a3815a26f7bd6_Mysterious%20Urban%20Portrait.avif" class="img-carousel__img"></div>
+      </div>
+      <div data-3d-carousel-panel="" class="img-carousel__panel">
+        <div data-3d-carousel-content="" class="img-carousel__item"><img src="https://cdn.prod.website-files.com/689201b6fcd75d4e39c1bf42/689204d819cbb2dbff9b2a64_Moonlit%20Rocky%20Landscape.avif" class="img-carousel__img"></div>
+      </div>
+      <div data-3d-carousel-panel="" class="img-carousel__panel">
+        <div data-3d-carousel-content="" class="img-carousel__item"><img src="https://cdn.prod.website-files.com/689201b6fcd75d4e39c1bf42/689204d8cc5908532a8fd8c6_Mysterious%20Balaclava%20Portrait.avif" class="img-carousel__img"></div>
+        <div data-3d-carousel-content="" class="img-carousel__item"><img src="https://cdn.prod.website-files.com/689201b6fcd75d4e39c1bf42/689204d8da35115879d4da77_Futuristic%20Mask%20Portrait.avif" class="img-carousel__img"></div>
+      </div>
+      <div data-3d-carousel-panel="" class="img-carousel__panel">
+        <div data-3d-carousel-content="" class="img-carousel__item"><img src="https://cdn.prod.website-files.com/689201b6fcd75d4e39c1bf42/689204d819cbb2dbff9b2a80_Serene%20Wheat%20Field%20Landscape.avif" class="img-carousel__img"></div>
+      </div>
+      <div data-3d-carousel-panel="" class="img-carousel__panel">
+        <div data-3d-carousel-content="" class="img-carousel__item"><img src="https://cdn.prod.website-files.com/689201b6fcd75d4e39c1bf42/689204d84ab87177abc40d52_Solitude%20in%20White.avif" class="img-carousel__img"></div>
+        <div data-3d-carousel-content="" class="img-carousel__item"><img src="https://cdn.prod.website-files.com/689201b6fcd75d4e39c1bf42/689204d8bcd829c22ae071e4_Mysterious%20Portrait.avif" class="img-carousel__img"></div>
+      </div>
+      <div data-3d-carousel-panel="" class="img-carousel__panel">
+        <div data-3d-carousel-content="" class="img-carousel__item"><img src="https://cdn.prod.website-files.com/689201b6fcd75d4e39c1bf42/689204d8f2996c45c7f5ec3e_Modern%20House%20on%20Hillside.avif" class="img-carousel__img"></div>
+      </div>
+      <div data-3d-carousel-panel="" class="img-carousel__panel">
+        <div data-3d-carousel-content="" class="img-carousel__item"><img src="https://cdn.prod.website-files.com/689201b6fcd75d4e39c1bf42/689204d83b775bc909a4914f_Cylindrical%20Tube%20with%20Oranges.avif" class="img-carousel__img"></div>
+        <div data-3d-carousel-content="" class="img-carousel__item"><img src="https://cdn.prod.website-files.com/689201b6fcd75d4e39c1bf42/689204d89daf4fb3b1b6dbcf_Contemplative%20Urban%20Portrait.avif" class="img-carousel__img"></div>
+      </div>
+      <div data-3d-carousel-panel="" class="img-carousel__panel">
+        <div data-3d-carousel-content="" class="img-carousel__item"><img src="https://cdn.prod.website-files.com/689201b6fcd75d4e39c1bf42/689204d8cb1cc611680f5233_White%20Bucket%20Hat%20on%20Rocky%20Surface.avif" class="img-carousel__img"></div>
+      </div>
+      <div data-3d-carousel-panel="" class="img-carousel__panel">
+        <div data-3d-carousel-content="" class="img-carousel__item"><img src="https://cdn.prod.website-files.com/689201b6fcd75d4e39c1bf42/689204d82ea2b65ee2abfc33_Urban%20Anonymity.avif" class="img-carousel__img"></div>
+        <div data-3d-carousel-content="" class="img-carousel__item"><img src="https://cdn.prod.website-files.com/689201b6fcd75d4e39c1bf42/689204d880f185d08576afa9_Futuristic%20Masked%20Individual.avif" class="img-carousel__img"></div>
+      </div>
+      <div data-3d-carousel-panel="" class="img-carousel__panel">
+        <div data-3d-carousel-content="" class="img-carousel__item"><img src="https://cdn.prod.website-files.com/689201b6fcd75d4e39c1bf42/689204d847d26653710d42aa_Regal%20Portrait%20with%20Crown.avif" class="img-carousel__img"></div>
+      </div>
+      <div data-3d-carousel-panel="" class="img-carousel__panel">
+        <div data-3d-carousel-content="" class="img-carousel__item"><img src="https://cdn.prod.website-files.com/689201b6fcd75d4e39c1bf42/689204d8d7f5ef9c36c91701_Window%20View%20of%20Vibrant%20Sky.avif" class="img-carousel__img"></div>
+        <div data-3d-carousel-content="" class="img-carousel__item"><img src="https://cdn.prod.website-files.com/689201b6fcd75d4e39c1bf42/689204d87b92b30ee718d99d_White%20Baseball%20Cap%20with%20Dried%20Plants.avif" class="img-carousel__img"></div>
+      </div>
+      <div data-3d-carousel-panel="" class="img-carousel__panel">
+        <div data-3d-carousel-content="" class="img-carousel__item"><img src="https://cdn.prod.website-files.com/689201b6fcd75d4e39c1bf42/689204d85f8f425e2f133bba_Urban%20Chic%20Portrait.avif" class="img-carousel__img"></div>
+      </div>
     </div>
   </div>
 
-  <p class="carousel-hint">
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    Drag to spin
-  </p>
-
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Draggable.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/InertiaPlugin.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Observer.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/Draggable.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/InertiaPlugin.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/Observer.min.js"></script>
 
   <script>
-    gsap.registerPlugin(ScrollTrigger, Draggable, InertiaPlugin, Observer);
+    gsap.registerPlugin(Draggable, InertiaPlugin, Observer, ScrollTrigger);
 
     function init3dImageCarousel() {
-      const carousel = document.querySelector('[data-3d-carousel]');
-      if (!carousel) return;
+      let radius;
+      let draggableInstance;
+      let observerInstance;
+      let spin;
+      let intro;
+      let lastWidth = window.innerWidth;
 
-      const panels = carousel.querySelectorAll('[data-3d-carousel-panel]');
-      const count = panels.length;
-      const calcRadius = () => window.innerWidth * 0.5;
-      let radius = calcRadius();
-      let currentAngle = 0;
+      const wrap = document.querySelector('[data-3d-carousel-wrap]');
+      if (!wrap) return;
 
-      function positionPanels(r) {
-        panels.forEach((panel, i) => {
-          const angle = (360 / count) * i;
-          gsap.set(panel, {
-            rotationY: angle,
-            transformOrigin: '50% 50% ' + (-r) + 'px',
-            z: r
-          });
-        });
-      }
+      const calcRadius = () => {
+        radius = window.innerWidth * 0.5;
+      };
 
-      positionPanels(radius);
+      const destroy = () => {
+        draggableInstance && draggableInstance.kill();
+        observerInstance && observerInstance.kill();
+        spin && spin.kill();
+        intro && intro.kill();
+        ScrollTrigger.getAll().forEach(st => st.kill());
+        const panels = wrap.querySelectorAll('[data-3d-carousel-panel]');
+        gsap.set(panels, { clearProps: 'transform' });
+      };
 
-      const proxy = { rotation: 0 };
+      const create = () => {
+        calcRadius();
 
-      Draggable.create(proxy, {
-        type: 'rotation',
-        trigger: '.scene-wrap',
-        inertia: true,
-        onDrag: function () {
-          gsap.set(carousel, { rotationY: -this.x / 3 });
-        },
-        onDragEnd: function () {
-          // handled by inertia
-        }
-      });
+        const panels = wrap.querySelectorAll('[data-3d-carousel-panel]');
+        const content = wrap.querySelectorAll('[data-3d-carousel-content]');
+        const proxy = document.createElement('div');
+        const wrapProgress = gsap.utils.wrap(0, 1);
+        const dragDistance = window.innerWidth * 3;
+        let startProg;
 
-      // Use a ticker-driven approach for smooth drag
-      let dragProxy = { val: 0 };
-      const sceneWrap = document.querySelector('.scene-wrap');
+        panels.forEach(p =>
+          p.style.transformOrigin = `50% 50% ${-radius}px`
+        );
 
-      let isDragging = false;
-      let startX = 0;
-      let lastX = 0;
-      let velocity = 0;
-      let momentum = 0;
+        spin = gsap.fromTo(
+          panels,
+          { rotationY: i => (i * 360) / panels.length },
+          { rotationY: '-=360', duration: 30, ease: 'none', repeat: -1 }
+        );
 
-      sceneWrap.addEventListener('pointerdown', (e) => {
-        isDragging = true;
-        startX = e.clientX;
-        lastX = e.clientX;
-        velocity = 0;
-        gsap.killTweensOf(dragProxy);
-        sceneWrap.setPointerCapture(e.pointerId);
-      });
+        spin.progress(1000);
 
-      sceneWrap.addEventListener('pointermove', (e) => {
-        if (!isDragging) return;
-        const dx = e.clientX - lastX;
-        velocity = dx;
-        lastX = e.clientX;
-        currentAngle -= dx * 0.3;
-        gsap.set(carousel, { rotationY: currentAngle });
-      });
-
-      sceneWrap.addEventListener('pointerup', () => {
-        isDragging = false;
-        momentum = velocity * 6;
-        gsap.to(dragProxy, {
-          val: dragProxy.val + momentum,
-          duration: 1.4,
-          ease: 'power3.out',
-          onUpdate: () => {
-            const delta = dragProxy.val - (dragProxy._prev || 0);
-            currentAngle -= delta * 0.3;
-            gsap.set(carousel, { rotationY: currentAngle });
-            dragProxy._prev = dragProxy.val;
+        draggableInstance = Draggable.create(proxy, {
+          trigger: wrap,
+          type: 'x',
+          inertia: true,
+          allowNativeTouchScrolling: true,
+          onPress() {
+            gsap.to(content, {
+              clipPath: 'inset(5%)',
+              duration: 0.3,
+              ease: 'power4.out',
+              overwrite: 'auto'
+            });
+            gsap.killTweensOf(spin);
+            spin.timeScale(0);
+            startProg = spin.progress();
           },
-          onComplete: () => { dragProxy._prev = 0; dragProxy.val = 0; }
+          onDrag() {
+            const p = startProg + (this.startX - this.x) / dragDistance;
+            spin.progress(wrapProgress(p));
+          },
+          onThrowUpdate() {
+            const p = startProg + (this.startX - this.x) / dragDistance;
+            spin.progress(wrapProgress(p));
+          },
+          onRelease() {
+            if (!this.tween || !this.tween.isActive()) {
+              gsap.to(spin, { timeScale: 1, duration: 0.1 });
+            }
+            gsap.to(content, {
+              clipPath: 'inset(0%)',
+              duration: 0.5,
+              ease: 'power4.out',
+              overwrite: 'auto'
+            });
+          },
+          onThrowComplete() {
+            gsap.to(spin, { timeScale: 1, duration: 0.1 });
+          }
+        })[0];
+
+        intro = gsap.timeline({
+          scrollTrigger: {
+            trigger: wrap,
+            start: 'top 80%',
+            end: 'bottom top',
+            scrub: false,
+            toggleActions: 'play resume play play'
+          },
+          defaults: { ease: 'expo.inOut' }
         });
-      });
+        intro
+          .fromTo(spin, { timeScale: 15 }, { timeScale: 1, duration: 2 })
+          .fromTo(wrap, { scale: 0.5, rotation: 12 }, { scale: 1, rotation: 5, duration: 1.2 }, '<')
+          .fromTo(content, { autoAlpha: 0 }, { autoAlpha: 1, stagger: { amount: 0.8, from: 'random' } }, '<');
 
-      // Scroll adds rotational velocity
-      Observer.create({
-        target: window,
-        type: 'wheel',
-        onChangeY: (self) => {
-          currentAngle += self.deltaY * 0.15;
-          gsap.to(carousel, { rotationY: currentAngle, duration: 0.6, ease: 'power2.out' });
+        observerInstance = Observer.create({
+          target: window,
+          type: 'wheel,scroll,touch',
+          onChangeY: self => {
+            let v = gsap.utils.clamp(-60, 60, self.velocityY * 0.005);
+            spin.timeScale(v);
+            const resting = v < 0 ? -1 : 1;
+
+            gsap.fromTo(
+              { value: v },
+              { value: v },
+              {
+                value: resting,
+                duration: 1.2,
+                onUpdate() {
+                  spin.timeScale(this.targets()[0].value);
+                }
+              }
+            );
+          }
+        });
+      };
+
+      create();
+
+      const debounce = (fn, ms) => {
+        let t;
+        return () => {
+          clearTimeout(t);
+          t = setTimeout(fn, ms);
+        };
+      };
+
+      window.addEventListener('resize', debounce(() => {
+        const newWidth = window.innerWidth;
+        if (newWidth !== lastWidth) {
+          lastWidth = newWidth;
+          destroy();
+          create();
+          ScrollTrigger.refresh();
         }
-      });
-
-      window.addEventListener('resize', () => {
-        radius = calcRadius();
-        positionPanels(radius);
-      });
-
-      // Hide hint on first drag
-      const hint = document.querySelector('.carousel-hint');
-      sceneWrap.addEventListener('pointerdown', () => {
-        if (hint) gsap.to(hint, { opacity: 0, duration: 0.4, onComplete: () => hint.remove() });
-      }, { once: true });
+      }, 200));
     }
 
-    init3dImageCarousel();
+    document.addEventListener('DOMContentLoaded', () => {
+      init3dImageCarousel();
+    });
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
