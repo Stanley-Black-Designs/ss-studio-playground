@@ -22,7 +22,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: #f5f4f0;
+      background: #e8e7e4;
       color: #0a0a0a;
       font-family: 'NeueMontreal', Arial, sans-serif;
       font-weight: 500;
@@ -30,6 +30,9 @@
       -webkit-font-smoothing: antialiased;
       min-height: 100vh;
       font-size: 16px;
+      font-weight: 500;
+      line-height: 1.4;
+      -webkit-font-smoothing: antialiased;
     }
 
     /* ── Page layout ── */
@@ -40,43 +43,55 @@
       align-items: center;
     }
 
-    /* ── Exact Osmo CSS ── */
+    /* ── Container ── */
     .preview-container {
       width: 100%;
-      max-width: 76em;
+      max-width: 1200px;
       margin-left: auto;
       margin-right: auto;
-      padding: 4em 2em;
+      padding: 4em 3em;
     }
 
     .preview-collection {
       width: 100%;
-      margin-top: .5em;
+      margin-top: 0;
     }
 
+    /* ── Header row ── */
     .preview-item__row {
-      flex-flow: wrap;
-      justify-content: flex-start;
+      display: flex;
       align-items: center;
       width: 100%;
-      display: flex;
     }
 
-    .preview-item__col { flex: 1; }
-    .preview-item__col.is--large  { max-width: 45%; }
-    .preview-item__col.is--medium { max-width: 25%; }
-    .preview-item__col.is--small  { max-width: 15%; }
+    /* Name col ~50%, rest share remaining 50% equally */
+    .preview-item__col.is--large  { flex: 0 0 50%; }
+    .preview-item__col.is--small  { flex: 1; }
+    .preview-item__col.is--medium { flex: 1; }
 
     .preview-container__label {
-      color: #0a0a0a80;
+      color: rgba(10,10,10,0.45);
       text-transform: uppercase;
-      font-size: .75em;
+      font-size: .7em;
+      font-weight: 500;
+      letter-spacing: .08em;
     }
 
-    .preview-list {
-      flex-flow: column;
-      width: 100%;
+    /* Hairline rule beneath header */
+    .preview-header-row {
       display: flex;
+      align-items: center;
+      width: 100%;
+      padding-bottom: .75em;
+      border-bottom: 1px solid rgba(10,10,10,0.2);
+      margin-bottom: 0;
+    }
+
+    /* ── List ── */
+    .preview-list {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
       position: relative;
     }
 
@@ -87,19 +102,26 @@
 
     .preview-item__heading {
       margin: 0;
-      font-size: 3.5em;
-      font-weight: 400;
+      font-size: clamp(2em, 4vw, 3.5em);
+      font-weight: 300;
       line-height: 1;
+      letter-spacing: -.01em;
     }
 
     .preview-item__text {
-      margin-bottom: 0;
-      font-size: 1.25em;
+      margin: 0;
+      font-size: 1em;
       font-weight: 400;
       line-height: 1.2;
+      color: rgba(10,10,10,0.7);
     }
 
-    /* Hidden source visual — only used for cloning */
+    /* Services in warm amber */
+    .preview-item__col.is--medium .preview-item__text {
+      color: #8B5E3C;
+    }
+
+    /* Hidden source visual */
     .preview-item__visual {
       aspect-ratio: 1 / 1.25;
       width: 20em;
@@ -108,7 +130,6 @@
       overflow: hidden;
     }
 
-    /* Cloned visuals injected into the follower */
     .preview-follower [data-follower-visual] {
       display: block;
       width: 100%;
@@ -117,10 +138,18 @@
     }
 
     .preview-item__inner {
-      border-top: 1px solid #00000040;
+      border-top: 1px solid rgba(10,10,10,0.18);
       width: 100%;
-      padding-top: 3.5em;
-      padding-bottom: 3.5em;
+      padding-top: 2.25em;
+      padding-bottom: 2.25em;
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Bottom border on last item */
+    .preview-item:last-child .preview-item__inner {
+      border-bottom: 1px solid rgba(10,10,10,0.18);
     }
 
     .preview-item__visual-img {
@@ -144,7 +173,6 @@
       overflow: hidden;
     }
 
-    /* Label is a SIBLING of __inner, not a child */
     .preview-follower__label {
       z-index: 2;
       position: absolute;
@@ -174,12 +202,6 @@
     }
 
     /* Desktop hover states */
-    @media screen and (min-width: 992px) {
-      .preview-item:last-of-type {
-        border-bottom: 1px solid rgba(0,0,0,0.25);
-      }
-    }
-
     @media (hover: hover) and (min-width: 992px) {
       body:has([data-follower-collection]:hover) .preview-follower__inner {
         opacity: 1;
@@ -190,29 +212,26 @@
         transform: translate(0px, 0%);
       }
       body:has(.preview-item:hover) .preview-item:not(:hover) {
-        opacity: 0.5;
+        opacity: 0.4;
       }
     }
 
     /* Tablet */
     @media screen and (max-width: 991px) {
-      .preview-item__row { grid-row-gap: .5em; }
-      .preview-item__row.tablet--hide { display: none; }
+      .preview-item__row { gap: .5em; flex-wrap: wrap; }
+      .preview-header-row { display: none; }
 
       .preview-item__col.is--large {
-        flex: none; order: -1; width: 100%; max-width: none;
+        flex: 0 0 100%; order: -1;
       }
-      .preview-item__col.is--medium { order: -1; max-width: 80%; }
-      .preview-item__col.is--small  { text-align: right; max-width: 20%; }
       .preview-item__col.is--small.tablet--hide { display: none; }
+      .preview-item__col.is--small  { flex: 0 0 auto; }
+      .preview-item__col.is--medium { flex: 1; }
 
-      .preview-list {
-        grid-column-gap: 1em;
-        grid-row-gap: 4em;
-        flex-flow: wrap;
-      }
-
+      .preview-list { gap: 0; flex-wrap: wrap; }
       .preview-item { width: calc(50% - .5em); }
+      .preview-item:nth-child(odd) { margin-right: 1em; }
+
       .preview-item__heading { font-size: 2em; }
 
       .preview-item__visual {
@@ -222,30 +241,29 @@
         margin-bottom: 1em;
         display: block;
         position: relative;
+        aspect-ratio: 4/3;
       }
 
       .preview-item__inner {
-        border: none;
         flex-flow: column;
-        padding-top: 0;
-        padding-bottom: 0;
         display: flex;
+        padding-top: 1em;
+        padding-bottom: 2em;
       }
 
       .preview-follower { display: none; }
     }
 
-    /* Mobile */
     @media screen and (max-width: 767px) {
-      .preview-container { padding-left: 1em; padding-right: 1em; }
-      .preview-list { grid-row-gap: 3em; }
-      .preview-item { width: 100%; }
+      .preview-container { padding: 3em 1.25em; }
+      .preview-item { width: 100%; margin-right: 0 !important; }
+      .preview-item__heading { font-size: 2.5em; }
     }
   </style>
 </head>
 <body>
 
-  <header class="demo-chrome" style="background:rgba(245,244,240,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.1);">
+  <header class="demo-chrome" style="background:rgba(232,231,228,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.1);">
     <div class="demo-chrome__left">
       <a class="demo-chrome__back" href="../index.html" style="color:rgba(10,10,10,0.55);">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -260,10 +278,10 @@
   <div class="page-wrap">
     <div data-follower-wrap="" class="preview-container">
 
-      <!-- Column headers (desktop only) -->
-      <div class="preview-item__row tablet--hide">
+      <!-- Column headers -->
+      <div class="preview-header-row">
         <div class="preview-item__col is--large"><span class="preview-container__label">Name</span></div>
-        <div class="preview-item__col is--small"><span class="preview-container__label">Location</span></div>
+        <div class="preview-item__col is--small tablet--hide"><span class="preview-container__label">Location</span></div>
         <div class="preview-item__col is--small"><span class="preview-container__label">Year</span></div>
         <div class="preview-item__col is--medium"><span class="preview-container__label">Services</span></div>
       </div>
