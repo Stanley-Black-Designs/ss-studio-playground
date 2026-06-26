@@ -19,6 +19,75 @@
       width: 100%;
     }
 
+    /* Wrapper: path layer sits on top of text */
+    .draw-wrap {
+      position: relative;
+      width: 100%;
+    }
+
+    /* Text content fills the same height as the SVG */
+    .draw-content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 4em 0;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .draw-section {
+      display: flex;
+      width: 100%;
+      padding: 0 5%;
+    }
+
+    /* Alternate left/right positioning to follow the path's serpentine */
+    .draw-section--1 { justify-content: flex-end; }
+    .draw-section--2 { justify-content: flex-start; padding-left: 8%; }
+    .draw-section--3 { justify-content: flex-end; }
+    .draw-section--4 { justify-content: center; }
+
+    .draw-text {
+      max-width: 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .draw-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #0064E7;
+    }
+
+    .draw-h {
+      font-size: clamp(28px, 3.5vw, 48px);
+      font-weight: 500;
+      line-height: 1.05;
+      letter-spacing: -.02em;
+      color: #f0f0f2;
+      margin: 0;
+    }
+
+    .draw-p {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.65;
+      color: rgba(240,240,242,0.55);
+      margin: 0;
+    }
+
+    /* SVG layer sits behind text visually but covers same space */
+    .draw-path-layer {
+      position: relative;
+      width: 100%;
+      z-index: 1;
+    }
+
     [data-draw-scroll-desktop],
     [data-draw-scroll-mobile] {
       display: block;
@@ -34,6 +103,16 @@
     @media (max-width: 767px) {
       [data-draw-scroll-desktop] { display: none; }
       [data-draw-scroll-mobile] { display: block; }
+
+      .draw-content { padding: 3em 0; }
+      .draw-text { max-width: 45vw; }
+      .draw-section--2 { padding-left: 5%; }
+      .draw-p { font-size: 13px; }
+    }
+
+    @media (max-width: 479px) {
+      .draw-text { max-width: 52vw; }
+      .draw-h { font-size: 20px; }
     }
   </style>
 </head>
@@ -48,17 +127,56 @@
     <a class="demo-chrome__cta" href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener">Book a call</a>
   </header>
 
-  <div data-draw-scroll-wrap>
+  <div data-draw-scroll-wrap class="draw-wrap">
 
-    <!-- Desktop SVG -->
-    <svg data-draw-scroll-desktop xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 1040 2430" fill="none">
-      <path data-draw-scroll-path d="M587.951 30.0063C718.546 287.255 506.581 892.058 187.126 635.947C-154.429 362.118 969.689 156.621 930.009 690.21C890.328 1223.8 117.306 1508.68 117.306 1203.2C117.306 927.361 1193.01 872.595 982.75 1411.21C863.692 1716.19 62.0549 2560.79 30.9135 1937.26C3.77072 1393.8 587.952 1603.14 587.951 2400.01" stroke="currentColor" stroke-width="60" stroke-linecap="round"></path>
-    </svg>
+    <!-- Text blocks that sit alongside the path -->
+    <div class="draw-content">
 
-    <!-- Mobile SVG -->
-    <svg data-draw-scroll-mobile xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 448 2433" fill="none">
-      <path data-draw-scroll-path d="M261.417 30.502C326.48 118.169 402.716 356.502 187.155 608.502C-82.2964 923.502 204.717 1253.5 364.28 1379C523.844 1504.5 813.866 1858 146.008 2039.5C-521.85 2221 -136.489 1394.5 146.008 1768C428.506 2141.5 253.89 2356 233.318 2402.5" stroke="currentColor" stroke-width="61" stroke-linecap="round"></path>
-    </svg>
+      <div class="draw-section draw-section--1">
+        <div class="draw-text">
+          <span class="draw-eyebrow">01 — Strategy</span>
+          <h2 class="draw-h">Discovery & Brief</h2>
+          <p class="draw-p">We start with a deep-dive into your brand, goals, and audience — defining what success looks like before a single pixel is designed.</p>
+        </div>
+      </div>
+
+      <div class="draw-section draw-section--2">
+        <div class="draw-text">
+          <span class="draw-eyebrow">02 — Design</span>
+          <h2 class="draw-h">Concept & Direction</h2>
+          <p class="draw-p">Moodboards, wireframes, and motion explorations — turning strategy into a visual language that feels distinct and intentional.</p>
+        </div>
+      </div>
+
+      <div class="draw-section draw-section--3">
+        <div class="draw-text">
+          <span class="draw-eyebrow">03 — Build</span>
+          <h2 class="draw-h">Development</h2>
+          <p class="draw-p">Clean, performant code built with the right tools for your stack — Webflow, Next.js, or vanilla HTML/CSS/JS with GSAP animation.</p>
+        </div>
+      </div>
+
+      <div class="draw-section draw-section--4">
+        <div class="draw-text">
+          <span class="draw-eyebrow">04 — Launch</span>
+          <h2 class="draw-h">Ship & Optimise</h2>
+          <p class="draw-p">We launch, track, and iterate — ensuring performance, SEO health, and a smooth handoff so you own everything from day one.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SVG path overlay -->
+    <div class="draw-path-layer">
+      <!-- Desktop SVG -->
+      <svg data-draw-scroll-desktop xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 1040 2430" fill="none">
+        <path data-draw-scroll-path d="M587.951 30.0063C718.546 287.255 506.581 892.058 187.126 635.947C-154.429 362.118 969.689 156.621 930.009 690.21C890.328 1223.8 117.306 1508.68 117.306 1203.2C117.306 927.361 1193.01 872.595 982.75 1411.21C863.692 1716.19 62.0549 2560.79 30.9135 1937.26C3.77072 1393.8 587.952 1603.14 587.951 2400.01" stroke="currentColor" stroke-width="60" stroke-linecap="round"></path>
+      </svg>
+      <!-- Mobile SVG -->
+      <svg data-draw-scroll-mobile xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 448 2433" fill="none">
+        <path data-draw-scroll-path d="M261.417 30.502C326.48 118.169 402.716 356.502 187.155 608.502C-82.2964 923.502 204.717 1253.5 364.28 1379C523.844 1504.5 813.866 1858 146.008 2039.5C-521.85 2221 -136.489 1394.5 146.008 1768C428.506 2141.5 253.89 2356 233.318 2402.5" stroke="currentColor" stroke-width="61" stroke-linecap="round"></path>
+      </svg>
+    </div>
 
   </div>
 
