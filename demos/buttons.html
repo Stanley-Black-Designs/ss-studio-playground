@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Button Showcase — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:#0c0d10;font-family:'Inter',sans-serif;padding-top:50px;-webkit-font-smoothing:antialiased}
+
+    .btn-page{padding:48px 24px 80px}
+    .btn-page__header{text-align:center;margin-bottom:48px}
+    .btn-page__header h1{font-size:clamp(28px,4vw,48px);font-weight:500;color:#f0f0f2;letter-spacing:-.03em;margin-bottom:8px}
+    .btn-page__header p{color:rgba(240,240,242,.4);font-size:14px;letter-spacing:.06em;text-transform:uppercase}
+
+    /* Grid */
+    .btn-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;max-width:1400px;margin:0 auto}
+    @media(max-width:1100px){.btn-grid{grid-template-columns:repeat(3,1fr)}}
+    @media(max-width:700px){.btn-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:420px){.btn-grid{grid-template-columns:1fr}}
+
+    /* Cell */
+    .btn-cell{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:48px 24px;min-height:220px;position:relative}
+    .btn-cell__label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;opacity:.45;font-family:'Inter',sans-serif;font-weight:500;position:absolute;bottom:16px;left:0;right:0;text-align:center}
+
+    /* ─── 1. Elastic Pulse — coral bg ─── */
+    .cell-1{background:#1a0e0a}
+    .elastic-pulse-btn{cursor:pointer;text-decoration:none;position:relative;font-size:16px}
+    .elastic-pulse-btn__content{color:#fff;background-color:#ff8a4f;border-radius:50em;justify-content:center;align-items:center;padding:.5em .75em;display:flex;position:relative;box-shadow:inset 0 -.25em .375em 0 #97133433}
+    .elastic-pulse-btn__icon{justify-content:center;align-items:center;width:1.5em;height:1.5em;padding:.25em;display:flex}
+    .elastic-pulse-btn__text{padding:.25em}
+    .elastic-pulse-btn__span{white-space:nowrap;font-size:1em;font-weight:500;line-height:1.2;display:block}
+
+    /* ─── 2. Slanted Reveal — midnight blue bg ─── */
+    .cell-2{background:#04091a}
+    .btn-slanted{color:#fff;background-color:#146ef5;border-radius:.125em;padding:.625em 1em;text-decoration:none;position:relative;overflow:hidden;--rotate:20deg;--move:150%;font-size:16px}
+    .btn-slanted-label__wrap{z-index:1;place-items:center;display:grid;position:relative}
+    .btn-slanted-bg{z-index:0;transform-origin:50% 0;border-radius:inherit;background-color:#002f79;width:120%;height:100%;position:absolute;top:auto;bottom:0%;right:0;transform:rotate(-30deg) translate(0%,200%);transition:transform .45s cubic-bezier(.625,.05,0,1)}
+    .btn-slanted-label{transform-origin:50% 1000%;transition:transform .45s cubic-bezier(.625,.05,0,1)}
+    .btn-slanted-label:not(:nth-of-type(1)){position:absolute}
+    .btn-slanted-label:nth-of-type(1){transform:translate(0,0) rotate(0);transition-delay:.075s}
+    .btn-slanted-label:nth-of-type(2){transform:translate(calc(var(--move)*-.2),calc(var(--move)*2.5)) rotate(calc(var(--rotate)*-2));transition-delay:0s}
+    @media(hover:hover){.btn-slanted:hover .btn-slanted-label:nth-of-type(1){transform:translate(calc(var(--move)*.2),calc(var(--move)*-2.5)) rotate(calc(var(--rotate)*2));transition-delay:0s}.btn-slanted:hover .btn-slanted-label:nth-of-type(2){transform:translate(0,0) rotate(0);transition-delay:.075s}.btn-slanted:hover .btn-slanted-bg{transform:translate(0%,0%) rotate(0deg)}}
+
+    /* ─── 3. Copy Email — forest green bg ─── */
+    .cell-3{background:#0b1a0e}
+    .copy-email-button{gap:.75em;background-color:#fff;border-radius:.5em;justify-content:flex-start;align-items:center;padding:.75em 1em .75em .75em;display:flex;border:none;cursor:pointer}
+    .copy-email-text__wrap{flex-flow:column;justify-content:flex-start;align-items:center;height:1.4em;font-size:1.1em;line-height:1.4;display:flex;overflow:hidden}
+    .copy-email-text__el{white-space:nowrap;font-size:1em;font-family:'Inter',sans-serif;transition:transform .45s cubic-bezier(.65,0,0,1)}
+    .copy-email-icon__wrap{color:#fff;background-color:#22502e;border-radius:.375em;justify-content:center;align-items:center;width:2.5em;height:2.5em;padding:.5em;transition:background-color .2s;display:flex;flex-shrink:0}
+    @media(hover:hover){.copy-email-button:hover .copy-email-icon__wrap{background:rgba(34,80,46,.9)}.copy-email-button:hover .copy-email-text__el{transform:translate(0,-100%)}}
+    [data-copy-button="copied"] .copy-email-icon__wrap{background:#0F8E2E!important}
+    [data-copy-button="copied"] .copy-email-text__el{transform:translate(0,-200%)!important}
+
+    /* ─── 4. Draw Underline — warm cream bg ─── */
+    .cell-4{background:#1a1510;color:#f0ece4}
+    .text-draw{cursor:pointer;padding-top:.625em;font-size:2em;text-decoration:none;color:inherit;display:inline-block}
+    .text-draw__span{font-size:1em;font-weight:500;line-height:1.1;display:block}
+    .text-draw__box{color:#e55050;width:100%;height:.625em;position:relative}
+    .text-draw__box svg{width:100%;height:100%;position:absolute;overflow:visible!important}
+
+    /* ─── 5. Tilting Bounce — deep teal bg ─── */
+    .cell-5{background:#061410}
+    :root{--ease-elastic:linear(0,0.55 7.5%,0.85 12%,0.95 14%,1.03 16.5%,1.09 20%,1.13 22%,1.14 23%,1.15 24.5%,1.15 26%,1.13 28%,1.11 31%,1.05 39%,1.02 43%,0.99 47%,0.98 52%,0.97 59%,1.002 81%,1)}
+    .btn-bounce{color:#113d28;padding:.75em 2em;font-size:14px;text-decoration:none;position:relative;display:inline-block}
+    .btn-bounce-bg{z-index:0;background-color:#55db9c;border-radius:100em;position:absolute;inset:0%}
+    .btn-bounce-text{z-index:1;display:block;position:relative}
+    .btn-bounce-text__wrap{padding-top:1.25em;padding-bottom:1.25em;overflow:hidden}
+    @media(hover:hover) and (pointer:fine){.btn-bounce,.btn-bounce-text,.btn-bounce-text__wrap{transition:transform .65s var(--ease-elastic)}.btn-bounce-text{--text-duplicate-distance:3em;text-shadow:0 var(--text-duplicate-distance) currentColor}.btn-bounce:hover{transform:scale(.92) rotate(-3deg)}.btn-bounce:hover .btn-bounce-text__wrap{transform:rotate(3deg)}.btn-bounce:hover .btn-bounce-text{transform:translate(0,calc(-1 * var(--text-duplicate-distance)))}}
+
+    /* ─── 6. Char Stagger — charcoal bg ─── */
+    .cell-6{background:#111318}
+    .btn-animate-chars{color:#131313;cursor:pointer;border-radius:.25em;justify-content:center;align-items:center;padding:1em;font-size:14px;line-height:1;text-decoration:none;display:flex;position:relative}
+    .btn-animate-chars__text{white-space:nowrap;line-height:1.3}
+    .btn-animate-chars [data-button-animate-chars]{overflow:hidden;position:relative;display:inline-block}
+    .btn-animate-chars [data-button-animate-chars] span{display:inline-block;position:relative;text-shadow:0 1.3em currentColor;transform:translateY(0) rotate(.001deg);transition:transform .6s cubic-bezier(.625,.05,0,1)}
+    .btn-animate-chars:hover [data-button-animate-chars] span{transform:translateY(-1.3em) rotate(.001deg)}
+    .btn-animate-chars__bg{background-color:#efeeec;border-radius:.25em;position:absolute;inset:0;transition:inset .6s cubic-bezier(.625,.05,0,1)}
+    .btn-animate-chars:hover .btn-animate-chars__bg{inset:.125em}
+
+    /* ─── 7. Stop Motion — dark warm bg ─── */
+    .cell-7{background:#0f0e09}
+    .btn-stop-motion{pointer-events:auto;color:#131313;cursor:pointer;flex:0 auto;padding:.75em 1.5em .75em 1em;font-weight:400;line-height:1;text-decoration:none;display:inline-block;transform:rotate(-1deg);transition:.5s cubic-bezier(.35,1.75,.6,1)}
+    .btn-stop-motion:hover{transform:scale(1.05) rotate(-1deg)}
+    .btn-stop-motion__inner{gap:.25em;justify-content:center;align-items:center;height:100%;display:flex}
+    .btn-stop-motion__back{width:100%;height:100%;position:absolute;top:0;left:0;overflow:hidden}
+    .btn-stop-motion__back-svg{width:300%;height:100%;position:absolute;top:0;left:0;max-width:none}
+    .btn-stop-motion__icon{color:#ffe224;flex-shrink:0;width:1.5em;margin-left:-.25em;margin-right:-.25em;position:relative;overflow:hidden}
+    .before__100{padding-top:100%}
+    .btn-stop-motion__icon-svg{width:auto;height:100%;position:absolute;top:0;left:0;max-width:none}
+    .btn-stop-motion__p{color:#efeeec;margin-bottom:0;font-size:1em;font-weight:500;position:relative}
+    @keyframes sprite{to{transform:translateX(-100%)}}
+    @keyframes wiggle{from{transform:rotate(1deg)}to{transform:rotate(-1deg)}}
+    [data-sprite] .btn-stop-motion__icon-svg{animation:sprite .45s steps(4,end) infinite}
+    [data-sprite]:hover .btn-stop-motion__back-svg{animation:sprite .45s steps(3,end) infinite}
+    [data-wiggle]:hover [data-wiggle-target]{animation:wiggle .3s steps(2,end) infinite}
+
+    /* ─── 8. Rotating Icon — muted olive bg ─── */
+    .cell-8{background:#0e0f07}
+    .btn-icon-link{gap:.5em;color:#a29a65;font-size:16px;line-height:1.2;text-decoration:none;display:flex;align-items:center}
+    .btn-icon-icon{z-index:1;flex:none;justify-content:center;align-items:center;width:1em;height:1em;display:flex;position:relative}
+    .btn-icon-icon__bg{background-color:currentColor;border-radius:.125em;width:100%;height:100%;position:absolute}
+    .btn-icon-icon__wrap{color:#a29a65;justify-content:flex-end;align-items:center;width:100%;height:100%;display:flex;position:relative;overflow:hidden}
+    .btn-icon-icon__list{flex:none;justify-content:flex-start;align-items:center;height:100%;display:flex}
+    .btn-icon-icon__arrow{flex:none;width:1em;height:100%;padding:.2em}
+    .btn-icon-content{gap:.5em;color:#fff;background-color:#a29a65;border-radius:.25em;justify-content:flex-start;align-items:center;padding:.6125em .75em;display:flex;position:relative;overflow:hidden}
+    .btn-icon-content__text{font-size:.875em}
+    .btn-icon-content__mask{z-index:1;flex:none;justify-content:flex-start;align-items:center;display:flex;position:relative;overflow:hidden}
+    .btn-icon-content__bg{z-index:0;background-color:#302d1c;width:120%;height:100%;position:absolute;bottom:0%;left:-10%;transform:translate(0,175%) rotate(15deg)}
+    [data-button-anim-target]{transition:transform .525s cubic-bezier(.625,.05,0,1)}
+    .btn-icon-content__text{--text-duplicate-distance:1.5em;text-shadow:0 var(--text-duplicate-distance) currentColor}
+    @media(hover:hover) and (pointer:fine){.btn-icon-link:hover .btn-icon-content__text{transform:translate(0,calc(-1 * var(--text-duplicate-distance)))}.btn-icon-link:hover .btn-icon-icon__bg{transform:rotate(90deg)}.btn-icon-link:hover .btn-icon-icon__arrow{transform:translate(200%,0)}.btn-icon-link:hover .btn-icon-content__bg{transform:translate(0%,0%) rotate(0)}}
+
+    /* ─── 9. Underline Link — near-black bg ─── */
+    .cell-9{background:#0c0c0c;color:#f0f0f2}
+    .link-group{gap:1em;justify-content:center;font-size:2em;display:flex;flex-wrap:wrap}
+    .underline-link{color:inherit;font-size:1em;line-height:1.25}
+    [data-underline-link]{text-decoration:none;position:relative}
+    [data-underline-link]::before,[data-underline-link="alt"]::before,[data-underline-link="alt"]::after{content:"";position:absolute;bottom:-.0625em;left:0;width:100%;height:.0625em;background-color:currentColor;transition:transform .735s cubic-bezier(.625,.05,0,1);transform-origin:right;transform:scaleX(0) rotate(.001deg)}
+    [data-underline-link="alt"]::before{transform-origin:left;transform:scaleX(1) rotate(.001deg);transition-delay:.3s}
+    [data-underline-link="alt"]::after{transform-origin:right;transform:scaleX(0) rotate(.001deg);transition-delay:0s}
+    @media(hover:hover) and (pointer:fine){[data-underline-link]:hover::before{transform-origin:left;transform:scaleX(1) rotate(.001deg)}[data-underline-link="alt"]:hover::before{transform-origin:right;transform:scaleX(0) rotate(.001deg);transition-delay:0s}[data-underline-link="alt"]:hover::after{transform-origin:left;transform:scaleX(1) rotate(.001deg);transition-delay:.3s}}
+
+    /* ─── 10. Bubble Arrow — dark slate bg ─── */
+    .cell-10{background:#0a0a12}
+    .btn-bubble-arrow{border-radius:10em;justify-content:center;align-items:center;font-size:1.1em;text-decoration:none;display:flex;position:relative}
+    .btn-bubble-arrow__arrow{color:#131313;background-color:#ff4c2f;border-radius:10em;flex-flow:row;justify-content:center;align-items:center;width:3.75em;height:3.75em;display:flex;position:relative;transition:transform .735s cubic-bezier(.625,.05,0,1);transform:scale(0) rotate(.001deg);transform-origin:left}
+    .btn-bubble-arrow__arrow.is--duplicate{z-index:2;background-color:#efeeec;position:absolute;right:0;transform:scale(1) rotate(.001deg);transform-origin:right}
+    .btn-bubble-arrow__arrow-svg{width:40%;transition:transform .735s cubic-bezier(.625,.05,0,1);transform:rotate(.001deg)}
+    .btn-bubble-arrow__content{color:#efeeec;background-color:rgba(0,0,0,.4);border-radius:10em;justify-content:center;align-items:center;height:3.75em;padding:0 2em;display:flex;position:relative;transition:transform .735s cubic-bezier(.625,.05,0,1);transform:translateX(-3.75em) rotate(.001deg)}
+    .btn-bubble-arrow__content-text{line-height:1}
+    .btn-bubble-arrow:hover .btn-bubble-arrow__content{transform:translateX(0) rotate(.001deg)}
+    .btn-bubble-arrow:hover .btn-bubble-arrow__arrow-svg{transform:rotate(-45deg)}
+    .btn-bubble-arrow:hover .btn-bubble-arrow__arrow{transform:scale(1) rotate(.001deg)}
+    .btn-bubble-arrow:hover .btn-bubble-arrow__arrow.is--duplicate{transform:scale(0) rotate(.001deg)}
+
+    /* ─── 11. Directional Hover — dark forest bg ─── */
+    .cell-11{background:#08181b}
+    .btn-dir-wrap{gap:1em;display:flex;flex-wrap:wrap;justify-content:center}
+    .btn{cursor:pointer;border-radius:2em;justify-content:center;align-items:center;height:3em;padding:0 1.25em;text-decoration:none;display:flex;position:relative}
+    .btn__text{color:#efede3;justify-content:flex-start;align-items:center;display:flex;position:relative;transition:color .7s cubic-bezier(.625,.05,0,1)}
+    .btn-text-p{color:currentColor;white-space:nowrap;margin-bottom:0;font-size:.875em;font-weight:500;line-height:1.2}
+    .btn__bg{background-color:#08181b;border-radius:1.5em;width:100%;height:100%;position:absolute;top:0;left:0}
+    .btn__circle-wrap{border-radius:1.5em;width:100%;height:100%;position:absolute;top:0;left:0;overflow:hidden}
+    .btn__circle{pointer-events:none;background-color:#d1fd88;border-radius:50%;width:100%;display:block;position:absolute;top:50%;left:50%;transition:transform .7s cubic-bezier(.625,.05,0,1),background-color .4s cubic-bezier(.625,.05,0,1);transform:translate(-50%,-50%) scale(0) rotate(.001deg)}
+    .btn:hover .btn__circle{transform:translate(-50%,-50%) scale(1) rotate(.001deg)}
+    .btn[data-theme="dark"] .btn__circle{background-color:#d1fd88}
+    .btn[data-theme="dark"]:hover .btn__text{color:#031819}
+    .btn[data-theme="light"] .btn__bg{background-color:#efede3}
+    .btn[data-theme="light"] .btn__text{color:#031819}
+    .btn[data-theme="light"] .btn__circle{background-color:#9fccc8}
+    .btn[data-theme="primary"] .btn__bg{background-color:#d1fd88}
+    .btn[data-theme="primary"] .btn__text{color:#031819}
+    .btn[data-theme="primary"] .btn__circle{background-color:#b8ec6f}
+
+    /* ─── 12. Magnetic — deep purple bg ─── */
+    .cell-12{background:#0f0a1c}
+    .btn-magnetic{font-size:1em;position:relative;padding:12px 16px;margin:-12px -16px}
+    .btn-magnetic__click{cursor:pointer;border-radius:4em;justify-content:center;align-items:center;width:100%;height:100%;display:flex;position:relative;overflow:hidden;text-decoration:none}
+    .btn-magnetic__fill{background-color:#6448b2;width:100%;height:100%;position:absolute}
+    .btn-magnetic__content{justify-content:center;align-items:center;width:100%;height:100%;padding:.75em 2em;display:flex;position:relative}
+    .btn-magnetic__text{position:relative;overflow:hidden}
+    .btn-magnetic__text-p{color:#ede7ff;text-align:center;margin-bottom:0;font-size:1em;font-weight:500;line-height:1.5;position:relative}
+    .btn-magnetic__text-p.is--duplicate{position:absolute;top:100%}
+    .btn-magnetic__click .btn-magnetic__text-p{transition:all .6s cubic-bezier(.625,.05,0,1);transform:translateY(0%) rotate(.001deg)}
+    .btn-magnetic__click:hover .btn-magnetic__text-p{transform:translateY(-100%) rotate(.001deg)}
+
+    /* ─── 13. Toggle — dusty rose bg ─── */
+    .cell-13{background:#1a1012;transition:background-color .4s cubic-bezier(.35,1,.6,1)}
+    .cell-13.is-checked{background:#1a0a2a}
+    .btn-toggle{gap:.5em;cursor:pointer;align-items:center;display:flex;position:relative;font-size:18px}
+    .btn-toggle__toggle{background-color:#ff4c24;border-radius:2em;flex-shrink:0;width:2em;height:1.25em;display:flex}
+    .btn-toggle__toggle-dot{background-color:#fff;border-radius:50%;width:1em;height:1em;margin:.125em 0 0 .125em;transition:all .4s cubic-bezier(.35,1.5,.6,1);transform:translateX(0) rotate(.001deg)}
+    .btn-toggle__p{color:#efeeec;margin-bottom:0;font-size:1.25em;line-height:1;position:relative;transition:color .4s cubic-bezier(.35,1,.6,1)}
+    .btn-toggle__checkbox{opacity:0;appearance:none;-webkit-appearance:none;width:100%;height:100%;position:absolute;cursor:pointer}
+    .cell-13:has(input[type="checkbox"]:checked){background:#1a0a2a}
+    .btn-toggle:has(input[type="checkbox"]:checked) .btn-toggle__toggle-dot{transform:translateX(.75em) rotate(.001deg)}
+  </style>
+</head>
+<body>
+  <div class="demo-chrome">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <div class="demo-chrome__sep"></div><span class="demo-chrome__title">Button Showcase</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+
+  <div class="btn-page">
+    <div class="btn-page__header">
+      <h1>Button Showcase</h1>
+      <p>13 production-ready interactions — hover to trigger</p>
+    </div>
+
+    <div class="btn-grid">
+
+      <!-- 1. Elastic Pulse -->
+      <div class="btn-cell cell-1">
+        <a data-elastic-pulse-btn="" href="#" class="elastic-pulse-btn">
+          <div data-elastic-pulse-target="" class="elastic-pulse-btn__content">
+            <div class="elastic-pulse-btn__icon"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none"><path d="M20.5 10.5H3.5V21.5H20.5V10.5Z" stroke="currentColor" stroke-width="2"></path><path d="M12 14.5V17" stroke="currentColor" stroke-width="2"></path><path d="M18 10.5V8C18 6.4087 17.3679 4.88258 16.2426 3.75736C15.1174 2.63214 13.5913 2 12 2C10.4087 2 8.88258 2.63214 7.75736 3.75736C6.63214 4.88258 6 6.4087 6 8V10.5" stroke="currentColor" stroke-width="2"></path></svg></div>
+            <div class="elastic-pulse-btn__text"><span class="elastic-pulse-btn__span">Elastic Pulse</span></div>
+          </div>
+        </a>
+        <span class="btn-cell__label" style="color:#ff8a4f">Elastic Pulse Button</span>
+      </div>
+
+      <!-- 2. Slanted Reveal -->
+      <div class="btn-cell cell-2">
+        <a href="#" class="btn-slanted">
+          <div class="btn-slanted-label__wrap">
+            <span class="btn-slanted-label">Slanted Reveal</span>
+            <span aria-hidden="true" class="btn-slanted-label">Slanted Reveal</span>
+          </div>
+          <div class="btn-slanted-bg"></div>
+        </a>
+        <span class="btn-cell__label" style="color:#146ef5">Slanted Reveal</span>
+      </div>
+
+      <!-- 3. Copy Email -->
+      <div class="btn-cell cell-3">
+        <button aria-label="Copy email to clipboard" data-copy-button="" data-copy-email="hello@stanleysmithstudios.com" class="copy-email-button">
+          <div class="copy-email-icon__wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none"><path d="M16 2H8V5H16V2Z" stroke="currentColor" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M16 3H17.5L19 4.5V19.5L17.5 21H6.5L5 19.5V4.5L6.5 3H8" stroke="currentColor" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </div>
+          <div class="copy-email-text__wrap">
+            <span data-copy-email-element="" class="copy-email-text__el" style="font-size:.8em">hello@stanleysmithstudios.com</span>
+            <span class="copy-email-text__el" style="font-size:.8em">Click to copy email</span>
+            <span class="copy-email-text__el" style="font-size:.8em">Copied! ✓</span>
+          </div>
+        </button>
+        <span class="btn-cell__label" style="color:#55db9c">Copy to Clipboard</span>
+      </div>
+
+      <!-- 4. Draw Underline -->
+      <div class="btn-cell cell-4">
+        <a data-draw-line="" href="#" class="text-draw">
+          <span class="text-draw__span">Draw Underline</span>
+          <div data-draw-line-box="" class="text-draw__box"></div>
+        </a>
+        <span class="btn-cell__label" style="color:#e55050">Random SVG Underline</span>
+      </div>
+
+      <!-- 5. Tilting Bounce -->
+      <div class="btn-cell cell-5">
+        <a href="#" class="btn-bounce">
+          <div class="btn-bounce-bg"></div>
+          <div class="btn-bounce-text__wrap"><span class="btn-bounce-text">Bouncy Button</span></div>
+        </a>
+        <span class="btn-cell__label" style="color:#55db9c">Tilting Bounce</span>
+      </div>
+
+      <!-- 6. Char Stagger -->
+      <div class="btn-cell cell-6">
+        <a href="#" aria-label="Staggering button" class="btn-animate-chars">
+          <div class="btn-animate-chars__bg"></div>
+          <span data-button-animate-chars="" class="btn-animate-chars__text">Staggering Button</span>
+        </a>
+        <span class="btn-cell__label" style="color:rgba(240,240,242,.4)">CSS Character Stagger</span>
+      </div>
+
+      <!-- 7. Stop Motion -->
+      <div class="btn-cell cell-7">
+        <a href="#" class="btn-stop-motion" data-wiggle data-sprite>
+          <div class="btn-stop-motion__inner">
+            <div class="btn-stop-motion__back">
+              <svg class="btn-stop-motion__back-svg" xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 678 82" fill="none" preserveAspectRatio="none"><path d="M460.308 7.5301L460.216 7.59846L460.136 7.68002C457.225 10.6259 456.112 14.1147 455.704 17.5301C455.426 19.853 455.471 22.2897 455.511 24.487C455.528 25.4194 455.544 26.3088 455.534 27.128L455.534 27.1281C455.485 31.453 455.744 35.7647 456.055 40.0304C456.123 40.9669 456.194 41.9001 456.264 42.8308C456.515 46.1574 456.764 49.452 456.895 52.7505L456.895 52.7508C456.908 53.0821 456.921 53.4306 456.934 53.7944C457.069 57.4373 457.259 62.604 458.379 67.1206C459.587 71.9918 462.087 76.9016 467.56 77.582C473.567 78.3305 479.645 78.2561 485.652 77.9982C487.517 77.9182 489.368 77.821 491.208 77.7243C495.339 77.5074 499.416 77.2933 503.477 77.282C509.676 77.2646 515.244 77.2472 520.758 77.2299C527.284 77.2095 533.736 77.1893 541.07 77.1696H541.07C554.586 77.1316 568.103 77.3437 581.637 77.5561L581.644 77.5562C595.171 77.7685 608.714 77.981 622.259 77.9429L656.359 77.8495H656.359C661.063 77.8359 665.017 76.6431 667.846 73.7831C670.658 70.9404 672.118 66.6909 672.376 61.0789C672.376 61.0754 672.376 61.072 672.377 61.0685L674.492 25.4333L674.494 25.398L674.495 25.3626C674.533 22.1986 674.382 18.4111 673.479 14.9927C672.579 11.5846 670.865 8.30716 667.596 6.52469C664.981 5.09728 662.088 4.78229 659.564 4.54711C644.655 3.15323 629.771 3.58486 614.955 4.01454C607.786 4.22244 600.633 4.42988 593.5 4.42988H593.489L593.477 4.43005C574.96 4.7118 563.056 4.62436 546.859 4.50539C543.481 4.48058 539.916 4.4544 536.066 4.42991L536.056 4.42985L536.047 4.42991L481.337 4.78111L481.327 4.78117L481.317 4.78137C480.654 4.79452 479.792 4.79159 478.8 4.78821C476.592 4.7807 473.737 4.77099 470.984 4.93131C468.963 5.04904 466.912 5.26041 465.089 5.64402C463.297 6.02083 461.568 6.59424 460.308 7.5301Z" fill="currentColor" vector-effect="non-scaling-stroke"></path><path d="M234.308 7.53029L234.216 7.59866L234.136 7.68022C231.211 10.6399 230.192 14.1108 229.879 17.4972C229.724 19.1774 229.74 20.8572 229.787 22.4481C229.799 22.8857 229.814 23.3132 229.829 23.7322C229.868 24.8662 229.906 25.9383 229.894 26.9826L229.894 26.9828C229.875 28.6315 229.85 30.2894 229.826 31.9535C229.725 38.8516 229.622 45.8555 229.895 52.7507L229.895 52.751C229.942 53.9419 229.932 55.2806 229.922 56.7443C229.916 57.5192 229.91 58.3292 229.912 59.1708C229.919 61.5488 229.992 64.1036 230.352 66.4843C230.71 68.8491 231.369 71.1777 232.64 73.0207C233.953 74.9248 235.881 76.2492 238.56 76.5822C250.422 78.0603 265.656 78.3151 277.477 78.2822C283.676 78.2648 289.244 78.2474 294.758 78.2301C301.285 78.2097 307.736 78.1895 315.07 78.1698H315.07C328.58 78.1318 342.101 78.0942 355.62 78.0566C369.17 78.0189 382.72 77.9812 396.259 77.9431L430.359 77.8497H430.359C435.025 77.8362 439.302 76.7751 442.498 74.1015C445.729 71.3985 447.627 67.2382 447.889 61.514L447.891 61.4715L447.891 61.429L447.495 25.3457C447.498 25.1251 447.501 24.9008 447.504 24.6732C447.543 21.7376 447.591 18.2486 447.003 15.101C446.368 11.6948 444.927 8.34146 441.596 6.52488C438.981 5.09747 436.088 4.78249 433.564 4.54731C422.446 3.50779 411.337 3.65454 400.286 4.05631C397.163 4.16986 394.049 4.30351 390.94 4.43693C383.019 4.77686 375.136 5.1152 367.24 5.1152H367.228L367.217 5.11538C353.805 5.31944 344.001 5.08464 333.483 4.83273C326.434 4.66389 319.063 4.48737 310.07 4.43013C310.069 4.43012 310.067 4.43011 310.066 4.4301L255.365 3.78138L255.341 3.78109L255.317 3.78156C253.037 3.82678 248.938 3.9493 244.891 4.43987C242.868 4.68508 240.826 5.0259 239.013 5.50582C237.23 5.978 235.536 6.61818 234.308 7.53029Z" fill="currentColor" vector-effect="non-scaling-stroke"></path><path d="M8.30825 7.53031L8.21621 7.59867L8.13562 7.68023C5.22501 10.6261 4.11162 14.1149 3.70376 17.5303C3.42636 19.8533 3.47076 22.2899 3.51079 24.4872C3.52778 25.4196 3.54399 26.309 3.53448 27.1282L3.53448 27.1283C3.43625 35.6709 3.55681 44.217 3.89466 52.7508L3.89467 52.751C3.94197 53.9397 3.93235 55.3029 3.92174 56.8084C3.91609 57.6093 3.91016 58.4504 3.91236 59.327C3.91857 61.7984 3.99176 64.4732 4.35013 66.9728C4.70591 69.4543 5.36005 71.899 6.61737 73.8311C7.91554 75.826 9.84384 77.2446 12.5596 77.5822C21.6839 78.7191 32.8409 78.5422 42.824 78.3839C45.8454 78.336 48.7592 78.2898 51.4767 78.2822C57.6756 78.2648 63.2436 78.2474 68.7584 78.2301C75.2845 78.2097 81.736 78.1895 89.07 78.1698H89.0702C102.58 78.1318 116.101 78.0942 129.62 78.0566C143.17 78.0189 156.719 77.9812 170.259 77.9432L204.359 77.8497H204.359C209.025 77.8362 213.088 76.774 216.05 74.0563C219.022 71.3282 220.631 67.1677 220.889 61.514L220.889 61.512L222.493 25.4112L222.494 25.387L222.495 25.3628C222.533 22.1989 222.382 18.4113 221.479 14.993C220.579 11.5848 218.865 8.30736 215.596 6.5249C212.981 5.09749 210.088 4.7825 207.564 4.54732C192.196 3.11047 176.75 3.46107 161.408 3.80934C154.66 3.9625 147.932 4.11522 141.24 4.11522H141.228L141.217 4.11539C118.825 4.4561 106.355 4.57189 84.0659 4.43012L84.0563 4.43005L84.0468 4.43012L29.3374 4.78131L29.3273 4.78138L29.3173 4.78158C28.6541 4.79473 27.7923 4.7918 26.7999 4.78842C24.5917 4.78091 21.7368 4.7712 18.984 4.93152C16.9626 5.04925 14.9124 5.26062 13.0886 5.64423C11.2971 6.02104 9.56824 6.59445 8.30825 7.53031Z" fill="currentColor" vector-effect="non-scaling-stroke"></path></svg>
+            </div>
+            <div class="btn-stop-motion__icon">
+              <div class="before__100"></div>
+              <svg class="btn-stop-motion__icon-svg" xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 160 40" fill="none"><path d="M138.72 35.662C138.72 35.662 138.68 35.6604 138.655 35.6594C138.413 35.6171 138.235 35.3986 138.245 35.1472L138.785 21.8544L134.175 23.5194C134.001 23.5854 133.8 23.5448 133.659 23.4091C133.526 23.2818 133.469 23.0845 133.525 22.9L139.544 3.36319C139.619 3.12252 139.852 2.97764 140.103 3.02029C140.345 3.06262 140.523 3.28105 140.512 3.53247L139.973 16.8253L144.583 15.1603C144.765 15.0945 144.958 15.1349 145.099 15.2706C145.232 15.3978 145.289 15.5951 145.233 15.7797L139.214 35.3165C139.148 35.5332 138.939 35.679 138.72 35.6702L138.72 35.662Z" fill="currentColor"></path><path d="M100.389 35.966C100.389 35.966 100.349 35.9661 100.324 35.9662C100.081 35.9347 99.8932 35.7244 99.8922 35.4728L101.032 21.3271L94.5498 23.5735C93.0942 22.946 94.1764 23.6156 94.0297 23.4863C93.8912 23.365 93.8255 23.1705 93.8735 22.9836L99.7771 3.66243C99.8411 3.41867 100.068 3.26356 100.32 3.29505C100.563 3.32657 100.751 3.53688 100.752 3.78851L99.0734 18.229L105.161 17.3027C105.339 17.2289 105.534 17.2606 105.681 17.3899C105.82 17.5112 105.885 17.7058 105.837 17.8926L100.867 35.5988C100.811 35.8182 100.609 35.9732 100.389 35.9741L100.389 35.966Z" fill="currentColor"></path><path d="M58.6775 35.1145C58.6775 35.1145 58.637 35.111 58.6127 35.1089C58.3728 35.0557 58.2048 34.8295 58.2263 34.5788L61.1337 18.9977L54.6831 22.7794C54.5069 22.8376 54.3074 22.7879 54.1729 22.646C54.0457 22.5129 53.9977 22.3133 54.0622 22.1314L60.1736 4.78497C60.2591 4.54791 60.4989 4.41369 60.7469 4.46756C60.9868 4.52075 61.1549 4.74698 61.1333 4.99768L61.1337 15.5456L65.4578 14.8976C65.6421 14.84 65.8335 14.8891 65.968 15.0309C66.0952 15.1641 66.1432 15.3638 66.0787 15.5456L59.186 34.7915C59.1106 35.005 58.8952 35.1413 58.6768 35.1226L58.6775 35.1145Z" fill="currentColor"></path><path d="M18.0738 34.3732C18.0738 34.3732 18.0277 34.3732 18 34.3732C17.7232 34.3404 17.511 34.1273 17.511 33.8732L19.5 20.8732L13.7841 24.301C15 24.301 13.3597 24.3419 13.1936 24.2108C13.0367 24.0879 12.9629 23.8912 13.0183 23.7027L21 3.37316C21.0738 3.12729 21.3322 2.97156 21.6182 3.00434C21.895 3.03713 22.1072 3.2502 22.1072 3.50426L21 17.8732L25.2159 15.4415C25.4189 15.3677 25.6404 15.4005 25.8065 15.5316C25.9633 15.6545 26.0371 15.8513 25.9817 16.0398L18.6182 34.0044C18.5536 34.2256 18.3229 34.3814 18.0738 34.3814V34.3732Z" fill="currentColor"></path></svg>
+            </div>
+            <p data-wiggle-target class="btn-stop-motion__p">Stop Motion</p>
+          </div>
+        </a>
+        <span class="btn-cell__label" style="color:#ffe224">Stop Motion CSS</span>
+      </div>
+
+      <!-- 8. Rotating Icon -->
+      <div class="btn-cell cell-8">
+        <a href="#" class="btn-icon-link">
+          <div class="btn-icon-content">
+            <div class="btn-icon-content__mask">
+              <span data-button-anim-target="" class="btn-icon-content__text">Button with Icon</span>
+            </div>
+            <div data-icon-size="normal" class="btn-icon-icon">
+              <div data-button-anim-target="" class="btn-icon-icon__bg"></div>
+              <div class="btn-icon-icon__wrap">
+                <div class="btn-icon-icon__list">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 8" fill="none" data-button-anim-target="" class="btn-icon-icon__arrow"><path d="M4.45231 0.385986H6.02531L9.30131 3.99999L6.02531 7.61399H4.45231L7.40331 4.58499H0.695312V3.42799H7.41631L4.45231 0.385986Z" fill="currentColor"></path></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 8" fill="none" data-button-anim-target="" class="btn-icon-icon__arrow"><path d="M4.45231 0.385986H6.02531L9.30131 3.99999L6.02531 7.61399H4.45231L7.40331 4.58499H0.695312V3.42799H7.41631L4.45231 0.385986Z" fill="currentColor"></path></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 10 8" fill="none" data-button-anim-target="" class="btn-icon-icon__arrow"><path d="M4.45231 0.385986H6.02531L9.30131 3.99999L6.02531 7.61399H4.45231L7.40331 4.58499H0.695312V3.42799H7.41631L4.45231 0.385986Z" fill="currentColor"></path></svg>
+                </div>
+              </div>
+            </div>
+            <div data-button-anim-target="" class="btn-icon-content__bg"></div>
+          </div>
+        </a>
+        <span class="btn-cell__label" style="color:#a29a65">Rotating Icon</span>
+      </div>
+
+      <!-- 9. Underline Link -->
+      <div class="btn-cell cell-9">
+        <div class="link-group">
+          <a data-underline-link href="#" class="underline-link">Underline In</a>
+          <a data-underline-link="alt" href="#" class="underline-link">Swap Out</a>
+        </div>
+        <span class="btn-cell__label" style="color:rgba(240,240,242,.4)">Underline Animation</span>
+      </div>
+
+      <!-- 10. Bubble Arrow -->
+      <div class="btn-cell cell-10">
+        <a href="#" class="btn-bubble-arrow">
+          <div class="btn-bubble-arrow__arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" class="btn-bubble-arrow__arrow-svg"><polyline points="18 8 18 18 8 18" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="1.5"></polyline><line x1="18" y1="18" x2="5" y2="5" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="1.5"></line></svg>
+          </div>
+          <div class="btn-bubble-arrow__content"><span class="btn-bubble-arrow__content-text">Button Bubble</span></div>
+          <div class="btn-bubble-arrow__arrow is--duplicate">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" class="btn-bubble-arrow__arrow-svg"><polyline points="18 8 18 18 8 18" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="1.5"></polyline><line x1="18" y1="18" x2="5" y2="5" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="1.5"></line></svg>
+          </div>
+        </a>
+        <span class="btn-cell__label" style="color:#ff4c2f">Bubble Arrow</span>
+      </div>
+
+      <!-- 11. Directional Hover -->
+      <div class="btn-cell cell-11">
+        <div class="btn-dir-wrap">
+          <a href="#" data-theme="dark" data-btn-hover="" class="btn">
+            <div class="btn__bg"></div><div class="btn__circle-wrap"><div class="btn__circle"><div class="before__100"></div></div></div>
+            <div class="btn__text"><p class="btn-text-p">Dark</p></div>
+          </a>
+          <a href="#" data-theme="light" data-btn-hover="" class="btn">
+            <div class="btn__bg"></div><div class="btn__circle-wrap"><div class="btn__circle"><div class="before__100"></div></div></div>
+            <div class="btn__text"><p class="btn-text-p">Light</p></div>
+          </a>
+          <a href="#" data-theme="primary" data-btn-hover="" class="btn">
+            <div class="btn__bg"></div><div class="btn__circle-wrap"><div class="btn__circle"><div class="before__100"></div></div></div>
+            <div class="btn__text"><p class="btn-text-p">Primary</p></div>
+          </a>
+        </div>
+        <span class="btn-cell__label" style="color:#d1fd88">Directional Hover</span>
+      </div>
+
+      <!-- 12. Magnetic -->
+      <div class="btn-cell cell-12">
+        <div class="btn-magnetic">
+          <a href="#" class="btn-magnetic__click" data-magnetic-strength="50" data-magnetic-strength-inner="25">
+            <div class="btn-magnetic__fill"></div>
+            <div data-magnetic-inner-target="" class="btn-magnetic__content">
+              <div class="btn-magnetic__text">
+                <p class="btn-magnetic__text-p">Magnetic Effect</p>
+                <p class="btn-magnetic__text-p is--duplicate">Magnetic Effect</p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <span class="btn-cell__label" style="color:#ede7ff">Magnetic Hover</span>
+      </div>
+
+      <!-- 13. Toggle -->
+      <div class="btn-cell cell-13">
+        <div class="btn-toggle">
+          <div class="btn-toggle__toggle"><div class="btn-toggle__toggle-dot"></div></div>
+          <p class="btn-toggle__p">CSS Toggle</p>
+          <input type="checkbox" class="btn-toggle__checkbox">
+        </div>
+        <span class="btn-cell__label" style="color:#ff4c24">Toggle (CSS Only)</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scripts: GSAP for buttons that need it -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/DrawSVGPlugin.min.js"></script>
+  <script>
+    // 1. Elastic Pulse
+    function initElasticPulseButton(){if(window.matchMedia('(hover: none) and (pointer: coarse)').matches)return;document.querySelectorAll('[data-elastic-pulse-btn]').forEach(btn=>{const target=btn.querySelector('[data-elastic-pulse-target]')||btn;let hoverLocked=false;btn.addEventListener('mouseenter',()=>{if(hoverLocked)return;hoverLocked=true;setTimeout(()=>{hoverLocked=false;},500);const el=target;const w=el.offsetWidth;const h=el.offsetHeight;const fs=parseFloat(getComputedStyle(el).fontSize);const stretch=0.75*fs;const sx=(w+stretch)/w;const sy=(h-stretch*0.33)/h;if(el._pulseTl&&el._pulseTl.kill)el._pulseTl.kill();el._pulseTl=gsap.timeline().to(el,{scaleX:sx,scaleY:sy,duration:0.1,ease:'power1.out'}).to(el,{scaleX:1,scaleY:1,duration:1,ease:'elastic.out(1, 0.3)'});});});}
+
+    // 3. Copy Email
+    function initCopyEmailClipboard(){const buttons=document.querySelectorAll('.copy-email-button');if(!buttons.length)return;const copyEmail=(button)=>{const email=button.getAttribute('data-copy-email')||button.querySelector('[data-copy-email-element]').textContent.trim();if(email){navigator.clipboard.writeText(email).then(()=>{button.setAttribute('data-copy-button','copied');button.setAttribute('aria-label','Email copied to clipboard!');});}};const handleInteraction=(e)=>{if(e.type==='click'||(e.type==='keydown'&&(e.key==='Enter'||e.key===' '))){e.preventDefault();copyEmail(e.currentTarget);}};buttons.forEach((button)=>{button.addEventListener('click',handleInteraction);button.addEventListener('keydown',handleInteraction);button.addEventListener('mouseleave',()=>{button.removeAttribute('data-copy-button');button.blur();button.setAttribute('aria-label','Copy email to clipboard');});button.addEventListener('blur',()=>{button.removeAttribute('data-copy-button');button.setAttribute('aria-label','Copy email to clipboard');});});}
+
+    // 4. Draw Random Underline
+    function initDrawRandomUnderline(){gsap.registerPlugin(DrawSVGPlugin);const svgVariants=[`<svg width="310" height="40" viewBox="0 0 310 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 20.9999C26.7762 16.2245 49.5532 11.5572 71.7979 14.6666C84.9553 16.5057 97.0392 21.8432 109.987 24.3888C116.413 25.6523 123.012 25.5143 129.042 22.6388C135.981 19.3303 142.586 15.1422 150.092 13.3333C156.799 11.7168 161.702 14.6225 167.887 16.8333C181.562 21.7212 194.975 22.6234 209.252 21.3888C224.678 20.0548 239.912 17.991 255.42 18.3055C272.027 18.6422 288.409 18.867 305 17.9999" stroke="currentColor" stroke-width="10" stroke-linecap="round"/></svg>`,`<svg width="310" height="40" viewBox="0 0 310 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 29.5014C9.61174 24.4515 12.9521 17.9873 20.9532 17.5292C23.7742 17.3676 27.0987 17.7897 29.6575 19.0014C33.2644 20.7093 35.6481 24.0004 39.4178 25.5014C48.3911 29.0744 55.7503 25.7731 63.3048 21.0292C67.9902 18.0869 73.7668 16.1366 79.3721 17.8903C85.1682 19.7036 88.2173 26.2464 94.4121 27.2514C102.584 28.5771 107.023 25.5064 113.276 20.6125C119.927 15.4067 128.83 12.3333 137.249 15.0014C141.418 16.3225 143.116 18.7528 146.581 21.0014C149.621 22.9736 152.78 23.6197 156.284 24.2514C165.142 25.8479 172.315 17.5185 179.144 13.5014C184.459 10.3746 191.785 8.74853 195.868 14.5292C199.252 19.3205 205.597 22.9057 211.621 22.5014C215.553 22.2374 220.183 17.8356 222.979 15.5569C225.4 13.5845 227.457 11.1105 230.742 10.5292C232.718 10.1794 234.784 12.9691 236.164 14.0014C238.543 15.7801 240.717 18.4775 243.356 19.8903C249.488 23.1729 255.706 21.2551 261.079 18.0014C266.571 14.6754 270.439 11.5202 277.146 13.6125C280.725 14.7289 283.221 17.209 286.393 19.0014C292.321 22.3517 298.255 22.5014 305 22.5014" stroke="currentColor" stroke-width="10" stroke-linecap="round"/></svg>`,`<svg width="310" height="40" viewBox="0 0 310 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.99805 20.9998C65.6267 17.4649 126.268 13.845 187.208 12.8887C226.483 12.2723 265.751 13.2796 304.998 13.9998" stroke="currentColor" stroke-width="10" stroke-linecap="round"/></svg>`];function decorateSVG(svgEl){svgEl.setAttribute('preserveAspectRatio','none');svgEl.querySelectorAll('path').forEach(path=>{path.setAttribute('stroke','currentColor');});}let nextIndex=null;document.querySelectorAll('[data-draw-line]').forEach(container=>{const box=container.querySelector('[data-draw-line-box]');if(!box)return;let enterTween=null;let leaveTween=null;container.addEventListener('mouseenter',()=>{if(enterTween&&enterTween.isActive())return;if(leaveTween&&leaveTween.isActive())leaveTween.kill();if(nextIndex===null){nextIndex=Math.floor(Math.random()*svgVariants.length);}box.innerHTML=svgVariants[nextIndex];const svg=box.querySelector('svg');if(svg){decorateSVG(svg);const path=svg.querySelector('path');if(path){gsap.set(path,{drawSVG:'0%'});enterTween=gsap.to(path,{duration:0.5,drawSVG:'100%',ease:'power2.inOut',onComplete:()=>{enterTween=null;}});}}nextIndex=(nextIndex+1)%svgVariants.length;});container.addEventListener('mouseleave',()=>{const path=box.querySelector('path');if(!path)return;const playOut=()=>{if(leaveTween&&leaveTween.isActive())return;leaveTween=gsap.to(path,{duration:0.5,drawSVG:'100% 100%',ease:'power2.inOut',onComplete:()=>{leaveTween=null;box.innerHTML='';}});};if(enterTween&&enterTween.isActive()){enterTween.eventCallback('onComplete',playOut);}else{playOut();}});});}
+
+    // 6. Char Stagger
+    function initButtonCharacterStagger(){const offsetIncrement=0.01;const buttons=document.querySelectorAll('[data-button-animate-chars]');buttons.forEach(button=>{const text=button.textContent;button.innerHTML='';[...text].forEach((char,index)=>{const span=document.createElement('span');span.textContent=char;span.style.transitionDelay=`${index*offsetIncrement}s`;if(char===' ')span.style.whiteSpace='pre';button.appendChild(span);});});}
+
+    // 11. Directional Hover
+    function initDirectionalButtonHover(){document.querySelectorAll('[data-btn-hover]').forEach(button=>{button.addEventListener('mouseenter',handleHover);button.addEventListener('mouseleave',handleHover);});function handleHover(event){const button=event.currentTarget;const buttonRect=button.getBoundingClientRect();const buttonWidth=buttonRect.width;const buttonHeight=buttonRect.height;const buttonCenterX=buttonRect.left+buttonWidth/2;const mouseX=event.clientX;const mouseY=event.clientY;const offsetXFromLeft=((mouseX-buttonRect.left)/buttonWidth)*100;const offsetYFromTop=((mouseY-buttonRect.top)/buttonHeight)*100;let offsetXFromCenter=((mouseX-buttonCenterX)/(buttonWidth/2))*50;offsetXFromCenter=Math.abs(offsetXFromCenter);const circle=button.querySelector('.btn__circle');if(circle){circle.style.left=`${offsetXFromLeft.toFixed(1)}%`;circle.style.top=`${offsetYFromTop.toFixed(1)}%`;circle.style.width=`${115+offsetXFromCenter.toFixed(1)*2}%`;}}}
+
+    // 12. Magnetic
+    function initMagneticEffect(){const magnets=document.querySelectorAll('[data-magnetic-strength]');if(window.innerWidth<=991)return;const resetEl=(el,immediate)=>{if(!el)return;gsap.killTweensOf(el);(immediate?gsap.set:gsap.to)(el,{x:"0em",y:"0em",rotate:"0deg",clearProps:"all",...(!immediate&&{ease:"elastic.out(1, 0.3)",duration:1.6})});};const resetOnEnter=e=>{const m=e.currentTarget;resetEl(m,true);resetEl(m.querySelector('[data-magnetic-inner-target]'),true);};const moveMagnet=e=>{const m=e.currentTarget,b=m.getBoundingClientRect(),strength=parseFloat(m.getAttribute('data-magnetic-strength'))||25,inner=m.querySelector('[data-magnetic-inner-target]'),innerStrength=parseFloat(m.getAttribute('data-magnetic-strength-inner'))||strength,offsetX=((e.clientX-b.left)/m.offsetWidth-0.5)*(strength/16),offsetY=((e.clientY-b.top)/m.offsetHeight-0.5)*(strength/16);gsap.to(m,{x:offsetX+"em",y:offsetY+"em",rotate:"0.001deg",ease:"power4.out",duration:1.6});if(inner){const innerOffsetX=((e.clientX-b.left)/m.offsetWidth-0.5)*(innerStrength/16),innerOffsetY=((e.clientY-b.top)/m.offsetHeight-0.5)*(innerStrength/16);gsap.to(inner,{x:innerOffsetX+"em",y:innerOffsetY+"em",rotate:"0.001deg",ease:"power4.out",duration:2});}};const resetMagnet=e=>{const m=e.currentTarget,inner=m.querySelector('[data-magnetic-inner-target]');gsap.to(m,{x:"0em",y:"0em",ease:"elastic.out(1, 0.3)",duration:1.6,clearProps:"all"});if(inner){gsap.to(inner,{x:"0em",y:"0em",ease:"elastic.out(1, 0.3)",duration:2,clearProps:"all"});}};magnets.forEach(m=>{m.addEventListener('mouseenter',resetOnEnter);m.addEventListener('mousemove',moveMagnet);m.addEventListener('mouseleave',resetMagnet);});}
+
+    document.addEventListener('DOMContentLoaded',()=>{
+      initElasticPulseButton();
+      initCopyEmailClipboard();
+      initDrawRandomUnderline();
+      initButtonCharacterStagger();
+      initDirectionalButtonHover();
+      initMagneticEffect();
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="lenis-init.js"></script>
+</body>
+</html>
