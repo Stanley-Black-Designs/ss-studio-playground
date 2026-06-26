@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skeleton Loader Text — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:#0d1220;color:#c8e0e8;font-family:'Space Mono',monospace;padding-top:50px;-webkit-font-smoothing:antialiased}
+
+    .ghost-section{gap:2em;flex-flow:column;justify-content:center;align-items:center;width:100%;min-height:100vh;padding:4em 2em;display:flex}
+    .ghost-section.is--light{color:#121422;background-color:#cdf7ff}
+    .ghost-section.is--dark-alt{background-color:#060910}
+
+    .ghost-heading{letter-spacing:-.03em;text-transform:uppercase;max-width:15em;margin:0;font-family:'Space Mono',monospace;font-size:clamp(1.8em,4vw,4em);font-weight:400;line-height:1}
+    .ghost-heading.is--small{max-width:25em;font-size:clamp(1.2em,2.5vw,2.5em);line-height:1.1}
+    .ghost-eyebrow{font-size:.75em;letter-spacing:.15em;opacity:.45;text-transform:uppercase;font-family:'Inter',sans-serif;font-weight:500}
+
+    [data-load-skeleton="dark"]{--color-skeleton-base:#2E3643;--color-skeleton-pulse:#53636F}
+    [data-load-skeleton="light"]{--color-skeleton-base:#B1D5DE;--color-skeleton-pulse:#8CA8B2}
+    [data-load-skeleton="accent"]{--color-skeleton-base:#0a2a3a;--color-skeleton-pulse:#0064E7}
+
+    [data-load-skeleton] .single-line{visibility:hidden}
+    .skeleton-overlay{position:absolute;top:50%;transform:translate(0px,-50%);left:0px;width:100%;height:80%;border-radius:.25rem;z-index:1;background-color:var(--color-skeleton-base)}
+  </style>
+</head>
+<body>
+  <div class="demo-chrome">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <div class="demo-chrome__sep"></div><span class="demo-chrome__title">Skeleton Loader Text</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+
+  <!-- Section 1: Dark intro -->
+  <div class="ghost-section">
+    <span class="ghost-eyebrow">↓ Scroll to reveal</span>
+    <h1 data-load-skeleton="dark" class="ghost-heading">This heading will reveal with a skeleton loader effect.</h1>
+  </div>
+
+  <!-- Section 2: Light background -->
+  <div class="ghost-section is--light">
+    <h1 data-load-skeleton="light" class="ghost-heading">→ Fully attribute based<br>→ Set different themes<br>→ Control skeleton styling</h1>
+  </div>
+
+  <!-- Section 3: Dark alt with accent -->
+  <div class="ghost-section is--dark-alt">
+    <h1 data-load-skeleton="accent" class="ghost-heading">Motion design isn't decoration — it's communication.</h1>
+  </div>
+
+  <!-- Section 4: Body copy demo -->
+  <div class="ghost-section">
+    <h2 data-load-skeleton="dark" class="ghost-heading is--small">The idea of skeleton loading was introduced in 2013 by Luke Wroblewski — blank placeholders that pulse before real content appears. Here, we use GSAP SplitText to bring that idea to headings and body copy as you scroll.</h2>
+  </div>
+
+  <!-- Section 5: Final CTA-style -->
+  <div class="ghost-section is--light">
+    <h1 data-load-skeleton="light" class="ghost-heading">Have a project in mind?</h1>
+    <span class="ghost-eyebrow" style="color:#0064E7;">Book a call →</span>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/SplitText.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger,SplitText);
+    function debounce(fn,delay){let t;return function(){clearTimeout(t);t=setTimeout(fn,delay);};}
+    function cleanup(){document.querySelectorAll('[data-load-skeleton]').forEach(target=>{if(target.splitInstance){target.splitInstance.revert();delete target.splitInstance;}target.querySelectorAll('.skeleton-overlay').forEach(overlay=>overlay.remove());});ScrollTrigger.getAll().forEach(trigger=>{if(trigger.vars&&trigger.vars.trigger&&trigger.vars.trigger.closest('[data-load-skeleton]')){trigger.kill();}});}
+    function initSplit(){let skeletonLoadTargets=document.querySelectorAll('[data-load-skeleton]');skeletonLoadTargets.forEach(target=>{let splitInstance=new SplitText(target,{type:"lines",linesClass:"single-line"});target.splitInstance=splitInstance;target.setAttribute("aria-label",target.textContent);splitInstance.lines.forEach(line=>{line.setAttribute("aria-hidden","true");let wrapper=document.createElement('div');wrapper.classList.add('single-line-wrap');line.parentNode.insertBefore(wrapper,line);wrapper.appendChild(line);});});}
+    function initSkeletonLoader(){const instances=document.querySelectorAll('[data-load-skeleton]');instances.forEach(instance=>{const overlays=[];const lineWrappers=instance.querySelectorAll('.single-line-wrap');lineWrappers.forEach(wrapper=>{const overlay=document.createElement('div');overlay.classList.add('skeleton-overlay');wrapper.style.position='relative';wrapper.appendChild(overlay);overlays.push(overlay);});overlays.forEach((overlay,i)=>{const tl=gsap.timeline({scrollTrigger:{trigger:overlay,start:"top 90%",once:true},defaults:{duration:0.5,ease:"power2.inOut"}});const pulseColor=gsap.getProperty(instance,"--color-skeleton-pulse");const textEl=overlay.previousElementSibling;tl.to(overlay,{backgroundColor:pulseColor,duration:0.3,ease:"power1.inOut",repeat:2,yoyo:true,delay:i*0.05}).to(overlay,{opacity:0,onComplete:()=>overlay.remove()}).to(textEl,{autoAlpha:1},"<");});});}
+    function initTextEffects(){cleanup();initSplit();initSkeletonLoader();}
+    let prevWidth=window.innerWidth;
+    const onResize=debounce(()=>{const currentWidth=window.innerWidth;if(currentWidth!==prevWidth){prevWidth=currentWidth;initTextEffects();}},250);
+    window.addEventListener('resize',onResize);
+    document.addEventListener("DOMContentLoaded",()=>{document.fonts.ready.then(initTextEffects);});
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="lenis-init.js"></script>
+</body>
+</html>
