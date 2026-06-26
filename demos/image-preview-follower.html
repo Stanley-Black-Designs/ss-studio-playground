@@ -6,9 +6,10 @@
   <title>Image Preview Cursor Follower — Stanley Smith Studios</title>
   <link rel="stylesheet" href="demo-chrome.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
       background: #f5f4f0;
       color: #0a0a0a;
@@ -17,6 +18,7 @@
       font-size: 16px;
     }
 
+    /* ── Page layout ── */
     .page-wrap {
       padding-top: 80px;
       min-height: 100dvh;
@@ -24,6 +26,7 @@
       align-items: center;
     }
 
+    /* ── Exact Osmo CSS ── */
     .preview-container {
       width: 100%;
       max-width: 76em;
@@ -45,21 +48,10 @@
       display: flex;
     }
 
-    .preview-item__col {
-      flex: 1;
-    }
-
-    .preview-item__col.is--large {
-      max-width: 45%;
-    }
-
-    .preview-item__col.is--medium {
-      max-width: 25%;
-    }
-
-    .preview-item__col.is--small {
-      max-width: 15%;
-    }
+    .preview-item__col { flex: 1; }
+    .preview-item__col.is--large  { max-width: 45%; }
+    .preview-item__col.is--medium { max-width: 25%; }
+    .preview-item__col.is--small  { max-width: 15%; }
 
     .preview-container__label {
       color: #0a0a0a80;
@@ -80,8 +72,7 @@
     }
 
     .preview-item__heading {
-      margin-top: 0;
-      margin-bottom: 0;
+      margin: 0;
       font-size: 3.5em;
       font-weight: 400;
       line-height: 1;
@@ -94,6 +85,7 @@
       line-height: 1.2;
     }
 
+    /* Hidden source visual — only used for cloning */
     .preview-item__visual {
       aspect-ratio: 1 / 1.25;
       width: 20em;
@@ -102,6 +94,7 @@
       overflow: hidden;
     }
 
+    /* Cloned visuals injected into the follower */
     .preview-follower [data-follower-visual] {
       display: block;
       width: 100%;
@@ -122,6 +115,7 @@
       height: 100%;
     }
 
+    /* ── Follower cursor ── */
     .preview-follower {
       z-index: 100;
       aspect-ratio: 1 / 1.25;
@@ -136,6 +130,7 @@
       overflow: hidden;
     }
 
+    /* Label is a SIBLING of __inner, not a child */
     .preview-follower__label {
       z-index: 2;
       position: absolute;
@@ -152,7 +147,7 @@
     }
 
     .preview-follower__inner {
-      z-index: 2;
+      z-index: 1;
       justify-content: center;
       align-items: center;
       width: 100%;
@@ -164,9 +159,10 @@
       transition: opacity 0.1s ease, transform 0.6s cubic-bezier(0.65, 0.1, 0, 1);
     }
 
+    /* Desktop hover states */
     @media screen and (min-width: 992px) {
       .preview-item:last-of-type {
-        border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+        border-bottom: 1px solid rgba(0,0,0,0.25);
       }
     }
 
@@ -184,35 +180,17 @@
       }
     }
 
+    /* Tablet */
     @media screen and (max-width: 991px) {
-      .preview-item__row {
-        grid-row-gap: .5em;
-      }
-
-      .preview-item__row.tablet--hide {
-        display: none;
-      }
+      .preview-item__row { grid-row-gap: .5em; }
+      .preview-item__row.tablet--hide { display: none; }
 
       .preview-item__col.is--large {
-        flex: none;
-        order: -1;
-        width: 100%;
-        max-width: none;
+        flex: none; order: -1; width: 100%; max-width: none;
       }
-
-      .preview-item__col.is--medium {
-        order: -1;
-        max-width: 80%;
-      }
-
-      .preview-item__col.is--small {
-        text-align: right;
-        max-width: 20%;
-      }
-
-      .preview-item__col.is--small.tablet--hide {
-        display: none;
-      }
+      .preview-item__col.is--medium { order: -1; max-width: 80%; }
+      .preview-item__col.is--small  { text-align: right; max-width: 20%; }
+      .preview-item__col.is--small.tablet--hide { display: none; }
 
       .preview-list {
         grid-column-gap: 1em;
@@ -220,13 +198,8 @@
         flex-flow: wrap;
       }
 
-      .preview-item {
-        width: calc(50% - .5em);
-      }
-
-      .preview-item__heading {
-        font-size: 2em;
-      }
+      .preview-item { width: calc(50% - .5em); }
+      .preview-item__heading { font-size: 2em; }
 
       .preview-item__visual {
         border-radius: .75em;
@@ -238,169 +211,139 @@
       }
 
       .preview-item__inner {
-        border: 1px #000;
+        border: none;
         flex-flow: column;
         padding-top: 0;
         padding-bottom: 0;
         display: flex;
       }
 
-      .preview-follower {
-        display: none;
-      }
+      .preview-follower { display: none; }
     }
 
+    /* Mobile */
     @media screen and (max-width: 767px) {
-      .preview-container {
-        padding-left: 1em;
-        padding-right: 1em;
-      }
-
-      .preview-list {
-        grid-row-gap: 3em;
-      }
-
-      .preview-item {
-        width: 100%;
-      }
+      .preview-container { padding-left: 1em; padding-right: 1em; }
+      .preview-list { grid-row-gap: 3em; }
+      .preview-item { width: 100%; }
     }
   </style>
 </head>
 <body>
 
-  <header class="demo-chrome" style="background: rgba(245,244,240,0.9); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.1);">
-    <a class="demo-chrome__back" href="../index.html" style="color: rgba(10,10,10,0.6);">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Back
-    </a>
-    <span class="demo-chrome__title" style="color: #0a0a0a;">Image Preview Cursor Follower</span>
-    <a class="demo-chrome__cta" href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener">Book a call</a>
+  <header class="demo-chrome" style="background:rgba(245,244,240,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.1);">
+    <div class="demo-chrome__left">
+      <a class="demo-chrome__back" href="../index.html" style="color:rgba(10,10,10,0.55);">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to Playground
+      </a>
+      <div class="demo-chrome__sep" style="background:rgba(0,0,0,0.12);"></div>
+      <span class="demo-chrome__title" style="color:#0a0a0a;">Image Preview Cursor Follower</span>
+    </div>
+    <a class="demo-chrome__cta" href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener">Have a project in mind?</a>
   </header>
 
   <div class="page-wrap">
     <div data-follower-wrap="" class="preview-container">
+
+      <!-- Column headers (desktop only) -->
       <div class="preview-item__row tablet--hide">
         <div class="preview-item__col is--large"><span class="preview-container__label">Name</span></div>
         <div class="preview-item__col is--small"><span class="preview-container__label">Location</span></div>
         <div class="preview-item__col is--small"><span class="preview-container__label">Year</span></div>
         <div class="preview-item__col is--medium"><span class="preview-container__label">Services</span></div>
       </div>
+
       <div data-follower-collection="" class="preview-collection">
         <div class="preview-list">
+
           <div data-follower-item="" class="preview-item">
             <a href="#" class="preview-item__inner">
               <div class="preview-item__row">
-                <div class="preview-item__col is--large">
-                  <h2 class="preview-item__heading">Prism</h2>
-                </div>
-                <div class="preview-item__col is--small tablet--hide">
-                  <p class="preview-item__text">Belgium</p>
-                </div>
-                <div class="preview-item__col is--small">
-                  <p class="preview-item__text">2025</p>
-                </div>
-                <div class="preview-item__col is--medium">
-                  <p class="preview-item__text">Development</p>
-                </div>
+                <div class="preview-item__col is--large"><h2 class="preview-item__heading">Prism</h2></div>
+                <div class="preview-item__col is--small tablet--hide"><p class="preview-item__text">Belgium</p></div>
+                <div class="preview-item__col is--small"><p class="preview-item__text">2025</p></div>
+                <div class="preview-item__col is--medium"><p class="preview-item__text">Development</p></div>
               </div>
               <div data-follower-visual="" class="preview-item__visual">
                 <img src="https://cdn.prod.website-files.com/6889f182607452ec007a0ae1/688a1e49a704afe5e3f4a55d_Fluid%20Abstract%20Design.avif" class="preview-item__visual-img">
               </div>
             </a>
           </div>
+
           <div data-follower-item="" class="preview-item">
             <a href="#" class="preview-item__inner">
               <div class="preview-item__row">
-                <div class="preview-item__col is--large">
-                  <h2 class="preview-item__heading">Oracle</h2>
-                </div>
-                <div class="preview-item__col is--small tablet--hide">
-                  <p class="preview-item__text">Australia</p>
-                </div>
-                <div class="preview-item__col is--small">
-                  <p class="preview-item__text">2025</p>
-                </div>
-                <div class="preview-item__col is--medium">
-                  <p class="preview-item__text">Design, Development</p>
-                </div>
+                <div class="preview-item__col is--large"><h2 class="preview-item__heading">Oracle</h2></div>
+                <div class="preview-item__col is--small tablet--hide"><p class="preview-item__text">Australia</p></div>
+                <div class="preview-item__col is--small"><p class="preview-item__text">2025</p></div>
+                <div class="preview-item__col is--medium"><p class="preview-item__text">Design, Development</p></div>
               </div>
               <div data-follower-visual="" class="preview-item__visual">
                 <img src="https://cdn.prod.website-files.com/6889f182607452ec007a0ae1/688a1e2ea2b1de5d693cf173_Elegant%20Ice%20Bottle%20Display.avif" class="preview-item__visual-img">
               </div>
             </a>
           </div>
+
           <div data-follower-item="" class="preview-item">
             <a href="#" class="preview-item__inner">
               <div class="preview-item__row">
-                <div class="preview-item__col is--large">
-                  <h2 class="preview-item__heading">Mosaic</h2>
-                </div>
-                <div class="preview-item__col is--small tablet--hide">
-                  <p class="preview-item__text">Spain</p>
-                </div>
-                <div class="preview-item__col is--small">
-                  <p class="preview-item__text">2024</p>
-                </div>
-                <div class="preview-item__col is--medium">
-                  <p class="preview-item__text">Development</p>
-                </div>
+                <div class="preview-item__col is--large"><h2 class="preview-item__heading">Mosaic</h2></div>
+                <div class="preview-item__col is--small tablet--hide"><p class="preview-item__text">Spain</p></div>
+                <div class="preview-item__col is--small"><p class="preview-item__text">2024</p></div>
+                <div class="preview-item__col is--medium"><p class="preview-item__text">Development</p></div>
               </div>
               <div data-follower-visual="" class="preview-item__visual">
                 <img src="https://cdn.prod.website-files.com/6889f182607452ec007a0ae1/688a1e2e3a3b6987bbb92dfd_Serene%20Floral%20Arrangement.avif" class="preview-item__visual-img">
               </div>
             </a>
           </div>
+
           <div data-follower-item="" class="preview-item">
             <a href="#" class="preview-item__inner">
               <div class="preview-item__row">
-                <div class="preview-item__col is--large">
-                  <h2 class="preview-item__heading">Zenith</h2>
-                </div>
-                <div class="preview-item__col is--small tablet--hide">
-                  <p class="preview-item__text">Japan</p>
-                </div>
-                <div class="preview-item__col is--small">
-                  <p class="preview-item__text">2024</p>
-                </div>
-                <div class="preview-item__col is--medium">
-                  <p class="preview-item__text">Strategy, Design</p>
-                </div>
+                <div class="preview-item__col is--large"><h2 class="preview-item__heading">Zenith</h2></div>
+                <div class="preview-item__col is--small tablet--hide"><p class="preview-item__text">Japan</p></div>
+                <div class="preview-item__col is--small"><p class="preview-item__text">2024</p></div>
+                <div class="preview-item__col is--medium"><p class="preview-item__text">Strategy, Design</p></div>
               </div>
               <div data-follower-visual="" class="preview-item__visual">
                 <img src="https://cdn.prod.website-files.com/6889f182607452ec007a0ae1/688a1e349d92acc75bd79fa8_Minimalist%20Green%20Stools.avif" class="preview-item__visual-img">
               </div>
             </a>
           </div>
+
         </div>
       </div>
+
+      <!-- Follower cursor: label is SIBLING of inner, not nested inside it -->
       <div data-follower-cursor="" class="preview-follower">
-        <div data-follower-cursor-inner="" class="preview-follower__inner">
-          <div class="preview-follower__label">
-            <div class="preview-follower__label-span">View case</div>
-          </div>
+        <div data-follower-cursor-inner="" class="preview-follower__inner"></div>
+        <div class="preview-follower__label">
+          <div class="preview-follower__label-span">View case</div>
         </div>
       </div>
+
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
-
   <script>
     function initPreviewFollower() {
       const wrappers = document.querySelectorAll('[data-follower-wrap]');
 
       wrappers.forEach(wrap => {
-        const collection = wrap.querySelector('[data-follower-collection]');
-        const items = wrap.querySelectorAll('[data-follower-item]');
-        const follower = wrap.querySelector('[data-follower-cursor]');
+        const collection   = wrap.querySelector('[data-follower-collection]');
+        const items        = wrap.querySelectorAll('[data-follower-item]');
+        const follower     = wrap.querySelector('[data-follower-cursor]');
         const followerInner = wrap.querySelector('[data-follower-cursor-inner]');
 
-        let prevIndex = null;
+        let prevIndex  = null;
         let firstEntry = true;
 
-        const offset = 100;
+        const offset   = 100;
         const duration = 0.5;
-        const ease = 'power2.inOut';
+        const ease     = 'power2.inOut';
 
         gsap.set(follower, { xPercent: -50, yPercent: -50 });
 
@@ -421,9 +364,7 @@
               gsap.killTweensOf(el);
               gsap.to(el, {
                 yPercent: forward ? -offset : offset,
-                duration,
-                ease,
-                overwrite: 'auto',
+                duration, ease, overwrite: 'auto',
                 onComplete: () => el.remove()
               });
             });
@@ -448,10 +389,7 @@
             if (!el) return;
             gsap.killTweensOf(el);
             gsap.to(el, {
-              yPercent: -offset,
-              duration,
-              ease,
-              overwrite: 'auto',
+              yPercent: -offset, duration, ease, overwrite: 'auto',
               onComplete: () => el.remove()
             });
           });
@@ -468,9 +406,7 @@
       });
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      initPreviewFollower();
-    });
+    document.addEventListener('DOMContentLoaded', () => { initPreviewFollower(); });
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
