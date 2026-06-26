@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Highlight Text on Scroll — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:#0a0a0a;color:#f0f0f2;font-family:'Inter',sans-serif;padding-top:50px;-webkit-font-smoothing:antialiased}
+    .section{display:flex;align-items:center;justify-content:center;min-height:100dvh;padding:6em 2em}
+    .heading{text-align:center;max-width:800px;margin:0 auto;font-size:clamp(28px,4.5vw,60px);font-weight:400;line-height:1.1;letter-spacing:-.02em}
+    .heading--large{font-size:clamp(36px,6vw,80px);font-weight:300}
+  </style>
+</head>
+<body>
+  <div class="demo-chrome">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <div class="demo-chrome__sep"></div><span class="demo-chrome__title">Highlight Text on Scroll</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+
+  <section class="section">
+    <h1 data-highlight-text class="heading heading--large">This heading will start pretty faded, and then smoothly transition into a highlighted version as you scroll!</h1>
+  </section>
+
+  <section class="section">
+    <h2 data-highlight-text data-highlight-fade="0.1" data-highlight-stagger="0.08" class="heading">Motion design isn't decoration — it's communication. Every transition, reveal, and hover state carries meaning and guides attention.</h2>
+  </section>
+
+  <section class="section">
+    <h2 data-highlight-text data-highlight-scroll-start="top 80%" data-highlight-scroll-end="center 30%" data-highlight-stagger="0.15" class="heading heading--large">Have a project in mind?</h2>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/SplitText.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger,SplitText);
+    function initHighlightText(){let splitHeadingTargets=document.querySelectorAll("[data-highlight-text]");splitHeadingTargets.forEach((heading)=>{const scrollStart=heading.getAttribute("data-highlight-scroll-start")||"top 90%";const scrollEnd=heading.getAttribute("data-highlight-scroll-end")||"center 40%";const fadedValue=heading.getAttribute("data-highlight-fade")||0.2;const staggerValue=heading.getAttribute("data-highlight-stagger")||0.1;new SplitText(heading,{type:"words, chars",autoSplit:true,onSplit(self){let ctx=gsap.context(()=>{let tl=gsap.timeline({scrollTrigger:{scrub:true,trigger:heading,start:scrollStart,end:scrollEnd}});tl.from(self.chars,{autoAlpha:fadedValue,stagger:staggerValue,ease:"linear"});});return ctx;}});});}
+    document.addEventListener("DOMContentLoaded",()=>{initHighlightText();});
+  </script>
+</body>
+</html>

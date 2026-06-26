@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Global Parallax Setup — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:#131313;color:#f0f0f2;font-family:'Inter',sans-serif;padding-top:50px;font-size:min(.85vw,1rem);-webkit-font-smoothing:antialiased}
+    .parallax-demo-wrap{gap:15em;flex-flow:column;width:100%;padding-bottom:50vh;display:flex}
+    .parallax-demo-hero{justify-content:center;align-items:center;width:100%;height:100vh;padding:0 2em;display:flex;position:relative;overflow:clip}
+    .parallax-demo-bg{z-index:0;width:100%;height:120%;position:absolute}
+    .parallax-demo-img{object-fit:cover;width:100%;height:100%}
+    .parallax-demo-h{z-index:1;text-align:center;max-width:15ch;margin:0;font-size:4em;font-weight:500;line-height:1;position:relative}
+    .parallax-demo-row{gap:1.25em;justify-content:center;align-items:center;width:100%;padding:0 2em;display:flex;position:relative}
+    .parallax-demo-row__third{aspect-ratio:1;width:calc(33.3333% - .833333em)}
+    .parallax-demo-card{gap:2rem;background-color:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);border-radius:.75em;flex-flow:row;justify-content:flex-start;align-items:flex-end;width:100%;height:100%;padding:2em;display:flex}
+    .parallax-demo-p{margin-bottom:0;font-family:monospace;font-size:1.1em;color:rgba(240,240,242,0.6)}
+    .parallax-demo-row__half{aspect-ratio:1;border-radius:.75em;width:100%;position:relative;overflow:hidden}
+    .parallax-demo-card__wrap{gap:2rem;background-color:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);border-radius:.75em;flex-flow:row;align-items:flex-end;width:100%;height:35em;padding:2em;display:flex;overflow:hidden}
+    .parallax-demo-details{z-index:1;position:absolute;bottom:2rem;left:2rem}
+    .data-parallax-span{display:inline-block}
+    @media (max-width:767px){body{font-size:1rem}.parallax-demo-h{font-size:3em}.parallax-demo-row{flex-flow:wrap;padding:0 1.25em}.parallax-demo-row__third{width:100%}.parallax-demo-card{padding:1.25em}.parallax-demo-p{font-size:.75em}.parallax-demo-card__wrap{flex-flow:column;height:auto}}
+  </style>
+</head>
+<body>
+  <div class="demo-chrome">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <div class="demo-chrome__sep"></div><span class="demo-chrome__title">Global Parallax Setup</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+  <div class="parallax-demo-wrap">
+    <div class="parallax-demo-hero">
+      <div data-parallax-scroll-start="top top" data-parallax="trigger" data-parallax-start="0" data-parallax-end="40" class="parallax-demo-bg"><img src="https://cdn.prod.website-files.com/68348a3398ed51b777cbfd0d/683d928d5346bddfd3ac9f94_pawel-czerwinski-H8kzolaZjIM-unsplash.avif" class="parallax-demo-img"></div>
+      <h1 class="parallax-demo-h">Global Parallax Setup</h1>
+      <div class="parallax-demo-details"><p class="parallax-demo-p">data-parallax-start="0"<br>data-parallax-end="40"<br>data-parallax-scroll-start="top top"</p></div>
+    </div>
+    <div class="parallax-demo-row">
+      <div class="parallax-demo-row__third"><div data-parallax-disable="mobileLandscape" data-parallax="trigger" class="parallax-demo-card"><p class="parallax-demo-p">start="20"<br>end="-20"<br>disable="mobileLandscape"</p></div></div>
+      <div class="parallax-demo-row__third"><div data-parallax-disable="mobileLandscape" data-parallax="trigger" data-parallax-start="30" data-parallax-end="-30" class="parallax-demo-card"><p class="parallax-demo-p">start="30"<br>end="-30"<br>disable="mobileLandscape"</p></div></div>
+      <div class="parallax-demo-row__third"><div data-parallax-disable="mobileLandscape" data-parallax="trigger" data-parallax-start="40" data-parallax-end="-40" class="parallax-demo-card"><p class="parallax-demo-p">start="40"<br>end="-40"<br>disable="mobileLandscape"</p></div></div>
+    </div>
+    <div class="parallax-demo-row">
+      <h1 class="parallax-demo-h">One function. Fully flexible setup with <span data-parallax-disable="mobile" data-parallax="trigger" data-parallax-end="0" data-parallax-scroll-end="center center" class="data-parallax-span">a</span><span data-parallax-disable="mobile" data-parallax="trigger" data-parallax-start="40" data-parallax-end="0" data-parallax-scroll-end="center center" class="data-parallax-span">t</span><span data-parallax-disable="mobile" data-parallax="trigger" data-parallax-start="60" data-parallax-end="0" data-parallax-scroll-end="center center" class="data-parallax-span">t</span><span data-parallax-disable="mobile" data-parallax="trigger" data-parallax-start="80" data-parallax-end="0" data-parallax-scroll-end="center center" class="data-parallax-span">r</span><span data-parallax-disable="mobile" data-parallax="trigger" data-parallax-start="100" data-parallax-end="0" data-parallax-scroll-end="center center" class="data-parallax-span">i</span><span data-parallax-disable="mobile" data-parallax="trigger" data-parallax-start="120" data-parallax-end="0" data-parallax-scroll-end="center center" class="data-parallax-span">b</span><span data-parallax-disable="mobile" data-parallax="trigger" data-parallax-start="140" data-parallax-end="0" data-parallax-scroll-end="center center" class="data-parallax-span">u</span><span data-parallax-disable="mobile" data-parallax="trigger" data-parallax-start="160" data-parallax-end="0" data-parallax-scroll-end="center center" class="data-parallax-span">t</span><span data-parallax-disable="mobile" data-parallax="trigger" data-parallax-start="180" data-parallax-end="0" data-parallax-scroll-end="center center" class="data-parallax-span">e</span><span data-parallax-disable="mobile" data-parallax="trigger" data-parallax-start="200" data-parallax-end="0" data-parallax-scroll-end="center center" class="data-parallax-span">s</span><span data-parallax-disable="mobile" data-parallax="trigger" data-parallax-start="220" data-parallax-end="0" data-parallax-scroll-end="center center" class="data-parallax-span">.</span></h1>
+    </div>
+    <div class="parallax-demo-row">
+      <div class="parallax-demo-row__half"><div data-parallax-scrub="2" data-parallax="trigger" data-parallax-start="-30" data-parallax-end="0" class="parallax-demo-bg"><img src="https://cdn.prod.website-files.com/68348a3398ed51b777cbfd0d/683d928d8799f0d832b9a30c_pawel-czerwinski-V558Lx_ji6I-unsplash.avif" class="parallax-demo-img"></div><div class="parallax-demo-details"><p class="parallax-demo-p">scrub="2" start="-30" end="0"</p></div></div>
+      <div class="parallax-demo-row__half"><div data-parallax-end="0" data-parallax="trigger" data-parallax-scrub="2" data-parallax-start="-30" class="parallax-demo-bg"><img src="https://cdn.prod.website-files.com/68348a3398ed51b777cbfd0d/683d928eb38a241d3d8801fe_pawel-czerwinski-d-gcPDVNO1E-unsplash.avif" class="parallax-demo-img"></div><div class="parallax-demo-details"><p class="parallax-demo-p">scrub="2" start="-30" end="0"</p></div></div>
+    </div>
+    <div class="parallax-demo-row">
+      <h1 class="parallax-demo-h">Even control the direc<span data-parallax-scroll-start="center 60%" data-parallax="trigger" data-parallax-direction="horizontal" data-parallax-scrub="2" data-parallax-start="0" data-parallax-end="200" class="data-parallax-span">t</span><span data-parallax-scroll-start="center 60%" data-parallax="trigger" data-parallax-direction="horizontal" data-parallax-scrub="2" data-parallax-start="0" data-parallax-end="400" class="data-parallax-span">i</span><span data-parallax-scroll-start="center 60%" data-parallax="trigger" data-parallax-direction="horizontal" data-parallax-scrub="2" data-parallax-start="0" data-parallax-end="600" class="data-parallax-span">o</span><span data-parallax-scroll-start="center 60%" data-parallax="trigger" data-parallax-direction="horizontal" data-parallax-scrub="2" data-parallax-start="0" data-parallax-end="800" class="data-parallax-span">n</span></h1>
+    </div>
+    <div class="parallax-demo-row">
+      <h1 class="parallax-demo-h"><span data-parallax-end="0" data-parallax="trigger" data-parallax-scroll-end="center center" class="data-parallax-span">H</span><span data-parallax-start="-100" data-parallax="trigger" data-parallax-scroll-end="center center" data-parallax-end="0" class="data-parallax-span">a</span><span data-parallax-start="200" data-parallax="trigger" data-parallax-scroll-end="center center" data-parallax-end="0" class="data-parallax-span">v</span><span data-parallax-start="50" data-parallax="trigger" data-parallax-scroll-end="center center" data-parallax-end="0" class="data-parallax-span">e</span> <span data-parallax-start="-75" data-parallax="trigger" data-parallax-scroll-end="center center" data-parallax-end="0" class="data-parallax-span">f</span><span data-parallax-start="-300" data-parallax="trigger" data-parallax-scroll-end="center center" data-parallax-end="0" class="data-parallax-span">u</span><span data-parallax-start="400" data-parallax="trigger" data-parallax-scroll-end="center center" data-parallax-end="0" class="data-parallax-span">n</span><span data-parallax-start="-100" data-parallax="trigger" data-parallax-scroll-end="center center" data-parallax-end="0" class="data-parallax-span">!</span></h1>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+    const lenis=new Lenis();lenis.on('scroll',ScrollTrigger.update);gsap.ticker.add((time)=>{lenis.raf(time*1000);});gsap.ticker.lagSmoothing(0);
+    function initGlobalParallax(){const mm=gsap.matchMedia();mm.add({isMobile:"(max-width:479px)",isMobileLandscape:"(max-width:767px)",isTablet:"(max-width:991px)",isDesktop:"(min-width:992px)"},(context)=>{const{isMobile,isMobileLandscape,isTablet}=context.conditions;const ctx=gsap.context(()=>{document.querySelectorAll('[data-parallax="trigger"]').forEach((trigger)=>{const disable=trigger.getAttribute("data-parallax-disable");if((disable==="mobile"&&isMobile)||(disable==="mobileLandscape"&&isMobileLandscape)||(disable==="tablet"&&isTablet)){return;}const target=trigger.querySelector('[data-parallax="target"]')||trigger;const direction=trigger.getAttribute("data-parallax-direction")||"vertical";const prop=direction==="horizontal"?"xPercent":"yPercent";const scrubAttr=trigger.getAttribute("data-parallax-scrub");const scrub=scrubAttr?parseFloat(scrubAttr):true;const startAttr=trigger.getAttribute("data-parallax-start");const startVal=startAttr!==null?parseFloat(startAttr):20;const endAttr=trigger.getAttribute("data-parallax-end");const endVal=endAttr!==null?parseFloat(endAttr):-20;const scrollStartRaw=trigger.getAttribute("data-parallax-scroll-start")||"top bottom";const scrollStart=`clamp(${scrollStartRaw})`;const scrollEndRaw=trigger.getAttribute("data-parallax-scroll-end")||"bottom top";const scrollEnd=`clamp(${scrollEndRaw})`;gsap.fromTo(target,{[prop]:startVal},{[prop]:endVal,ease:"none",scrollTrigger:{trigger,start:scrollStart,end:scrollEnd,scrub}});});});return()=>ctx.revert();});}
+    document.addEventListener("DOMContentLoaded",()=>{initGlobalParallax();});
+  </script>
+</body>
+</html>
