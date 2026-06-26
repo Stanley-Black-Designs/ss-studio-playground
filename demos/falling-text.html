@@ -49,5 +49,7 @@
     function initFallingTextGravity(){new SplitText("[data-drop-text]",{type:"lines, chars",autoSplit:true,linesClass:"line",onSplit(self){let ctx=gsap.context(()=>{self.lines.forEach((line)=>{gsap.timeline({scrollTrigger:{once:true,trigger:line,start:"top top-=10"}}).to(line.children,{duration:"random(1.5, 3)",physics2D:{velocity:"random(500, 1000)",angle:90,gravity:3000},rotation:"random(-90, 90)",ease:"none"}).to(line.children,{autoAlpha:0,duration:0.2},"-=.2");});});return ctx;}});}
     document.addEventListener("DOMContentLoaded",()=>{initFallingTextGravity();});
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="lenis-init.js"></script>
 </body>
 </html>
