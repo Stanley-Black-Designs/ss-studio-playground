@@ -46,7 +46,7 @@
     /* ─── 3. Copy Email — forest green bg ─── */
     .cell-3{background:#0b1a0e}
     .copy-email-button{gap:.75em;background-color:#fff;border-radius:.5em;justify-content:flex-start;align-items:center;padding:.75em 1em .75em .75em;display:flex;border:none;cursor:pointer}
-    .copy-email-text__wrap{flex-flow:column;justify-content:flex-start;align-items:center;height:1.4em;font-size:1.1em;line-height:1.4;display:flex;overflow:hidden}
+    .copy-email-text__wrap{flex-flow:column;justify-content:flex-start;align-items:flex-start;height:1em;font-size:1em;line-height:1;display:flex;overflow:hidden}
     .copy-email-text__el{white-space:nowrap;font-size:1em;font-family:'Inter',sans-serif;transition:transform .45s cubic-bezier(.65,0,0,1)}
     .copy-email-icon__wrap{color:#fff;background-color:#22502e;border-radius:.375em;justify-content:center;align-items:center;width:2.5em;height:2.5em;padding:.5em;transition:background-color .2s;display:flex;flex-shrink:0}
     @media(hover:hover){.copy-email-button:hover .copy-email-icon__wrap{background:rgba(34,80,46,.9)}.copy-email-button:hover .copy-email-text__el{transform:translate(0,-100%)}}
@@ -176,6 +176,202 @@
     .btn-toggle__checkbox{opacity:0;appearance:none;-webkit-appearance:none;width:100%;height:100%;position:absolute;cursor:pointer}
     .cell-13:has(input[type="checkbox"]:checked){background:#1a0a2a}
     .btn-toggle:has(input[type="checkbox"]:checked) .btn-toggle__toggle-dot{transform:translateX(.75em) rotate(.001deg)}
+
+    /* ─── Button 001 — Concentric rings rotation ─── */
+    .cell-b001{background:#0f0f0f}
+    .button-001{white-space:nowrap;color:var(--b001-color,#201d1d);user-select:none;-webkit-user-select:none;background-color:transparent;outline-style:none;padding:0;line-height:1;text-decoration:none;display:inline-grid;-webkit-tap-highlight-color:transparent;transition:scale .15s cubic-bezier(.4,0,.2,1)}
+    .button-001:active{scale:.955 .925}
+    .button-001__wrap{pointer-events:none;border-radius:2.5em;padding:.75em 1em;overflow:clip;z-index:1;grid-area:1/1}
+    .button-001__inner{place-items:center;display:grid;position:relative}
+    .button-001__inner-circle{aspect-ratio:1;border-radius:50%;grid-area:1/1;place-content:center;width:33.3333%;height:auto;display:grid;position:absolute;overflow:clip}
+    .button-001__mid-circle{aspect-ratio:1;border-radius:50%;grid-area:1/1;place-content:center;width:66.6667%;height:auto;display:grid;position:absolute;overflow:clip;-webkit-mask:radial-gradient(circle,#0000 33.3333%,#000 0);mask:radial-gradient(circle,#0000 33.3333%,#000 0)}
+    .button-001__outer-circle{aspect-ratio:1;grid-area:1/1;place-content:center;width:100%;display:grid;position:absolute;-webkit-mask:radial-gradient(circle,#0000 46.5%,#000 0);mask:radial-gradient(circle,#0000 46.5%,#000 0)}
+    .button-001__inner-circle,.button-001__mid-circle,.button-001__outer-circle{transition:rotate .675s cubic-bezier(.4,.15,.3,1)}
+    .button-001__text{text-decoration:none}
+    .button-001__text-size{opacity:0;grid-area:1/1;place-content:center;display:grid}
+    .button-001__bg{background-color:#fff;border-radius:2.5em;grid-area:1/1;width:100%;height:100%;padding:0;position:relative}
+    @media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){.button-001:hover .button-001__inner-circle{rotate:360deg;transition:rotate .635s .05s linear(0,0.0006,0.001,0.002,0.003,0.005,0.009,0.013,0.02,0.031,0.047,0.07,0.103,0.148,0.208,0.287,0.375,0.477,0.577,0.673,0.761,0.837,0.9,0.948,0.983,1.005,1.017,1.022,1.022,1.018,1.011,1.004,0.998,0.994,0.992,0.992,0.993,0.996,0.998,0.999,1)}.button-001:hover .button-001__mid-circle{rotate:-360deg;transition:rotate .7s .05s linear(0,0.0006,0.001,0.002,0.003,0.005,0.009,0.013,0.02,0.031,0.047,0.07,0.103,0.148,0.208,0.287,0.375,0.477,0.577,0.673,0.761,0.837,0.9,0.948,0.983,1.005,1.017,1.022,1.022,1.018,1.011,1.004,0.998,0.994,0.992,0.992,0.993,0.996,0.998,0.999,1)}.button-001:hover .button-001__outer-circle{rotate:360deg;transition:rotate .765s .05s linear(0,0.0006,0.001,0.002,0.003,0.005,0.009,0.013,0.02,0.031,0.047,0.07,0.103,0.148,0.208,0.287,0.375,0.477,0.577,0.673,0.761,0.837,0.9,0.948,0.983,1.005,1.017,1.022,1.022,1.018,1.011,1.004,0.998,0.994,0.992,0.992,0.993,0.996,0.998,0.999,1)}}
+
+    /* ─── Button 002 — 3D flip reveal ─── */
+    .cell-b002{background:#160d2a}
+    .button-002{-webkit-tap-highlight-color:transparent;background-color:transparent;outline-style:none;padding:0;line-height:1;text-decoration:none;display:inline-grid;transition:scale .15s cubic-bezier(.4,0,.2,1)}
+    .button-002:active{scale:.955 .925}
+    .button-002__inner{pointer-events:none;backface-visibility:hidden;perspective:10em;padding:.125em;border-radius:2.5em;z-index:1;clip-path:inset(0 round 2.5em);grid-area:1/1;display:grid}
+    .button-002__hover{backface-visibility:hidden;transform-style:preserve-3d;grid-area:1/1;justify-content:center;align-items:center;padding:0;display:flex;translate:0 calc(65% + .125em) 0;rotate:1 0 0 -85deg;scale:.525;transition:translate .4s cubic-bezier(.675,.15,.1,1),rotate .4s cubic-bezier(.675,.15,.1,1),scale .4s cubic-bezier(.675,.15,.1,1)}
+    .button-002__hover::after{content:attr(data-text);display:block;color:#fff;grid-area:1/1;background-color:#8963eb;border-radius:calc(2.5em - .125em);padding:.625em .8625em}
+    .button-002__default{backface-visibility:hidden;color:#fff;transform-style:preserve-3d;grid-area:1/1;display:grid;transition:translate .45s cubic-bezier(.675,.15,.1,1),rotate .475s cubic-bezier(.675,.15,.1,1),scale .35s cubic-bezier(.675,.15,.1,1)}
+    .button-002__default-bg{background-color:#8963eb;border-radius:calc(2.5em - .125em);grid-area:1/1;padding:0}
+    .button-002__default-text{padding:.625em .8625em;grid-area:1/1}
+    .button-002__bg{background-color:#fff;border-radius:2.5em;grid-area:1/1;width:100%;height:100%;padding:0;position:relative}
+    @media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){.button-002:hover .button-002__hover{translate:0 0 0;rotate:1 0 0 0deg;scale:1;transition:translate .45s .05s cubic-bezier(.675,.15,.1,1),rotate .475s .05s cubic-bezier(.675,.15,.1,1),scale .35s .05s cubic-bezier(.675,.15,.1,1)}.button-002:hover .button-002__default{translate:0 calc(-65% - .125em) 0;rotate:1 0 0 85deg;scale:.525;transition:translate .4s .05s cubic-bezier(.675,.15,.1,1),rotate .4s .05s cubic-bezier(.675,.15,.1,1),scale .4s .05s cubic-bezier(.675,.15,.1,1)}}
+
+    /* ─── Button 004 — 3D char scatter ─── */
+    .cell-b004{background:#0d1a14}
+    .button-004{color:#1b372e;user-select:none;-webkit-user-select:none;background-color:transparent;outline-style:none;padding:0;line-height:1;text-decoration:none;display:inline-grid;position:relative;-webkit-tap-highlight-color:transparent;transition:scale .15s cubic-bezier(.4,0,.2,1)}
+    .button-004:active{scale:.955 .925}
+    .button-004__inner{pointer-events:none;border-radius:2.5em;z-index:1;padding:.75em 1em;grid-area:1/1;display:grid}
+    .button-004__text{perspective:10em;transform-style:preserve-3d;grid-area:1/1}
+    .button-004__text .button-004__split-char{--base-delay:.05s;--max-extra:2.9s;--t:calc(var(--index)/max(var(--max-index),1));--curve:sin(calc(var(--t)*1.5deg));--delay:calc(var(--base-delay) + (var(--curve)*var(--max-extra)));--rot-t:calc(var(--index)/max(var(--max-index),1));--rot-curve:sin(calc(var(--rot-t)*30deg));--rot-sign:clamp(-1,var(--signed-index),1);--rot-max:36deg;display:inline-block}
+    .button-004__text.is--default .button-004__split-char{transition:transform .325s cubic-bezier(.675,.15,.1,1),translate .425s cubic-bezier(.675,.15,.1,1),rotate .45s cubic-bezier(.675,.15,.1,1),opacity .15s ease-out}
+    .button-004__text.is--hover .button-004__split-char{transition:transform .35s cubic-bezier(.675,.15,.1,1),translate .35s cubic-bezier(.675,.15,.1,1),rotate .35s cubic-bezier(.675,.15,.1,1),opacity .15s .1s ease-out;rotate:1 0 0 -72deg;transform:rotateZ(calc(var(--rot-sign)*var(--rot-curve)*var(--rot-max)*-1)) scale(.65);translate:calc(var(--signed-index)*.125em) calc(1.25em) 0;opacity:0}
+    .button-004__bg{background-color:#d9ee79;border-radius:2.5em;grid-area:1/1;width:100%;height:100%;padding:0}
+    @media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){.button-004:hover .button-004__text.is--default .button-004__split-char{translate:calc(var(--signed-index)*.125em) calc(-1.25em) 0;rotate:1 0 0 72deg;transform:rotateZ(calc(var(--rot-sign)*var(--rot-curve)*var(--rot-max)*-1)) scale(.65);opacity:0;transition:transform .35s var(--delay) cubic-bezier(.675,.15,.1,1),translate .35s var(--delay) cubic-bezier(.675,.15,.1,1),rotate .35s var(--delay) cubic-bezier(.675,.15,.1,1),opacity .15s calc(var(--delay) + .1s) ease-out}.button-004:hover .button-004__text.is--hover .button-004__split-char{translate:0 0 0;rotate:1 0 0 0deg;transform:rotateZ(0deg) scale(1);opacity:1;transition:transform .325s calc(var(--delay) + .05s) cubic-bezier(.675,.15,.1,1),translate .425s calc(var(--delay) + .05s) cubic-bezier(.675,.15,.1,1),rotate .45s calc(var(--delay) + .05s) cubic-bezier(.675,.15,.1,1),opacity .15s calc(var(--delay) + .075s) ease-out}}
+
+    /* ─── Button 006 — Clip wipe reveal ─── */
+    .cell-b006{background:#1a0b05}
+    .button-006{user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;background-color:transparent;outline-style:none;padding:0;line-height:1;text-decoration:none;display:inline-grid;position:relative;transition:scale .15s cubic-bezier(.4,0,.2,1)}
+    .button-006:active{scale:.955 .925}
+    .button-006__hover{pointer-events:none;color:#fff;z-index:2;grid-area:1/1;display:grid;clip-path:polygon(0% 50%,100% 50%,100% 50%,0% 50%);transition:clip-path .375s cubic-bezier(.675,.15,.1,1)}
+    .button-006__hover .button-006__text{scale:.85;opacity:0;transition:scale .35s cubic-bezier(.675,.15,.1,1),opacity .15s .05s ease-out}
+    .button-006__default{pointer-events:none;color:#131313;grid-area:1/1;display:grid}
+    .button-006__default .button-006__text{scale:1;transition:scale .35s cubic-bezier(.675,.15,.1,1)}
+    .button-006__text{padding:.75em 1em;z-index:1;grid-area:1/1}
+    .button-006__bg{border-radius:2.5em;grid-area:1/1;place-self:center;width:calc(100% - 1px);height:calc(100% - 1px);padding:0}
+    .button-006__bg.is--hover{background-color:#ff5100}
+    .button-006__bg.is--default{background-color:#fff;width:calc(100% - 2px);height:calc(100% - 2px)}
+    @media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){.button-006:hover .button-006__hover{clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%);transition:clip-path .425s .05s cubic-bezier(.675,.15,.1,1)}.button-006:hover .button-006__hover .button-006__text{scale:1;opacity:1;transition:scale .35s .1s cubic-bezier(.675,.15,.1,1),opacity .15s .15s ease-out}.button-006:hover .button-006__default .button-006__text{scale:1.2;transition:scale .35s .05s cubic-bezier(.675,.15,.1,1)}}
+
+    /* ─── Button 009 — Arrow swap ─── */
+    .cell-b009{background:#0a0a0a}
+    .button-009{color:#121212;user-select:none;-webkit-user-select:none;background-color:transparent;outline-style:none;padding:0;line-height:1;text-decoration:none;display:inline-grid;position:relative;-webkit-tap-highlight-color:transparent;transition:scale .15s cubic-bezier(.4,0,.2,1)}
+    .button-009:active{scale:.955 .925}
+    .button-009__inner{pointer-events:none;gap:.375em;padding:.75em .75em .75em 1em;z-index:1;border-radius:2.5em;overflow:clip;grid-area:1/1;justify-content:center;align-items:center;display:flex;position:relative}
+    .button-009__icon{width:.875em;height:.875em;flex:none;transition:translate .5s cubic-bezier(.32,.72,0,1),opacity .15s ease-out}
+    .button-009__icon.is--left{left:.75em;position:absolute;opacity:0;translate:-1.5em 0 0}
+    .button-009__text{flex:none;transition:translate .5s cubic-bezier(.32,.72,0,1)}
+    .button-009__bg{background-color:#fff;border-radius:2.5em;grid-area:1/1;width:100%;height:100%;padding:0}
+    @media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){.button-009:hover .button-009__text{translate:calc(.875em + .375em + .75em - 1em) 0 0;transition:translate .5s .075s cubic-bezier(.32,.72,0,1)}.button-009:hover .button-009__icon.is--left{translate:0 0 0;opacity:1;transition:translate .5s .075s cubic-bezier(.32,.72,0,1),opacity .15s .075s ease-out}.button-009:hover .button-009__icon.is--right{translate:1.5em 0 0;opacity:0;transition:translate .5s .05s cubic-bezier(.32,.72,0,1),opacity .15s .075s ease-out}}
+
+    /* ─── Button 013 — Clip-path fill ─── */
+    .cell-b013{background:#060e0f}
+    .button-013{color:#121212;user-select:none;-webkit-user-select:none;background-color:transparent;outline-style:none;place-content:center;place-items:center;padding:0;line-height:1;text-decoration:none;display:inline-grid;position:relative;-webkit-tap-highlight-color:transparent;transition:color .15s cubic-bezier(.215,.61,.355,1),scale .15s cubic-bezier(.4,0,.2,1)}
+    .button-013:active{scale:.955 .925}
+    .button-013__bg{background-color:#fff;border-radius:2.5em;grid-area:1/1;width:calc(100% - 1px);height:calc(100% - 1px);padding:0}
+    .button-013__bg-hover{background-color:#31bac2;border-radius:2.5em;z-index:1;will-change:transform,clip-path;grid-area:1/1;width:calc(100% + .25em);height:calc(100% + .25em);padding:0;clip-path:inset(1em 1em 1em 1em round 2.5em);opacity:0;transition:clip-path .4s cubic-bezier(.19,.69,.33,1.33),opacity .15s cubic-bezier(.215,.61,.355,1)}
+    .button-013__text{width:100%;height:100%;padding:.75em 1em;z-index:2;grid-area:1/1}
+    @media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){.button-013:hover{color:#fff;transition:color .15s .05s cubic-bezier(.215,.61,.355,1),scale .15s cubic-bezier(.4,0,.2,1)}.button-013:hover .button-013__bg-hover{clip-path:inset(.125em .125em .125em .125em round 2.5em);opacity:1;transition:clip-path .4s .05s cubic-bezier(.19,.69,.33,1.33),opacity .15s .05s cubic-bezier(.215,.61,.355,1)}}
+
+    /* ─── Button 015 — Double clip wipe ─── */
+    .cell-b015{background:#0e0512}
+    .button-015{color:#121212;user-select:none;-webkit-user-select:none;background-color:transparent;outline-style:none;place-content:center;place-items:center;padding:0;line-height:1;text-decoration:none;display:inline-grid;position:relative;-webkit-tap-highlight-color:transparent;transition:color .15s cubic-bezier(.215,.61,.355,1),scale .15s cubic-bezier(.4,0,.2,1)}
+    .button-015:active{scale:.955 .925}
+    .button-015__bg{background-color:#fff;border-radius:2.5em;grid-area:1/1;width:calc(100% - 1px);height:calc(100% - 1px);padding:0}
+    .button-015__bg-hover{border-radius:2.5em;will-change:transform,clip-path;grid-area:1/1;width:calc(100% + .25em);height:calc(100% + .25em);padding:0;clip-path:inset(1.25em 1.25em 1.25em 1.25em round 2.5em);opacity:0}
+    .button-015__bg-hover.is--first{background-color:#be65e3;z-index:1;transition:clip-path .35s cubic-bezier(.19,.69,.33,1),opacity 0s cubic-bezier(.215,.61,.355,1)}
+    .button-015__bg-hover.is--second{background-color:#501632;z-index:2;transition:clip-path .35s .05s cubic-bezier(.19,.69,.33,1),opacity .1s .1s cubic-bezier(.215,.61,.355,1)}
+    .button-015__text{width:100%;height:100%;padding:.75em 1em;z-index:3;grid-area:1/1}
+    @media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){.button-015:hover{color:#fff;transition:color .15s .2s cubic-bezier(.215,.61,.355,1),scale .15s cubic-bezier(.4,0,.2,1)}.button-015:hover .button-015__bg-hover.is--first{clip-path:inset(.125em .125em .125em .125em round 2.5em);opacity:1;transition:clip-path .3s .05s cubic-bezier(.19,.69,.33,1),opacity .1s .05s cubic-bezier(.215,.61,.355,1)}.button-015:hover .button-015__bg-hover.is--second{clip-path:inset(.125em .125em .125em .125em round 2.5em);opacity:1;transition:clip-path .375s .2s cubic-bezier(.19,.69,.33,1.33),opacity .1s .2s cubic-bezier(.215,.61,.355,1)}}
+
+    /* ─── Button 016 — Text scroll up ─── */
+    .cell-b016{background:#111}
+    .button-016{user-select:none;-webkit-user-select:none;color:#121212;background-color:transparent;outline-style:none;padding:0;line-height:1;text-decoration:none;display:inline-grid;position:relative;-webkit-tap-highlight-color:transparent;transition:color .325s cubic-bezier(.785,.135,.15,.86)}
+    .button-016__inner{pointer-events:none;border-radius:2.5em;z-index:1;padding:.75em 1em;grid-area:1/1;justify-content:center;align-items:center;display:flex;overflow:clip}
+    .button-016__text{text-shadow:0 2lh 0 currentColor;transition:translate .3s cubic-bezier(.785,.135,.15,.86)}
+    .button-016__bg{pointer-events:none;border-radius:2.5em;background-color:#fff;grid-area:1/1;width:100%;height:100%;padding:0;transition:background-color .325s cubic-bezier(.785,.135,.15,.86)}
+    @media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){.button-016:hover{color:#fff}.button-016:hover .button-016__text{translate:0 calc(-2lh) 0}.button-016:hover .button-016__bg{background-color:#121212}}
+
+    /* ─── Button 020 — Slide up reveal ─── */
+    .cell-b020{background:#080808}
+    .button-020{user-select:none;-webkit-user-select:none;background-color:transparent;outline-style:none;padding:0;line-height:1;text-decoration:none;display:inline-grid;position:relative;-webkit-tap-highlight-color:transparent}
+    .button-020__inner{pointer-events:none;border-radius:2.5em;display:grid;overflow:clip}
+    .button-020__default{width:100%;height:100%;color:#121212;grid-area:1/1;display:grid}
+    .button-020__default-bg{background-color:#fff;border-radius:2.5em;grid-area:1/1;width:100%;height:100%;padding:0}
+    .button-020__default-text{width:100%;height:100%;padding:.75em 1em;grid-area:1/1;transition:translate .45s cubic-bezier(.32,.72,0,1),scale .45s cubic-bezier(.32,.72,0,1)}
+    .button-020__hover{width:100%;height:100%;color:#fff;grid-area:1/1;display:grid;translate:0 calc(100% + 1px) 0;transition:translate .45s cubic-bezier(.32,.72,0,1)}
+    .button-020__hover-bg{background-color:#121212;grid-area:1/1;width:100%;height:100%;padding:0}
+    .button-020__hover-text{width:100%;height:100%;padding:.75em 1em;grid-area:1/1;translate:0 25% 0;transition:translate .45s cubic-bezier(.32,.72,0,1)}
+    @media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){.button-020:hover .button-020__default-text{translate:0 -25% 0;scale:.85;transition:translate .95s cubic-bezier(.32,.72,0,1),scale .95s cubic-bezier(.32,.72,0,1)}.button-020:hover .button-020__hover{translate:0 0 0;transition-delay:.05s}.button-020:hover .button-020__hover-text{translate:0 0 0;transition-delay:.065s}}
+
+    /* ─── Button 023 — 3D tumble ─── */
+    .cell-b023{background:#120508}
+    .button-023{color:#121212;user-select:none;-webkit-user-select:none;background-color:transparent;outline-style:none;padding:0;line-height:1;text-decoration:none;display:inline-grid;position:relative;-webkit-tap-highlight-color:transparent;transition:scale .15s cubic-bezier(.4,0,.2,1)}
+    .button-023:active{scale:.955 .925}
+    .button-023__bg{pointer-events:none;background-color:#fff;border-radius:2.5em;grid-area:1/1;place-items:center;width:100%;height:100%;display:grid;overflow:hidden;transition:scale .45s cubic-bezier(.32,.72,0,1)}
+    .button-023__bg-inner{grid-area:1/1;width:120%;height:100%;padding:0;transform-origin:100% 0;translate:0 100% 0;rotate:-12deg;transition:translate .6s cubic-bezier(.32,.72,0,1),rotate .5s cubic-bezier(.32,.72,0,1);transition-delay:calc(var(--index)*-1*.042s)}
+    .button-023__bg-inner.is--first{background-color:#ff5100}
+    .button-023__bg-inner.is--second{background-color:#121212;z-index:1}
+    .button-023__inner{pointer-events:none;z-index:1;border-radius:2.5em;grid-area:1/1;width:100%;height:100%;display:grid;overflow:clip}
+    .button-023__text{width:100%;height:100%;padding:.75em 1em;grid-area:1/1}
+    .button-023__text.is--first{transform-origin:0 0;transition:translate .75s linear(0,0.5737 7.6%,0.8382 11.87%,0.9463 14.19%,1.0292 16.54%,1.0886 18.97%,1.1258 21.53%,1.137 22.97%,1.1424 24.48%,1.1423 26.1%,1.1366 27.86%,1.1165 31.01%,1.0507 38.62%,1.0219 42.57%,0.9995 46.99%,0.9872 51.63%,0.9842 58.77%,1.0011 81.26%,1),rotate .5s cubic-bezier(.32,.72,0,1)}
+    .button-023__text.is--second{color:#fff;translate:5% 100% 0;rotate:1 1 .75 -45deg;transform-origin:top right;transition:translate .75s linear(0,0.5737 7.6%,0.8382 11.87%,0.9463 14.19%,1.0292 16.54%,1.0886 18.97%,1.1258 21.53%,1.137 22.97%,1.1424 24.48%,1.1423 26.1%,1.1366 27.86%,1.1165 31.01%,1.0507 38.62%,1.0219 42.57%,0.9995 46.99%,0.9872 51.63%,0.9842 58.77%,1.0011 81.26%,1),rotate .5s cubic-bezier(.32,.72,0,1)}
+    @media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){.button-023:hover .button-023__bg{scale:1.065 1.095}.button-023:hover .button-023__bg-inner{translate:0 0 0;rotate:0deg;transition-delay:calc(var(--index)*.068s + .05s)}.button-023:hover .button-023__text.is--first{rotate:1 1 .45 -60deg;translate:-5% -100% 0;transition-delay:.075s}.button-023:hover .button-023__text.is--second{rotate:1 1 .45 0deg;translate:0 0 0;transition-delay:.165s}}
+
+    /* ─── Button 025 — Push across ─── */
+    .cell-b025{background:#1a0800}
+    .button-025{user-select:none;-webkit-user-select:none;background-color:transparent;outline-style:none;padding:0;line-height:1;text-decoration:none;display:inline-grid;position:relative;-webkit-tap-highlight-color:transparent;transition:scale .15s cubic-bezier(.4,0,.2,1)}
+    .button-025:active{scale:.955 .925}
+    .button-025__inner{pointer-events:none;border-radius:2.5em;grid-area:1/1;width:100%;height:100%;display:grid;overflow:clip}
+    .button-025__default{width:100%;height:100%;color:#fff;grid-area:1/1;display:grid}
+    .button-025__default-bg{background-color:#ff5100;border-radius:2.5em;grid-area:1/1;width:100%;height:100%;padding:0}
+    .button-025__default-inner{width:100%;height:100%;padding:.75em 1em;grid-area:1/1;justify-content:center;align-items:center;display:flex;transition:translate .45s cubic-bezier(.32,.72,0,1),scale .45s cubic-bezier(.32,.72,0,1)}
+    .button-025__hover{z-index:1;width:100%;height:100%;color:#fff;grid-area:1/1;display:grid;translate:calc((100% + 1px)*-1) 0 0;transition:translate .45s cubic-bezier(.32,.72,0,1)}
+    .button-025__hover-bg{background-color:#131313;border-radius:2.5em;grid-area:1/1;width:100%;height:100%;padding:0}
+    .button-025__hover-inner{width:100%;height:100%;padding:.75em 1em;grid-area:1/1;justify-content:center;align-items:center;display:flex;translate:-1em 0 0;transition:translate .45s cubic-bezier(.32,.72,0,1)}
+    @media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){.button-025:hover .button-025__default-inner{translate:1em 0 0;scale:.85;transition:translate .95s cubic-bezier(.32,.72,0,1),scale .95s cubic-bezier(.32,.72,0,1)}.button-025:hover .button-025__hover{translate:0 0 0;transition-delay:.05s}.button-025:hover .button-025__hover-inner{translate:0 0 0;transition-delay:.065s}}
+
+    /* ─── Button 027 — 3D perspective flip ─── */
+    .cell-b027{background:#070e10}
+    .button-027{user-select:none;-webkit-user-select:none;background-color:transparent;outline-style:none;padding:0;line-height:1;text-decoration:none;display:inline-grid;position:relative;-webkit-tap-highlight-color:transparent;transition:scale .15s cubic-bezier(.4,0,.2,1)}
+    .button-027:active{scale:.955 .925}
+    .button-027__inner{pointer-events:none;perspective:35em;width:100%;height:100%;transform-style:preserve-3d;grid-area:1/1;place-items:center;display:grid}
+    .button-027__default{width:100%;height:100%;color:#131313;grid-area:1/1;display:grid;transition:translate .75s linear(0,0.5737 7.6%,0.8382 11.87%,0.9463 14.19%,1.0292 16.54%,1.0886 18.97%,1.1258 21.53%,1.137 22.97%,1.1424 24.48%,1.1423 26.1%,1.1366 27.86%,1.1165 31.01%,1.0507 38.62%,1.0219 42.57%,0.9995 46.99%,0.9872 51.63%,0.9842 58.77%,1.0011 81.26%,1),rotate .85s linear(0,0.5737 7.6%,0.8382 11.87%,0.9463 14.19%,1.0292 16.54%,1.0886 18.97%,1.1258 21.53%,1.137 22.97%,1.1424 24.48%,1.1423 26.1%,1.1366 27.86%,1.1165 31.01%,1.0507 38.62%,1.0219 42.57%,0.9995 46.99%,0.9872 51.63%,0.9842 58.77%,1.0011 81.26%,1),opacity .15s ease-out}
+    .button-027__default-bg{background-color:#f4f4f4;border-radius:2.5em;grid-area:1/1;width:100%;height:100%;padding:0}
+    .button-027__default-inner{width:100%;height:100%;padding:.75em 1em;grid-area:1/1;justify-content:center;align-items:center;display:flex}
+    .button-027__hover{width:100%;height:100%;color:#f4f4f4;grid-area:1/1;display:grid;transition:translate .85s linear(0,0.5737 7.6%,0.8382 11.87%,0.9463 14.19%,1.0292 16.54%,1.0886 18.97%,1.1258 21.53%,1.137 22.97%,1.1424 24.48%,1.1423 26.1%,1.1366 27.86%,1.1165 31.01%,1.0507 38.62%,1.0219 42.57%,0.9995 46.99%,0.9872 51.63%,0.9842 58.77%,1.0011 81.26%,1),rotate .75s linear(0,0.5737 7.6%,0.8382 11.87%,0.9463 14.19%,1.0292 16.54%,1.0886 18.97%,1.1258 21.53%,1.137 22.97%,1.1424 24.48%,1.1423 26.1%,1.1366 27.86%,1.1165 31.01%,1.0507 38.62%,1.0219 42.57%,0.9995 46.99%,0.9872 51.63%,0.9842 58.77%,1.0011 81.26%,1),opacity .15s ease-out;opacity:0;translate:0 2em -8em;rotate:1 0 0 -90deg}
+    .button-027__hover-bg{border-radius:2.5em;background-color:#6f8b9a;grid-area:1/1;width:100%;height:100%;padding:0}
+    .button-027__hover-inner{width:100%;height:100%;padding:.75em 1em;grid-area:1/1;justify-content:center;align-items:center;display:flex}
+    @media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){.button-027:hover .button-027__default{translate:0 -2em -8em;rotate:1 0 0 90deg;opacity:0;transition-delay:.05s}.button-027:hover .button-027__hover{transition:translate .75s .05s linear(0,0.5737 7.6%,0.8382 11.87%,0.9463 14.19%,1.0292 16.54%,1.0886 18.97%,1.1258 21.53%,1.137 22.97%,1.1424 24.48%,1.1423 26.1%,1.1366 27.86%,1.1165 31.01%,1.0507 38.62%,1.0219 42.57%,0.9995 46.99%,0.9872 51.63%,0.9842 58.77%,1.0011 81.26%,1),rotate .85s .05s linear(0,0.5737 7.6%,0.8382 11.87%,0.9463 14.19%,1.0292 16.54%,1.0886 18.97%,1.1258 21.53%,1.137 22.97%,1.1424 24.48%,1.1423 26.1%,1.1366 27.86%,1.1165 31.01%,1.0507 38.62%,1.0219 42.57%,0.9995 46.99%,0.9872 51.63%,0.9842 58.77%,1.0011 81.26%,1),opacity .075s .05s ease-in;rotate:1 0 0 0deg;translate:0 0 0;opacity:1}}
+
+    /* ─── Button 028 — Icon spin-in ─── */
+    .cell-b028{background:#130e0c}
+    .button-028{color:#fff;user-select:none;-webkit-user-select:none;background-color:transparent;outline-style:none;padding:0;line-height:1;text-decoration:none;display:inline-grid;position:relative;-webkit-tap-highlight-color:transparent;transition:scale .15s cubic-bezier(.4,0,.2,1)}
+    .button-028:active{scale:.955 .925}
+    .button-028__bg{background-color:#9f837c;border-radius:2.5em;grid-area:1/1;width:100%;height:100%;padding:0;transition:scale .75s linear(0,0.5737 7.6%,0.8382 11.87%,0.9463 14.19%,1.0292 16.54%,1.0886 18.97%,1.1258 21.53%,1.137 22.97%,1.1424 24.48%,1.1423 26.1%,1.1366 27.86%,1.1165 31.01%,1.0507 38.62%,1.0219 42.57%,0.9995 46.99%,0.9872 51.63%,0.9842 58.77%,1.0011 81.26%,1)}
+    .button-028__inner{width:100%;height:100%;padding:.75em 1em;z-index:1;grid-area:1/1;justify-content:flex-start;align-items:center;display:flex;position:relative}
+    .button-028__icon{pointer-events:none;flex:none;width:1em;height:1em;position:absolute;translate:-65%;opacity:0;transform:translate3d(-50%,-50%,0) rotate(60deg) scale(.5);transition:opacity .15s ease-out,transform .75s linear(0,0.5737 7.6%,0.8382 11.87%,0.9463 14.19%,1.0292 16.54%,1.0886 18.97%,1.1258 21.53%,1.137 22.97%,1.1424 24.48%,1.1423 26.1%,1.1366 27.86%,1.1165 31.01%,1.0507 38.62%,1.0219 42.57%,0.9995 46.99%,0.9872 51.63%,0.9842 58.77%,1.0011 81.26%,1)}
+    .button-028__text{transition:transform .75s linear(0,0.5737 7.6%,0.8382 11.87%,0.9463 14.19%,1.0292 16.54%,1.0886 18.97%,1.1258 21.53%,1.137 22.97%,1.1424 24.48%,1.1423 26.1%,1.1366 27.86%,1.1165 31.01%,1.0507 38.62%,1.0219 42.57%,0.9995 46.99%,0.9872 51.63%,0.9842 58.77%,1.0011 81.26%,1)}
+    @media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){.button-028:hover .button-028__bg{scale:1.065 1.095;transition-delay:.05s}.button-028:hover .button-028__icon{opacity:1;transform:translate3d(0,0,0) rotate(0deg) scale(1);transition-delay:.05s}.button-028:hover .button-028__text{transform:translate3d(.375em,0,0);transition-delay:.05s}}
+
+    /* ─── Button 029 — Curtain slide ─── */
+    .cell-b029{background:#080c1a}
+    .button-029{user-select:none;-webkit-user-select:none;background-color:transparent;outline-style:none;padding:0;line-height:1;text-decoration:none;display:inline-grid;position:relative;-webkit-tap-highlight-color:transparent;transition:scale .15s cubic-bezier(.4,0,.2,1)}
+    .button-029:active{scale:.955 .925}
+    .button-029__inner{grid-area:1/1;place-items:center;width:100%;height:100%;display:grid}
+    .button-029__default{width:100%;height:100%;color:#fff;grid-area:1/1;display:grid}
+    .button-029__default-bg{background-color:#2d336b;border-radius:2.5em;grid-area:1/1;width:100%;height:100%;padding:0}
+    .button-029__default-inner{width:100%;height:100%;padding:.75em 1em;grid-area:1/1;justify-content:center;align-items:center;display:flex}
+    .button-029__hover{color:#2d336b;grid-area:1/1;width:calc(100% + 1px);height:calc(100% + 1px);display:grid;clip-path:inset(0 100% 0 0 round 0 .75em .75em 0);transition:clip-path .5s cubic-bezier(.32,.72,0,1)}
+    .button-029__hover-bg{border-radius:2.5em;background-color:#fff;grid-area:1/1;width:100%;height:100%;padding:0}
+    .button-029__hover-inner{width:100%;height:100%;padding:.75em 1em;grid-area:1/1;justify-content:center;align-items:center;display:flex}
+    @media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){.button-029:hover .button-029__hover{clip-path:inset(0 0 0 0 round 0);transition:clip-path .55s .05s cubic-bezier(.32,.72,0,1)}}
+
+    /* ─── Button 045 — Elastic squish ─── */
+    .cell-b045{background:#1a0d00}
+    .button-045{color:#fff;user-select:none;-webkit-user-select:none;background-color:transparent;outline-style:none;padding:0;line-height:1;text-decoration:none;display:inline-grid;position:relative;-webkit-tap-highlight-color:transparent}
+    .button-045__inner{pointer-events:none;width:100%;height:100%;padding:.75em 1em;background-color:#ffaa32;border-radius:2.5em;grid-area:1/1;justify-content:center;align-items:center;display:flex}
+
+    /* ─── Button 054 — Double curtain ─── */
+    .cell-b054{background:#16001a}
+    .button-054{user-select:none;-webkit-user-select:none;background-color:transparent;outline-style:none;padding:0;line-height:1;text-decoration:none;display:inline-grid;position:relative;-webkit-tap-highlight-color:transparent;transition:scale .15s cubic-bezier(.4,0,.2,1)}
+    .button-054:active{scale:.955 .925}
+    .button-054__default{pointer-events:none;width:100%;height:100%;color:#131313;grid-area:1/1;display:grid}
+    .button-054__text{width:100%;height:100%;padding:.75em 1em;z-index:1;grid-area:1/1}
+    .button-054__bg{border-radius:2.5em;grid-area:1/1;place-self:center;width:calc(100% - 1px);height:calc(100% - 1px);padding:0}
+    .button-054__bg.is--default{background-color:#fff;width:calc(100% - 2px);height:calc(100% - 2px)}
+    .button-054__bg.is--hover{background-color:#f67def}
+    .button-054__hover{pointer-events:none;width:100%;height:100%;color:#fff;z-index:2;grid-area:1/1;place-self:center;display:grid;clip-path:inset(calc(50% - .0625em) 0% calc(50% - .0625em) 0%);transition:clip-path .35s cubic-bezier(.675,.15,.1,1)}
+    .button-054__hover-inner{width:100%;height:100%;display:grid;clip-path:inset(0% 100% 0% 0%);transition:clip-path .25s .25s cubic-bezier(.675,.15,.1,1)}
+    @media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){.button-054:hover .button-054__hover{clip-path:inset(0% 0% 0% 0%);transition:clip-path .4s .2s cubic-bezier(.675,.15,.1,1)}.button-054:hover .button-054__hover-inner{clip-path:inset(0% 0% 0% 0%);transition:clip-path .25s .05s cubic-bezier(.675,.15,.1,1)}}
+
+    /* ─── Button 056 — Scale + word scroll ─── */
+    .cell-b056{background:#0f0800}
+    .button-056{user-select:none;-webkit-user-select:none;color:#131313;background-color:transparent;outline-style:none;padding:0;line-height:1;text-decoration:none;display:inline-grid;position:relative;-webkit-tap-highlight-color:transparent}
+    .button-056__bg-wrap{pointer-events:none;border-radius:2.5em;grid-area:1/1;width:100%;height:100%;display:grid;overflow:clip;transition:scale .4s cubic-bezier(.34,1.44,.64,1),transform .15s cubic-bezier(.4,0,.2,1)}
+    .button-056__bg{background-color:#fff;border-radius:2.5em;grid-area:1/1;place-self:center;width:calc(100% - 1px);height:calc(100% - 1px);padding:0}
+    .button-056__bg-hover{z-index:1;background-color:#ef8a61;grid-area:1/1;width:100%;height:100%;padding:0;translate:0 101% 0;transition:translate .45s cubic-bezier(.23,1,.32,1)}
+    .button-056__inner{pointer-events:none;width:100%;height:100%;padding:.75em 1em;z-index:1;grid-area:1/1;justify-content:center;align-items:center;display:flex}
+    .button-056__text-outer{clip-path:inset(-10% 0)}
+    @media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){.button-056:hover .button-056__bg-wrap{scale:1.065 1.095;transition:scale .425s .05s cubic-bezier(.34,1.44,.64,1),transform .15s cubic-bezier(.4,0,.2,1)}.button-056:hover .button-056__bg-hover{translate:0 0 0;transition-delay:.05s}.button-056__split-word{text-shadow:0 1.3em #fff;transition:translate .45s calc((var(--word) - 1)*.042s) cubic-bezier(.23,1,.32,1)}.button-056:hover .button-056__split-word{translate:0 -1.3em 0;transition:translate .45s calc((var(--word) - 1)*.042s + .05s) cubic-bezier(.23,1,.32,1)}}
   </style>
 </head>
 <body>
@@ -225,9 +421,9 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none"><path d="M16 2H8V5H16V2Z" stroke="currentColor" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M16 3H17.5L19 4.5V19.5L17.5 21H6.5L5 19.5V4.5L6.5 3H8" stroke="currentColor" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></svg>
           </div>
           <div class="copy-email-text__wrap">
-            <span data-copy-email-element="" class="copy-email-text__el" style="font-size:.8em">hello@stanleysmithstudios.com</span>
-            <span class="copy-email-text__el" style="font-size:.8em">Click to copy email</span>
-            <span class="copy-email-text__el" style="font-size:.8em">Copied! ✓</span>
+            <span data-copy-email-element="" class="copy-email-text__el" style="font-size:.85em;line-height:1;flex-shrink:0">hello@stanleysmithstudios.com</span>
+            <span class="copy-email-text__el" style="font-size:.85em;line-height:1;flex-shrink:0">Click to copy email</span>
+            <span class="copy-email-text__el" style="font-size:.85em;line-height:1;flex-shrink:0">Copied! ✓</span>
           </div>
         </button>
         <span class="btn-cell__label" style="color:#55db9c">Copy to Clipboard</span>
@@ -368,12 +564,254 @@
         <span class="btn-cell__label" style="color:#ff4c24">Toggle (CSS Only)</span>
       </div>
 
+      <!-- B001: Concentric Rings -->
+      <div class="btn-cell cell-b001">
+        <a class="button-001" data-button-001="" href="#">
+          <span class="button-001__wrap">
+            <span class="button-001__inner">
+              <span class="button-001__inner-circle"><span class="button-001__text">Rings</span></span>
+              <span class="button-001__mid-circle"><span aria-hidden="true" class="button-001__text">Rings</span></span>
+              <span class="button-001__outer-circle"><span aria-hidden="true" class="button-001__text">Rings</span></span>
+              <span class="button-001__text-size"><span aria-hidden="true" class="button-001__text">Rings</span></span>
+            </span>
+          </span>
+          <span class="button-001__bg"></span>
+        </a>
+        <span class="btn-cell__label" style="color:rgba(240,240,242,.35)">Concentric Rings</span>
+      </div>
+
+      <!-- B002: 3D Flip -->
+      <div class="btn-cell cell-b002">
+        <a data-button-002="" href="#" class="button-002">
+          <span class="button-002__inner">
+            <span class="button-002__hover" data-text="3D Flip"></span>
+            <span class="button-002__default">
+              <span class="button-002__default-bg"></span>
+              <span class="button-002__default-text">3D Flip</span>
+            </span>
+          </span>
+          <span class="button-002__bg"></span>
+        </a>
+        <span class="btn-cell__label" style="color:#8963eb">3D Flip Reveal</span>
+      </div>
+
+      <!-- B004: Char Scatter -->
+      <div class="btn-cell cell-b004">
+        <a data-button-004="" href="#" class="button-004">
+          <span class="button-004__inner">
+            <span data-button-004-text="" class="button-004__text is--default">Scatter</span>
+            <span aria-hidden="true" data-button-004-text="" class="button-004__text is--hover">Scatter</span>
+          </span>
+          <span class="button-004__bg"></span>
+        </a>
+        <span class="btn-cell__label" style="color:#d9ee79">3D Char Scatter</span>
+      </div>
+
+      <!-- B006: Clip Wipe -->
+      <div class="btn-cell cell-b006">
+        <a data-button-006="" href="#" class="button-006">
+          <span class="button-006__hover">
+            <span class="button-006__text">Wipe In</span>
+            <span class="button-006__bg is--hover"></span>
+          </span>
+          <span class="button-006__default">
+            <span aria-hidden="true" class="button-006__text">Wipe In</span>
+            <span class="button-006__bg is--default"></span>
+          </span>
+        </a>
+        <span class="btn-cell__label" style="color:#ff5100">Clip Wipe</span>
+      </div>
+
+      <!-- B009: Arrow Swap -->
+      <div class="btn-cell cell-b009">
+        <a data-button-009="" href="#" class="button-009">
+          <span class="button-009__inner">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true" class="button-009__icon is--left"><path d="M14 19L21 12L14 5" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"></path><path d="M21 12H2" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"></path></svg>
+            <span class="button-009__text">Arrow Swap</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" aria-hidden="true" class="button-009__icon is--right"><path d="M14 19L21 12L14 5" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"></path><path d="M21 12H2" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"></path></svg>
+          </span>
+          <span class="button-009__bg"></span>
+        </a>
+        <span class="btn-cell__label" style="color:rgba(240,240,242,.35)">Arrow Swap</span>
+      </div>
+
+      <!-- B013: Fill Expand -->
+      <div class="btn-cell cell-b013">
+        <a data-button-013="" href="#" class="button-013">
+          <span class="button-013__bg"></span>
+          <span class="button-013__bg-hover"></span>
+          <span class="button-013__text">Fill Expand</span>
+        </a>
+        <span class="btn-cell__label" style="color:#31bac2">Clip Fill</span>
+      </div>
+
+      <!-- B015: Double Clip -->
+      <div class="btn-cell cell-b015">
+        <a data-button-015="" href="#" class="button-015">
+          <span class="button-015__bg"></span>
+          <span class="button-015__bg-hover is--first"></span>
+          <span class="button-015__bg-hover is--second"></span>
+          <span class="button-015__text">Double Wipe</span>
+        </a>
+        <span class="btn-cell__label" style="color:#be65e3">Double Clip</span>
+      </div>
+
+      <!-- B016: Text Scroll Up -->
+      <div class="btn-cell cell-b016">
+        <a data-button-016="" href="#" class="button-016">
+          <span class="button-016__inner">
+            <span class="button-016__text">Scroll Up</span>
+          </span>
+          <span class="button-016__bg"></span>
+        </a>
+        <span class="btn-cell__label" style="color:rgba(240,240,242,.35)">Text Scroll Up</span>
+      </div>
+
+      <!-- B020: Slide Reveal -->
+      <div class="btn-cell cell-b020">
+        <a data-button-020="" href="#" class="button-020">
+          <span class="button-020__inner">
+            <span class="button-020__default">
+              <span class="button-020__default-bg"></span>
+              <span class="button-020__default-text">Slide Up</span>
+            </span>
+            <span aria-hidden="true" class="button-020__hover">
+              <span class="button-020__hover-bg"></span>
+              <span class="button-020__hover-text">Slide Up</span>
+            </span>
+          </span>
+        </a>
+        <span class="btn-cell__label" style="color:rgba(240,240,242,.35)">Slide Reveal</span>
+      </div>
+
+      <!-- B023: 3D Tumble -->
+      <div class="btn-cell cell-b023">
+        <a data-button-023="" href="#" class="button-023">
+          <span class="button-023__bg">
+            <span style="--index:0" class="button-023__bg-inner is--first"></span>
+            <span style="--index:1" class="button-023__bg-inner is--second"></span>
+          </span>
+          <span class="button-023__inner">
+            <span class="button-023__text is--first">3D Tumble</span>
+            <span aria-hidden="true" class="button-023__text is--second">3D Tumble</span>
+          </span>
+        </a>
+        <span class="btn-cell__label" style="color:#ff5100">3D Tumble</span>
+      </div>
+
+      <!-- B025: Push Across -->
+      <div class="btn-cell cell-b025">
+        <a data-button-025="" href="#" class="button-025">
+          <span class="button-025__inner">
+            <span class="button-025__default">
+              <span class="button-025__default-bg"></span>
+              <span class="button-025__default-inner"><span class="button-025__default-text">Push Across</span></span>
+            </span>
+            <span aria-hidden="true" class="button-025__hover">
+              <span class="button-025__hover-bg"></span>
+              <span class="button-025__hover-inner"><span class="button-025__hover-text">Push Across</span></span>
+            </span>
+          </span>
+        </a>
+        <span class="btn-cell__label" style="color:#ff5100">Push Across</span>
+      </div>
+
+      <!-- B027: 3D Perspective -->
+      <div class="btn-cell cell-b027">
+        <a data-button-027="" href="#" class="button-027">
+          <span class="button-027__inner">
+            <span class="button-027__default">
+              <span class="button-027__default-bg"></span>
+              <span class="button-027__default-inner"><span class="button-027__text">Flip Over</span></span>
+            </span>
+            <span aria-hidden="true" class="button-027__hover">
+              <span class="button-027__hover-bg"></span>
+              <span class="button-027__hover-inner"><span class="button-027__text">Flip Over</span></span>
+            </span>
+          </span>
+        </a>
+        <span class="btn-cell__label" style="color:#6f8b9a">3D Perspective</span>
+      </div>
+
+      <!-- B028: Icon Spin-In -->
+      <div class="btn-cell cell-b028">
+        <a data-button-028="" href="#" class="button-028">
+          <span class="button-028__bg"></span>
+          <span class="button-028__inner">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 20 20" fill="none" aria-hidden="true" class="button-028__icon"><path d="M12 16H8V12H12V16Z" fill="currentColor"></path><path d="M8 12H4V8H8V12Z" fill="currentColor"></path><path d="M16 12H12V8H16V12Z" fill="currentColor"></path><path d="M12 8H8V4H12V8Z" fill="currentColor"></path></svg>
+            <span class="button-028__text">Icon Spin</span>
+          </span>
+        </a>
+        <span class="btn-cell__label" style="color:#9f837c">Icon Spin-In</span>
+      </div>
+
+      <!-- B029: Curtain Slide -->
+      <div class="btn-cell cell-b029">
+        <a data-button-029="" href="#" class="button-029">
+          <span class="button-029__inner">
+            <span class="button-029__default">
+              <span class="button-029__default-bg"></span>
+              <span class="button-029__default-inner"><span class="button-029__text">Curtain</span></span>
+            </span>
+            <span aria-hidden="true" class="button-029__hover">
+              <span class="button-029__hover-bg"></span>
+              <span class="button-029__hover-inner"><span class="button-029__text">Curtain</span></span>
+            </span>
+          </span>
+        </a>
+        <span class="btn-cell__label" style="color:#2d336b">Curtain Slide</span>
+      </div>
+
+      <!-- B045: Elastic Squish -->
+      <div class="btn-cell cell-b045">
+        <a data-button-045="" href="#" class="button-045">
+          <span data-button-045-inner="" class="button-045__inner">
+            <span class="button-045__text">Squish</span>
+          </span>
+        </a>
+        <span class="btn-cell__label" style="color:#ffaa32">Elastic Squish</span>
+      </div>
+
+      <!-- B054: Double Curtain -->
+      <div class="btn-cell cell-b054">
+        <a data-button-054="" href="#" class="button-054">
+          <span class="button-054__default">
+            <span class="button-054__text">Curtain ×2</span>
+            <span class="button-054__bg is--default"></span>
+          </span>
+          <span aria-hidden="true" class="button-054__hover">
+            <span class="button-054__hover-inner">
+              <span class="button-054__text">Curtain ×2</span>
+              <span class="button-054__bg is--hover"></span>
+            </span>
+          </span>
+        </a>
+        <span class="btn-cell__label" style="color:#f67def">Double Curtain</span>
+      </div>
+
+      <!-- B056: Scale + Word Scroll -->
+      <div class="btn-cell cell-b056">
+        <a data-button-056="" href="#" class="button-056">
+          <span class="button-056__bg-wrap">
+            <span class="button-056__bg"></span>
+            <span class="button-056__bg-hover"></span>
+          </span>
+          <span class="button-056__inner">
+            <span class="button-056__text-outer">
+              <span data-button-056-text="" class="button-056__text">Word Scroll</span>
+            </span>
+          </span>
+        </a>
+        <span class="btn-cell__label" style="color:#ef8a61">Scale + Scroll</span>
+      </div>
+
     </div>
   </div>
 
   <!-- Scripts: GSAP for buttons that need it -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/DrawSVGPlugin.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/SplitText.min.js"></script>
   <script>
     // 1. Elastic Pulse
     function initElasticPulseButton(){if(window.matchMedia('(hover: none) and (pointer: coarse)').matches)return;document.querySelectorAll('[data-elastic-pulse-btn]').forEach(btn=>{const target=btn.querySelector('[data-elastic-pulse-target]')||btn;let hoverLocked=false;btn.addEventListener('mouseenter',()=>{if(hoverLocked)return;hoverLocked=true;setTimeout(()=>{hoverLocked=false;},500);const el=target;const w=el.offsetWidth;const h=el.offsetHeight;const fs=parseFloat(getComputedStyle(el).fontSize);const stretch=0.75*fs;const sx=(w+stretch)/w;const sy=(h-stretch*0.33)/h;if(el._pulseTl&&el._pulseTl.kill)el._pulseTl.kill();el._pulseTl=gsap.timeline().to(el,{scaleX:sx,scaleY:sy,duration:0.1,ease:'power1.out'}).to(el,{scaleX:1,scaleY:1,duration:1,ease:'elastic.out(1, 0.3)'});});});}
@@ -393,6 +831,16 @@
     // 12. Magnetic
     function initMagneticEffect(){const magnets=document.querySelectorAll('[data-magnetic-strength]');if(window.innerWidth<=991)return;const resetEl=(el,immediate)=>{if(!el)return;gsap.killTweensOf(el);(immediate?gsap.set:gsap.to)(el,{x:"0em",y:"0em",rotate:"0deg",clearProps:"all",...(!immediate&&{ease:"elastic.out(1, 0.3)",duration:1.6})});};const resetOnEnter=e=>{const m=e.currentTarget;resetEl(m,true);resetEl(m.querySelector('[data-magnetic-inner-target]'),true);};const moveMagnet=e=>{const m=e.currentTarget,b=m.getBoundingClientRect(),strength=parseFloat(m.getAttribute('data-magnetic-strength'))||25,inner=m.querySelector('[data-magnetic-inner-target]'),innerStrength=parseFloat(m.getAttribute('data-magnetic-strength-inner'))||strength,offsetX=((e.clientX-b.left)/m.offsetWidth-0.5)*(strength/16),offsetY=((e.clientY-b.top)/m.offsetHeight-0.5)*(strength/16);gsap.to(m,{x:offsetX+"em",y:offsetY+"em",rotate:"0.001deg",ease:"power4.out",duration:1.6});if(inner){const innerOffsetX=((e.clientX-b.left)/m.offsetWidth-0.5)*(innerStrength/16),innerOffsetY=((e.clientY-b.top)/m.offsetHeight-0.5)*(innerStrength/16);gsap.to(inner,{x:innerOffsetX+"em",y:innerOffsetY+"em",rotate:"0.001deg",ease:"power4.out",duration:2});}};const resetMagnet=e=>{const m=e.currentTarget,inner=m.querySelector('[data-magnetic-inner-target]');gsap.to(m,{x:"0em",y:"0em",ease:"elastic.out(1, 0.3)",duration:1.6,clearProps:"all"});if(inner){gsap.to(inner,{x:"0em",y:"0em",ease:"elastic.out(1, 0.3)",duration:2,clearProps:"all"});}};magnets.forEach(m=>{m.addEventListener('mouseenter',resetOnEnter);m.addEventListener('mousemove',moveMagnet);m.addEventListener('mouseleave',resetMagnet);});}
 
+    // B004 — Char Scatter
+    function initButton004(){const buttons=document.querySelectorAll('[data-button-004]');if(!buttons.length)return;buttons.forEach(element=>{const textEls=element.querySelectorAll('[data-button-004-text]');if(!textEls.length)return;textEls.forEach(textEl=>{const split=new SplitText(textEl,{type:'chars',tag:'span',charsClass:'button-004__split-char'});const chars=split.chars;const count=chars.length;const center=(count-1)/2;const maxIndex=Math.floor(center);textEl.style.setProperty('--max-index',maxIndex);chars.forEach((char,index)=>{const distance=Math.floor(Math.abs(index-center));let signedIndex=0;if(index<center)signedIndex=distance;else if(index>center)signedIndex=-distance;char.style.setProperty('--index',distance);char.style.setProperty('--signed-index',signedIndex);});});});}
+
+    // B045 — Elastic Squish
+    function initButton045(){const buttons=document.querySelectorAll('[data-button-045]');if(!buttons.length)return;let mm=gsap.matchMedia();buttons.forEach(element=>{const hoverRoot=element.closest('[data-hover]')||element;const inner=element.querySelector('[data-button-045-inner]')||element;let locked=false;function runPulse(click=false){if(locked)return;locked=true;setTimeout(()=>{locked=false;},click?100:350);const el=inner;const w=el.offsetWidth;const h=el.offsetHeight;const fs=parseFloat(getComputedStyle(el).fontSize);const stretch=0.75*fs;const sx=(w+stretch)/w;const sy=(h-stretch*0.33)/h;if(el._pulseTl&&el._pulseTl.kill)el._pulseTl.kill();el._pulseTl=gsap.timeline().to(el,{scaleX:click?sy:sx,scaleY:click?sx*1.3:sy,duration:0.1,ease:'power1.out'}).to(element,{scale:click?0.8:1,duration:0.1,ease:'power1.out'},'<').to(el,{scaleX:1,scaleY:1,duration:1,ease:'elastic.out(1, 0.3)'}).to(element,{scale:1,duration:1,ease:'elastic.out(1, 0.3)'},'<');}
+    hoverRoot.addEventListener('pointerdown',()=>runPulse(true));mm.add('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)',()=>{hoverRoot.addEventListener('mouseenter',()=>runPulse(false));});});}
+
+    // B056 — Word Scroll
+    function initButton056(){const buttons=document.querySelectorAll('[data-button-056]');if(!buttons.length)return;buttons.forEach(element=>{const textEls=element.querySelectorAll('[data-button-056-text]');if(!textEls.length)return;textEls.forEach(textEl=>{const split=new SplitText(textEl,{type:'words',tag:'span',wordsClass:'button-056__split-word',propIndex:true});gsap.set(split.words,{display:'inline-block'});});});}
+
     document.addEventListener('DOMContentLoaded',()=>{
       initElasticPulseButton();
       initCopyEmailClipboard();
@@ -400,6 +848,11 @@
       initButtonCharacterStagger();
       initDirectionalButtonHover();
       initMagneticEffect();
+      document.fonts.ready.then(()=>{
+        initButton004();
+        initButton045();
+        initButton056();
+      });
     });
   </script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
