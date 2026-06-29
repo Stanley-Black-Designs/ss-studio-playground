@@ -153,9 +153,13 @@ img, video { display: block; max-width: 100%; }
   .intro { padding: 64px 20px 56px; }
   .header-inner, .section-label-row, .cta-band__inner, .site-footer { padding-left: 20px; padding-right: 20px; }
   .site-footer { flex-direction: column; gap: 8px; align-items: flex-start; }
-  .intro-actions, .cta-band__actions { flex-direction: column; align-items: flex-start; gap: 16px; }
-  /* Remove negative margins on mobile so buttons don't overlap */
-  .btn-wrap { margin: 0; }
+  .intro-actions, .cta-band__actions { flex-direction: column; align-items: stretch; gap: 12px; }
+  /* Full-width buttons, no magnetic clipping */
+  .btn-wrap { margin: 0; width: 100%; display: flex; }
+  .btn-magnetic { width: 100%; display: block; }
+  .btn-magnetic__click { width: 100%; border-radius: 4em; }
+  /* Disable magnetic JS translate on touch — neutralise inline transform */
+  .btn-magnetic [data-magnetic-inner-target] { transform: none !important; }
 }
 @media (prefers-reduced-motion: reduce) {
   .pg-card { transition: none; opacity: 1; transform: none; }
