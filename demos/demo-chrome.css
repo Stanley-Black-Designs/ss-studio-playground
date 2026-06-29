@@ -36,3 +36,65 @@ html { -webkit-font-smoothing: antialiased; }
   transition: background 0.2s, opacity 0.2s;
 }
 .demo-chrome__cta:hover { background: #3a78e8; }
+
+/* ── Mobile: stack nav, move CTA to bottom bar ── */
+@media (max-width: 600px) {
+  .demo-chrome {
+    height: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 10px 18px 11px;
+    gap: 3px;
+  }
+
+  .demo-chrome__left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    width: 100%;
+  }
+
+  .demo-chrome__sep { display: none; }
+
+  .demo-chrome__back {
+    font-size: 12px;
+  }
+
+  .demo-chrome__title {
+    font-size: 13px;
+    color: rgba(240,240,242,0.75);
+  }
+
+  /* Hide CTA in top bar on mobile */
+  .demo-chrome .demo-chrome__cta { display: none; }
+
+  /* Bottom CTA bar */
+  .demo-chrome-mobile-cta {
+    display: flex;
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
+    padding: 14px 18px 18px;
+    background: rgba(12,13,16,0.72);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .demo-chrome-mobile-cta a {
+    display: flex; align-items: center; justify-content: center;
+    width: 100%;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 14px; font-weight: 500;
+    color: #fff;
+    background: #4f8ef7;
+    border-radius: 100px; padding: 13px 20px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .demo-chrome-mobile-cta a:hover { background: #3a78e8; }
+}
+
+/* Hide mobile CTA bar on desktop */
+@media (min-width: 601px) {
+  .demo-chrome-mobile-cta { display: none; }
+}
