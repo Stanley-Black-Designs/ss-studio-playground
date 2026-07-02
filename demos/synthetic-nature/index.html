@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Organic Visions — Witness the Hidden Realm</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400&family=Geist:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; min-height: 100%; background: #010101; color: #fff; -webkit-font-smoothing: antialiased; }
+    body { font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; border: 0; cursor: pointer; background: transparent; color: inherit; }
+
+    /* ── Back chrome ── */
+    #bc { position: fixed; top: 0; left: 0; right: 0; z-index: 9999; height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 16px; background: rgba(10,10,10,.94); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,.08); }
+    #bc a.bl { font-family: 'Geist', system-ui; font-size: 12px; color: rgba(255,255,255,.55); display: flex; align-items: center; gap: 6px; text-decoration: none; transition: color .15s; }
+    #bc a.bl:hover { color: #fff; }
+    #bc .sep { color: rgba(255,255,255,.15); font-size: 11px; }
+    #bc .dn { font-size: 12px; color: rgba(255,255,255,.55); }
+    #bc a.ct { margin-left: auto; background: #0064E7; color: #fff; border-radius: 999px; padding: 6px 16px; font-size: 11px; font-weight: 500; text-decoration: none; display: flex; align-items: center; white-space: nowrap; }
+
+    /* ── Page ── */
+    main {
+      position: relative;
+      min-height: 100vh;
+      overflow: hidden;
+      background: #010101;
+      padding-top: 44px;
+    }
+
+    video.bg {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+      z-index: 0;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: relative;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 20px;
+    }
+    @media (min-width: 768px) {
+      nav { justify-content: center; padding: 24px 48px; }
+    }
+
+    .brand {
+      font-size: 10px;
+      font-weight: 300;
+      text-transform: uppercase;
+      letter-spacing: .25em;
+      color: #fff;
+    }
+    @media (min-width: 768px) {
+      .brand { position: absolute; left: 50%; transform: translateX(-310px); letter-spacing: .3em; }
+    }
+    @media (min-width: 1024px) {
+      .brand { transform: translateX(-380px); }
+    }
+
+    .nav-links {
+      display: none;
+      align-items: center;
+      gap: 32px;
+    }
+    @media (min-width: 768px) {
+      .nav-links { display: flex; }
+    }
+    .nav-links a {
+      font-size: 10px;
+      font-weight: 300;
+      text-transform: uppercase;
+      letter-spacing: .2em;
+      color: rgba(255,255,255,.8);
+      transition: color .3s ease;
+    }
+    .nav-links a:hover { color: #fff; }
+
+    /* Mobile menu toggle */
+    .menu-toggle {
+      display: grid;
+      place-items: center;
+      width: 40px; height: 40px;
+      color: #fff;
+    }
+    @media (min-width: 768px) { .menu-toggle { display: none; } }
+    .menu-toggle svg { width: 22px; height: 22px; stroke: currentColor; stroke-width: 1.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* Mobile menu */
+    .mobile-menu {
+      position: fixed;
+      top: calc(44px + 64px);
+      left: 16px; right: 16px;
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      padding: 32px 24px;
+      border-radius: 16px;
+      background: rgba(10,10,10,.7);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: 0 8px 32px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.1);
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+      transition: opacity .3s ease, transform .3s ease;
+    }
+    .mobile-menu.open {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    @media (min-width: 768px) { .mobile-menu { display: none !important; } }
+    .mobile-menu a {
+      font-size: 11px;
+      font-weight: 300;
+      text-transform: uppercase;
+      letter-spacing: .25em;
+      color: rgba(255,255,255,.9);
+      transition: color .2s ease;
+    }
+    .mobile-menu a:hover { color: #fff; }
+
+    /* ── Hero section ── */
+    section.hero {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: calc(100vh - 44px - 72px);
+      padding: 48px 20px 0;
+      text-align: center;
+    }
+    @media (min-width: 640px) { section.hero { padding-top: 64px; } }
+    @media (min-width: 768px) { section.hero { padding-top: 96px; } }
+
+    h1 {
+      font-family: 'EB Garamond', Garamond, 'Times New Roman', serif;
+      font-weight: 400;
+      font-size: clamp(2.5rem, 10vw, 8rem);
+      line-height: 1.08;
+      letter-spacing: -.01em;
+      color: #fff;
+      margin-bottom: 24px;
+    }
+    @media (min-width: 640px) { h1 { margin-bottom: 32px; } }
+
+    /* Character stagger */
+    .char {
+      display: inline-block;
+      opacity: 0;
+      transition: opacity .45s ease;
+    }
+    .char.visible { opacity: 1; }
+
+    p.sub {
+      max-width: 320px;
+      font-size: .875rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: rgba(255,255,255,.7);
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .8s ease 1.6s, transform .8s ease 1.6s;
+    }
+    @media (min-width: 640px) { p.sub { max-width: 420px; font-size: 1rem; margin-bottom: 40px; } }
+    @media (min-width: 768px) { p.sub { font-size: 1.125rem; } }
+    p.sub.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Liquid glass ── */
+    .liquid-glass {
+      background: rgba(255,255,255,.01);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      box-shadow: inset 0 1px 1px rgba(255,255,255,.1);
+      position: relative;
+      overflow: hidden;
+      transition: background .3s ease, box-shadow .3s ease, transform .2s ease;
+    }
+    .liquid-glass::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1.4px;
+      background: linear-gradient(180deg, rgba(255,255,255,.45) 0%, rgba(255,255,255,.15) 20%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,.15) 80%, rgba(255,255,255,.45) 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+    .liquid-glass:hover { background: rgba(255,255,255,.04); box-shadow: inset 0 1px 2px rgba(255,255,255,.15); }
+    .liquid-glass:active { transform: scale(.98); }
+
+    a.cta-btn {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 14px 28px;
+      font-size: 10px;
+      font-weight: 300;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      color: rgba(255,255,255,.9);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .8s ease 2s, transform .8s ease 2s, background .3s ease, box-shadow .3s ease;
+    }
+    @media (min-width: 640px) { a.cta-btn { padding: 16px 40px; letter-spacing: .2em; } }
+    a.cta-btn.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <!-- Back chrome -->
+  <div id="bc">
+    <a href="../../index.html" class="bl">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8 2L4 6l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to Playground
+    </a>
+    <span class="sep">/</span>
+    <span class="dn">Organic Visions — Witness the Hidden Realm</span>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" class="ct">Book a call</a>
+  </div>
+
+  <main>
+    <video class="bg" autoplay muted loop playsinline preload="auto">
+      <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260619_191346_9d19d66e-86a4-47f7-8dc6-712c1788c3b2.mp4" type="video/mp4">
+    </video>
+
+    <nav>
+      <a href="#" class="brand">Organic Visions</a>
+      <div class="nav-links">
+        <a href="#">Wander</a>
+        <a href="#">Archive</a>
+        <a href="#">Story</a>
+        <a href="#">Connect</a>
+      </div>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+        <svg id="menuIcon" viewBox="0 0 24 24"><path id="iconPath" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#" onclick="closeMenu()">Wander</a>
+      <a href="#" onclick="closeMenu()">Archive</a>
+      <a href="#" onclick="closeMenu()">Story</a>
+      <a href="#" onclick="closeMenu()">Connect</a>
+    </div>
+
+    <section class="hero">
+      <h1 id="headline">
+        <span class="block" id="line1"></span>
+        <span class="block" id="line2"></span>
+      </h1>
+      <p class="sub" id="subtext">
+        An odyssey through delicate living forms,<br>
+        revealed by lens and curiosity.
+      </p>
+      <a href="#" class="cta-btn liquid-glass" id="ctaBtn">Begin the Experience</a>
+    </section>
+  </main>
+
+  <script>
+    // ── Mobile menu ──
+    const toggle = document.getElementById('menuToggle');
+    const menu = document.getElementById('mobileMenu');
+    const iconPath = document.getElementById('iconPath');
+    let open = false;
+
+    function closeMenu() { open = false; menu.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); iconPath.setAttribute('d','M4 6h16M4 12h16M4 18h16'); }
+
+    toggle.addEventListener('click', () => {
+      open = !open;
+      menu.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      iconPath.setAttribute('d', open ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16');
+    });
+
+    // ── StaggeredFade: character-by-character reveal ──
+    function buildStagger(containerId, text, baseDelay) {
+      const el = document.getElementById(containerId);
+      text.split('').forEach((char, i) => {
+        const span = document.createElement('span');
+        span.className = 'char';
+        span.textContent = char === ' ' ? '\u00A0' : char;
+        span.style.transitionDelay = `${baseDelay + i * 0.07}s`;
+        el.appendChild(span);
+      });
+    }
+
+    buildStagger('line1', 'WITNESS THE', 0.1);
+    buildStagger('line2', 'HIDDEN REALM', 0.9);
+
+    // ── Trigger reveals via IntersectionObserver ──
+    const chars = document.querySelectorAll('.char');
+    const sub = document.getElementById('subtext');
+    const cta = document.getElementById('ctaBtn');
+
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        chars.forEach(c => c.classList.add('visible'));
+        sub.classList.add('visible');
+        cta.classList.add('visible');
+        obs.disconnect();
+      });
+    }, { threshold: 0.1 });
+
+    obs.observe(document.querySelector('section.hero'));
+
+    // ── Video autoplay ──
+    document.querySelectorAll('video').forEach(v => {
+      v.muted = true;
+      v.play().catch(() => {});
+    });
+  </script>
+</body>
+</html>
