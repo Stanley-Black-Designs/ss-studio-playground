@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forma — Video Contact Hero</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital,wght@0,400;1,400&display=swap");
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Inter", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #ffffff;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    button,
+    input,
+    textarea,
+    a {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      min-height: 100vh;
+      background: #ffffff;
+      padding: 0.75rem;
+    }
+
+    .hero-card {
+      position: relative;
+      min-height: calc(100vh - 24px);
+      overflow: hidden;
+      border-radius: 1rem;
+      background: #111111;
+      isolation: isolate;
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .content-layer {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      min-height: calc(100vh - 24px);
+      flex-direction: column;
+      gap: 1.5rem;
+      padding: 1rem;
+    }
+
+    .navbar {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .nav-pill {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      gap: 0.75rem;
+      border-radius: 1rem;
+      background: rgba(255, 255, 255, 0.6);
+      padding: 0.5rem 0.5rem 0.5rem 0.75rem;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.12);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .logo {
+      display: block;
+      width: 32px;
+      height: 32px;
+      flex: 0 0 32px;
+    }
+
+    .nav-links {
+      display: none;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .nav-link {
+      color: #1f2937;
+      font-size: 0.875rem;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: opacity 200ms ease;
+    }
+
+    .nav-link:hover {
+      opacity: 0.6;
+    }
+
+    .nav-cta {
+      margin-left: auto;
+      border-radius: 0.75rem;
+      background: #000000;
+      color: #ffffff;
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: background-color 200ms ease;
+      white-space: nowrap;
+    }
+
+    .nav-cta:hover {
+      background: #1f2937;
+    }
+
+    .spacer {
+      min-height: 2rem;
+      flex: 1 1 auto;
+    }
+
+    .bottom-row {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .headline {
+      flex-shrink: 0;
+      color: #ffffff;
+      font-size: 1.875rem;
+      font-weight: 500;
+      line-height: 1.25;
+      text-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+    }
+
+    .headline .accent {
+      font-family: "Instrument Serif", serif;
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .form-wrap {
+      width: 100%;
+      flex-shrink: 0;
+    }
+
+    .form-card {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      overflow: hidden;
+      border-radius: 1rem;
+      background: #ffffff;
+      padding: 1rem;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+    }
+
+    .form-heading {
+      color: #000000;
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: -0.025em;
+    }
+
+    .email-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      border-radius: 1rem;
+      background: #f9fafb;
+      padding: 0.625rem 1rem;
+    }
+
+    .email-label {
+      color: #6b7280;
+      font-size: 0.75rem;
+      font-weight: 500;
+      line-height: 1.15;
+    }
+
+    .email-link {
+      display: block;
+      max-width: 190px;
+      overflow: hidden;
+      color: #2563eb;
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .email-link:hover {
+      text-decoration: underline;
+    }
+
+    .socials {
+      display: flex;
+      flex-shrink: 0;
+      align-items: center;
+      gap: 0.375rem;
+    }
+
+    .social-btn {
+      display: flex;
+      width: 2rem;
+      height: 2rem;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.75rem;
+      transition: opacity 200ms ease;
+    }
+
+    .social-btn:hover {
+      opacity: 0.8;
+    }
+
+    .social-whatsapp {
+      background: #dcfce7;
+      color: #16a34a;
+    }
+
+    .social-instagram {
+      background: #ffedd5;
+      color: #fb923c;
+    }
+
+    .social-linkedin {
+      background: #dbeafe;
+      color: #2563eb;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: #9ca3af;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      height: 1px;
+      flex: 1 1 0;
+      background: #e5e7eb;
+    }
+
+    .contact-form,
+    .fields {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .form-label {
+      color: #000000;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .input-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .field {
+      width: 100%;
+      min-width: 0;
+      border-radius: 0.75rem;
+      border: 1px solid #e5e7eb;
+      background: transparent;
+      padding: 0.625rem 0.75rem;
+      color: #111827;
+      font-size: 0.875rem;
+      outline: none;
+      transition: border-color 200ms ease, box-shadow 200ms ease;
+    }
+
+    .field::placeholder {
+      color: #9ca3af;
+    }
+
+    .field:focus {
+      border-color: transparent;
+      box-shadow: 0 0 0 2px #111827;
+    }
+
+    textarea.field {
+      min-height: 104px;
+      resize: none;
+    }
+
+    .tags-label {
+      margin-bottom: 0.5rem;
+      color: #000000;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.375rem;
+    }
+
+    .tag {
+      border-radius: 0.5rem;
+      border: 1px solid #e5e7eb;
+      background: #ffffff;
+      color: #374151;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      transition: all 200ms ease;
+    }
+
+    .tag:hover {
+      border-color: #9ca3af;
+    }
+
+    .tag.active {
+      border-color: #000000;
+      background: #f3f4f6;
+      color: #000000;
+    }
+
+    .submit {
+      width: 100%;
+      border-radius: 1rem;
+      background: #000000;
+      color: #ffffff;
+      padding: 0.75rem 1rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      transition: background-color 200ms ease, opacity 200ms ease;
+    }
+
+    .submit:hover {
+      background: #1f2937;
+    }
+
+    .submit:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+
+    .success {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1.5rem 0;
+      text-align: center;
+    }
+
+    .success.active {
+      display: flex;
+    }
+
+    .success-icon {
+      display: flex;
+      width: 3rem;
+      height: 3rem;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: #f0fdf4;
+      color: #16a34a;
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .success h3 {
+      color: #111827;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .success p {
+      color: #6b7280;
+      font-size: 0.875rem;
+    }
+
+    .icon {
+      width: 13px;
+      height: 13px;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+
+    @media (min-width: 640px) {
+      .page {
+        padding: 1rem;
+      }
+
+      .hero-card {
+        min-height: calc(100vh - 32px);
+        border-radius: 1.5rem;
+      }
+
+      .content-layer {
+        min-height: calc(100vh - 32px);
+        padding: 1.5rem;
+      }
+
+      .nav-pill {
+        width: auto;
+        gap: 1.5rem;
+        padding-left: 1rem;
+      }
+
+      .nav-links {
+        display: flex;
+      }
+
+      .nav-cta {
+        padding-inline: 1.25rem;
+      }
+
+      .headline {
+        max-width: 32rem;
+        font-size: 2.25rem;
+      }
+
+      .form-card {
+        border-radius: 1.5rem;
+        padding: 1.5rem;
+      }
+
+      .form-heading {
+        font-size: 1.5rem;
+      }
+
+      .input-row {
+        flex-direction: row;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .page {
+        padding: 1.5rem;
+      }
+
+      .hero-card {
+        min-height: calc(100vh - 48px);
+      }
+
+      .content-layer {
+        min-height: calc(100vh - 48px);
+        padding: 2rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .hero-card {
+        height: calc(100vh - 48px);
+      }
+
+      .content-layer {
+        height: 100%;
+      }
+
+      .bottom-row {
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: space-between;
+      }
+
+      .headline {
+        max-width: 32rem;
+      }
+
+      .form-wrap {
+        width: min(480px, 45%);
+      }
+    }
+
+    @media (min-width: 1280px) {
+      .headline {
+        max-width: 42rem;
+        font-size: 3rem;
+      }
+    }
+
+    /* Back chrome */
+    #back-chrome{position:fixed;top:0;left:0;right:0;z-index:9999;height:44px;display:flex;align-items:center;gap:12px;padding:0 16px;background:rgba(10,10,10,.94);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08)}
+    #back-chrome a.bl{font-family:'Inter',system-ui;font-size:12px;color:rgba(255,255,255,.55);display:flex;align-items:center;gap:6px;text-decoration:none;transition:color .15s}
+    #back-chrome a.bl:hover{color:#fff}
+    #back-chrome .sep{color:rgba(255,255,255,.15);font-size:11px}
+    #back-chrome .dn{font-size:12px;color:rgba(255,255,255,.55)}
+    #back-chrome a.ct{margin-left:auto;background:#0064E7;color:#fff;border-radius:999px;padding:6px 16px;font-size:11px;font-weight:500;text-decoration:none;display:flex;align-items:center;white-space:nowrap}
+    /* Offset the page — adjust vh calcs to account for 44px chrome */
+    .page { padding-top: calc(0.75rem + 44px); }
+    .hero-card { min-height: calc(100vh - 24px - 44px); }
+    .content-layer { min-height: calc(100vh - 24px - 44px); }
+    @media (min-width: 640px) {
+      .page { padding-top: calc(1rem + 44px); }
+      .hero-card { min-height: calc(100vh - 32px - 44px); }
+      .content-layer { min-height: calc(100vh - 32px - 44px); }
+    }
+    @media (min-width: 768px) {
+      .page { padding-top: calc(1.5rem + 44px); }
+      .hero-card { min-height: calc(100vh - 48px - 44px); }
+      .content-layer { min-height: calc(100vh - 48px - 44px); }
+    }
+    @media (min-width: 1024px) {
+      .hero-card { height: calc(100vh - 48px - 44px); }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="back-chrome">
+    <a href="../../index.html" class="bl"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8 2L4 6l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+    <span class="sep">/</span>
+    <span class="dn">Forma — Video Contact Hero</span>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" class="ct">Book a call</a>
+  </div>
+  <main class="page">
+    <section class="hero-card">
+      <video
+        class="hero-video"
+        src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260602_150901_c45b90ec-18d7-42ff-90e2-b95d7109e330.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+      ></video>
+
+      <div class="content-layer">
+        <header class="navbar">
+          <nav class="nav-pill" aria-label="Main navigation">
+            <svg class="logo" viewBox="0 0 256 256" aria-label="Forma logo" role="img">
+              <path fill="#000000" d="M 256 256 L 128 256 L 0 128 L 128 128 Z M 256 128 L 128 128 L 0 0 L 128 0 Z" />
+            </svg>
+
+            <div class="nav-links">
+              <a class="nav-link" href="#">Our story</a>
+              <a class="nav-link" href="#">Expertise</a>
+              <a class="nav-link" href="#">Our work</a>
+              <a class="nav-link" href="#">Journal</a>
+            </div>
+
+            <a class="nav-cta" href="#contact">Start a project</a>
+          </nav>
+        </header>
+
+        <div class="spacer"></div>
+
+        <div class="bottom-row">
+          <p class="headline">
+            We craft bold ideas<br />
+            and ship them as <span class="accent">products</span>
+          </p>
+
+          <div class="form-wrap" id="contact">
+            <div class="form-card">
+              <h1 class="form-heading">Say hello! 👋</h1>
+
+              <div class="email-row">
+                <div>
+                  <div class="email-label">Drop me a line</div>
+                  <a class="email-link" href="mailto:hello@stanleysmithstudios.com">hello@stanleysmithstudios.com</a>
+                </div>
+
+                <div class="socials" aria-label="Social links">
+                  <a class="social-btn social-whatsapp" href="https://wa.me/27748790665" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                    <svg class="icon" viewBox="0 0 24 24">
+                      <path d="M20.5 11.8a8.5 8.5 0 0 1-12.7 7.4L3 20.5l1.3-4.6a8.5 8.5 0 1 1 16.2-4.1Z"></path>
+                      <path d="M8.8 8.6c.2-.5.4-.5.7-.5h.5c.2 0 .4 0 .6.4l.7 1.6c.1.3.1.5-.1.7l-.4.5c-.1.1-.2.3 0 .5.4.8 1.1 1.5 2 2 .2.1.4.1.5 0l.6-.7c.2-.2.4-.2.7-.1l1.6.8c.3.1.4.3.4.6v.5c0 .3-.2.7-.5.9-.6.4-1.5.5-2.6.1-2.7-.9-5-3.1-5.8-5.6-.3-.9-.2-1.6.2-2.1Z"></path>
+                    </svg>
+                  </a>
+
+                  <a class="social-btn social-linkedin" href="https://www.linkedin.com/in/astanleysmith/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                    <svg class="icon" viewBox="0 0 24 24">
+                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6Z"></path>
+                      <rect x="2" y="9" width="4" height="12"></rect>
+                      <circle cx="4" cy="4" r="2"></circle>
+                    </svg>
+                  </a>
+
+                  <a class="social-btn social-instagram" href="https://www.instagram.com/stanley_smith_studios" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                    <svg class="icon" viewBox="0 0 24 24">
+                      <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+                      <circle cx="12" cy="12" r="4"></circle>
+                      <circle cx="17.5" cy="6.5" r="1"></circle>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+              <div class="divider">OR</div>
+
+              <form class="contact-form" id="contactForm">
+                <div class="fields" id="formFields">
+                  <label class="form-label">Tell us about your vision</label>
+
+                  <div class="input-row">
+                    <input class="field" id="name" type="text" placeholder="Full name" autocomplete="name" />
+                    <input class="field" id="email" type="email" placeholder="Email" autocomplete="email" />
+                  </div>
+
+                  <textarea class="field" id="message" rows="4" placeholder="What are you looking to build or improve..."></textarea>
+
+                  <div>
+                    <div class="tags-label">I need help with...</div>
+                    <div class="tags" id="tags"></div>
+                  </div>
+
+                  <button class="submit" id="submitBtn" type="submit">Send my message</button>
+                </div>
+
+                <div class="success" id="successState">
+                  <div class="success-icon">✓</div>
+                  <h3>You're all set!</h3>
+                  <p>Expect a reply within 24 hours.</p>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const SERVICES = [
+      "Website",
+      "Mobile App",
+      "Web App",
+      "E-Commerce",
+      "Visual Identity",
+      "3D & Motion",
+      "Digital Marketing",
+      "Growth & Consulting",
+      "Other"
+    ];
+
+    const selected = new Set();
+    const tagsWrap = document.getElementById("tags");
+    const form = document.getElementById("contactForm");
+    const submitBtn = document.getElementById("submitBtn");
+    const formFields = document.getElementById("formFields");
+    const successState = document.getElementById("successState");
+
+    SERVICES.forEach((service) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "tag";
+      button.textContent = service;
+
+      button.addEventListener("click", () => {
+        if (selected.has(service)) {
+          selected.delete(service);
+          button.classList.remove("active");
+        } else {
+          selected.add(service);
+          button.classList.add("active");
+        }
+      });
+
+      tagsWrap.appendChild(button);
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Sending...";
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
+      const services = Array.from(selected).join(", ") || "Not specified";
+
+      const subject = encodeURIComponent("New project enquiry from the landing page");
+      const body = encodeURIComponent(
+        `Name: ${name || "Not provided"}
+` +
+        `Email: ${email || "Not provided"}
+` +
+        `Services: ${services}
+
+` +
+        `Message:
+${message || "Not provided"}`
+      );
+
+      window.location.href = `mailto:hello@stanleysmithstudios.com?subject=${subject}&body=${body}`;
+
+      await new Promise((resolve) => setTimeout(resolve, 800));
+
+      formFields.style.display = "none";
+      successState.classList.add("active");
+    });
+
+    document.querySelectorAll("video").forEach((video) => {
+      video.muted = true;
+      const play = () => video.play().catch(() => {});
+      if (document.readyState === "complete") play();
+      else window.addEventListener("load", play, { once: true });
+    });
+  </script>
+</body>
+</html>
