@@ -153,14 +153,26 @@ function initMagneticEffect() {
 // ── SCROLL-IN ────────────────────────────────────────────────────────────────
 const cards = document.querySelectorAll('.pg-card');
 if ('IntersectionObserver' in window) {
+  let batchTimer = null;
+  let batchEntries = [];
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        const i = [...cards].indexOf(entry.target);
-        setTimeout(() => entry.target.classList.add('is-visible'), i * 70);
+        batchEntries.push(entry.target);
         observer.unobserve(entry.target);
       }
     });
+    // Process all entries that arrived in this observer tick together as one batch
+    if (batchEntries.length) {
+      clearTimeout(batchTimer);
+      batchTimer = setTimeout(() => {
+        batchEntries.forEach((card, i) => {
+          setTimeout(() => card.classList.add('is-visible'), i * 70);
+        });
+        batchEntries = [];
+      }, 0);
+    }
   }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
   cards.forEach(c => observer.observe(c));
 } else {
