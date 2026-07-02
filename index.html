@@ -72,7 +72,15 @@
 
   <main class="playground-grid">
 
-    <article class="pg-card" data-href="demos/radial-marquee.html">
+    <!-- Filter bar -->
+    <div class="pg-filters" id="pgFilters">
+      <button class="pg-filter is-active" data-filter="all">All</button>
+      <button class="pg-filter" data-filter="motion">Motion</button>
+      <button class="pg-filter" data-filter="landing">Landing Pages</button>
+    </div>
+    <p class="pg-count" id="pgCount"></p>
+
+    <article class="pg-card" data-category="motion" data-href="demos/radial-marquee.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="radial-cards-marquee.avif" alt="Radial Cards Marquee" loading="eager">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/radial-marquee.mp4"></video>
@@ -85,7 +93,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/3d-tornado.html">
+    <article class="pg-card" data-category="motion" data-href="demos/3d-tornado.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="3d-tornado.avif" alt="3D Cards Tornado" loading="eager">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/3d-tornado.mp4"></video>
@@ -98,7 +106,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/infinite-grid.html">
+    <article class="pg-card" data-category="motion" data-href="demos/infinite-grid.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="infinite-grid.avif" alt="Infinite Draggable Grid" loading="eager">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/infinite-grid.mp4"></video>
@@ -111,7 +119,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/parallax-slider.html">
+    <article class="pg-card" data-category="motion" data-href="demos/parallax-slider.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="parallax-slider.avif" alt="Parallax Image Slider" loading="eager">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/parallax-slider.mp4"></video>
@@ -124,7 +132,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/layered-slider.html">
+    <article class="pg-card" data-category="motion" data-href="demos/layered-slider.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="layered-slider.avif" alt="Layered Image Slider" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/layered-slider.mp4"></video>
@@ -137,7 +145,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/depth-tiles.html">
+    <article class="pg-card" data-category="motion" data-href="demos/depth-tiles.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="depth-tiles.avif" alt="Depth Tiles Infinite Loop" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/depth-tiles.mp4"></video>
@@ -150,7 +158,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/orbit-tiles.html">
+    <article class="pg-card" data-category="motion" data-href="demos/orbit-tiles.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="orbit-tiles.avif" alt="Orbit Tiles Infinite Loop" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/orbit-tiles.mp4"></video>
@@ -163,7 +171,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/cascading-slider.html">
+    <article class="pg-card" data-category="motion" data-href="demos/cascading-slider.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="cascading-slider.avif" alt="Cascading Slider" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/cascading-slider.mp4"></video>
@@ -176,7 +184,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/bg-zoom.html">
+    <article class="pg-card" data-category="motion" data-href="demos/bg-zoom.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="bg-zoom.avif" alt="Image to Background Zoom" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/bg-zoom.mp4"></video>
@@ -189,7 +197,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/image-trail.html">
+    <article class="pg-card" data-category="motion" data-href="demos/image-trail.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="image-trail.avif" alt="Rotating Image Trail" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/image-trail.mp4"></video>
@@ -202,7 +210,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/feature-pills.html">
+    <article class="pg-card" data-category="motion" data-href="demos/feature-pills.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="feature-pills.avif" alt="Expanding Feature Pills" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/feature-pills.mp4"></video>
@@ -215,7 +223,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/image-sequence.html">
+    <article class="pg-card" data-category="motion" data-href="demos/image-sequence.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="image-sequence.avif" alt="Image Sequence on Scroll" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/image-sequence.mp4"></video>
@@ -228,7 +236,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/stacking-cards.html">
+    <article class="pg-card" data-category="motion" data-href="demos/stacking-cards.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="stacking-cards.avif" alt="Stacking Cards Parallax" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/stacking-cards.mp4"></video>
@@ -241,7 +249,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/sticky-features.html">
+    <article class="pg-card" data-category="motion" data-href="demos/sticky-features.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="sticky-features.avif" alt="Sticky Features" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/sticky-features.mp4"></video>
@@ -254,7 +262,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/horizontal-scroll.html">
+    <article class="pg-card" data-category="motion" data-href="demos/horizontal-scroll.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="horizontal-scroll.avif" alt="Horizontal Scrolling Sections" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/horizontal-scroll.mp4"></video>
@@ -267,7 +275,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/3d-image-carousel.html">
+    <article class="pg-card" data-category="motion" data-href="demos/3d-image-carousel.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="3d-image-carousel.avif" alt="3D Image Carousel" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/3d-image-carousel.mp4"></video>
@@ -280,7 +288,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/pixelated-scroll.html">
+    <article class="pg-card" data-category="motion" data-href="demos/pixelated-scroll.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="pixelated-scroll.avif" alt="Pixelated Scroll Transition" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/pixelated-scroll.mp4"></video>
@@ -293,7 +301,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/draw-path-scroll.html">
+    <article class="pg-card" data-category="motion" data-href="demos/draw-path-scroll.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="draw-path-scroll.avif" alt="Draw Path on Scroll" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/draw-path-scroll.mp4"></video>
@@ -306,7 +314,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/sticky-steps.html">
+    <article class="pg-card" data-category="motion" data-href="demos/sticky-steps.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="sticky-steps.avif" alt="Sticky Steps" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/sticky-steps.mp4"></video>
@@ -319,7 +327,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/highlight-marker.html">
+    <article class="pg-card" data-category="motion" data-href="demos/highlight-marker.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="highlight-marker.avif" alt="Highlight Marker Text Reveal" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/highlight-marker.mp4"></video>
@@ -332,7 +340,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/line-testimonials.html">
+    <article class="pg-card" data-category="motion" data-href="demos/line-testimonials.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="line-testimonials.avif" alt="Line Reveal Testimonials" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/line-testimonials.mp4"></video>
@@ -345,7 +353,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/image-preview-follower.html">
+    <article class="pg-card" data-category="motion" data-href="demos/image-preview-follower.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="image-preview-follower.avif" alt="Image Preview Cursor Follower" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/image-preview-follower.mp4"></video>
@@ -358,7 +366,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/dropping-cards.html">
+    <article class="pg-card" data-category="motion" data-href="demos/dropping-cards.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="dropping-cards.avif" alt="Dropping Cards Stack" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/dropping-cards.mp4"></video>
@@ -371,7 +379,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/stacking-bounce.html">
+    <article class="pg-card" data-category="motion" data-href="demos/stacking-bounce.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="stacking-bounce.avif" alt="Stacking Sticky Cards Bounce" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/stacking-bounce.mp4"></video>
@@ -384,7 +392,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/flick-cards.html">
+    <article class="pg-card" data-category="motion" data-href="demos/flick-cards.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="flick-cards.avif" alt="Flick Cards Slider" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/flick-cards.mp4"></video>
@@ -397,7 +405,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/momentum-hover.html">
+    <article class="pg-card" data-category="motion" data-href="demos/momentum-hover.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="momentum-hover.avif" alt="Momentum Based Hover" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/momentum-hover.mp4"></video>
@@ -410,7 +418,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/locomotive-scroll.html">
+    <article class="pg-card" data-category="motion" data-href="demos/locomotive-scroll.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="locomotive-scroll.avif" alt="Locomotive Smooth Scroll" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/locomotive-scroll.mp4"></video>
@@ -423,7 +431,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/follow-svg-path.html">
+    <article class="pg-card" data-category="motion" data-href="demos/follow-svg-path.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="follow-svg-path.avif" alt="Follow SVG Path on Scroll" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/follow-svg-path.mp4"></video>
@@ -436,7 +444,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/stacked-cards.html">
+    <article class="pg-card" data-category="motion" data-href="demos/stacked-cards.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="stacked-cards.avif" alt="Stacked Cards Slider" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/stacked-cards.mp4"></video>
@@ -449,7 +457,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/falling-text.html">
+    <article class="pg-card" data-category="motion" data-href="demos/falling-text.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="falling-text.avif" alt="Falling Text with Gravity" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/falling-text.mp4"></video>
@@ -462,7 +470,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/global-parallax.html">
+    <article class="pg-card" data-category="motion" data-href="demos/global-parallax.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="global-parallax.avif" alt="Global Parallax Setup" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/global-parallax.mp4"></video>
@@ -475,7 +483,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/highlight-text.html">
+    <article class="pg-card" data-category="motion" data-href="demos/highlight-text.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="highlight-text.avif" alt="Highlight Text on Scroll" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/highlight-text.mp4"></video>
@@ -488,7 +496,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/emoji-rain.html">
+    <article class="pg-card" data-category="motion" data-href="demos/emoji-rain.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="emoji-rain.avif" alt="Emoji Rain Effect" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/emoji-rain.mp4"></video>
@@ -501,7 +509,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/sticky-tabs.html">
+    <article class="pg-card" data-category="motion" data-href="demos/sticky-tabs.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="sticky-tabs.avif" alt="Sticky Section Tabs" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/sticky-tabs.mp4"></video>
@@ -514,7 +522,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/falling-2d.html">
+    <article class="pg-card" data-category="motion" data-href="demos/falling-2d.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="falling-2d.avif" alt="Falling 2D Objects" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/falling-2d.mp4"></video>
@@ -527,7 +535,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/scaling-flip.html">
+    <article class="pg-card" data-category="motion" data-href="demos/scaling-flip.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="scaling-flip.avif" alt="Scaling Element on Scroll" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/scaling-flip.mp4"></video>
@@ -540,7 +548,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/parallax-gallery.html">
+    <article class="pg-card" data-category="motion" data-href="demos/parallax-gallery.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="parallax-gallery.avif" alt="Parallax Image Gallery" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/parallax-gallery.mp4"></video>
@@ -553,7 +561,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/skeleton-loader.html">
+    <article class="pg-card" data-category="motion" data-href="demos/skeleton-loader.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="skeleton-loader.avif" alt="Skeleton Loader Text" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/skeleton-loader.mp4"></video>
@@ -566,7 +574,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/draggable-slider.html">
+    <article class="pg-card" data-category="motion" data-href="demos/draggable-slider.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="draggable-slider.avif" alt="Draggable Infinite Slider" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/draggable-slider.mp4"></video>
@@ -579,7 +587,7 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/parallax-layers.html">
+    <article class="pg-card" data-category="motion" data-href="demos/parallax-layers.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="parallax-layers.avif" alt="Parallax Image Layers" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/parallax-layers.mp4"></video>
@@ -592,7 +600,19 @@
       </div>
     </article>
 
-    <article class="pg-card" data-href="demos/buttons.html">
+    <article class="pg-card" data-category="landing" data-href="demos/dental-health/index.html">
+      <div class="pg-card__media">
+        <img class="pg-card__thumb" src="dental-health-preview.webp" alt="Dental Health Landing Page" loading="lazy">
+        <div class="pg-card__overlay"><span class="pg-card__open-label">Open demo <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5l7-7M4 2.5h5.5V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+      </div>
+      <div class="pg-card__info">
+        <h2 class="pg-card__title">NY Dental Landing Page</h2>
+        <p class="pg-card__desc">A clean, editorial dental healthcare landing page with scroll reveals, animated headlines, and a bold typographic hero.</p>
+        <div class="pg-card__meta"><span class="pg-card__tech">Landing Page</span><span class="pg-card__tech">Healthcare</span><span class="pg-card__tech">Scroll Reveal</span></div>
+      </div>
+    </article>
+
+    <article class="pg-card" data-category="motion" data-href="demos/buttons.html">
       <div class="pg-card__media">
         <img class="pg-card__thumb" src="buttons.avif" alt="Button Showcase" loading="lazy">
         <video class="pg-card__video" muted loop playsinline preload="none" data-src="videos/buttons.mp4"></video>

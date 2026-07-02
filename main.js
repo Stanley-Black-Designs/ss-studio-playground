@@ -186,3 +186,40 @@ document.addEventListener('DOMContentLoaded', initMagneticEffect);
     .to(actions, { opacity: 1, y: 0, duration: 0.75 }, '-=0.5')
     .to(rule, { opacity: 1, duration: 0.9 }, '-=0.35');
 })();
+
+/* ── Filter system ──────────────────────────────────────── */
+(function () {
+  const filters = document.querySelectorAll('.pg-filter');
+  const cards   = document.querySelectorAll('.pg-card');
+  const count   = document.getElementById('pgCount');
+
+  function updateCount(active) {
+    const visible = active === 'all'
+      ? cards.length
+      : [...cards].filter(c => c.dataset.category === active).length;
+    if (count) count.textContent = visible + ' demo' + (visible === 1 ? '' : 's');
+  }
+
+  function applyFilter(active) {
+    cards.forEach(card => {
+      const cat = card.dataset.category || 'motion';
+      if (active === 'all' || cat === active) {
+        card.classList.remove('is-hidden');
+      } else {
+        card.classList.add('is-hidden');
+      }
+    });
+    updateCount(active);
+  }
+
+  filters.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filters.forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      applyFilter(btn.dataset.filter);
+    });
+  });
+
+  // Init count
+  updateCount('all');
+})();
