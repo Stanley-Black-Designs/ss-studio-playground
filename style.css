@@ -168,10 +168,12 @@ img, video { display: block; max-width: 100%; }
 
 /* ── FILTERS ──────────────────────────────────────────────── */
 .pg-filters {
+  max-width: 1320px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 0 40px 28px;
+  padding: 0 32px 28px;
 }
 .pg-filter {
   height: 32px;
@@ -197,7 +199,9 @@ img, video { display: block; max-width: 100%; }
   color: #fff;
 }
 .pg-count {
-  padding: 0 40px 20px;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 32px 20px;
   font-size: 11px;
   color: rgba(255,255,255,0.28);
   letter-spacing: .04em;
@@ -208,5 +212,5 @@ img, video { display: block; max-width: 100%; }
 }
 @media (max-width: 640px) {
   .pg-filters { padding-left: 20px; padding-right: 20px; }
-  .pg-count { padding-left: 20px; }
+  .pg-count { padding-left: 20px; padding-right: 20px; }
 }
