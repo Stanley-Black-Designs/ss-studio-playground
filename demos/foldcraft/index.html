@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foldcraft</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        min-height: 100%;
+      }
+
+      body {
+        font-family: "Geist", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background: #000;
+        color: #fff;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button {
+        font: inherit;
+        border: 0;
+        cursor: pointer;
+      }
+
+      .page {
+        position: relative;
+        height: 100vh;
+        width: 100%;
+        overflow: hidden;
+        background: #000;
+        font-family: "Geist", sans-serif;
+      }
+
+      .bg-video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 70% center;
+      }
+
+      .navbar {
+        position: relative;
+        z-index: 30;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.25rem 1.5rem;
+      }
+
+      .nav-left {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .logo {
+        font-size: 1.125rem;
+        line-height: 1.25rem;
+        font-weight: 600;
+        letter-spacing: -0.025em;
+        color: #fff;
+      }
+
+      .nav-links {
+        display: none;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      .nav-link {
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        color: rgba(255, 255, 255, 0.8);
+        transition: color 200ms ease;
+      }
+
+      .nav-link:hover {
+        color: #fff;
+      }
+
+      .talk-desktop {
+        display: none;
+        border-radius: 0.5rem;
+        background: #fff;
+        padding: 0.5rem 1.25rem;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        font-weight: 500;
+        color: #000;
+        transition: transform 200ms ease;
+      }
+
+      .talk-desktop:hover {
+        transform: scale(1.05);
+      }
+
+      .menu-toggle {
+        position: relative;
+        z-index: 50;
+        display: flex;
+        width: 40px;
+        height: 40px;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        color: #fff;
+        transition: transform 160ms ease;
+      }
+
+      .menu-toggle:active {
+        transform: scale(0.9);
+      }
+
+      .menu-toggle svg {
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        transition: opacity 300ms ease, transform 300ms ease;
+      }
+
+      .menu-icon {
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
+      }
+
+      .close-icon {
+        opacity: 0;
+        transform: rotate(-90deg) scale(0.75);
+      }
+
+      .menu-open .menu-icon {
+        opacity: 0;
+        transform: rotate(90deg) scale(0.75);
+      }
+
+      .menu-open .close-icon {
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
+      }
+
+      .mobile-menu {
+        position: absolute;
+        inset-inline: 0;
+        top: 0;
+        z-index: 20;
+        height: 0;
+        overflow: hidden;
+        background: rgba(0, 0, 0, 0.98);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        opacity: 0;
+        pointer-events: none;
+        transition: height 500ms cubic-bezier(0.16, 1, 0.3, 1), opacity 500ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .mobile-menu.is-open {
+        height: 100vh;
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .mobile-menu-inner {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 2rem;
+        opacity: 0;
+        transform: translateY(2rem);
+        transition: opacity 500ms cubic-bezier(0.16, 1, 0.3, 1) 100ms, transform 500ms cubic-bezier(0.16, 1, 0.3, 1) 100ms;
+      }
+
+      .mobile-menu.is-open .mobile-menu-inner {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .mobile-menu-links {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .mobile-link {
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.9);
+        transition: color 200ms ease;
+      }
+
+      .mobile-link:hover {
+        color: #fff;
+      }
+
+      .mobile-talk {
+        margin-top: 1.5rem;
+        width: fit-content;
+        border-radius: 999px;
+        background: #fff;
+        padding: 0.875rem 2rem;
+        font-size: 1rem;
+        line-height: 1.5rem;
+        font-weight: 500;
+        color: #000;
+        transition: transform 200ms ease;
+      }
+
+      .mobile-talk:hover {
+        transform: scale(1.05);
+      }
+
+      .hero {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        height: calc(100vh - 80px);
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 3rem 1.5rem 2.5rem;
+      }
+
+      .top-section {
+        max-width: 48rem;
+      }
+
+      .badge {
+        margin-bottom: 1rem;
+        font-size: 0.75rem;
+        line-height: 1rem;
+        color: rgba(255, 255, 255, 0.9);
+        animation: fadeSlideUp 0.8s ease 0.2s both;
+      }
+
+      .heading {
+        font-size: 1.875rem;
+        line-height: 1.1;
+        font-weight: 500;
+        letter-spacing: -0.025em;
+        color: #fff;
+        animation: fadeSlideUp 0.8s ease 0.4s both;
+      }
+
+      .bottom-section {
+        max-width: 36rem;
+      }
+
+      .description {
+        margin-bottom: 1.25rem;
+        max-width: 24rem;
+        font-size: 0.875rem;
+        line-height: 1.625;
+        color: rgba(255, 255, 255, 0.6);
+        animation: fadeSlideUp 0.8s ease 0.7s both;
+      }
+
+      .explore-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        border-radius: 0.5rem;
+        background: #fff;
+        padding: 0.625rem 1.25rem;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        font-weight: 500;
+        color: #000;
+        transition: transform 200ms ease;
+        animation: fadeSlideUp 0.8s ease 0.9s both;
+      }
+
+      .explore-btn:hover {
+        transform: scale(1.05);
+      }
+
+      .arrow-icon {
+        width: 16px;
+        height: 16px;
+      }
+
+      @keyframes fadeSlideUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (min-width: 640px) {
+        .logo {
+          font-size: 1.25rem;
+          line-height: 1.75rem;
+        }
+
+        .badge {
+          margin-bottom: 1.5rem;
+          font-size: 0.875rem;
+          line-height: 1.25rem;
+        }
+
+        .heading {
+          font-size: 3rem;
+          line-height: 1.1;
+        }
+
+        .hero {
+          padding-top: 4rem;
+          padding-bottom: 3rem;
+        }
+
+        .description {
+          margin-bottom: 1.5rem;
+          max-width: 32rem;
+          font-size: 1rem;
+        }
+
+        .explore-btn {
+          padding: 0.75rem 1.5rem;
+        }
+      }
+
+      @media (min-width: 768px) {
+        .navbar {
+          padding: 1.25rem 3rem;
+        }
+
+        .nav-links,
+        .talk-desktop {
+          display: flex;
+        }
+
+        .menu-toggle,
+        .mobile-menu {
+          display: none;
+        }
+
+        .hero {
+          padding: 5rem 3rem 4rem;
+        }
+
+        .heading {
+          font-size: 3.75rem;
+        }
+
+        .description {
+          font-size: 1.125rem;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .navbar {
+          padding-inline: 4rem;
+        }
+
+        .hero {
+          padding-inline: 4rem;
+        }
+
+        .heading {
+          font-size: 4.5rem;
+        }
+      }
+    </style>
+    <style>
+      #back-chrome{position:fixed;top:0;left:0;right:0;z-index:9999;height:44px;display:flex;align-items:center;gap:12px;padding:0 16px;background:rgba(10,10,10,.94);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08)}
+      #back-chrome a.bl{font-family:'Geist',system-ui;font-size:12px;color:rgba(255,255,255,.55);display:flex;align-items:center;gap:6px;text-decoration:none;transition:color .15s}
+      #back-chrome a.bl:hover{color:#fff}
+      #back-chrome .sep{color:rgba(255,255,255,.15);font-size:11px}
+      #back-chrome .dn{font-size:12px;color:rgba(255,255,255,.55)}
+      #back-chrome a.ct{margin-left:auto;background:#0064E7;color:#fff;border-radius:999px;padding:6px 16px;font-size:11px;font-weight:500;text-decoration:none;display:flex;align-items:center;white-space:nowrap}
+      body{padding-top:44px}
+    </style>
+  </head>
+  <body>
+    <div id="back-chrome">
+      <a href="../../index.html" class="bl"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8 2L4 6l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <span class="sep">/</span>
+      <span class="dn">Foldcraft — Visual Storytelling</span>
+      <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" class="ct">Book a call</a>
+    </div>
+    <main class="page">
+      <video
+        class="bg-video"
+        src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260622_204221_5339e40b-e73d-4ab0-9c65-79c18c66fd50.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+      ></video>
+
+      <nav class="navbar" aria-label="Main navigation">
+        <div class="nav-left">
+          <a href="#" class="logo">Foldcraft</a>
+          <div class="nav-links" aria-label="Primary links">
+            <a class="nav-link" href="#">Home</a>
+            <a class="nav-link" href="#">Projects</a>
+            <a class="nav-link" href="#">Studio</a>
+            <a class="nav-link" href="#">Reach Us</a>
+          </div>
+        </div>
+
+        <a class="talk-desktop" href="#">Let's Talk</a>
+
+        <button class="menu-toggle" type="button" aria-label="Toggle mobile menu" aria-expanded="false">
+          <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 12h16" />
+            <path d="M4 6h16" />
+            <path d="M4 18h16" />
+          </svg>
+          <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 6 6 18" />
+            <path d="m6 6 12 12" />
+          </svg>
+        </button>
+      </nav>
+
+      <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-inner">
+          <div class="mobile-menu-links">
+            <a class="mobile-link" href="#">Home</a>
+            <a class="mobile-link" href="#">Projects</a>
+            <a class="mobile-link" href="#">Studio</a>
+            <a class="mobile-link" href="#">Reach Us</a>
+          </div>
+          <a class="mobile-talk" href="#">Let's Talk</a>
+        </div>
+      </div>
+
+      <section class="hero" aria-label="Foldcraft hero section">
+        <div class="top-section">
+          <p class="badge">Brand &amp; Visual Storytelling</p>
+          <h1 class="heading">
+            Shaping visual<br />
+            narratives,<br />
+            one pixel at a time.
+          </h1>
+        </div>
+
+        <div class="bottom-section">
+          <p class="description">Turning vision into reality through craft, motion, and an endless pursuit of beauty.</p>
+          <a href="#" class="explore-btn">
+            Explore Work
+            <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14" />
+              <path d="m12 5 7 7-7 7" />
+            </svg>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const toggle = document.querySelector('.menu-toggle');
+      const mobileMenu = document.querySelector('#mobileMenu');
+      const mobileMenuLinks = document.querySelectorAll('.mobile-link, .mobile-talk');
+
+      function setMenuOpen(open) {
+        toggle.classList.toggle('menu-open', open);
+        mobileMenu.classList.toggle('is-open', open);
+        toggle.setAttribute('aria-expanded', String(open));
+        document.body.style.overflow = open ? 'hidden' : '';
+      }
+
+      toggle.addEventListener('click', () => {
+        setMenuOpen(!mobileMenu.classList.contains('is-open'));
+      });
+
+      mobileMenuLinks.forEach((link) => {
+        link.addEventListener('click', () => setMenuOpen(false));
+      });
+
+      window.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') setMenuOpen(false);
+      });
+    </script>
+  </body>
+</html>
