@@ -3,338 +3,304 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NY Dental — Dental Health Landing Page</title>
+  <title>Dental Health — Quality Healthcare</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Lenis smooth scroll -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <!-- Tailwind CDN for rapid fidelity -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+        }
+      }
+    }
+  </script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', system-ui, sans-serif; background: #fff; color: #111; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-    a { text-decoration: none; color: inherit; }
-    img { display: block; max-width: 100%; }
+    html, body { height: 100%; overflow-x: hidden; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #fff; -webkit-font-smoothing: antialiased; }
 
-    /* ── Nav ── */
-    .nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 18px 40px;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(0,0,0,0.06);
-    }
-    .nav-logo { line-height: 1; }
-    .nav-logo-name { display: block; font-size: 13px; font-weight: 600; letter-spacing: .01em; }
-    .nav-logo-sub { display: block; font-size: 10px; color: #888; margin-top: 1px; letter-spacing: .04em; }
-    .nav-right { display: flex; align-items: center; gap: 20px; }
-    .nav-menu {
-      border: 1px solid #111; border-radius: 999px;
-      padding: 8px 20px; font-size: 13px; font-weight: 500;
-      cursor: pointer; transition: background .2s, color .2s;
-    }
-    .nav-menu:hover { background: #111; color: #fff; }
-    .nav-emergency { font-size: 13px; font-weight: 500; color: #111; }
-
-    /* ── Hero ── */
-    .hero {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      padding-top: 74px;
-    }
-    .hero-left {
-      padding: 60px 40px 60px 60px;
-      display: flex; flex-direction: column; justify-content: center;
-      position: relative; z-index: 1;
-    }
-    .hero-features { display: flex; flex-direction: column; gap: 0; }
-    .hero-feature {
-      font-size: clamp(28px, 3.5vw, 52px);
-      font-weight: 400;
-      letter-spacing: -.025em;
-      line-height: 1.15;
-      padding: 22px 0;
-      border-bottom: 1px solid rgba(0,0,0,0.1);
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity .6s ease, transform .6s ease;
-    }
-    .hero-feature.visible { opacity: 1; transform: translateY(0); }
-    .hero-feature:first-child { border-top: 1px solid rgba(0,0,0,0.1); }
-    .hero-body {
-      margin-top: 40px;
-      font-size: 14px; line-height: 1.65; color: #555;
-      max-width: 340px;
-      opacity: 0; transform: translateY(16px);
-      transition: opacity .6s ease .4s, transform .6s ease .4s;
-    }
-    .hero-body.visible { opacity: 1; transform: translateY(0); }
-    .hero-image-wrap {
-      position: relative; overflow: hidden;
-    }
-    .hero-image-wrap img {
-      width: 100%; height: 100%; object-fit: cover;
-      object-position: center top;
-    }
-    .hero-image-lines {
-      position: absolute; inset: 0; pointer-events: none;
-    }
-    .hero-image-lines span {
-      position: absolute; left: 0; right: 0; height: 1px;
-      background: rgba(255,255,255,0.7);
-    }
-
-    /* ── Headline section ── */
-    .headline-section {
-      padding: 0 60px 0;
-      background: #fff;
-    }
-    .headline-tag {
-      font-size: 11px; font-weight: 500; letter-spacing: .1em;
-      text-transform: uppercase; color: #888; margin-bottom: 16px;
-    }
-    .headline-title {
-      font-size: clamp(54px, 8vw, 120px);
-      font-weight: 400; letter-spacing: -.04em; line-height: .9;
-      color: #111; overflow: hidden;
-    }
-    .headline-title span { display: inline-block; }
-    .headline-row {
-      display: flex; align-items: flex-end; justify-content: space-between;
-      gap: 40px; padding-bottom: 60px;
-      border-bottom: 1px solid rgba(0,0,0,0.08);
-    }
-    .headline-cta {
-      flex-shrink: 0;
-      background: #111; color: #fff;
-      border: none; border-radius: 999px;
-      padding: 14px 32px; font-size: 13px; font-weight: 500;
-      cursor: pointer; transition: transform .2s, background .2s;
-      white-space: nowrap;
-    }
-    .headline-cta:hover { background: #333; transform: translateY(-2px); }
-
-    /* ── Services ── */
-    .services { padding: 80px 60px; }
-    .services-label { font-size: 11px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: #888; margin-bottom: 48px; }
-    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(0,0,0,0.08); }
-    .service-card {
-      background: #fff; padding: 40px 32px;
-      transition: background .2s;
-    }
-    .service-card:hover { background: #f9f9f9; }
-    .service-num { font-size: 11px; color: #bbb; margin-bottom: 24px; }
-    .service-title { font-size: 22px; font-weight: 400; letter-spacing: -.02em; margin-bottom: 12px; }
-    .service-body { font-size: 13px; line-height: 1.7; color: #666; }
-
-    /* ── Stats ── */
-    .stats {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 1px; background: rgba(0,0,0,0.08);
-      border-top: 1px solid rgba(0,0,0,0.08);
-      border-bottom: 1px solid rgba(0,0,0,0.08);
-    }
-    .stat { background: #fff; padding: 48px 40px; }
-    .stat-val { font-size: clamp(36px, 4vw, 60px); font-weight: 300; letter-spacing: -.04em; line-height: 1; }
-    .stat-label { font-size: 12px; color: #888; margin-top: 8px; }
-
-    /* ── CTA band ── */
-    .cta-band {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 60px; gap: 40px;
-    }
-    .cta-band-text { font-size: clamp(28px, 3vw, 44px); font-weight: 400; letter-spacing: -.025em; line-height: 1.1; max-width: 560px; }
-    .cta-band-btn {
-      flex-shrink: 0; border: 1px solid #111; border-radius: 999px;
-      padding: 16px 36px; font-size: 14px; font-weight: 500;
-      cursor: pointer; transition: background .2s, color .2s;
-      white-space: nowrap;
-    }
-    .cta-band-btn:hover { background: #111; color: #fff; }
-
-    /* ── Footer ── */
-    .footer {
-      border-top: 1px solid rgba(0,0,0,0.08);
-      padding: 32px 60px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .footer-copy { font-size: 12px; color: #999; }
-
-    /* ── Back chrome (matches demo-chrome) ── */
+    /* Back chrome */
     .back-chrome {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      height: 44px;
-      display: flex; align-items: center; gap: 14px;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: 44px; display: flex; align-items: center; gap: 12px;
       padding: 0 16px;
-      background: rgba(10,10,10,0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: rgba(10,10,10,.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
     }
-    .back-chrome a {
-      font-family: 'Inter', system-ui;
-      font-size: 12px; color: rgba(255,255,255,0.55);
-      display: flex; align-items: center; gap: 6px;
+    .back-chrome a.back {
+      font-family: 'Inter', system-ui; font-size: 12px; color: rgba(255,255,255,.55);
+      display: flex; align-items: center; gap: 6px; text-decoration: none;
       transition: color .15s;
     }
-    .back-chrome a:hover { color: #fff; }
-    .back-chrome .sep { color: rgba(255,255,255,0.15); font-size: 11px; }
-    .back-chrome .demo-name { font-size: 12px; color: rgba(255,255,255,0.55); }
-    .back-chrome-cta {
-      margin-left: auto;
-      background: #0064E7; color: #fff;
-      border: none; border-radius: 999px;
-      padding: 6px 16px; font-size: 11px; font-weight: 500;
-      cursor: pointer; font-family: inherit;
-      text-decoration: none; display: flex; align-items: center;
+    .back-chrome a.back:hover { color: #fff; }
+    .back-chrome .sep { color: rgba(255,255,255,.15); font-size: 11px; }
+    .back-chrome .demo-name { font-size: 12px; color: rgba(255,255,255,.55); }
+    .back-chrome a.cta {
+      margin-left: auto; background: #0064E7; color: #fff; border: none;
+      border-radius: 999px; padding: 6px 16px; font-size: 11px; font-weight: 500;
+      text-decoration: none; display: flex; align-items: center; font-family: 'Inter', system-ui;
     }
 
-    /* push content below chrome */
-    body { padding-top: 44px; }
-    .hero { padding-top: 44px; }
-
-    /* ── Responsive ── */
-    @media (max-width: 860px) {
-      .hero { grid-template-columns: 1fr; }
-      .hero-image-wrap { height: 50vw; }
-      .hero-left { padding: 40px 24px; }
-      .headline-section, .services, .cta-band, .footer { padding-left: 24px; padding-right: 24px; }
-      .services-grid { grid-template-columns: 1fr; }
-      .stats { grid-template-columns: repeat(2,1fr); }
+    /* Masked card technique */
+    .masked-card {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
     }
+
+    /* Splash screen */
+    #splash {
+      position: fixed; inset: 0; z-index: 190;
+      display: flex; align-items: flex-end; justify-content: flex-start;
+      background: #fff;
+      transition: opacity 0.7s ease;
+    }
+    #splash.fade-out { opacity: 0; pointer-events: none; }
+    #splash-count {
+      padding: 24px; font-size: clamp(56px, 12vw, 128px);
+      font-weight: 800; line-height: 1; color: #000; font-variant-numeric: tabular-nums;
+    }
+
+    /* Stagger reveal */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
   </style>
 </head>
-<body>
+<body class="bg-white" style="padding-top: 44px">
 
   <!-- Back chrome -->
   <div class="back-chrome">
-    <a href="../../index.html">
+    <a href="../../index.html" class="back">
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8 2L4 6l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Back to Playground
     </a>
     <span class="sep">/</span>
     <span class="demo-name">Dental Health Landing Page</span>
-    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" class="back-chrome-cta">Book a call</a>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" class="cta">Book a call</a>
   </div>
 
-  <!-- Nav -->
-  <nav class="nav">
-    <a href="#" class="nav-logo">
-      <span class="nav-logo-name">DENTAL<br>HEALTH</span>
-      <span class="nav-logo-sub">quality healthcare</span>
+  <!-- Splash screen -->
+  <div id="splash">
+    <div id="splash-count">0</div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="fixed left-0 right-0 z-50 flex items-center justify-between bg-white/80 px-4 py-2 backdrop-blur-md md:px-6 md:py-3" style="top:44px">
+    <a href="#" class="flex flex-col text-black no-underline">
+      <span class="text-xl font-extrabold uppercase leading-none tracking-tight md:text-2xl">Dental</span>
+      <span class="-mt-1.5 text-xl font-extrabold uppercase leading-none tracking-tight md:-mt-2 md:text-2xl">Health</span>
+      <span class="mt-1.5 text-[8px] font-medium leading-none md:mt-2 md:text-[9px]">quality healthcare</span>
     </a>
-    <div class="nav-right">
-      <button class="nav-menu">Menu</button>
-      <a href="#" class="nav-emergency">Dental Emergency</a>
+    <div class="flex items-center gap-4">
+      <button class="rounded-full border border-black bg-white px-6 py-3 text-sm font-semibold text-black transition-colors duration-200 hover:bg-black hover:text-white">Menu</button>
+      <a href="#" class="text-sm font-semibold text-black no-underline hidden md:block">Dental Emergency</a>
     </div>
   </nav>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-left">
-      <div class="hero-features">
-        <div class="hero-feature">Advanced Dentistry</div>
-        <div class="hero-feature">High Quality Equipment</div>
-        <div class="hero-feature">Friendly Staff</div>
-      </div>
-      <p class="hero-body">We wish to provide professional dental services that match the current technologies and highest standards of modern care.</p>
+  <!-- SECTION 1: Hero with masked image bars -->
+  <section id="section1" class="flex w-full flex-col gap-1.5 overflow-hidden px-3 pb-1.5 md:gap-2 md:px-5 md:pb-2" style="min-height: 100svh; padding-top: calc(44px + 64px)">
+    <div class="reveal" style="height: 56px; border-radius: 12px; overflow: hidden; flex-shrink: 0; position: relative;">
+      <div class="masked-card" id="bar0" style="position:absolute;inset:0"></div>
+      <span class="relative z-10 flex h-full items-center pl-7 text-lg font-bold text-black md:text-3xl">Advanced Dentistry</span>
     </div>
-    <div class="hero-image-wrap">
-      <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=1200&auto=format&fit=crop&q=80" alt="NY Dental">
-      <div class="hero-image-lines">
-        <span style="top:33%"></span>
-        <span style="top:66%"></span>
+    <div class="reveal" style="height: 56px; border-radius: 12px; overflow: hidden; flex-shrink: 0; position: relative; margin-top: 6px">
+      <div class="masked-card" id="bar1" style="position:absolute;inset:0"></div>
+      <span class="relative z-10 flex h-full items-center pl-7 text-lg font-bold text-black md:text-3xl">High Quality Equipment</span>
+    </div>
+    <div class="reveal" style="height: 56px; border-radius: 12px; overflow: hidden; flex-shrink: 0; position: relative; margin-top: 6px">
+      <div class="masked-card" id="bar2" style="position:absolute;inset:0"></div>
+      <span class="relative z-10 flex h-full items-center pl-7 text-lg font-bold text-black md:text-3xl">Friendly Staff</span>
+    </div>
+    <!-- Big hero card -->
+    <div class="reveal" style="flex: 1; border-radius: 12px; overflow: hidden; position: relative; margin-top: 6px; min-height: 300px">
+      <div class="masked-card" id="bar3" style="position:absolute;inset:0"></div>
+      <p class="absolute left-4 top-4 z-10 max-w-[220px] text-xs font-semibold leading-4 text-black md:left-7 md:top-7 md:max-w-[300px] md:text-sm md:leading-5">
+        We wish to provide professional dental services that match the current technologies
+      </p>
+      <div class="absolute bottom-5 left-3 z-10 md:bottom-8 md:left-4">
+        <span class="mb-4 block text-xs font-semibold text-black md:mb-6 md:text-sm">Trusted Dentist in West New York</span>
+        <h1 class="font-bold leading-[0.79] tracking-tight text-black" style="font-size: clamp(3rem, 11vw, 11rem)">NY Dental</h1>
+      </div>
+      <p class="absolute bottom-6 right-4 z-10 text-xs font-semibold text-white md:bottom-10 md:right-8 md:text-sm">Free Consultation</p>
+    </div>
+  </section>
+
+  <!-- SECTION 2: Smile Gallery with masked image grid -->
+  <section id="section2" class="flex w-full flex-col gap-1.5 overflow-hidden px-3 pb-1.5 pt-1.5 md:gap-2 md:px-5 md:pb-2 md:pt-2" style="min-height: 100svh">
+    <div class="grid flex-1 gap-1.5 md:gap-2" style="grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr 0.8fr; min-height: calc(100svh - 16px)">
+      <!-- Top-left: Smile Gallery -->
+      <div class="reveal relative overflow-hidden rounded-xl md:rounded-2xl s2card" id="s2c0" style="min-height: 160px">
+        <div class="masked-card s2bg" style="position:absolute;inset:0"></div>
+        <h2 class="absolute left-5 top-4 z-10 text-2xl font-bold text-white md:left-7 md:top-6 md:text-3xl md:text-black">Smile Gallery</h2>
+        <p class="absolute bottom-4 left-5 z-10 text-xs font-semibold text-white md:bottom-6 md:left-7 md:text-sm md:text-black">Our cosmetic dental work</p>
+      </div>
+      <!-- Top-right + Mid-right: tall Call Us card (row-span 2) -->
+      <div class="reveal relative overflow-hidden rounded-xl md:rounded-2xl s2card" id="s2c1" style="grid-row: span 2; min-height: 200px">
+        <div class="masked-card s2bg" style="position:absolute;inset:0"></div>
+        <p class="absolute bottom-16 left-5 z-10 text-xs font-semibold leading-4 text-white md:bottom-20 md:left-7 md:text-sm md:leading-5">
+          If you want a gorgeous smile,<br>call us to ask about a smile makeover.
+        </p>
+        <button class="absolute bottom-4 right-4 z-10 rounded-full bg-white px-5 py-3 text-base font-bold text-black transition-transform hover:scale-105 md:bottom-6 md:right-6 md:px-8 md:py-5 md:text-xl">
+          Call Us
+        </button>
+      </div>
+      <!-- Mid-left: Smile Makeover -->
+      <div class="reveal relative overflow-hidden rounded-xl md:rounded-2xl s2card" id="s2c2" style="min-height: 160px">
+        <div class="masked-card s2bg" style="position:absolute;inset:0"></div>
+        <h2 class="absolute left-5 top-4 z-10 font-bold leading-[0.9] text-white md:left-7 md:top-6 md:text-black" style="font-size: clamp(3rem, 7vw, 6rem)">Smile<br>makeover</h2>
+      </div>
+      <!-- Bottom: Services row (spans full width) -->
+      <div class="reveal relative overflow-hidden rounded-xl md:rounded-2xl s2card" id="s2c3" style="grid-column: span 2; min-height: 200px">
+        <div class="masked-card s2bg" style="position:absolute;inset:0"></div>
+        <!-- Service pills overlay -->
+        <div class="absolute inset-0 z-10 flex gap-1.5 p-2 md:gap-2 md:p-3" style="flex-wrap: wrap">
+          <div class="flex flex-col justify-between rounded-xl bg-white/90 backdrop-blur-md p-3 md:rounded-2xl md:p-5" style="flex: 1; min-width: calc(50% - 4px)">
+            <h3 class="text-xl font-bold leading-[1.05] text-black md:text-4xl whitespace-pre-line">Dental&#10;Veneers</h3>
+            <span class="flex h-8 w-8 items-center justify-center self-end rounded-full border border-black text-xs font-semibold text-black md:h-12 md:w-12 md:text-sm">01</span>
+          </div>
+          <div class="flex flex-col justify-between rounded-xl bg-white/20 backdrop-blur-xl p-3 md:rounded-2xl md:p-5" style="flex: 1; min-width: calc(50% - 4px)">
+            <h3 class="text-xl font-bold leading-[1.05] text-white md:text-4xl whitespace-pre-line">Dental&#10;Crowns</h3>
+            <span class="flex h-8 w-8 items-center justify-center self-end rounded-full border border-white text-xs font-semibold text-white md:h-12 md:w-12 md:text-sm">02</span>
+          </div>
+          <div class="flex flex-col justify-between rounded-xl bg-white/20 backdrop-blur-xl p-3 md:rounded-2xl md:p-5" style="flex: 1; min-width: calc(50% - 4px)">
+            <h3 class="text-xl font-bold leading-[1.05] text-white md:text-4xl whitespace-pre-line">Teeth&#10;Whitening</h3>
+            <span class="flex h-8 w-8 items-center justify-center self-end rounded-full border border-white text-xs font-semibold text-white md:h-12 md:w-12 md:text-sm">03</span>
+          </div>
+          <div class="flex flex-col justify-between rounded-xl bg-white/20 backdrop-blur-xl p-3 md:rounded-2xl md:p-5" style="flex: 1; min-width: calc(50% - 4px)">
+            <h3 class="text-xl font-bold leading-[1.05] text-white md:text-4xl whitespace-pre-line">Dental&#10;Implants</h3>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Headline -->
-  <section class="headline-section">
-    <div class="headline-row">
-      <div>
-        <p class="headline-tag">Trusted Dentist in West New York</p>
-        <h1 class="headline-title">
-          <span>NY Dental</span>
-        </h1>
+  <!-- SECTION 3: Implant Dentistry -->
+  <section id="section3" class="flex w-full flex-col gap-1.5 overflow-visible px-3 pb-10 pt-1.5 md:gap-2 md:px-5 md:pb-14 md:pt-2" style="min-height: 100svh">
+    <div class="grid gap-1.5 md:gap-2 flex-1" style="grid-template-columns: 1fr 1fr; min-height: calc(100svh - 80px)">
+      <!-- Left column -->
+      <div class="flex flex-col gap-1.5 md:gap-2">
+        <!-- Implant Dentistry header card -->
+        <div class="reveal flex flex-col rounded-xl bg-stone-50 p-5 md:rounded-2xl md:p-7" style="flex: 1.2; min-height: 180px">
+          <h2 class="font-bold leading-[0.95] text-black" style="font-size: clamp(3rem, 7vw, 6.5rem)">Implant<br>Dentistry</h2>
+          <p class="mt-8 text-xs font-semibold text-black md:mt-12 md:text-sm">Restore Missing Teeth</p>
+        </div>
+        <!-- Two photos -->
+        <div class="reveal flex gap-1.5 md:gap-2" style="flex: 1; min-height: 140px">
+          <div class="flex-1 overflow-hidden rounded-xl md:rounded-2xl">
+            <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260624_115253_c19ab167-8dd5-48b4-967d-b9f0d9d6e8fb.png&w=600&q=85" alt="Dental procedure" class="h-full w-full object-cover">
+          </div>
+          <div class="flex-1 overflow-hidden rounded-xl md:rounded-2xl">
+            <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260624_115237_fc519057-6e87-4abf-999a-9610b8b085b4.png&w=600&q=85" alt="Dental restoration" class="h-full w-full object-cover">
+          </div>
+        </div>
+        <!-- Book online card -->
+        <div class="reveal flex items-end justify-between rounded-xl bg-zinc-200 p-5 md:rounded-2xl md:p-7" style="flex: 0.8; min-height: 160px">
+          <div>
+            <p class="mb-2 text-xs font-semibold text-black md:mb-3 md:text-sm">Consultation</p>
+            <h3 class="text-xl font-bold leading-6 text-black md:text-3xl md:leading-8">Dental<br>Restoration<br>Services</h3>
+          </div>
+          <button class="rounded-full bg-white px-5 py-3 text-base font-bold text-black transition-transform hover:scale-105 md:px-8 md:py-5 md:text-xl">Book Online</button>
+        </div>
       </div>
-      <button class="headline-cta">Free Consultation</button>
+      <!-- Right column: full-height photo with overlay cards -->
+      <div class="reveal relative overflow-hidden rounded-xl md:rounded-2xl" style="min-height: 350px">
+        <img src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260624_114355_752ba9e6-0942-4abb-9047-5d9bb16632e9.png&w=800&q=85" alt="Smiling patient" class="h-full w-full object-cover object-top">
+        <div class="absolute bottom-5 left-3 right-3 flex gap-1.5 md:bottom-8 md:left-5 md:right-5 md:gap-2">
+          <div class="flex flex-col justify-between rounded-xl bg-white p-3 md:rounded-2xl md:p-5" style="flex: 1; height: 144px; min-height: 144px">
+            <h4 class="text-lg font-bold leading-5 text-black md:text-2xl md:leading-7">The Process<br>of Installing<br>Implants</h4>
+            <span class="flex h-9 w-9 items-center justify-center self-end rounded-full border border-black text-black md:h-12 md:w-12">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="transform:rotate(-45deg)"><path d="M1 7h12m0 0L8 2m5 5L8 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+          <div class="flex flex-col justify-between rounded-xl bg-white/20 p-3 backdrop-blur-xl md:rounded-2xl md:p-5" style="flex: 1; height: 144px; min-height: 144px">
+            <h4 class="text-lg font-bold leading-5 text-white md:text-2xl md:leading-7">Caring<br>for Dental<br>Implants</h4>
+            <span class="flex h-9 w-9 items-center justify-center self-end rounded-full border border-white text-white md:h-12 md:w-12">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="transform:rotate(-45deg)"><path d="M1 7h12m0 0L8 2m5 5L8 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Services -->
-  <section class="services">
-    <p class="services-label">Our Services</p>
-    <div class="services-grid">
-      <div class="service-card">
-        <div class="service-num">01</div>
-        <h3 class="service-title">General Dentistry</h3>
-        <p class="service-body">Comprehensive oral health care for patients of all ages, from routine cleanings to complex restorations.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-num">02</div>
-        <h3 class="service-title">Cosmetic Dentistry</h3>
-        <p class="service-body">Transform your smile with whitening, veneers, and smile design tailored to your unique features.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-num">03</div>
-        <h3 class="service-title">Dental Implants</h3>
-        <p class="service-body">Permanent tooth replacement solutions that look, feel, and function exactly like your natural teeth.</p>
-      </div>
-    </div>
-  </section>
+<script>
+// ── Lenis smooth scroll ──────────────────────────────────────
+const lenis = new Lenis({
+  duration: 1.1,
+  easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  smoothWheel: true,
+  syncTouch: false,
+});
+function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+requestAnimationFrame(raf);
 
-  <!-- Stats -->
-  <div class="stats">
-    <div class="stat"><div class="stat-val">15+</div><div class="stat-label">Years of experience</div></div>
-    <div class="stat"><div class="stat-val">4,800</div><div class="stat-label">Happy patients</div></div>
-    <div class="stat"><div class="stat-val">98%</div><div class="stat-label">Satisfaction rate</div></div>
-    <div class="stat"><div class="stat-val">3</div><div class="stat-label">Award-winning dentists</div></div>
-  </div>
+// ── Splash counter ───────────────────────────────────────────
+const splash = document.getElementById('splash');
+const counter = document.getElementById('splash-count');
+let current = 0;
+const interval = setInterval(() => {
+  current++;
+  counter.textContent = current;
+  if (current >= 100) {
+    clearInterval(interval);
+    setTimeout(() => { splash.classList.add('fade-out'); }, 200);
+    setTimeout(() => { splash.style.display = 'none'; }, 900);
+  }
+}, 20);
 
-  <!-- CTA -->
-  <div class="cta-band">
-    <p class="cta-band-text">Ready for a healthier, brighter smile? Book your visit today.</p>
-    <button class="cta-band-btn">Book appointment</button>
-  </div>
+// ── Masked image technique ───────────────────────────────────
+// Section 1: hero image split across bars
+const HERO = 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260624_113640_ccf3cf97-d447-425b-a134-d7b09fc743fc.png&w=1280&q=85';
+const SEC2  = 'section2.jpg';
 
-  <!-- Footer -->
-  <footer class="footer">
-    <span class="footer-copy">© 2025 Dental Health. All rights reserved.</span>
-    <span class="footer-copy">NY Dental — Quality Healthcare</span>
-  </footer>
+function applyMask(el, imgUrl, section) {
+  if (!el || !section) return;
+  const sRect = section.getBoundingClientRect();
+  const eRect = el.getBoundingClientRect();
+  const iw = new Image();
+  iw.onload = () => {
+    const scale = Math.max(sRect.width / iw.naturalWidth, sRect.height / iw.naturalHeight);
+    const rw = iw.naturalWidth * scale;
+    const rh = iw.naturalHeight * scale;
+    const ox = Math.max(rw - sRect.width, 0) * 0.8;
+    const oy = Math.max(rh - sRect.height, 0) * 0.5;
+    const bx = -(eRect.left - sRect.left + ox);
+    const by = -(eRect.top - sRect.top + oy);
+    el.style.backgroundImage = `url(${imgUrl})`;
+    el.style.backgroundSize = `${rw}px ${rh}px`;
+    el.style.backgroundPosition = `${bx}px ${by}px`;
+  };
+  iw.src = imgUrl;
+}
 
-  <script>
-    // Animate hero features on load
-    const features = document.querySelectorAll('.hero-feature');
-    const body = document.querySelector('.hero-body');
-    features.forEach((el, i) => {
-      setTimeout(() => el.classList.add('visible'), 100 + i * 120);
-    });
-    setTimeout(() => body.classList.add('visible'), 500);
+function updateMasks() {
+  const s1 = document.getElementById('section1');
+  const s2 = document.getElementById('section2');
+  ['bar0','bar1','bar2','bar3'].forEach(id => applyMask(document.getElementById(id), HERO, s1));
+  document.querySelectorAll('.s2bg').forEach(el => applyMask(el, SEC2, s2));
+}
 
-    // Headline title reveal
-    const title = document.querySelector('.headline-title span');
-    if (title) {
-      title.style.opacity = '0';
-      title.style.transform = 'translateY(100%)';
-      title.style.display = 'inline-block';
-      title.style.transition = 'opacity .8s ease .2s, transform .8s cubic-bezier(.16,1,.3,1) .2s';
-      setTimeout(() => {
-        title.style.opacity = '1';
-        title.style.transform = 'translateY(0)';
-      }, 200);
-    }
+// Initial + on resize
+setTimeout(updateMasks, 100);
+window.addEventListener('resize', updateMasks);
 
-    // IntersectionObserver for stat counters
-    const stats = document.querySelectorAll('.stat-val');
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.style.transition = 'opacity .5s ease';
-          e.target.style.opacity = '1';
-          obs.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.3 });
-    stats.forEach(s => { s.style.opacity = '0'; obs.observe(s); });
-  </script>
+// ── IntersectionObserver stagger reveals ─────────────────────
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    const siblings = Array.from(el.parentElement.querySelectorAll(':scope > .reveal'));
+    const idx = siblings.indexOf(el);
+    setTimeout(() => el.classList.add('visible'), idx * 120);
+    obs.unobserve(el);
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
 </body>
 </html>

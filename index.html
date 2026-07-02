@@ -70,15 +70,15 @@
     <span class="section-label-count">41 components</span>
   </div>
 
-  <main class="playground-grid">
+  <!-- Filter bar -->
+  <div class="pg-filters" id="pgFilters">
+    <button class="pg-filter is-active" data-filter="all">All</button>
+    <button class="pg-filter" data-filter="motion">Motion</button>
+    <button class="pg-filter" data-filter="landing">Landing Pages</button>
+  </div>
+  <p class="pg-count" id="pgCount"></p>
 
-    <!-- Filter bar -->
-    <div class="pg-filters" id="pgFilters">
-      <button class="pg-filter is-active" data-filter="all">All</button>
-      <button class="pg-filter" data-filter="motion">Motion</button>
-      <button class="pg-filter" data-filter="landing">Landing Pages</button>
-    </div>
-    <p class="pg-count" id="pgCount"></p>
+  <main class="playground-grid">
 
     <article class="pg-card" data-category="motion" data-href="demos/radial-marquee.html">
       <div class="pg-card__media">
