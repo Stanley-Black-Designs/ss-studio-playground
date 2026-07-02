@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Halo / USD Halo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* TT Norms Pro → DM Sans (closest available Google Fonts match) */
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: 'DM Sans', Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #F5F5F5;
+      color: #000;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    * { font-family: inherit; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; border: 0; cursor: pointer; }
+
+    :root {
+      --bg: #F5F5F5;
+      --black: #000;
+      --muted: rgba(0,0,0,.7);
+      --purple: #2B2644;
+      --max: 88rem;
+    }
+
+    .page { display: flex; flex-direction: column; background: var(--bg); overflow-x: hidden; }
+    .hero-shell { height: 100vh; min-height: 720px; display: flex; flex-direction: column; overflow: hidden; position: relative; }
+    .max { max-width: var(--max); margin: 0 auto; width: 100%; }
+
+    .navbar {
+      position: absolute; top: 0; left: 0; right: 0; z-index: 20;
+      padding: 20px 24px;
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; font-size: 24px; font-weight: 600; letter-spacing: -0.04em; color: #000; }
+    .logo-icon { width: 28px; height: 28px; display: block; }
+    .nav-links { display: flex; align-items: center; gap: 32px; color: #4b5563; font-size: 16px; font-weight: 600; }
+    .nav-links a { transition: color .2s ease; }
+    .nav-links a:hover { color: #000; }
+    .pill-black { display: inline-flex; align-items: center; gap: 12px; background: #000; color: #fff; border-radius: 999px; font-weight: 600; transition: background .2s ease, transform .2s ease; }
+    .pill-black:hover { background: #1f2937; }
+    .wallet { font-size: 16px; padding: 10px 28px; }
+
+    .hero-wrap { flex: 1; padding: 80px 24px 24px; display: flex; align-items: flex-end; }
+    .hero-card { position: relative; width: 100%; height: calc(100vh - 96px); min-height: 624px; border-radius: 18px; overflow: hidden; background: #ddd; }
+    .hero-card video, .use-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .hero-content { position: relative; z-index: 2; height: 100%; padding: 144px 48px 48px; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; }
+    .hero-title { margin: 0 0 16px; max-width: 576px; color: #000; font-size: clamp(48px, 5vw, 72px); line-height: 1.02; font-weight: 600; letter-spacing: -0.04em; }
+    .hero-copy { margin: 0 0 32px; color: rgba(0,0,0,.72); font-size: clamp(16px, 1.4vw, 18px); line-height: 1.65; max-width: 520px; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+    .cta { padding: 8px 8px 8px 32px; font-size: clamp(16px,1.4vw,18px); }
+    .arrow-circle { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 999px; background: #fff; color: #000; flex: 0 0 auto; }
+    .arrow-circle svg { width: 20px; height: 20px; }
+
+    .marquee { margin-top: 96px; width: 100%; max-width: 448px; overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+    .marquee-track { display: flex; width: max-content; animation: marquee 22s linear infinite; }
+    .marquee.backers .marquee-track { animation: backers-marquee 30s linear infinite; }
+    .marquee-item { margin: 0 28px; flex-shrink: 0; color: rgba(0,0,0,.6); white-space: nowrap; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    @keyframes backers-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    .section { background: var(--bg); padding-left: 24px; padding-right: 24px; }
+    .info { padding-top: 96px; padding-bottom: 88px; }
+    .intro-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 48px; align-items: start; margin-bottom: 64px; }
+    .section-title { margin: 0; color: #000; font-size: clamp(40px,4.4vw,60px); line-height: 1.05; font-weight: 600; letter-spacing: -0.03em; }
+    .discover { margin-top: 32px; padding: 8px 8px 8px 26px; font-size: 16px; }
+    .intro-copy { margin: 0; color: rgba(0,0,0,.7); font-size: clamp(24px,2.4vw,32px); line-height: 1.35; max-width: 680px; }
+
+    .card-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; }
+    .feature-card { min-height: 320px; border-radius: 18px; overflow: hidden; padding: 28px; display: flex; flex-direction: column; justify-content: space-between; }
+    .bloom { grid-column: span 2; background-image: url('https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260423_164207_f243351d-ed59-48ec-83a0-a5e996bdbe3c.png&w=1280&q=85'); background-size: cover; background-position: center; }
+    .feature-title { margin: 0; font-size: 24px; line-height: 1.1; font-weight: 600; letter-spacing: -0.02em; }
+    .feature-body { margin: 0; color: rgba(0,0,0,.7); font-size: 16px; line-height: 1.45; max-width: 320px; }
+    .dark-card { background: var(--purple); color: #fff; }
+    .dark-card .feature-body { color: rgba(255,255,255,.62); }
+
+    .backed { padding-bottom: 32px; }
+    .backed-grid { display: grid; grid-template-columns: 1fr 3fr; gap: 32px; align-items: center; }
+    .backed-copy { margin: 0; color: rgba(0,0,0,.7); font-size: 16px; line-height: 1.5; }
+    .backers { max-width: none; margin-top: 0; }
+    .backers .marquee-item { margin: 0 40px; color: rgba(0,0,0,.5); }
+
+    .use-cases { padding-top: 96px; padding-bottom: 96px; }
+    .use-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 32px; align-items: start; }
+    .eyebrow { margin: 0 0 8px; color: rgba(0,0,0,.6); font-size: 14px; }
+    .use-title { margin: 0 0 24px; font-size: clamp(48px,5vw,72px); line-height: .92; letter-spacing: -0.04em; font-weight: 600; }
+    .use-copy { margin: 0; color: rgba(0,0,0,.6); max-width: 384px; font-size: 16px; line-height: 1.65; }
+    .use-left { padding-top: 8px; padding-right: 48px; }
+    .commerce-card { position: relative; min-height: 720px; border-radius: 28px; overflow: hidden; background: #eee; }
+    .commerce-content { position: relative; z-index: 2; padding: 48px; }
+    .commerce-title { margin: 0 0 20px; font-size: clamp(40px,4vw,60px); line-height: 1.02; letter-spacing: -0.03em; font-weight: 600; }
+    .commerce-copy { margin: 0 0 32px; max-width: 448px; color: rgba(0,0,0,.72); font-size: 16px; line-height: 1.6; }
+    .know { display: inline-flex; align-items: center; gap: 14px; font-weight: 600; font-size: 15px; color: #000; }
+    .know .arrow-circle { width: 36px; height: 36px; background: rgba(255,255,255,.82); backdrop-filter: blur(8px); transition: background .2s ease; }
+    .know:hover .arrow-circle { background: #fff; }
+    svg { display: block; }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hero-shell { min-height: auto; height: auto; }
+      .hero-wrap { padding-top: 84px; }
+      .hero-card { height: auto; min-height: calc(100vh - 108px); }
+      .hero-content { padding: 128px 28px 36px; }
+      .marquee { margin-top: 72px; }
+      .intro-grid, .use-grid, .backed-grid { grid-template-columns: 1fr; }
+      .card-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .bloom { grid-column: span 2; }
+      .use-left { padding-right: 0; }
+      .commerce-card { min-height: 620px; }
+    }
+    @media (max-width: 640px) {
+      .navbar { padding: 18px 16px; }
+      .brand { font-size: 20px; }
+      .wallet { padding: 9px 18px; font-size: 14px; }
+      .hero-wrap, .section { padding-left: 16px; padding-right: 16px; }
+      .hero-card { border-radius: 16px; }
+      .hero-content { padding: 118px 24px 32px; }
+      .hero-title { font-size: 44px; }
+      .hero-copy { font-size: 15px; max-width: 520px; }
+      .marquee { margin-top: 56px; max-width: 100%; }
+      .info, .use-cases { padding-top: 72px; padding-bottom: 72px; }
+      .intro-grid { gap: 34px; margin-bottom: 40px; }
+      .intro-copy { font-size: 22px; }
+      .card-grid { grid-template-columns: 1fr; }
+      .bloom { grid-column: span 1; }
+      .feature-card { min-height: 280px; padding: 24px; }
+      .backed { padding-bottom: 16px; }
+      .commerce-card { min-height: 560px; border-radius: 22px; }
+      .commerce-content { padding: 32px 24px; }
+    }
+
+    /* Back chrome */
+    #back-chrome{position:fixed;top:0;left:0;right:0;z-index:9999;height:44px;display:flex;align-items:center;gap:12px;padding:0 16px;background:rgba(10,10,10,.94);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08)}
+    #back-chrome a.bl{font-family:'DM Sans',system-ui;font-size:12px;color:rgba(255,255,255,.55);display:flex;align-items:center;gap:6px;text-decoration:none;transition:color .15s}
+    #back-chrome a.bl:hover{color:#fff}
+    #back-chrome .sep{color:rgba(255,255,255,.15);font-size:11px}
+    #back-chrome .dn{font-size:12px;color:rgba(255,255,255,.55)}
+    #back-chrome a.ct{margin-left:auto;background:#0064E7;color:#fff;border-radius:999px;padding:6px 16px;font-size:11px;font-weight:500;text-decoration:none;display:flex;align-items:center;white-space:nowrap}
+    /* Lenis-safe: offset navbar + hero calcs, leave html/body untouched */
+    .navbar { top: 44px; }
+    .hero-shell { height: calc(100vh - 44px); min-height: calc(720px - 44px); }
+    .hero-card { height: calc(100vh - 96px - 44px); }
+    @media (max-width: 900px) {
+      .hero-card { min-height: calc(100vh - 108px - 44px); }
+    }
+  </style>
+</head>
+<body>
+  <div id="back-chrome">
+    <a href="../../index.html" class="bl"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8 2L4 6l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+    <span class="sep">/</span>
+    <span class="dn">Halo / USD Halo — DeFi Stablecoin</span>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" class="ct">Book a call</a>
+  </div>
+  <main class="page">
+    <section class="hero-shell">
+      <nav class="navbar">
+        <div class="max nav-inner">
+          <a class="brand" href="#">
+            <svg class="logo-icon" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true">
+              <path d="M 128.005 191.173 C 128.448 156.208 156.93 128 192 128 L 192 64 L 128 64 C 128 99.346 99.346 128 64 128 L 64 192 L 128 192 Z M 192 256 L 64 256 C 28.654 256 0 227.346 0 192 L 0 64 L 64 64 L 64 0 L 192 0 C 227.346 0 256 28.654 256 64 L 256 192 L 192 192 Z" />
+            </svg>
+            <span>Halo</span>
+          </a>
+          <div class="nav-links">
+            <a href="#network">Network</a><a href="#ecosystem">Ecosystem</a><a href="#rewards">Rewards</a><a href="#help">Help</a><a href="#news">News</a>
+          </div>
+          <a class="pill-black wallet" href="#">Open Wallet</a>
+        </div>
+      </nav>
+
+      <div class="hero-wrap">
+        <div class="hero-card max">
+          <video autoplay muted loop playsinline preload="auto">
+            <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260423_161253_c72b1869-400f-45ed-ac0c-52f68c2ed5bd.mp4" type="video/mp4" />
+          </video>
+          <div class="hero-content">
+            <h1 class="hero-title">Your Wealth Works</h1>
+            <p class="hero-copy">An automated, reward-powered digital dollar built for native passive earnings and effortless connection into DeFi.</p>
+            <a href="#" class="pill-black cta">Join us <span class="arrow-circle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></a>
+            <div class="marquee" aria-hidden="true">
+              <div class="marquee-track" id="heroMarquee"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section info" id="network">
+      <div class="max">
+        <div class="intro-grid">
+          <div>
+            <h2 class="section-title">Meet USD Halo.</h2>
+            <a href="#" class="pill-black discover">Discover it <span class="arrow-circle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></a>
+          </div>
+          <p class="intro-copy">USD Halo is a reward-earning dollar coin that lets your savings grow while remaining tied to the U.S. dollar.</p>
+        </div>
+        <div class="card-grid">
+          <article class="feature-card bloom">
+            <h3 class="feature-title">Savings that bloom</h3>
+            <p class="feature-body">Gain steady returns as your dollar tokens are routed into top-performing DeFi strategies.</p>
+          </article>
+          <article class="feature-card dark-card">
+            <h3 class="feature-title">Always fluid,<br>always pegged.</h3>
+            <p class="feature-body">Keep fully dollar-anchored with on-demand access to funds — no lockups or waits.</p>
+          </article>
+          <article class="feature-card dark-card">
+            <h3 class="feature-title">Fully<br>automated</h3>
+            <p class="feature-body">Skip the task of tuning positions yourself. USD Halo runs in the background for you.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section backed" id="ecosystem">
+      <div class="max backed-grid">
+        <p class="backed-copy">Funded by premier partners<br>and forward-thinking leaders.</p>
+        <div class="marquee backers" aria-hidden="true"><div class="marquee-track" id="backersMarquee"></div></div>
+      </div>
+    </section>
+
+    <section class="section use-cases" id="rewards">
+      <div class="max use-grid">
+        <div class="use-left">
+          <p class="eyebrow">USD Halo in Practice</p>
+          <h2 class="use-title">Use modes</h2>
+          <p class="use-copy">USD Halo powers a wide range of modes for builders, companies and treasuries wanting safe and rewarding stablecoin integrations plus more</p>
+        </div>
+        <article class="commerce-card">
+          <video class="use-video" autoplay muted loop playsinline preload="auto">
+            <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260423_183428_ab5e672a-f608-4dcb-b319-f3e040f02e2d.mp4" type="video/mp4" />
+          </video>
+          <div class="commerce-content">
+            <h3 class="commerce-title">Commerce</h3>
+            <p class="commerce-copy">Lift customer retention by offering USD Halo, a trusted dollar-backed stablecoin with strong yields, letting your patrons earn with zero effort on your platform.</p>
+            <a href="#" class="know"><span class="arrow-circle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span> Know more</a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+  <script>
+    const heroBrands = [
+      ['Stripe', 'font-family: Georgia, serif; font-weight:700; letter-spacing:-0.02em; font-size:15px;'],
+      ['Coinbase', 'font-family: Arial, sans-serif; font-weight:900; letter-spacing:0.08em; font-size:13px; text-transform:uppercase;'],
+      ['Uniswap', 'font-family: Trebuchet MS, sans-serif; font-weight:600; letter-spacing:0.01em; font-size:15px; font-style:italic;'],
+      ['Aave', 'font-family: Courier New, monospace; font-weight:700; letter-spacing:0.12em; font-size:13px; text-transform:uppercase;'],
+      ['Compound', 'font-family: Palatino, Book Antiqua, serif; font-weight:400; letter-spacing:-0.01em; font-size:16px;'],
+      ['MakerDAO', 'font-family: Impact, Arial Narrow, sans-serif; font-weight:400; letter-spacing:0.04em; font-size:14px;'],
+      ['Chainlink', 'font-family: Verdana, sans-serif; font-weight:700; letter-spacing:-0.03em; font-size:13px;']
+    ];
+    const backers = [
+      ['Fundamental Labs', 'font-family: Times New Roman, serif; font-weight:400; letter-spacing:0.02em; font-size:14px;'],
+      ['KUCOIN', 'font-family: Arial Black, sans-serif; font-weight:900; letter-spacing:0.08em; font-size:16px;'],
+      ['NGC', 'font-family: Impact, sans-serif; font-weight:700; letter-spacing:0.05em; font-size:18px;'],
+      ['NxGen', 'font-family: Georgia, serif; font-weight:600; letter-spacing:-0.02em; font-size:17px;'],
+      ['Matter Labs', 'font-family: Helvetica, Arial, sans-serif; font-weight:700; letter-spacing:-0.01em; font-size:15px;'],
+      ['DEXTools', 'font-family: Verdana, sans-serif; font-weight:700; letter-spacing:0.06em; font-size:14px; text-transform:uppercase;'],
+      ['NGRAVE', 'font-family: Courier New, monospace; font-weight:700; letter-spacing:0.18em; font-size:14px;'],
+      ['Polychain', 'font-family: Palatino, serif; font-weight:500; letter-spacing:0.03em; font-size:15px;']
+    ];
+    function fillMarquee(id, items) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const doubled = [...items, ...items];
+      el.innerHTML = doubled.map(([label, style]) => `<span class="marquee-item" style="${style}">${label}</span>`).join('');
+    }
+    fillMarquee('heroMarquee', heroBrands);
+    fillMarquee('backersMarquee', backers);
+
+    document.querySelectorAll('video').forEach(video => {
+      video.muted = true;
+      video.playsInline = true;
+      const play = () => video.play().catch(() => {});
+      video.addEventListener('loadeddata', play, { once: true });
+      play();
+    });
+
+    let lenis = null;
+    if (window.Lenis) {
+      lenis = new Lenis({
+        duration: 1.15,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        touchMultiplier: 1.2
+      });
+
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', (event) => {
+        const hash = anchor.getAttribute('href');
+        if (!hash || hash === '#') return;
+        const target = document.querySelector(hash);
+        if (!target || !lenis) return;
+        event.preventDefault();
+        lenis.scrollTo(target, { offset: 0 });
+      });
+    });
+  </script>
+</body>
+</html>
