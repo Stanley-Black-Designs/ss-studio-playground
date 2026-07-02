@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VEX - Shaping Tomorrow</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        min-height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        background: #000;
+        color: #fff;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button {
+        font: inherit;
+      }
+
+      .hero {
+        position: relative;
+        min-height: 100vh;
+        min-height: 100svh;
+        width: 100%;
+        overflow: hidden;
+        background: #000;
+      }
+
+      .hero-video {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .hero-shell {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        min-height: 100vh;
+        min-height: 100svh;
+        flex-direction: column;
+      }
+
+      .page-pad {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+
+      .nav-wrap {
+        padding-top: 1.5rem;
+      }
+
+      .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 0.5rem 1rem;
+        border-radius: 0.75rem;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        line-height: 1;
+        font-weight: 600;
+        letter-spacing: -0.04em;
+      }
+
+      .nav-links {
+        display: none;
+        align-items: center;
+        gap: 2rem;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+      }
+
+      .nav-links a {
+        color: #fff;
+        transition: color 180ms ease;
+      }
+
+      .nav-links a:hover {
+        color: #d1d5db;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 0;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: transform 180ms ease, background-color 180ms ease, color 180ms ease;
+      }
+
+      .btn:hover {
+        transform: scale(1.03);
+      }
+
+      .btn-white {
+        background: #fff;
+        color: #000;
+      }
+
+      .btn-white:hover {
+        background: #f3f4f6;
+      }
+
+      .nav-cta {
+        border-radius: 0.5rem;
+        padding: 0.5rem 1.5rem;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        font-weight: 500;
+      }
+
+      .hero-content {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding-top: 4rem;
+        padding-bottom: 3rem;
+      }
+
+      .hero-grid {
+        display: grid;
+        gap: 2rem;
+        align-items: end;
+      }
+
+      .eyebrow-spacer {
+        display: none;
+      }
+
+      .heading {
+        margin: 0 0 1rem;
+        max-width: 920px;
+        font-size: 2.25rem;
+        line-height: 1.1;
+        font-weight: 400;
+        letter-spacing: -0.04em;
+      }
+
+      .heading-line {
+        display: block;
+      }
+
+      .char {
+        display: inline-block;
+        opacity: 0;
+        transform: translateX(-18px);
+        transition-property: opacity, transform;
+        transition-duration: 500ms;
+        transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform;
+      }
+
+      .char.is-visible {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .subheading {
+        max-width: 720px;
+        margin: 0 0 1.25rem;
+        color: #d1d5db;
+        font-size: 1rem;
+        line-height: 1.55;
+        font-weight: 400;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .hero-btn {
+        border-radius: 0.5rem;
+        padding: 0.75rem 2rem;
+        font-weight: 500;
+      }
+
+      .btn-glass {
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .btn-glass:hover {
+        background: #fff;
+        color: #000;
+      }
+
+      .tag-wrap {
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-start;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 0.75rem;
+        padding: 0.75rem 1.5rem;
+      }
+
+      .tag span {
+        font-size: 1.125rem;
+        line-height: 1.4;
+        font-weight: 300;
+      }
+
+      .fade-in {
+        opacity: 0;
+        transition-property: opacity;
+        transition-timing-function: ease;
+      }
+
+      .fade-in.is-visible {
+        opacity: 1;
+      }
+
+      .liquid-glass {
+        background: rgba(0, 0, 0, 0.4);
+        background-blend-mode: luminosity;
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        border: none;
+        box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .liquid-glass::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 1.4px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.3) 0%,
+          rgba(255, 255, 255, 0.1) 20%,
+          rgba(255, 255, 255, 0) 40%,
+          rgba(255, 255, 255, 0) 60%,
+          rgba(255, 255, 255, 0.1) 80%,
+          rgba(255, 255, 255, 0.3) 100%
+        );
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+      }
+
+      .liquid-glass > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      @media (min-width: 768px) {
+        .page-pad {
+          padding-left: 3rem;
+          padding-right: 3rem;
+        }
+
+        .nav-links {
+          display: flex;
+        }
+
+        .heading {
+          font-size: 3rem;
+        }
+
+        .subheading {
+          font-size: 1.125rem;
+        }
+
+        .tag span {
+          font-size: 1.25rem;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .page-pad {
+          padding-left: 4rem;
+          padding-right: 4rem;
+        }
+
+        .hero-content {
+          padding-bottom: 4rem;
+        }
+
+        .hero-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .heading {
+          font-size: 3.75rem;
+        }
+
+        .tag-wrap {
+          justify-content: flex-end;
+        }
+
+        .tag span {
+          font-size: 1.5rem;
+        }
+      }
+
+      @media (min-width: 1280px) {
+        .heading {
+          font-size: 4.5rem;
+        }
+      }
+
+      @media (max-width: 430px) {
+        .page-pad {
+          padding-left: 1rem;
+          padding-right: 1rem;
+        }
+
+        .nav-cta {
+          padding-left: 1rem;
+          padding-right: 1rem;
+        }
+
+        .heading {
+          font-size: 2.15rem;
+        }
+      }
+    </style>
+    <style>
+      #back-chrome{position:fixed;top:0;left:0;right:0;z-index:9999;height:44px;display:flex;align-items:center;gap:12px;padding:0 16px;background:rgba(10,10,10,.94);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08)}
+      #back-chrome a.bl{font-family:'Inter',system-ui;font-size:12px;color:rgba(255,255,255,.55);display:flex;align-items:center;gap:6px;text-decoration:none;transition:color .15s}
+      #back-chrome a.bl:hover{color:#fff}
+      #back-chrome .sep{color:rgba(255,255,255,.15);font-size:11px}
+      #back-chrome .dn{font-size:12px;color:rgba(255,255,255,.55)}
+      #back-chrome a.ct{margin-left:auto;background:#0064E7;color:#fff;border-radius:999px;padding:6px 16px;font-size:11px;font-weight:500;text-decoration:none;display:flex;align-items:center;white-space:nowrap}
+      body{padding-top:44px}
+    </style>
+  </head>
+
+  <body>
+    <div id="back-chrome">
+      <a href="../../index.html" class="bl"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8 2L4 6l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <span class="sep">/</span>
+      <span class="dn">VEX — Shaping Tomorrow</span>
+      <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" class="ct">Book a call</a>
+    </div>
+    <main class="hero">
+      <video
+        class="hero-video"
+        src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260403_050628_c4e32401-fab4-4a27-b7a8-6e9291cd5959.mp4"
+        autoplay
+        loop
+        muted
+        playsinline
+        preload="metadata"
+      ></video>
+
+      <div class="hero-shell">
+        <header class="nav-wrap page-pad">
+          <nav class="navbar liquid-glass" aria-label="Main navigation">
+            <a href="#" class="logo">VEX</a>
+
+            <div class="nav-links" aria-label="Primary links">
+              <a href="#">Story</a>
+              <a href="#">Investing</a>
+              <a href="#">Building</a>
+              <a href="#">Advisory</a>
+            </div>
+
+            <a href="#" class="btn btn-white nav-cta">Start a Chat</a>
+          </nav>
+        </header>
+
+        <section class="hero-content page-pad" aria-label="Hero section">
+          <div class="hero-grid">
+            <div class="left-col">
+              <h1 class="heading" id="animatedHeading" aria-label="Shaping tomorrow with vision and action."></h1>
+
+              <p class="subheading fade-in" data-delay="800" data-duration="1000">
+                We back visionaries and craft ventures that define what comes next.
+              </p>
+
+              <div class="actions fade-in" data-delay="1200" data-duration="1000">
+                <a href="#" class="btn btn-white hero-btn">Start a Chat</a>
+                <a href="#" class="btn btn-glass liquid-glass hero-btn">Explore Now</a>
+              </div>
+            </div>
+
+            <div class="tag-wrap fade-in" data-delay="1400" data-duration="1000">
+              <div class="tag liquid-glass">
+                <span>Investing. Building. Advisory.</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <script>
+      const headingText = 'Shaping tomorrow\nwith vision and action.';
+      const heading = document.getElementById('animatedHeading');
+      const charDelay = 30;
+      const initialDelay = 200;
+
+      function buildAnimatedHeading() {
+        const lines = headingText.split('\n');
+        heading.innerHTML = '';
+
+        lines.forEach((line, lineIndex) => {
+          const lineSpan = document.createElement('span');
+          lineSpan.className = 'heading-line';
+
+          const lineBaseDelay = lineIndex * line.length * charDelay;
+
+          [...line].forEach((char, charIndex) => {
+            const span = document.createElement('span');
+            span.className = 'char';
+            span.textContent = char === ' ' ? '\u00A0' : char;
+            span.style.transitionDelay = `${initialDelay + lineBaseDelay + charIndex * charDelay}ms`;
+            lineSpan.appendChild(span);
+          });
+
+          heading.appendChild(lineSpan);
+        });
+      }
+
+      function startAnimations() {
+        requestAnimationFrame(() => {
+          document.querySelectorAll('.char').forEach((char) => {
+            char.classList.add('is-visible');
+          });
+
+          document.querySelectorAll('.fade-in').forEach((element) => {
+            const delay = Number(element.dataset.delay || 0);
+            const duration = Number(element.dataset.duration || 1000);
+            element.style.transitionDuration = `${duration}ms`;
+
+            window.setTimeout(() => {
+              element.classList.add('is-visible');
+            }, delay);
+          });
+        });
+      }
+
+      buildAnimatedHeading();
+      window.addEventListener('load', startAnimations, { once: true });
+    </script>
+  </body>
+</html>
