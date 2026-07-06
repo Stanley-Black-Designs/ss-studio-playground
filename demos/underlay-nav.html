@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fixed Underlay Navigation — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{background:#c5b8b0;font-family:'Inter',sans-serif;padding-top:50px;overflow:hidden}
+
+    .underlay-viewport{position:relative;width:100%;height:calc(100dvh - 50px);overflow:hidden}
+
+    /* ── Fixed nav underneath ── */
+    .underlay-nav{position:absolute;top:0;right:0;bottom:0;width:min(420px,88vw);background:#fff;display:flex;flex-direction:column;justify-content:space-between;padding:24px 32px 32px;z-index:0}
+    .underlay-nav__top{display:flex;justify-content:flex-end}
+    .underlay-nav__close{display:flex;align-items:center;gap:8px;background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;color:#131313;padding:8px 0}
+    .underlay-nav__close svg{width:14px;height:14px}
+    .underlay-nav__links{display:flex;flex-direction:column;align-items:flex-start;gap:2px;margin-top:12px;flex:1;justify-content:flex-start;padding-top:24px}
+    .underlay-nav__link{font-size:clamp(28px,4.5vh,40px);font-weight:500;color:#131313;text-decoration:none;line-height:1.25;padding:0 12px;margin-left:-12px;position:relative;transition:color .3s cubic-bezier(.625,.05,0,1);opacity:0;transform:translateX(24px)}
+    .underlay-nav__link::before{content:"";position:absolute;inset:2px 0;background:#ff5100;z-index:-1;transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.625,.05,0,1)}
+    .underlay-nav__link:hover{color:#fff}
+    .underlay-nav__link:hover::before{transform:scaleX(1)}
+    .underlay-nav__footer{border-top:1px solid rgba(0,0,0,.1);padding-top:20px;display:flex;gap:48px;opacity:0;transform:translateY(16px)}
+    .underlay-nav__col-title{font-size:12px;color:rgba(19,19,19,.4);margin-bottom:10px}
+    .underlay-nav__col a{display:block;font-size:13px;color:#131313;text-decoration:none;line-height:1.9}
+    .underlay-nav__col a:hover{color:#ff5100}
+    .underlay-nav__col a .ext{font-size:10px;vertical-align:super}
+
+    /* ── Page that slides ── */
+    .underlay-page{position:absolute;inset:0;z-index:1;background:#3d2b23;border-radius:0;overflow:hidden;will-change:transform;box-shadow:0 24px 80px rgba(0,0,0,.35)}
+    .underlay-page__media{position:absolute;inset:0}
+    .underlay-page__media img{width:100%;height:100%;object-fit:cover;display:block}
+    .underlay-page__media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,.05) 40%,rgba(0,0,0,.3))}
+    .underlay-page__header{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:22px 32px;z-index:2}
+    .underlay-page__logo{display:flex;align-items:center;gap:8px;color:#fff;font-weight:600;font-size:17px;letter-spacing:-.01em}
+    .underlay-page__logo-dot{width:9px;height:9px;background:#ff5100;border-radius:50%}
+    .underlay-page__menu-btn{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:100px;padding:10px 18px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;transition:background .3s}
+    .underlay-page__menu-btn:hover{background:rgba(255,255,255,.22)}
+    .underlay-page__title{position:absolute;left:32px;bottom:64px;z-index:2;color:rgba(255,255,255,.85);font-size:clamp(40px,6.5vw,84px);font-weight:400;line-height:1.05;letter-spacing:-.02em;max-width:9ch}
+    .underlay-page__asterisk{position:absolute;left:50%;bottom:36px;transform:translateX(-50%);color:#ff5100;font-size:36px;z-index:2}
+
+    /* Overlay to catch clicks on page when nav open */
+    .underlay-page__scrim{position:absolute;inset:0;z-index:3;display:none;cursor:pointer}
+    .nav-open .underlay-page__scrim{display:block}
+
+    @media(max-width:640px){
+      .underlay-nav{padding:20px 24px 24px}
+      .underlay-page__header{padding:18px 20px}
+      .underlay-page__title{left:20px;bottom:56px}
+      .underlay-nav__footer{gap:28px}
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-chrome">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <div class="demo-chrome__sep"></div><span class="demo-chrome__title">Fixed Underlay Navigation</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+
+  <div class="underlay-viewport">
+
+    <!-- Fixed nav layer (underneath) -->
+    <nav class="underlay-nav" aria-hidden="true">
+      <div class="underlay-nav__top">
+        <button data-nav-close class="underlay-nav__close">Close
+          <svg viewBox="0 0 14 14" fill="none"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="underlay-nav__links">
+        <a href="#" class="underlay-nav__link" data-nav-link>Home</a>
+        <a href="#" class="underlay-nav__link" data-nav-link>Projects</a>
+        <a href="#" class="underlay-nav__link" data-nav-link>About</a>
+        <a href="#" class="underlay-nav__link" data-nav-link>Services</a>
+        <a href="#" class="underlay-nav__link" data-nav-link>News</a>
+        <a href="#" class="underlay-nav__link" data-nav-link>Contact</a>
+      </div>
+      <div class="underlay-nav__footer" data-nav-footer>
+        <div class="underlay-nav__col">
+          <p class="underlay-nav__col-title">Socials</p>
+          <a href="#">Instagram</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">X/Twitter</a>
+        </div>
+        <div class="underlay-nav__col">
+          <p class="underlay-nav__col-title">Quick Links</p>
+          <a href="#">Privacy Policy <span class="ext">↗</span></a>
+          <a href="#">Terms &amp; Conditions <span class="ext">↗</span></a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page layer (slides left) -->
+    <div class="underlay-page" data-page>
+      <div class="underlay-page__media">
+        <img src="https://cdn.prod.website-files.com/671752cd4027f01b1b8f1c7f/6717795bb5aceca85011ad83_osmo-parallax-layer-1.webp" alt="">
+      </div>
+      <header class="underlay-page__header">
+        <div class="underlay-page__logo"><span class="underlay-page__logo-dot"></span>Stanley</div>
+        <button data-nav-open class="underlay-page__menu-btn">Menu</button>
+      </header>
+      <h1 class="underlay-page__title">Fixed Underlay Navigation</h1>
+      <span class="underlay-page__asterisk">✳</span>
+      <div class="underlay-page__scrim" data-nav-scrim></div>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script>
+    function initUnderlayNav(){
+      const page = document.querySelector('[data-page]');
+      const nav = document.querySelector('.underlay-nav');
+      const links = gsap.utils.toArray('[data-nav-link]');
+      const footer = document.querySelector('[data-nav-footer]');
+      const openBtn = document.querySelector('[data-nav-open]');
+      const closeBtn = document.querySelector('[data-nav-close]');
+      const scrim = document.querySelector('[data-nav-scrim]');
+      const body = document.body;
+      let isOpen = false;
+      let tl = null;
+
+      function navWidth(){
+        return nav.getBoundingClientRect().width;
+      }
+
+      function open(){
+        if(isOpen) return;
+        isOpen = true;
+        body.classList.add('nav-open');
+        nav.setAttribute('aria-hidden','false');
+        if(tl) tl.kill();
+        tl = gsap.timeline({defaults:{ease:'power4.inOut'}});
+        tl.to(page,{x:()=>-navWidth(),borderRadius:'24px',scale:.98,duration:.8},0)
+          .to(links,{x:0,opacity:1,duration:.6,stagger:.05,ease:'power3.out'},.25)
+          .to(footer,{y:0,opacity:1,duration:.5,ease:'power3.out'},.45);
+      }
+
+      function close(){
+        if(!isOpen) return;
+        isOpen = false;
+        body.classList.remove('nav-open');
+        nav.setAttribute('aria-hidden','true');
+        if(tl) tl.kill();
+        tl = gsap.timeline({defaults:{ease:'power4.inOut'}});
+        tl.to(links,{x:24,opacity:0,duration:.3,stagger:.02,ease:'power2.in'},0)
+          .to(footer,{y:16,opacity:0,duration:.3,ease:'power2.in'},0)
+          .to(page,{x:0,borderRadius:'0px',scale:1,duration:.7},.1);
+      }
+
+      openBtn.addEventListener('click', open);
+      closeBtn.addEventListener('click', close);
+      scrim.addEventListener('click', close);
+      document.addEventListener('keydown', e => { if(e.key === 'Escape') close(); });
+      links.forEach(l => l.addEventListener('click', e => { e.preventDefault(); close(); }));
+
+      // Keep position correct on resize while open
+      window.addEventListener('resize', () => {
+        if(isOpen) gsap.set(page,{x:-navWidth()});
+      });
+    }
+    document.addEventListener('DOMContentLoaded', initUnderlayNav);
+  </script>
+</body>
+</html>
