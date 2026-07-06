@@ -10,187 +10,165 @@
     body{background:#a8c97a;font-family:'Inter',sans-serif;padding-top:50px;min-height:100dvh;display:flex;align-items:center;justify-content:center;-webkit-font-smoothing:antialiased}
     .demo-stage{display:flex;align-items:center;justify-content:center;padding:40px 24px;width:100%;font-size:clamp(11px,1.05vw,15px)}
 
-    /* === OSMO ORIGINAL CSS — unchanged === */
     .events-calendar{
       --calendar-gap:.5em;
-      grid-column-gap:1.5em;
-      grid-row-gap:1.5em;
       color:#fff;
       background-color:#2d4e3b;
       border-radius:3em;
       width:62em;
+      height:36em;
       padding-left:1.5em;
       padding-right:1.5em;
       display:flex;
+      gap:1.5em;
       overflow:hidden;
     }
+
+    /* Left column: calendar */
     .events-calendar__calendar{
-      grid-column-gap:.75em;
-      grid-row-gap:.75em;
-      flex-flow:column;
-      width:100%;
+      flex:0 0 auto;
+      width:28em;
+      display:flex;
+      flex-direction:column;
+      gap:.75em;
       padding:3em 1.5em;
-      display:flex;
     }
+
+    /* Right column: cards — fills remaining space, clips, scrolls */
     .events-calendar__cards{
-      width:100%;
-      max-height:100%;
+      flex:1 1 0;
+      min-width:0;
       display:flex;
-      position:relative;
+      flex-direction:column;
+      overflow:hidden;
+      padding:1.5em 1.5em 1.5em 0;
     }
-    .events-calendar__header{
-      align-items:center;
-      padding-top:1em;
-      padding-left:1em;
-      padding-right:1em;
-      display:flex;
-    }
-    .events-calendar__weekdays{
-      grid-column-gap:var(--calendar-gap);
-      grid-row-gap:var(--calendar-gap);
-      padding-top:.75em;
-      padding-bottom:.25em;
-      display:flex;
-    }
-    .events-calendar__grid{
-      grid-column-gap:var(--calendar-gap);
-      grid-row-gap:var(--calendar-gap);
-      flex-flow:wrap;
-      display:flex;
-    }
-    .events-calendar__weekdays-day{
-      color:rgba(255,255,255,.75);
-      text-align:center;
-      user-select:none;
-      -webkit-user-select:none;
-      width:100%;
-      font-size:1em;
-      font-weight:400;
-      line-height:1;
-    }
-    .events-calendar__month{flex:1;justify-content:center;align-items:center;display:flex}
-    .events-calendar__month-span{letter-spacing:-.03em;user-select:none;-webkit-user-select:none;font-size:1.625em;font-weight:600;line-height:1.25}
-    .events-calendar__header-btn{flex:none}
-    .events-calendar__arrow{
-      color:#fff;
+
+    /* "No events" state — fills the column */
+    .events-calendar__no-event{
+      flex:1;
       background-color:rgba(255,255,255,.15);
-      border-radius:60em;
+      border-radius:1.5em;
+      display:none;
       justify-content:center;
       align-items:center;
-      width:2em;height:2em;
+    }
+    .events-calendar__no-event-p{margin:0;font-size:1em;font-weight:400;line-height:1.25}
+
+    /* Cards collection — fills remaining height, scrollable */
+    .events-calendar__cards-collection{
+      flex:1;
+      min-height:0;
+      overflow-y:auto;
+      scrollbar-width:none;
+    }
+    .events-calendar__cards-collection::-webkit-scrollbar{display:none}
+
+    .events-calendar__cards-list{
       display:flex;
+      flex-direction:column;
+      gap:1em;
+    }
+    .events-calendar__cards-item{
+      display:flex;
+      flex-shrink:0;
+    }
+
+    /* Visibility toggling */
+    [data-events-calendar-card-status="not-active"]{display:none}
+    [data-events-calendar-card-status="active"]{display:flex}
+    [data-events-calendar-empty-status="not-active"]{display:none}
+    [data-events-calendar-empty-status="active"]{display:flex}
+
+    /* Calendar internals */
+    .events-calendar__header{display:flex;align-items:center;padding:1em 1em 0}
+    .events-calendar__month{flex:1;display:flex;justify-content:center;align-items:center}
+    .events-calendar__month-span{font-size:1.625em;font-weight:600;line-height:1.25;letter-spacing:-.03em;user-select:none}
+    .events-calendar__header-btn{flex:none}
+    .events-calendar__arrow{
+      color:#fff;background-color:rgba(255,255,255,.15);border-radius:60em;
+      display:flex;justify-content:center;align-items:center;
+      width:2em;height:2em;border:none;cursor:pointer;
       transition:transform .3s cubic-bezier(.17,.67,.3,1.33),background-color .3s ease;
       transform:scale(1) rotate(.001deg);
-      border:none;cursor:pointer;
     }
     .events-calendar__arrow:hover{background-color:rgba(255,255,255,.25);transform:scale(1.075) rotate(.001deg)}
-    .events-calendar__arrow[disabled]{opacity:.4;cursor:not-allowed;transform:scale(1) rotate(.001deg)}
+    .events-calendar__arrow[disabled]{opacity:.4;cursor:not-allowed;transform:none}
     .events-calendar__arrow-svg{width:1em}
     .events-calendar__arrow-svg.is--flipped{transform:scaleX(-1)}
+
+    .events-calendar__weekdays{display:flex;gap:var(--calendar-gap);padding:.75em 0 .25em}
+    .events-calendar__weekdays-day{width:100%;text-align:center;font-size:1em;font-weight:400;line-height:1;color:rgba(255,255,255,.75);user-select:none}
+
+    .events-calendar__grid{display:flex;flex-wrap:wrap;gap:var(--calendar-gap)}
     .events-calendar__tile{
-      z-index:0;
+      position:relative;
       aspect-ratio:1;
-      color:rgba(255,255,255,.75);
-      cursor:auto;
-      width:calc((99.99% - (var(--calendar-gap)*6))/7);
-      user-select:none;-webkit-user-select:none;
+      width:calc((99.99% - var(--calendar-gap)*6)/7);
+      display:flex;justify-content:center;align-items:center;
       background-color:rgba(255,255,255,.15);
-      border-radius:.375em;
-      justify-content:center;align-items:center;
-      padding:0;display:flex;position:relative;border:none;
+      border-radius:.375em;border:none;
+      color:rgba(255,255,255,.75);font-size:1em;font-weight:500;
+      user-select:none;cursor:auto;padding:0;
     }
-    .events-calendar__tile[data-events-calendar-tile-status="event"],
-    .events-calendar__tile[data-events-calendar-tile-status="selected"]{
-      cursor:pointer;user-select:auto;
-      color:#2d4e3b;font-weight:600;
-      transition:transform .3s cubic-bezier(.17,.67,.3,1.33),background-color .3s ease;
-      transform:scale(1) rotate(.001deg);
-    }
+    .events-calendar__tile[data-events-calendar-tile-status="empty"]{background:transparent}
+    .events-calendar__tile[data-events-calendar-tile-status="event"]{background:#b8d67f;color:#2d4e3b;font-weight:600;cursor:pointer;transition:transform .3s cubic-bezier(.17,.67,.3,1.33)}
+    .events-calendar__tile[data-events-calendar-tile-status="selected"]{background:#f7ade8;color:#2d4e3b;font-weight:600;cursor:pointer;transition:transform .3s cubic-bezier(.17,.67,.3,1.33)}
     .events-calendar__tile[data-events-calendar-tile-status="event"]:hover,
     .events-calendar__tile[data-events-calendar-tile-status="selected"]:hover{transform:scale(1.05) rotate(.001deg)}
-    .events-calendar__tile[data-events-calendar-tile-status="empty"]{background:rgba(255,255,255,0);user-select:none}
-    .events-calendar__tile[data-events-calendar-tile-status="event"]{background:#b8d67f}
-    .events-calendar__tile[data-events-calendar-tile-status="selected"]{background:#f7ade8}
     .events-calendar__tile[data-events-calendar-today]::before{
       content:"";position:absolute;width:70%;height:70%;border-radius:50%;background:#2d4e3b;z-index:-1;
     }
-    .events-calendar__tile-span{text-align:center;font-size:1em;font-weight:500;line-height:1}
+    .events-calendar__tile-span{font-size:1em;font-weight:inherit;line-height:1;text-align:center}
     .events-calendar__tile-span:empty{display:none}
     .events-calendar__tile-count{
-      color:#2d4e3b;background-color:#fff;border-radius:50em;
-      justify-content:center;align-items:center;
+      position:absolute;top:-.5em;right:-.5em;
+      background:#fff;color:#2d4e3b;border-radius:50em;
       width:1.625em;height:1.625em;font-size:.75em;
-      display:flex;position:absolute;top:-.5em;right:-.5em;
+      display:flex;justify-content:center;align-items:center;
     }
     .events-calendar__tile-count[data-events-calendar-tile-count=""],
     .events-calendar__tile-count[data-events-calendar-tile-count="1"]{display:none}
-    .events-calendar__legenda{
-      grid-column-gap:2em;grid-row-gap:2em;
-      justify-content:center;align-items:center;
-      padding-top:.75em;padding-bottom:1em;display:flex;
-    }
-    .events-calendar__legenda-item{grid-column-gap:.375em;grid-row-gap:.375em;justify-content:center;align-items:center;display:flex}
-    .events-calendar__legenda-dot{background-color:#b8d67f;border-radius:50em;width:1em;height:1em}
-    .events-calendar__legenda-dot.is--selected{background-color:#f7ade8}
-    .events-calendar__legenda-span{opacity:.75;color:rgba(255,255,255,.75);font-size:1em;font-weight:400;line-height:1.25}
-    .events-calendar__cards-collection{width:100%;height:100%;position:relative}
-    .events-calendar__cards-list{
-      grid-column-gap:1em;grid-row-gap:1em;
-      flex-flow:column;flex:none;
-      width:100%;height:100%;
-      padding-top:1.5em;padding-bottom:1.5em;
-      display:flex;position:absolute;overflow:scroll;
-      scrollbar-width:none;
-    }
-    .events-calendar__cards-list::-webkit-scrollbar{display:none}
-    .events-calendar__cards-item{width:100%;height:100%;display:flex}
-    [data-events-calendar-card-status="not-active"],[data-events-calendar-empty-status="not-active"]{display:none}
-    [data-events-calendar-card-status="active"],[data-events-calendar-empty-status="active"]{display:flex}
-    .events-calendar__no-event{
-      background-color:rgba(255,255,255,.15);border-radius:1.5em;
-      justify-content:center;align-items:center;
-      width:100%;margin-top:1.5em;margin-bottom:1.5em;
-      display:flex;position:relative;
-    }
-    .events-calendar__no-event-p{margin-bottom:0;font-size:1em;font-weight:400;line-height:1.25}
-    .event-card{
-      grid-column-gap:1em;grid-row-gap:1em;
-      color:#201d1d;background-color:#fff;border-radius:1.5em;
-      flex-flow:column;width:100%;padding:1.5em;display:flex;
-    }
-    .event-card__title{flex:none;padding:1.125em 1em .75em}
-    .event-card__media{flex:1;min-height:12em;position:relative}
-    .event-card__description{
-      grid-column-gap:1.5em;grid-row-gap:1.5em;
-      flex-flow:column;flex:none;align-items:flex-start;
-      padding:.75em 1em 1em;display:flex;
-    }
-    .event-card__p{
-      opacity:.7;letter-spacing:-.02em;margin-bottom:0;font-size:1em;font-weight:500;line-height:1.25;
-      display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden;
-    }
-    .event-card__btn{
-      color:#fff;background-color:#82a345;border-radius:50em;
-      justify-content:center;align-items:center;
-      height:3.25em;padding-left:1.75em;padding-right:1.75em;
-      text-decoration:none;display:flex;
-    }
-    .event-card__btn.is--orange{background-color:#d37a1d}
-    .event-card__btn-span{font-size:1em;font-weight:500;line-height:1}
-    .event-card__img{object-fit:cover;border-radius:.5em;width:100%;height:100%;display:block;position:absolute}
-    .event-card__date-p{color:#2d4e3b;letter-spacing:-.03em;margin-bottom:0;font-size:1.5em;font-weight:600;line-height:1.125}
-    .event-card__h{color:#82a345;letter-spacing:-.03em;margin-top:0;margin-bottom:0;font-size:1.625em;font-weight:600;line-height:1.125}
-    .event-card__h.is--orange{color:#d37a1d}
 
-    @media screen and (max-width:991px){
-      .events-calendar{grid-column-gap:0;grid-row-gap:0;flex-flow:column;width:31em}
-      .events-calendar__calendar{padding-top:2em;padding-bottom:0}
-      .events-calendar__cards-list{border-radius:1.5em;position:relative}
+    .events-calendar__legenda{display:flex;justify-content:center;align-items:center;gap:2em;padding:.75em 0 1em}
+    .events-calendar__legenda-item{display:flex;align-items:center;gap:.375em}
+    .events-calendar__legenda-dot{width:1em;height:1em;border-radius:50em;background:#b8d67f}
+    .events-calendar__legenda-dot.is--selected{background:#f7ade8}
+    .events-calendar__legenda-span{font-size:1em;font-weight:400;line-height:1.25;color:rgba(255,255,255,.75);opacity:.75}
+
+    /* Event cards */
+    .event-card{
+      display:flex;flex-direction:column;gap:1em;
+      background:#fff;color:#201d1d;border-radius:1.5em;
+      width:100%;padding:1.5em;flex-shrink:0;
     }
-    @media screen and (max-width:479px){
-      .events-calendar{border-radius:2.5em;padding-left:1em;padding-right:1em}
-      .events-calendar__calendar{padding-left:0;padding-right:0}
-      .events-calendar__cards-list{padding-top:1em;padding-bottom:1em}
+    .event-card__title{padding:1.125em 1em .75em}
+    .event-card__h{font-size:1.625em;font-weight:600;line-height:1.125;letter-spacing:-.03em;color:#82a345;margin:0 0 .25em}
+    .event-card__h.is--orange{color:#d37a1d}
+    .event-card__date-p{font-size:1.5em;font-weight:600;line-height:1.125;letter-spacing:-.03em;color:#2d4e3b;margin:0}
+    .event-card__media{position:relative;height:12em}
+    .event-card__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:.5em;display:block}
+    .event-card__description{display:flex;flex-direction:column;gap:1.5em;padding:.75em 1em 1em;align-items:flex-start}
+    .event-card__p{font-size:1em;font-weight:500;line-height:1.25;letter-spacing:-.02em;opacity:.7;margin:0;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+    .event-card__btn{
+      display:flex;justify-content:center;align-items:center;
+      height:3.25em;padding:0 1.75em;border-radius:50em;
+      background:#82a345;color:#fff;text-decoration:none;
+    }
+    .event-card__btn.is--orange{background:#d37a1d}
+    .event-card__btn-span{font-size:1em;font-weight:500;line-height:1}
+
+    /* Responsive */
+    @media(max-width:900px){
+      .events-calendar{flex-direction:column;width:31em;height:auto}
+      .events-calendar__calendar{width:100%;padding:2em 1.5em 0}
+      .events-calendar__cards{padding:1em 1.5em 1.5em;overflow:visible}
+      .events-calendar__cards-collection{overflow:visible;height:auto}
+    }
+    @media(max-width:520px){
+      .events-calendar{width:100%;border-radius:2.5em;padding:0 1em}
+      .events-calendar__calendar{padding:1.5em 0 0}
+      .events-calendar__cards{padding:.75em 0 1.25em}
       .event-card{padding:1em}
     }
   </style>
@@ -206,6 +184,8 @@
 
   <div class="demo-stage">
     <div data-events-calendar-timezone="Africa/Johannesburg" data-events-calendar-init="" class="events-calendar">
+
+      <!-- Left: Calendar -->
       <div class="events-calendar__calendar">
         <div data-events-calendar-header="" class="events-calendar__header">
           <div class="events-calendar__header-btn">
@@ -232,7 +212,10 @@
           <span data-events-calendar-weekday="sunday" class="events-calendar__weekdays-day">S</span>
         </div>
         <div data-events-calendar-grid="" class="events-calendar__grid">
-          <button data-events-calendar-tile="" data-events-calendar-tile-status="empty" class="events-calendar__tile"><span data-events-calendar-tile-day="" class="events-calendar__tile-span"></span><span data-events-calendar-tile-count="" class="events-calendar__tile-count"></span></button>
+          <button data-events-calendar-tile="" data-events-calendar-tile-status="empty" class="events-calendar__tile">
+            <span data-events-calendar-tile-day="" class="events-calendar__tile-span"></span>
+            <span data-events-calendar-tile-count="" class="events-calendar__tile-count"></span>
+          </button>
         </div>
         <div class="events-calendar__legenda">
           <div class="events-calendar__legenda-item">
@@ -245,13 +228,16 @@
           </div>
         </div>
       </div>
+
+      <!-- Right: Cards -->
       <div data-events-calendar-cards="" class="events-calendar__cards">
         <div data-events-calendar-empty-status="not-active" class="events-calendar__no-event">
           <p class="events-calendar__no-event-p">No upcoming events 😢</p>
         </div>
         <div class="events-calendar__cards-collection">
           <div class="events-calendar__cards-list">
-            <div data-events-calendar-active-count="1" data-events-calendar-card="" data-events-calendar-card-date="July 10, 2026" data-events-calendar-card-status="not-active" class="events-calendar__cards-item">
+
+            <div data-events-calendar-card="" data-events-calendar-card-date="July 10, 2026" data-events-calendar-card-status="not-active" class="events-calendar__cards-item">
               <div class="event-card">
                 <div class="event-card__title">
                   <h3 class="event-card__h">Design Sprint</h3>
@@ -264,7 +250,8 @@
                 </div>
               </div>
             </div>
-            <div data-events-calendar-active-count="2" data-events-calendar-card="" data-events-calendar-card-date="July 18, 2026" data-events-calendar-card-status="not-active" class="events-calendar__cards-item">
+
+            <div data-events-calendar-card="" data-events-calendar-card-date="July 18, 2026" data-events-calendar-card-status="not-active" class="events-calendar__cards-item">
               <div class="event-card">
                 <div class="event-card__title">
                   <h3 class="event-card__h is--orange">Motion Workshop</h3>
@@ -277,7 +264,8 @@
                 </div>
               </div>
             </div>
-            <div data-events-calendar-active-count="2" data-events-calendar-card="" data-events-calendar-card-date="July 18, 2026" data-events-calendar-card-status="not-active" class="events-calendar__cards-item">
+
+            <div data-events-calendar-card="" data-events-calendar-card-date="July 18, 2026" data-events-calendar-card-status="not-active" class="events-calendar__cards-item">
               <div class="event-card">
                 <div class="event-card__title">
                   <h3 class="event-card__h">After Session</h3>
@@ -290,7 +278,8 @@
                 </div>
               </div>
             </div>
-            <div data-events-calendar-active-count="1" data-events-calendar-card="" data-events-calendar-card-date="August 5, 2026" data-events-calendar-card-status="not-active" class="events-calendar__cards-item">
+
+            <div data-events-calendar-card="" data-events-calendar-card-date="August 5, 2026" data-events-calendar-card-status="not-active" class="events-calendar__cards-item">
               <div class="event-card">
                 <div class="event-card__title">
                   <h3 class="event-card__h">SEO Deep Dive</h3>
@@ -303,14 +292,16 @@
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>
+
     </div>
   </div>
 
   <script>
-    function initEventsCalendar(){const calendars=document.querySelectorAll("[data-events-calendar-init]");if(!calendars.length)return;const settings={maxMonthsPast:12,maxMonthsFuture:12,translations:{months:["January","February","March","April","May","June","July","August","September","October","November","December"],weekdays:{monday:"M",tuesday:"T",wednesday:"W",thursday:"T",friday:"F",saturday:"S",sunday:"S"}}};calendars.forEach((calendar)=>{const timezone=calendar.getAttribute("data-events-calendar-timezone")||"Europe/Amsterdam";const grid=calendar.querySelector("[data-events-calendar-grid]");const monthLabel=calendar.querySelector("[data-events-calendar-month]");const prevButton=calendar.querySelector("[data-events-calendar-prev]");const nextButton=calendar.querySelector("[data-events-calendar-next]");const weekdayElements=[...calendar.querySelectorAll("[data-events-calendar-weekday]")];const allCards=[...calendar.querySelectorAll("[data-events-calendar-card-date]")];const emptyState=calendar.querySelector("[data-events-calendar-empty-status]");const templateTiles=[...grid.querySelectorAll("[data-events-calendar-tile]")];if(!templateTiles.length)return;const templateTile=templateTiles[0].cloneNode(true);const now=getNowInTimezone(timezone);const eventsMap=createEventsMap();let currentMonthDate=new Date(now.year,now.month,1);let selectedDate=getInitialSelectedDate();if(selectedDate){const selectedDateObject=parseDateKey(selectedDate);currentMonthDate=new Date(selectedDateObject.getFullYear(),selectedDateObject.getMonth(),1);}renderWeekdays();renderCalendar();updateCards();prevButton.addEventListener("click",()=>{const targetDate=new Date(currentMonthDate.getFullYear(),currentMonthDate.getMonth()-1,1);if(!canGoToMonth(targetDate))return;currentMonthDate=targetDate;renderCalendar();});nextButton.addEventListener("click",()=>{const targetDate=new Date(currentMonthDate.getFullYear(),currentMonthDate.getMonth()+1,1);if(!canGoToMonth(targetDate))return;currentMonthDate=targetDate;renderCalendar();});function renderWeekdays(){weekdayElements.forEach((weekday)=>{const day=weekday.getAttribute("data-events-calendar-weekday");if(settings.translations.weekdays[day])weekday.textContent=settings.translations.weekdays[day];});}function renderCalendar(){const year=currentMonthDate.getFullYear();const month=currentMonthDate.getMonth();monthLabel.textContent=`${settings.translations.months[month]} ${year}`;grid.innerHTML="";const firstDay=new Date(year,month,1);const firstWeekday=getWeekdayName(firstDay.getDay());const weekdayOrder=getWeekdayOrder();const startDay=weekdayOrder.indexOf(firstWeekday);const daysInMonth=new Date(year,month+1,0).getDate();updateButtonStates();for(let i=0;i<42;i++){const tile=templateTile.cloneNode(true);const dayElement=tile.querySelector("[data-events-calendar-tile-day]");const countElement=tile.querySelector("[data-events-calendar-tile-count]");const dayNumber=i-startDay+1;tile.removeAttribute("data-events-calendar-date");tile.removeAttribute("data-events-calendar-today");tile.removeAttribute("data-events-calendar-events-count");if(countElement){countElement.setAttribute("data-events-calendar-tile-count","");countElement.textContent="";}if(dayNumber<1||dayNumber>daysInMonth){tile.setAttribute("data-events-calendar-tile-status","empty");dayElement.textContent="";grid.appendChild(tile);continue;}const currentDate=new Date(year,month,dayNumber);const dateKey=formatDateKey(currentDate);const hasEvents=eventsMap[dateKey];const isSelected=selectedDate===dateKey;const isToday=dateKey===formatDateKey(new Date(now.year,now.month,now.day));tile.setAttribute("data-events-calendar-date",dateKey);dayElement.textContent=dayNumber;if(isSelected){tile.setAttribute("data-events-calendar-tile-status","selected");}else if(hasEvents){tile.setAttribute("data-events-calendar-tile-status","event");}else{tile.setAttribute("data-events-calendar-tile-status","no-event");}if(isToday)tile.setAttribute("data-events-calendar-today","");if(hasEvents){tile.setAttribute("data-events-calendar-events-count",hasEvents.length);if(countElement){countElement.setAttribute("data-events-calendar-tile-count",hasEvents.length);countElement.textContent=hasEvents.length;}}tile.addEventListener("click",()=>{if(!eventsMap[dateKey]||selectedDate===dateKey)return;selectedDate=dateKey;updateCards();updateTileStates();});grid.appendChild(tile);}}function updateTileStates(){const tiles=[...grid.querySelectorAll("[data-events-calendar-date]")];tiles.forEach((tile)=>{const dateKey=tile.getAttribute("data-events-calendar-date");const hasEvents=eventsMap[dateKey];if(selectedDate===dateKey){tile.setAttribute("data-events-calendar-tile-status","selected");}else if(hasEvents){tile.setAttribute("data-events-calendar-tile-status","event");}else{tile.setAttribute("data-events-calendar-tile-status","no-event");}});}function updateCards(){allCards.forEach((card)=>card.setAttribute("data-events-calendar-card-status","not-active"));if(emptyState)emptyState.setAttribute("data-events-calendar-empty-status","not-active");if(!selectedDate){if(emptyState)emptyState.setAttribute("data-events-calendar-empty-status","active");return;}const matchingCards=allCards.filter((card)=>{const cardDate=normalizeCardDate(card.getAttribute("data-events-calendar-card-date"));return cardDate===selectedDate;});if(!matchingCards.length){if(emptyState)emptyState.setAttribute("data-events-calendar-empty-status","active");return;}matchingCards.forEach((card)=>{card.setAttribute("data-events-calendar-card-status","active");card.setAttribute("data-events-calendar-active-count",matchingCards.length);});}function updateButtonStates(){const prevDate=new Date(currentMonthDate.getFullYear(),currentMonthDate.getMonth()-1,1);const nextDate=new Date(currentMonthDate.getFullYear(),currentMonthDate.getMonth()+1,1);setButtonState(prevButton,canGoToMonth(prevDate));setButtonState(nextButton,canGoToMonth(nextDate));}function setButtonState(button,isActive){if(!button)return;button.disabled=!isActive;button.setAttribute("aria-disabled",isActive?"false":"true");}function canGoToMonth(date){const minDate=new Date(now.year,now.month-settings.maxMonthsPast,1);const maxDate=new Date(now.year,now.month+settings.maxMonthsFuture,1);return date>=minDate&&date<=maxDate;}function createEventsMap(){const map={};allCards.forEach((card)=>{const rawDate=card.getAttribute("data-events-calendar-card-date");const normalizedDate=normalizeCardDate(rawDate);if(!normalizedDate)return;if(!map[normalizedDate])map[normalizedDate]=[];map[normalizedDate].push(card);});return map;}function getInitialSelectedDate(){const todayKey=formatDateKey(new Date(now.year,now.month,now.day));const eventDates=Object.keys(eventsMap).sort();if(eventDates.includes(todayKey))return todayKey;return eventDates.find((date)=>date>=todayKey)||null;}function getWeekdayOrder(){return weekdayElements.map((weekday)=>weekday.getAttribute("data-events-calendar-weekday"));}function getWeekdayName(dayIndex){return["sunday","monday","tuesday","wednesday","thursday","friday","saturday"][dayIndex];}function normalizeCardDate(dateString){const parsedDate=new Date(dateString);if(isNaN(parsedDate))return null;return formatDateKey(parsedDate);}function parseDateKey(dateKey){const[year,month,day]=dateKey.split("-").map(Number);return new Date(year,month-1,day);}function formatDateKey(date){const year=date.getFullYear();const month=String(date.getMonth()+1).padStart(2,"0");const day=String(date.getDate()).padStart(2,"0");return`${year}-${month}-${day}`;}function getNowInTimezone(timezone){const formatter=new Intl.DateTimeFormat("en-US",{timeZone:timezone,year:"numeric",month:"numeric",day:"numeric"});const parts=formatter.formatToParts(new Date());const values={};parts.forEach((part)=>values[part.type]=part.value);return{year:Number(values.year),month:Number(values.month)-1,day:Number(values.day)};}});}
+    function initEventsCalendar(){const calendars=document.querySelectorAll("[data-events-calendar-init]");if(!calendars.length)return;const settings={maxMonthsPast:12,maxMonthsFuture:12,translations:{months:["January","February","March","April","May","June","July","August","September","October","November","December"],weekdays:{monday:"M",tuesday:"T",wednesday:"W",thursday:"T",friday:"F",saturday:"S",sunday:"S"}}};calendars.forEach((calendar)=>{const timezone=calendar.getAttribute("data-events-calendar-timezone")||"Europe/Amsterdam";const grid=calendar.querySelector("[data-events-calendar-grid]");const monthLabel=calendar.querySelector("[data-events-calendar-month]");const prevButton=calendar.querySelector("[data-events-calendar-prev]");const nextButton=calendar.querySelector("[data-events-calendar-next]");const weekdayElements=[...calendar.querySelectorAll("[data-events-calendar-weekday]")];const allCards=[...calendar.querySelectorAll("[data-events-calendar-card-date]")];const emptyState=calendar.querySelector("[data-events-calendar-empty-status]");const templateTiles=[...grid.querySelectorAll("[data-events-calendar-tile]")];if(!templateTiles.length)return;const templateTile=templateTiles[0].cloneNode(true);const now=getNowInTimezone(timezone);const eventsMap=createEventsMap();let currentMonthDate=new Date(now.year,now.month,1);let selectedDate=getInitialSelectedDate();if(selectedDate){const selectedDateObject=parseDateKey(selectedDate);currentMonthDate=new Date(selectedDateObject.getFullYear(),selectedDateObject.getMonth(),1);}renderWeekdays();renderCalendar();updateCards();prevButton.addEventListener("click",()=>{const targetDate=new Date(currentMonthDate.getFullYear(),currentMonthDate.getMonth()-1,1);if(!canGoToMonth(targetDate))return;currentMonthDate=targetDate;renderCalendar();});nextButton.addEventListener("click",()=>{const targetDate=new Date(currentMonthDate.getFullYear(),currentMonthDate.getMonth()+1,1);if(!canGoToMonth(targetDate))return;currentMonthDate=targetDate;renderCalendar();});function renderWeekdays(){weekdayElements.forEach((weekday)=>{const day=weekday.getAttribute("data-events-calendar-weekday");if(settings.translations.weekdays[day])weekday.textContent=settings.translations.weekdays[day];});}function renderCalendar(){const year=currentMonthDate.getFullYear();const month=currentMonthDate.getMonth();monthLabel.textContent=`${settings.translations.months[month]} ${year}`;grid.innerHTML="";const firstDay=new Date(year,month,1);const firstWeekday=getWeekdayName(firstDay.getDay());const weekdayOrder=getWeekdayOrder();const startDay=weekdayOrder.indexOf(firstWeekday);const daysInMonth=new Date(year,month+1,0).getDate();updateButtonStates();for(let i=0;i<42;i++){const tile=templateTile.cloneNode(true);const dayElement=tile.querySelector("[data-events-calendar-tile-day]");const countElement=tile.querySelector("[data-events-calendar-tile-count]");const dayNumber=i-startDay+1;tile.removeAttribute("data-events-calendar-date");tile.removeAttribute("data-events-calendar-today");tile.removeAttribute("data-events-calendar-events-count");if(countElement){countElement.setAttribute("data-events-calendar-tile-count","");countElement.textContent="";}if(dayNumber<1||dayNumber>daysInMonth){tile.setAttribute("data-events-calendar-tile-status","empty");dayElement.textContent="";grid.appendChild(tile);continue;}const currentDate=new Date(year,month,dayNumber);const dateKey=formatDateKey(currentDate);const hasEvents=eventsMap[dateKey];const isSelected=selectedDate===dateKey;const isToday=dateKey===formatDateKey(new Date(now.year,now.month,now.day));tile.setAttribute("data-events-calendar-date",dateKey);dayElement.textContent=dayNumber;if(isSelected){tile.setAttribute("data-events-calendar-tile-status","selected");}else if(hasEvents){tile.setAttribute("data-events-calendar-tile-status","event");}else{tile.setAttribute("data-events-calendar-tile-status","no-event");}if(isToday)tile.setAttribute("data-events-calendar-today","");if(hasEvents){tile.setAttribute("data-events-calendar-events-count",hasEvents.length);if(countElement){countElement.setAttribute("data-events-calendar-tile-count",hasEvents.length);countElement.textContent=hasEvents.length;}}tile.addEventListener("click",()=>{if(!eventsMap[dateKey]||selectedDate===dateKey)return;selectedDate=dateKey;updateCards();updateTileStates();});grid.appendChild(tile);}}function updateTileStates(){const tiles=[...grid.querySelectorAll("[data-events-calendar-date]")];tiles.forEach((tile)=>{const dateKey=tile.getAttribute("data-events-calendar-date");const hasEvents=eventsMap[dateKey];if(selectedDate===dateKey){tile.setAttribute("data-events-calendar-tile-status","selected");}else if(hasEvents){tile.setAttribute("data-events-calendar-tile-status","event");}else{tile.setAttribute("data-events-calendar-tile-status","no-event");}});}function updateCards(){allCards.forEach((card)=>card.setAttribute("data-events-calendar-card-status","not-active"));if(emptyState)emptyState.setAttribute("data-events-calendar-empty-status","not-active");if(!selectedDate){if(emptyState)emptyState.setAttribute("data-events-calendar-empty-status","active");return;}const matchingCards=allCards.filter((card)=>{const cardDate=normalizeCardDate(card.getAttribute("data-events-calendar-card-date"));return cardDate===selectedDate;});if(!matchingCards.length){if(emptyState)emptyState.setAttribute("data-events-calendar-empty-status","active");return;}matchingCards.forEach((card)=>{card.setAttribute("data-events-calendar-card-status","active");});}function updateButtonStates(){const prevDate=new Date(currentMonthDate.getFullYear(),currentMonthDate.getMonth()-1,1);const nextDate=new Date(currentMonthDate.getFullYear(),currentMonthDate.getMonth()+1,1);setButtonState(prevButton,canGoToMonth(prevDate));setButtonState(nextButton,canGoToMonth(nextDate));}function setButtonState(button,isActive){if(!button)return;button.disabled=!isActive;button.setAttribute("aria-disabled",isActive?"false":"true");}function canGoToMonth(date){const minDate=new Date(now.year,now.month-settings.maxMonthsPast,1);const maxDate=new Date(now.year,now.month+settings.maxMonthsFuture,1);return date>=minDate&&date<=maxDate;}function createEventsMap(){const map={};allCards.forEach((card)=>{const rawDate=card.getAttribute("data-events-calendar-card-date");const normalizedDate=normalizeCardDate(rawDate);if(!normalizedDate)return;if(!map[normalizedDate])map[normalizedDate]=[];map[normalizedDate].push(card);});return map;}function getInitialSelectedDate(){const todayKey=formatDateKey(new Date(now.year,now.month,now.day));const eventDates=Object.keys(eventsMap).sort();if(eventDates.includes(todayKey))return todayKey;return eventDates.find((date)=>date>=todayKey)||null;}function getWeekdayOrder(){return weekdayElements.map((weekday)=>weekday.getAttribute("data-events-calendar-weekday"));}function getWeekdayName(dayIndex){return["sunday","monday","tuesday","wednesday","thursday","friday","saturday"][dayIndex];}function normalizeCardDate(dateString){const parsedDate=new Date(dateString);if(isNaN(parsedDate))return null;return formatDateKey(parsedDate);}function parseDateKey(dateKey){const[year,month,day]=dateKey.split("-").map(Number);return new Date(year,month-1,day);}function formatDateKey(date){const year=date.getFullYear();const month=String(date.getMonth()+1).padStart(2,"0");const day=String(date.getDate()).padStart(2,"0");return`${year}-${month}-${day}`;}function getNowInTimezone(timezone){const formatter=new Intl.DateTimeFormat("en-US",{timeZone:timezone,year:"numeric",month:"numeric",day:"numeric"});const parts=formatter.formatToParts(new Date());const values={};parts.forEach((part)=>values[part.type]=part.value);return{year:Number(values.year),month:Number(values.month)-1,day:Number(values.day)};}});}
     document.addEventListener("DOMContentLoaded",()=>{initEventsCalendar();});
   </script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
