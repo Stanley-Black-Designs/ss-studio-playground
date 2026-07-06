@@ -8,12 +8,13 @@
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     body{background:#a8c97a;font-family:'Inter',sans-serif;padding-top:50px;min-height:100dvh;display:flex;align-items:center;justify-content:center;-webkit-font-smoothing:antialiased}
-    .demo-stage{display:flex;align-items:center;justify-content:center;padding:40px 24px;width:100%;font-size:clamp(11px,1.1vw,15px)}
+    .demo-stage{display:flex;align-items:center;justify-content:center;padding:40px 24px;width:100%;font-size:clamp(11px,1.05vw,15px)}
 
-    /* ── Exact Osmo CSS ── */
+    /* === OSMO ORIGINAL CSS — unchanged === */
     .events-calendar{
       --calendar-gap:.5em;
-      gap:1.5em;
+      grid-column-gap:1.5em;
+      grid-row-gap:1.5em;
       color:#fff;
       background-color:#2d4e3b;
       border-radius:3em;
@@ -24,12 +25,12 @@
       overflow:hidden;
     }
     .events-calendar__calendar{
-      gap:.75em;
+      grid-column-gap:.75em;
+      grid-row-gap:.75em;
       flex-flow:column;
       width:100%;
       padding:3em 1.5em;
       display:flex;
-      flex-shrink:0;
     }
     .events-calendar__cards{
       width:100%;
@@ -45,13 +46,15 @@
       display:flex;
     }
     .events-calendar__weekdays{
-      gap:var(--calendar-gap);
+      grid-column-gap:var(--calendar-gap);
+      grid-row-gap:var(--calendar-gap);
       padding-top:.75em;
       padding-bottom:.25em;
       display:flex;
     }
     .events-calendar__grid{
-      gap:var(--calendar-gap);
+      grid-column-gap:var(--calendar-gap);
+      grid-row-gap:var(--calendar-gap);
       flex-flow:wrap;
       display:flex;
     }
@@ -59,24 +62,14 @@
       color:rgba(255,255,255,.75);
       text-align:center;
       user-select:none;
+      -webkit-user-select:none;
       width:100%;
       font-size:1em;
       font-weight:400;
       line-height:1;
     }
-    .events-calendar__month{
-      flex:1;
-      justify-content:center;
-      align-items:center;
-      display:flex;
-    }
-    .events-calendar__month-span{
-      letter-spacing:-.03em;
-      user-select:none;
-      font-size:1.625em;
-      font-weight:600;
-      line-height:1.25;
-    }
+    .events-calendar__month{flex:1;justify-content:center;align-items:center;display:flex}
+    .events-calendar__month-span{letter-spacing:-.03em;user-select:none;-webkit-user-select:none;font-size:1.625em;font-weight:600;line-height:1.25}
     .events-calendar__header-btn{flex:none}
     .events-calendar__arrow{
       color:#fff;
@@ -84,13 +77,11 @@
       border-radius:60em;
       justify-content:center;
       align-items:center;
-      width:2em;
-      height:2em;
+      width:2em;height:2em;
       display:flex;
       transition:transform .3s cubic-bezier(.17,.67,.3,1.33),background-color .3s ease;
       transform:scale(1) rotate(.001deg);
-      border:none;
-      cursor:pointer;
+      border:none;cursor:pointer;
     }
     .events-calendar__arrow:hover{background-color:rgba(255,255,255,.25);transform:scale(1.075) rotate(.001deg)}
     .events-calendar__arrow[disabled]{opacity:.4;cursor:not-allowed;transform:scale(1) rotate(.001deg)}
@@ -102,28 +93,22 @@
       color:rgba(255,255,255,.75);
       cursor:auto;
       width:calc((99.99% - (var(--calendar-gap)*6))/7);
-      user-select:none;
+      user-select:none;-webkit-user-select:none;
       background-color:rgba(255,255,255,.15);
       border-radius:.375em;
-      justify-content:center;
-      align-items:center;
-      padding:0;
-      display:flex;
-      position:relative;
-      border:none;
+      justify-content:center;align-items:center;
+      padding:0;display:flex;position:relative;border:none;
     }
     .events-calendar__tile[data-events-calendar-tile-status="event"],
     .events-calendar__tile[data-events-calendar-tile-status="selected"]{
-      cursor:pointer;
-      user-select:auto;
-      color:#2d4e3b;
-      font-weight:600;
+      cursor:pointer;user-select:auto;
+      color:#2d4e3b;font-weight:600;
       transition:transform .3s cubic-bezier(.17,.67,.3,1.33),background-color .3s ease;
       transform:scale(1) rotate(.001deg);
     }
     .events-calendar__tile[data-events-calendar-tile-status="event"]:hover,
     .events-calendar__tile[data-events-calendar-tile-status="selected"]:hover{transform:scale(1.05) rotate(.001deg)}
-    .events-calendar__tile[data-events-calendar-tile-status="empty"]{background:transparent;user-select:none}
+    .events-calendar__tile[data-events-calendar-tile-status="empty"]{background:rgba(255,255,255,0);user-select:none}
     .events-calendar__tile[data-events-calendar-tile-status="event"]{background:#b8d67f}
     .events-calendar__tile[data-events-calendar-tile-status="selected"]{background:#f7ade8}
     .events-calendar__tile[data-events-calendar-today]::before{
@@ -132,127 +117,78 @@
     .events-calendar__tile-span{text-align:center;font-size:1em;font-weight:500;line-height:1}
     .events-calendar__tile-span:empty{display:none}
     .events-calendar__tile-count{
-      color:#2d4e3b;
-      background-color:#fff;
-      border-radius:50em;
-      justify-content:center;
-      align-items:center;
-      width:1.625em;
-      height:1.625em;
-      font-size:.75em;
-      display:flex;
-      position:absolute;
-      top:-.5em;
-      right:-.5em;
+      color:#2d4e3b;background-color:#fff;border-radius:50em;
+      justify-content:center;align-items:center;
+      width:1.625em;height:1.625em;font-size:.75em;
+      display:flex;position:absolute;top:-.5em;right:-.5em;
     }
     .events-calendar__tile-count[data-events-calendar-tile-count=""],
     .events-calendar__tile-count[data-events-calendar-tile-count="1"]{display:none}
     .events-calendar__legenda{
-      gap:2em;
-      justify-content:center;
-      align-items:center;
-      padding-top:.75em;
-      padding-bottom:1em;
-      display:flex;
+      grid-column-gap:2em;grid-row-gap:2em;
+      justify-content:center;align-items:center;
+      padding-top:.75em;padding-bottom:1em;display:flex;
     }
-    .events-calendar__legenda-item{gap:.375em;justify-content:center;align-items:center;display:flex}
+    .events-calendar__legenda-item{grid-column-gap:.375em;grid-row-gap:.375em;justify-content:center;align-items:center;display:flex}
     .events-calendar__legenda-dot{background-color:#b8d67f;border-radius:50em;width:1em;height:1em}
     .events-calendar__legenda-dot.is--selected{background-color:#f7ade8}
     .events-calendar__legenda-span{opacity:.75;color:rgba(255,255,255,.75);font-size:1em;font-weight:400;line-height:1.25}
-
-    /* Cards panel — right side, fills height, scrollable */
-    .events-calendar__cards-collection{
-      width:100%;
-      height:100%;
-      position:relative;
-    }
+    .events-calendar__cards-collection{width:100%;height:100%;position:relative}
     .events-calendar__cards-list{
-      gap:1em;
-      flex-flow:column;
-      flex:none;
-      width:100%;
-      height:100%;
-      padding-top:1.5em;
-      padding-bottom:1.5em;
-      display:flex;
-      position:absolute;
-      overflow-y:scroll;
-      overflow-x:hidden;
+      grid-column-gap:1em;grid-row-gap:1em;
+      flex-flow:column;flex:none;
+      width:100%;height:100%;
+      padding-top:1.5em;padding-bottom:1.5em;
+      display:flex;position:absolute;overflow:scroll;
       scrollbar-width:none;
     }
     .events-calendar__cards-list::-webkit-scrollbar{display:none}
-    .events-calendar__cards-item{
-      width:100%;
-      flex-shrink:0;
-      display:flex;
-    }
-
-    /* Visibility — the key: only one shows at a time */
-    [data-events-calendar-card-status="not-active"]{display:none}
-    [data-events-calendar-card-status="active"]{display:flex}
-    [data-events-calendar-empty-status="not-active"]{display:none}
-    [data-events-calendar-empty-status="active"]{display:flex}
-
+    .events-calendar__cards-item{width:100%;height:100%;display:flex}
+    [data-events-calendar-card-status="not-active"],[data-events-calendar-empty-status="not-active"]{display:none}
+    [data-events-calendar-card-status="active"],[data-events-calendar-empty-status="active"]{display:flex}
     .events-calendar__no-event{
-      background-color:rgba(255,255,255,.15);
-      border-radius:1.5em;
-      justify-content:center;
-      align-items:center;
-      width:100%;
-      margin-top:1.5em;
-      margin-bottom:1.5em;
-      display:flex;
-      position:relative;
-      min-height:8em;
+      background-color:rgba(255,255,255,.15);border-radius:1.5em;
+      justify-content:center;align-items:center;
+      width:100%;margin-top:1.5em;margin-bottom:1.5em;
+      display:flex;position:relative;
     }
     .events-calendar__no-event-p{margin-bottom:0;font-size:1em;font-weight:400;line-height:1.25}
-
-    /* Event cards */
     .event-card{
-      gap:1em;
-      color:#201d1d;
-      background-color:#fff;
-      border-radius:1.5em;
-      flex-flow:column;
-      width:100%;
-      padding:1.5em;
-      display:flex;
+      grid-column-gap:1em;grid-row-gap:1em;
+      color:#201d1d;background-color:#fff;border-radius:1.5em;
+      flex-flow:column;width:100%;padding:1.5em;display:flex;
     }
     .event-card__title{flex:none;padding:1.125em 1em .75em}
-    .event-card__media{flex:none;height:12em;position:relative}
+    .event-card__media{flex:1;min-height:12em;position:relative}
     .event-card__description{
-      gap:1.5em;
-      flex-flow:column;
-      flex:none;
-      align-items:flex-start;
-      padding:.75em 1em 1em;
-      display:flex;
+      grid-column-gap:1.5em;grid-row-gap:1.5em;
+      flex-flow:column;flex:none;align-items:flex-start;
+      padding:.75em 1em 1em;display:flex;
     }
     .event-card__p{
       opacity:.7;letter-spacing:-.02em;margin-bottom:0;font-size:1em;font-weight:500;line-height:1.25;
-      display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;
+      display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden;
     }
     .event-card__btn{
-      color:#fff;background-color:#82a345;border-radius:50em;justify-content:center;align-items:center;
-      height:3.25em;padding:0 1.75em;text-decoration:none;display:flex;
+      color:#fff;background-color:#82a345;border-radius:50em;
+      justify-content:center;align-items:center;
+      height:3.25em;padding-left:1.75em;padding-right:1.75em;
+      text-decoration:none;display:flex;
     }
     .event-card__btn.is--orange{background-color:#d37a1d}
     .event-card__btn-span{font-size:1em;font-weight:500;line-height:1}
     .event-card__img{object-fit:cover;border-radius:.5em;width:100%;height:100%;display:block;position:absolute}
     .event-card__date-p{color:#2d4e3b;letter-spacing:-.03em;margin-bottom:0;font-size:1.5em;font-weight:600;line-height:1.125}
-    .event-card__h{color:#82a345;letter-spacing:-.03em;margin:0 0 .25em;font-size:1.625em;font-weight:600;line-height:1.125}
+    .event-card__h{color:#82a345;letter-spacing:-.03em;margin-top:0;margin-bottom:0;font-size:1.625em;font-weight:600;line-height:1.125}
     .event-card__h.is--orange{color:#d37a1d}
 
-    /* Responsive */
     @media screen and (max-width:991px){
-      .events-calendar{flex-flow:column;width:31em}
+      .events-calendar{grid-column-gap:0;grid-row-gap:0;flex-flow:column;width:31em}
       .events-calendar__calendar{padding-top:2em;padding-bottom:0}
-      .events-calendar__cards-list{position:relative;height:auto}
-      .events-calendar__cards-collection{height:auto}
-      .events-calendar__cards{height:auto}
+      .events-calendar__cards-list{border-radius:1.5em;position:relative}
     }
     @media screen and (max-width:479px){
-      .events-calendar{border-radius:2.5em;padding-left:1em;padding-right:1em;width:100%}
+      .events-calendar{border-radius:2.5em;padding-left:1em;padding-right:1em}
       .events-calendar__calendar{padding-left:0;padding-right:0}
       .events-calendar__cards-list{padding-top:1em;padding-bottom:1em}
       .event-card{padding:1em}
@@ -270,8 +206,6 @@
 
   <div class="demo-stage">
     <div data-events-calendar-timezone="Africa/Johannesburg" data-events-calendar-init="" class="events-calendar">
-
-      <!-- Left: Calendar -->
       <div class="events-calendar__calendar">
         <div data-events-calendar-header="" class="events-calendar__header">
           <div class="events-calendar__header-btn">
@@ -298,11 +232,7 @@
           <span data-events-calendar-weekday="sunday" class="events-calendar__weekdays-day">S</span>
         </div>
         <div data-events-calendar-grid="" class="events-calendar__grid">
-          <!-- JS generates all 42 tiles from this one template -->
-          <button data-events-calendar-tile="" data-events-calendar-tile-status="empty" class="events-calendar__tile">
-            <span data-events-calendar-tile-day="" class="events-calendar__tile-span"></span>
-            <span data-events-calendar-tile-count="" class="events-calendar__tile-count"></span>
-          </button>
+          <button data-events-calendar-tile="" data-events-calendar-tile-status="empty" class="events-calendar__tile"><span data-events-calendar-tile-day="" class="events-calendar__tile-span"></span><span data-events-calendar-tile-count="" class="events-calendar__tile-count"></span></button>
         </div>
         <div class="events-calendar__legenda">
           <div class="events-calendar__legenda-item">
@@ -315,15 +245,12 @@
           </div>
         </div>
       </div>
-
-      <!-- Right: Cards panel -->
       <div data-events-calendar-cards="" class="events-calendar__cards">
         <div data-events-calendar-empty-status="not-active" class="events-calendar__no-event">
           <p class="events-calendar__no-event-p">No upcoming events 😢</p>
         </div>
         <div class="events-calendar__cards-collection">
           <div class="events-calendar__cards-list">
-
             <div data-events-calendar-active-count="1" data-events-calendar-card="" data-events-calendar-card-date="July 10, 2026" data-events-calendar-card-status="not-active" class="events-calendar__cards-item">
               <div class="event-card">
                 <div class="event-card__title">
@@ -337,7 +264,6 @@
                 </div>
               </div>
             </div>
-
             <div data-events-calendar-active-count="2" data-events-calendar-card="" data-events-calendar-card-date="July 18, 2026" data-events-calendar-card-status="not-active" class="events-calendar__cards-item">
               <div class="event-card">
                 <div class="event-card__title">
@@ -351,7 +277,6 @@
                 </div>
               </div>
             </div>
-
             <div data-events-calendar-active-count="2" data-events-calendar-card="" data-events-calendar-card-date="July 18, 2026" data-events-calendar-card-status="not-active" class="events-calendar__cards-item">
               <div class="event-card">
                 <div class="event-card__title">
@@ -365,7 +290,6 @@
                 </div>
               </div>
             </div>
-
             <div data-events-calendar-active-count="1" data-events-calendar-card="" data-events-calendar-card-date="August 5, 2026" data-events-calendar-card-status="not-active" class="events-calendar__cards-item">
               <div class="event-card">
                 <div class="event-card__title">
@@ -379,11 +303,9 @@
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
-
     </div>
   </div>
 
