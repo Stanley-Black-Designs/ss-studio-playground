@@ -59,7 +59,7 @@
     .events-calendar__cards-collection{
       flex:1;
       min-height:0;
-      overflow-y:auto;
+      overflow-y:scroll;
       scrollbar-width:none;
     }
     .events-calendar__cards-collection::-webkit-scrollbar{display:none}
@@ -68,17 +68,19 @@
       display:flex;
       flex-direction:column;
       gap:1em;
+      padding-bottom:.5em;
     }
     .events-calendar__cards-item{
-      display:flex;
+      display:block;
       flex-shrink:0;
+      width:100%;
     }
 
     /* Visibility toggling */
-    [data-events-calendar-card-status="not-active"]{display:none}
-    [data-events-calendar-card-status="active"]{display:flex}
-    [data-events-calendar-empty-status="not-active"]{display:none}
-    [data-events-calendar-empty-status="active"]{display:flex}
+    [data-events-calendar-card-status="not-active"]{display:none !important}
+    [data-events-calendar-card-status="active"]{display:block !important}
+    [data-events-calendar-empty-status="not-active"]{display:none !important}
+    [data-events-calendar-empty-status="active"]{display:flex !important}
 
     /* Calendar internals */
     .events-calendar__header{display:flex;align-items:center;padding:1em 1em 0}
