@@ -101,6 +101,31 @@
       margin-right:auto;
     }
 
+    /* ── Initial hero text — visible before scroll starts ── */
+    .scene__hero-text{
+      position:absolute;
+      z-index:1;
+      text-align:center;
+      padding:0 clamp(24px,7vw,140px);
+      pointer-events:none;
+    }
+    .scene__hero-eyebrow{
+      display:block;
+      font-size:clamp(9px,1vw,12px);
+      font-weight:500;
+      letter-spacing:.2em;
+      text-transform:uppercase;
+      color:rgba(240,240,242,.4);
+      margin-bottom:1.25em;
+    }
+    .scene__hero-heading{
+      font-size:clamp(52px,9vw,124px);
+      font-weight:200;
+      line-height:1.0;
+      letter-spacing:-.045em;
+      color:#f0f0f2;
+    }
+
     /* ── Scroll hint ── */
     .scroll-hint{
       position:absolute;
@@ -153,6 +178,10 @@
       <h2 class="scene__heading">The web should<br>feel <em>alive.</em></h2>
       <p class="scene__body">Every scroll, every click — an opportunity to communicate something. Not decoration. Intention.</p>
     </div>
+    <div class="scene__hero-text">
+      <span class="scene__hero-eyebrow">Stanley Smith Studios</span>
+      <h1 class="scene__hero-heading">Motion<br>is meaning.</h1>
+    </div>
     <div class="scroll-hint">
       <span>Scroll</span>
       <div class="scroll-hint__bar"></div>
@@ -185,7 +214,6 @@
   <script>
     gsap.registerPlugin(ScrollTrigger);
 
-    // Lenis — tuned for smooth, slightly weighted feel without sluggishness
     const lenis = new Lenis({
       duration: 1.1,
       easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -195,48 +223,55 @@
     gsap.ticker.lagSmoothing(0);
 
     document.querySelectorAll('.scene').forEach(scene => {
-      const circle  = scene.querySelector('.scene__circle');
-      const content = scene.querySelector('.scene__content');
-      const hint    = scene.querySelector('.scroll-hint');
+      const circle   = scene.querySelector('.scene__circle');
+      const content  = scene.querySelector('.scene__content');
+      const heroText = scene.querySelector('.scene__hero-text');
+      const hint     = scene.querySelector('.scroll-hint');
 
-      // Hard-reset each scene so nothing bleeds between pins
       gsap.set(circle,  { scale: 0 });
-      gsap.set(content, { autoAlpha: 0, y: 28 });
+      gsap.set(content, { autoAlpha: 0, y: 24 });
 
       const tl = gsap.timeline({
-        defaults: { ease: 'none' },
         scrollTrigger: {
           trigger: scene,
           start:   'top top',
-          end:     '+=200%',   // 2× viewport — fast enough to feel snappy, long enough to feel controlled
-          scrub:   0.9,        // slight lag — smooths micro-jitter without rubber-band sluggishness
+          end:     '+=220%',   // slightly more room so circle feels leisurely
+          scrub:   1.0,
           pin:     true,
           anticipatePin: 1,
         }
       });
 
       /*
-        Timeline is normalised 0→1 across the scroll distance.
-        - 0.00→0.55 : circle scales up with power2.inOut — slow start, quick mid, slow land
-        - 0.58→0.80 : content fades + rises — appears while circle is full but before pin releases
-        - 0.85→1.00 : hold — reader has time to absorb text before next scene
-        Hint fades immediately.
+        0.00→0.62 : circle grows — power2.inOut, slightly slower to appreciate the shape
+        0.50→0.52 : hero text fades out mid-circle-rise (only scene 1 has this)
+        0.64→0.82 : content fades in sharp — short duration = snappy arrival
+        0.82→1.00 : hold — reader absorbs, then next scene takes over
       */
       tl.to(circle, {
         scale: 1,
-        duration: 0.55,
-        ease: 'power2.inOut',   // feels organic — not mechanical linear, not bouncy
+        duration: 0.62,
+        ease: 'power2.inOut',
       }, 0);
+
+      if (heroText) {
+        tl.to(heroText, {
+          autoAlpha: 0,
+          y: -16,
+          duration: 0.18,
+          ease: 'power2.in',
+        }, 0.28);
+      }
 
       tl.to(content, {
         autoAlpha: 1,
         y: 0,
-        duration: 0.22,
+        duration: 0.16,
         ease: 'power3.out',
-      }, 0.58);
+      }, 0.64);
 
       if (hint) {
-        tl.to(hint, { autoAlpha: 0, duration: 0.08 }, 0);
+        tl.to(hint, { autoAlpha: 0, duration: 0.06 }, 0);
       }
     });
   </script>
