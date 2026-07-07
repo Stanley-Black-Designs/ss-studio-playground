@@ -235,7 +235,7 @@
         scrollTrigger: {
           trigger: scene,
           start:   'top top',
-          end:     '+=220%',   // slightly more room so circle feels leisurely
+          end:     '+=180%',   // shorter — less dead hold time between scenes
           scrub:   1.0,
           pin:     true,
           anticipatePin: 1,
@@ -243,36 +243,37 @@
       });
 
       /*
-        0.00→0.62 : circle grows — power2.inOut, slightly slower to appreciate the shape
-        0.50→0.52 : hero text fades out mid-circle-rise (only scene 1 has this)
-        0.64→0.82 : content fades in sharp — short duration = snappy arrival
-        0.82→1.00 : hold — reader absorbs, then next scene takes over
+        0.00→0.60 : circle grows — power2.inOut
+        0.00→0.12 : hero text + scroll hint fade out together immediately
+        0.62→0.78 : content snaps in sharply
+        0.78→1.00 : hold — shorter than before so next scene arrives sooner
       */
       tl.to(circle, {
         scale: 1,
-        duration: 0.62,
+        duration: 0.60,
         ease: 'power2.inOut',
       }, 0);
 
+      // Hero text (scene 1 only) and hint fade together at scroll start
       if (heroText) {
         tl.to(heroText, {
           autoAlpha: 0,
           y: -16,
-          duration: 0.18,
+          duration: 0.12,
           ease: 'power2.in',
-        }, 0.28);
+        }, 0);
+      }
+
+      if (hint) {
+        tl.to(hint, { autoAlpha: 0, duration: 0.10 }, 0);
       }
 
       tl.to(content, {
         autoAlpha: 1,
         y: 0,
-        duration: 0.16,
+        duration: 0.14,
         ease: 'power3.out',
-      }, 0.64);
-
-      if (hint) {
-        tl.to(hint, { autoAlpha: 0, duration: 0.06 }, 0);
-      }
+      }, 0.62);
     });
   </script>
 </body>
