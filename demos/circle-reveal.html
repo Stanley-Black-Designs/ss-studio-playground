@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Circle Reveal — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:auto}
+    body{font-family:'Inter',sans-serif;padding-top:50px;background:#0c0d10;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+    /* ── Each scene is a pinned viewport ── */
+    .scene{
+      position:relative;
+      width:100%;
+      height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+    }
+
+    /* ── Circle: starts tiny, grows to cover viewport ── */
+    .scene__circle{
+      position:absolute;
+      width:150vmax;
+      height:150vmax;
+      border-radius:50%;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%) scale(0);
+      transform-origin:center center;
+      will-change:transform;
+      z-index:0;
+    }
+
+    /* Scene colors */
+    .scene--1{background:#0c0d10}
+    .scene--1 .scene__circle{background:#0064E7}
+
+    .scene--2{background:#0064E7}
+    .scene--2 .scene__circle{background:#f0f0f2}
+
+    .scene--3{background:#f0f0f2}
+    .scene--3 .scene__circle{background:#0c0d10}
+
+    /* ── Content: centered text, starts invisible ── */
+    .scene__content{
+      position:relative;
+      z-index:1;
+      text-align:center;
+      padding:0 clamp(24px,6vw,120px);
+      max-width:1000px;
+      opacity:0;
+      transform:translateY(20px);
+      will-change:opacity,transform;
+    }
+
+    .scene__eyebrow{
+      display:inline-block;
+      font-size:clamp(10px,1.1vw,13px);
+      font-weight:500;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      margin-bottom:1.5em;
+      opacity:.55;
+    }
+
+    .scene__heading{
+      font-size:clamp(36px,6.5vw,88px);
+      font-weight:300;
+      line-height:1.05;
+      letter-spacing:-.035em;
+    }
+
+    .scene__heading em{
+      font-style:italic;
+    }
+
+    .scene__sub{
+      margin-top:1.25em;
+      font-size:clamp(15px,1.5vw,19px);
+      font-weight:400;
+      line-height:1.6;
+      opacity:.6;
+      max-width:540px;
+      margin-left:auto;
+      margin-right:auto;
+    }
+
+    /* Per-scene text colors */
+    .scene--1 .scene__content{color:#f0f0f2}
+    .scene--2 .scene__content{color:#f0f0f2}
+    .scene--3 .scene__content{color:#0c0d10}
+
+    /* Scroll hint on first scene */
+    .scroll-hint{
+      position:absolute;
+      bottom:32px;
+      left:50%;
+      transform:translateX(-50%);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:8px;
+      color:rgba(240,240,242,.3);
+      font-size:11px;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+      z-index:2;
+    }
+    .scroll-hint__line{
+      width:1px;
+      height:40px;
+      background:rgba(240,240,242,.2);
+      animation:scrollpulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollpulse{
+      0%,100%{transform:scaleY(1);opacity:.3}
+      50%{transform:scaleY(.5);opacity:.8}
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-chrome">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <div class="demo-chrome__sep"></div><span class="demo-chrome__title">Circle Reveal</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+
+  <!-- Scene 1: dark bg, blue circle grows -->
+  <section class="scene scene--1" data-scene="1">
+    <div class="scene__circle"></div>
+    <div class="scene__content">
+      <span class="scene__eyebrow">Motion &amp; Design</span>
+      <h2 class="scene__heading">The web should<br>feel <em>alive.</em></h2>
+      <p class="scene__sub">Every scroll, every click — an opportunity to communicate something. Not decoration. Intention.</p>
+    </div>
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-hint__line"></div>
+    </div>
+  </section>
+
+  <!-- Scene 2: blue bg, light circle grows -->
+  <section class="scene scene--2" data-scene="2">
+    <div class="scene__circle"></div>
+    <div class="scene__content">
+      <span class="scene__eyebrow">Stanley Smith Studios</span>
+      <h2 class="scene__heading">Built for<br>those who <em>care.</em></h2>
+      <p class="scene__sub">We work with brands that take what they do seriously — and want a digital presence that matches that ambition.</p>
+    </div>
+  </section>
+
+  <!-- Scene 3: light bg, dark circle grows -->
+  <section class="scene scene--3" data-scene="3">
+    <div class="scene__circle"></div>
+    <div class="scene__content">
+      <span class="scene__eyebrow">Let's work together</span>
+      <h2 class="scene__heading">Ready to<br><em>begin?</em></h2>
+      <p class="scene__sub">Book a 30-minute call and let's talk about what you're building — and how motion can make it unforgettable.</p>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Lenis smooth scroll, connected to GSAP ticker
+    const lenis = new Lenis();
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(time => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+
+    const scenes = document.querySelectorAll('.scene');
+
+    scenes.forEach((scene, i) => {
+      const circle  = scene.querySelector('.scene__circle');
+      const content = scene.querySelector('.scene__content');
+      const hint    = scene.querySelector('.scroll-hint');
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: scene,
+          start: 'top top',
+          end: '+=150%',
+          scrub: 1.2,
+          pin: true,
+          anticipatePin: 1,
+        }
+      });
+
+      // 1. Circle expands from invisible to full cover — smooth & cubic
+      tl.to(circle, {
+        scale: 1,
+        duration: 3,
+        ease: 'power2.inOut',
+      }, 0);
+
+      // 2. Text fades in after circle is ~60% expanded
+      tl.to(content, {
+        opacity: 1,
+        y: 0,
+        duration: 1.5,
+        ease: 'power3.out',
+      }, 1.8);
+
+      // 3. Fade scroll hint out on first scene
+      if (hint) {
+        tl.to(hint, { opacity: 0, duration: 0.5 }, 0.2);
+      }
+    });
+  </script>
+</body>
+</html>
