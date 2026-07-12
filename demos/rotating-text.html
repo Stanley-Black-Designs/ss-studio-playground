@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rotating Text — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,200;0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:#0c0d10;font-family:'Inter',sans-serif;padding-top:50px;min-height:100dvh;display:flex;align-items:center;justify-content:center;-webkit-font-smoothing:antialiased}
+    .demo-stage{display:flex;align-items:center;justify-content:center;padding:60px 32px;width:100%}
+    .rotating-text__heading{color:#f0f0f2;text-align:center;letter-spacing:-.03em;margin:0;font-size:clamp(2em,6vw,4.5em);font-weight:300;line-height:1.05;width:100%}
+    .rotating-text__highlight{color:#0064E7}
+    [data-rotating-words]{display:inline-block;position:relative}
+    .rotating-text__inner{display:inline-block}
+    .rotating-text__word{display:block;white-space:nowrap;position:absolute;top:0;left:0}
+    .rotating-line{padding-bottom:.1em;margin-bottom:-.1em;white-space:nowrap}
+    .rotating-line-mask{overflow-x:visible!important;overflow-y:clip!important}
+  </style>
+</head>
+<body>
+  <div class="demo-chrome">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <div class="demo-chrome__sep"></div><span class="demo-chrome__title">Rotating Text</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+  <div class="demo-stage">
+    <h1 data-rotating-title data-step-duration="2" class="rotating-text__heading">
+      We build <span data-rotating-words="websites, experiences, motion, interfaces, brands" class="rotating-text__highlight">interfaces</span> that make people stop and look twice.
+    </h1>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/SplitText.min.js"></script>
+  <script>
+    gsap.registerPlugin(SplitText);
+    function initRotatingText(){document.querySelectorAll('[data-rotating-title]').forEach((heading)=>{const stepDuration=parseFloat(heading.getAttribute('data-step-duration')||'1.75');SplitText.create(heading,{type:'lines',mask:'lines',autoSplit:true,linesClass:'rotating-line',onSplit(instance){const rotatingSpan=heading.querySelector('[data-rotating-words]');if(!rotatingSpan)return;const rawWords=rotatingSpan.getAttribute('data-rotating-words')||'';const words=rawWords.split(',').map((w)=>w.trim()).filter(Boolean);if(!words.length)return;const wrapper=document.createElement('span');wrapper.className='rotating-text__inner';const wordEls=words.map((word)=>{const el=document.createElement('span');el.className='rotating-text__word';el.textContent=word;wrapper.appendChild(el);return el;});rotatingSpan.textContent='';rotatingSpan.appendChild(wrapper);requestAnimationFrame(()=>{const inDuration=0.75;const outDuration=0.6;gsap.set(wordEls,{yPercent:150,autoAlpha:0});let activeIndex=0;const firstWord=wordEls[activeIndex];gsap.set(firstWord,{yPercent:0,autoAlpha:1});const firstWidth=firstWord.getBoundingClientRect().width;wrapper.style.width=firstWidth+'px';function showNext(){const nextIndex=(activeIndex+1)%wordEls.length;const prev=wordEls[activeIndex];const current=wordEls[nextIndex];const targetWidth=current.getBoundingClientRect().width;gsap.to(wrapper,{width:targetWidth,duration:inDuration,ease:'power4.inOut'});if(prev&&prev!==current){gsap.to(prev,{yPercent:-150,autoAlpha:0,duration:outDuration,ease:'power4.inOut'});}gsap.fromTo(current,{yPercent:150,autoAlpha:0},{yPercent:0,autoAlpha:1,duration:inDuration,ease:'power4.inOut'});activeIndex=nextIndex;gsap.delayedCall(stepDuration,showNext);}if(wordEls.length>1){gsap.delayedCall(stepDuration,showNext);}});}});});}
+    document.addEventListener("DOMContentLoaded",function(){initRotatingText();});
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="lenis-init.js"></script>
+</body>
+</html>

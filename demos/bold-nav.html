@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bold Full Screen Navigation — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:#111;font-family:'Inter',sans-serif;min-height:100dvh;-webkit-font-smoothing:antialiased}
+    .page-content{min-height:100dvh;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.15);font-size:clamp(60px,12vw,160px);font-weight:300;letter-spacing:-.04em;user-select:none}
+    /* Nav */
+    .bold-nav-full{z-index:100;pointer-events:none;position:fixed;inset:0}
+    .bold-nav-full__bar{z-index:1;justify-content:space-between;width:100%;padding:2.5em;display:flex;position:absolute}
+    .bold-nav-full__logo{pointer-events:auto;color:#f4f4f4;justify-content:center;align-items:center;width:auto;height:2em;display:flex;text-decoration:none;font-weight:600;font-size:17px;letter-spacing:-.01em;gap:8px}
+    .bold-nav-full__logo-dot{width:9px;height:9px;background:#0064E7;border-radius:50%;flex-shrink:0}
+    .bold-nav-full__hamburger{pointer-events:auto;color:#f4f4f4;cursor:pointer;background-color:#0000;justify-content:center;align-items:center;width:3em;height:3em;display:flex;position:relative;overflow:hidden;border:none}
+    .bold-nav-full__hamburger .bold-nav-full__hamburger-bar{background-color:currentColor;width:2em;height:.125em;position:absolute;transform:translate(0,0) rotate(.001deg);transition:transform .5s cubic-bezier(.7,0,.3,1)}
+    .bold-nav-full__hamburger .bold-nav-full__hamburger-bar:nth-child(1){transform:translate(0,-.45em) scale(1,1) rotate(.001deg)}
+    .bold-nav-full__hamburger .bold-nav-full__hamburger-bar:nth-child(3){transform:translate(0,.45em) scale(1,1) rotate(.001deg)}
+    .bold-nav-full__hamburger:hover .bold-nav-full__hamburger-bar:nth-child(1){transform:translate(0,-.45em) scale(.5,1) rotate(.001deg)}
+    .bold-nav-full__hamburger:hover .bold-nav-full__hamburger-bar:nth-child(3){transform:translate(0,.45em) scale(.5,1) rotate(.001deg)}
+    [data-navigation-status="active"] .bold-nav-full__hamburger-bar:nth-child(1){transform:translate(0,0) rotate(45deg) scale(1,1)}
+    [data-navigation-status="active"] .bold-nav-full__hamburger-bar:nth-child(2){transform:translate(-150%,0) rotate(.001deg) scale(1,1)}
+    [data-navigation-status="active"] .bold-nav-full__hamburger-bar:nth-child(3){transform:translate(0,0) rotate(-45deg) scale(1,1)}
+    [data-navigation-status="active"] .bold-nav-full__hamburger:hover .bold-nav-full__hamburger-bar:nth-child(1){transform:translate(0,0) rotate(45deg) scale(.7,1)}
+    [data-navigation-status="active"] .bold-nav-full__hamburger:hover .bold-nav-full__hamburger-bar:nth-child(3){transform:translate(0,0) rotate(-45deg) scale(.7,1)}
+    .bold-nav-full__tile{pointer-events:auto;background-color:#0c0d10;flex-flow:column;justify-content:center;align-items:center;width:100%;height:100%;display:flex;position:absolute;top:0;left:0;transition:clip-path 1s cubic-bezier(.9,0,.1,1);clip-path:polygon(0% 0%,100% 0%,100% 0%,0% 0%)}
+    [data-navigation-status="active"] .bold-nav-full__tile{clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%)}
+    .bold-nav-full__ul{flex-flow:column;align-items:center;margin:0;padding:0;display:flex;list-style:none}
+    .bold-nav-full__li{justify-content:center;align-items:center;margin:0;padding:0;text-decoration:none;display:flex;position:relative;overflow:hidden;transition:opacity .5s cubic-bezier(.7,0,.3,1)}
+    .bold-nav-full__link{color:#f0f0f2;letter-spacing:-.04em;padding-left:.075em;padding-right:.075em;font-family:'Inter',sans-serif;font-size:calc(4vw + 4vh);font-weight:300;line-height:1.1;text-decoration:none;transform:translateY(100%) rotate(5deg);transition:transform .75s cubic-bezier(.7,0,.3,1)}
+    .bold-nav-full__link.is--current{color:#0064E7}
+    .bold-nav-full__li:nth-child(1) .bold-nav-full__link{transition-delay:.2s}
+    .bold-nav-full__li:nth-child(2) .bold-nav-full__link{transition-delay:.15s}
+    .bold-nav-full__li:nth-child(3) .bold-nav-full__link{transition-delay:.1s}
+    .bold-nav-full__li:nth-child(4) .bold-nav-full__link{transition-delay:.05s}
+    .bold-nav-full__li:nth-child(5) .bold-nav-full__link{transition-delay:0s}
+    [data-navigation-status="active"] .bold-nav-full__link{transform:translateY(0%) rotate(.001deg);transition-delay:.3s}
+    [data-navigation-status="active"] .bold-nav-full__li:nth-child(1) .bold-nav-full__link{transition-delay:.3s}
+    [data-navigation-status="active"] .bold-nav-full__li:nth-child(2) .bold-nav-full__link{transition-delay:.35s}
+    [data-navigation-status="active"] .bold-nav-full__li:nth-child(3) .bold-nav-full__link{transition-delay:.4s}
+    [data-navigation-status="active"] .bold-nav-full__li:nth-child(4) .bold-nav-full__link{transition-delay:.45s}
+    [data-navigation-status="active"] .bold-nav-full__li:nth-child(5) .bold-nav-full__link{transition-delay:.5s}
+    .bold-nav-full__link-text{text-shadow:0 1.1em 0 #0064E7;display:block;position:relative}
+    .bold-nav-full__ul:has(.bold-nav-full__li:hover) .bold-nav-full__li{opacity:.15}
+    .bold-nav-full__ul:has(.bold-nav-full__li:hover) .bold-nav-full__li:hover{opacity:1}
+    .bold-nav-full__link .bold-nav-full__link-text{transition:transform .5s cubic-bezier(.7,0,.3,1);transform:translateY(0%) rotate(.001deg)}
+    .bold-nav-full__link:hover .bold-nav-full__link-text{transform:translateY(-100%) rotate(.001deg)}
+    .bold-nav__bottom{justify-content:space-between;align-items:center;width:100%;padding:2.25em 2.5em;display:flex;position:absolute;bottom:0;left:0}
+    .bold-nav__word{opacity:.35;margin-bottom:0;font-size:1.125em;position:relative;color:#f0f0f2}
+  </style>
+</head>
+<body>
+  <div class="page-content">Menu</div>
+
+  <nav data-navigation-status="not-active" class="bold-nav-full">
+    <div class="bold-nav-full__bar">
+      <a href="../index.html" class="bold-nav-full__logo">
+        <span class="bold-nav-full__logo-dot"></span>Stanley
+      </a>
+      <button data-navigation-toggle="toggle" class="bold-nav-full__hamburger">
+        <div class="bold-nav-full__hamburger-bar"></div>
+        <div class="bold-nav-full__hamburger-bar"></div>
+        <div class="bold-nav-full__hamburger-bar"></div>
+      </button>
+    </div>
+    <div class="bold-nav-full__tile">
+      <ul class="bold-nav-full__ul">
+        <li class="bold-nav-full__li"><a href="#" class="bold-nav-full__link is--current"><span class="bold-nav-full__link-text">Home</span></a></li>
+        <li class="bold-nav-full__li"><a href="#" class="bold-nav-full__link"><span class="bold-nav-full__link-text">Work</span></a></li>
+        <li class="bold-nav-full__li"><a href="#" class="bold-nav-full__link"><span class="bold-nav-full__link-text">Services</span></a></li>
+        <li class="bold-nav-full__li"><a href="#" class="bold-nav-full__link"><span class="bold-nav-full__link-text">About</span></a></li>
+        <li class="bold-nav-full__li"><a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" class="bold-nav-full__link"><span class="bold-nav-full__link-text">Contact</span></a></li>
+      </ul>
+      <div class="bold-nav__bottom">
+        <p class="bold-nav__word">Cape Town, South Africa</p>
+        <p class="bold-nav__word">hello@stanleysmithstudios.com</p>
+      </div>
+    </div>
+  </nav>
+
+  <script>
+    function initBoldFullScreenNavigation(){document.querySelectorAll('[data-navigation-toggle="toggle"]').forEach(toggleBtn=>{toggleBtn.addEventListener('click',()=>{const navStatusEl=document.querySelector('[data-navigation-status]');if(!navStatusEl)return;if(navStatusEl.getAttribute('data-navigation-status')==='not-active'){navStatusEl.setAttribute('data-navigation-status','active');}else{navStatusEl.setAttribute('data-navigation-status','not-active');}});});document.addEventListener('keydown',e=>{if(e.keyCode===27){const navStatusEl=document.querySelector('[data-navigation-status]');if(!navStatusEl)return;if(navStatusEl.getAttribute('data-navigation-status')==='active'){navStatusEl.setAttribute('data-navigation-status','not-active');}}});}
+    document.addEventListener('DOMContentLoaded',function(){initBoldFullScreenNavigation();});
+  </script>
+</body>
+</html>

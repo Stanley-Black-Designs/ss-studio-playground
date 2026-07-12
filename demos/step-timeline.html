@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step-by-Step Timeline — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:#f2efe6;font-family:'Inter',sans-serif;padding-top:50px;color:#22201c;-webkit-font-smoothing:antialiased}
+    .demo-stage{padding:8em 2em 12em;max-width:700px;margin:0 auto}
+    .step-timeline{width:100%;max-width:50em;margin-left:auto;margin-right:auto}
+    .step-timeline__header{gap:1em;flex-flow:column;justify-content:flex-start;align-items:flex-start;margin-bottom:6em;display:flex}
+    .step-timeline__h2{letter-spacing:-.05em;margin-top:0;margin-bottom:0;font-size:4em;font-weight:300;line-height:1;color:#22201c}
+    .step-timeline__p{margin-bottom:0;font-size:1.125em;line-height:1.4}
+    .step-timeline__eyebrow{color:#6b7c51;text-transform:uppercase;font-size:.8em;letter-spacing:.1em;font-weight:500}
+    .step-timeline__wrapper{position:relative}
+    .step-timeline__list{gap:8em;flex-flow:column;justify-content:flex-start;align-items:stretch;display:flex}
+    .step-timeline__item{gap:3em;justify-content:flex-start;align-items:flex-start;display:flex;position:relative}
+    .step-timeline__line{pointer-events:none;background-color:rgba(34,32,28,.14);width:2px;position:absolute;top:0;bottom:0;left:1.5em}
+    .step-timeline__fill{transform-origin:50% 0;background-color:#7d8a69;width:100%;height:100%;position:absolute;inset:0%}
+    .step-timeline__marker{color:#22201c;background-color:#ebe8dd;border:1px solid rgba(0,0,0,.2);border-radius:100em;flex:none;justify-content:center;align-items:center;width:3em;height:3em;transition:all .4s cubic-bezier(.645,.045,.355,1);display:flex;position:relative;font-weight:500}
+    [data-step-timeline-item][data-status="active"] [data-step-timeline-marker]{background:#7d8a69;color:#f2efe6;border-color:#7d8a69}
+    [data-step-timeline-item][data-current] [data-step-timeline-marker]{box-shadow:0 0 0 .5em rgba(125,138,105,.16)}
+    .step-timeline__content{gap:1em;flex-flow:column;justify-content:flex-start;align-items:flex-start;max-width:28em;padding-top:.4em;transition:opacity .25s;display:flex}
+    [data-step-timeline-item] .step-timeline__content{opacity:.25}
+    [data-step-timeline-item][data-status="active"] .step-timeline__content{opacity:.5}
+    [data-step-timeline-item][data-current] .step-timeline__content{opacity:1}
+    .step-timeline__content-h{letter-spacing:-.04em;margin-top:0;margin-bottom:0;font-size:2em;font-weight:300;line-height:1;color:#22201c}
+    @media screen and (max-width:767px){.step-timeline{max-width:none}.step-timeline__list{gap:6em}.step-timeline__item{gap:1.5em}}
+  </style>
+</head>
+<body>
+  <div class="demo-chrome" style="background:rgba(242,239,230,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.08);">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back" style="color:rgba(34,32,28,0.55);"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <div class="demo-chrome__sep" style="background:rgba(0,0,0,0.12);"></div>
+      <span class="demo-chrome__title" style="color:#22201c;">Step-by-Step Timeline</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+  <div class="demo-stage">
+    <div data-step-timeline-init data-step-timeline-activation="0.5" class="step-timeline">
+      <div class="step-timeline__header">
+        <span class="step-timeline__eyebrow">Our process</span>
+        <h2 class="step-timeline__h2">How it works</h2>
+      </div>
+      <div class="step-timeline__wrapper">
+        <div data-step-timeline-line class="step-timeline__line"><div data-step-timeline-fill class="step-timeline__fill"></div></div>
+        <div class="step-timeline__collection">
+          <div class="step-timeline__list">
+            <div data-step-timeline-item class="step-timeline__item"><div data-step-timeline-marker class="step-timeline__marker"><span>1</span></div><div class="step-timeline__content"><h3 class="step-timeline__content-h">Discovery</h3><p class="step-timeline__p">We start by getting to know your brand, your goals, and the people you're trying to reach. One focused kickoff sets the direction for everything that follows.</p></div></div>
+            <div data-step-timeline-item class="step-timeline__item"><div data-step-timeline-marker class="step-timeline__marker"><span>2</span></div><div class="step-timeline__content"><h3 class="step-timeline__content-h">Strategy</h3><p class="step-timeline__p">With the groundwork laid, we shape the plan — the story, the structure, and the decisions that turn a loose idea into something we can actually build.</p></div></div>
+            <div data-step-timeline-item class="step-timeline__item"><div data-step-timeline-marker class="step-timeline__marker"><span>3</span></div><div class="step-timeline__content"><h3 class="step-timeline__content-h">Design</h3><p class="step-timeline__p">This is where it takes shape. We craft the visual language, the layouts, and the small details that make the work feel unmistakably yours.</p></div></div>
+            <div data-step-timeline-item class="step-timeline__item"><div data-step-timeline-marker class="step-timeline__marker"><span>4</span></div><div class="step-timeline__content"><h3 class="step-timeline__content-h">Build</h3><p class="step-timeline__p">Designs come to life in the browser — animated, responsive, and tested across devices so nothing breaks between the mockup and the real thing.</p></div></div>
+            <div data-step-timeline-item class="step-timeline__item"><div data-step-timeline-marker class="step-timeline__marker"><span>5</span></div><div class="step-timeline__content"><h3 class="step-timeline__content-h">Launch</h3><p class="step-timeline__p">We ship. Final checks, a clean handover, and your project goes live to the world exactly as it was meant to.</p></div></div>
+            <div data-step-timeline-item class="step-timeline__item"><div data-step-timeline-marker class="step-timeline__marker"><span>6</span></div><div class="step-timeline__content"><h3 class="step-timeline__content-h">Support</h3><p class="step-timeline__p">After launch we stick around — tuning, iterating, and helping you get the most out of what we made together.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+    function initStepByStepTimeline(){const root=document.querySelector("[data-step-timeline-init]");if(!root)return;const line=root.querySelector("[data-step-timeline-line]");const fill=root.querySelector("[data-step-timeline-fill]");const items=Array.from(root.querySelectorAll("[data-step-timeline-item]"));if(!line||!fill||!items.length)return;const anchors=items.map((item)=>item.querySelector("[data-step-timeline-marker]")||item);const activationInput=parseFloat(root.dataset.stepTimelineActivation);const activation=Number.isNaN(activationInput)?0.5:Math.min(Math.max(activationInput,0),1);const activationPercent=activation*100;const lastIndex=items.length-1;let anchorFractions=[0];function measureLine(){if(items.length<2){line.style.height="0px";anchorFractions=[0];return;}const base=line.parentElement.getBoundingClientRect().top;const centers=anchors.map((anchor)=>{const box=anchor.getBoundingClientRect();return box.top+box.height/2-base;});const firstCenter=centers[0];const span=centers[lastIndex]-firstCenter;line.style.top=firstCenter+"px";line.style.height=span+"px";anchorFractions=centers.map((center)=>span>0?(center-firstCenter)/span:0);}let currentIndex=-2;function setCurrentIndex(index){if(index===currentIndex)return;currentIndex=index;items.forEach((item,i)=>{const status=index>=0&&i<=index?"active":"inactive";if(item.getAttribute("data-status")!==status){item.setAttribute("data-status",status);}item.toggleAttribute("data-current",i===index);item.toggleAttribute("data-previous",i===index-1);item.toggleAttribute("data-next",i===index+1);});}function indexForProgress(reached,progress){if(!reached)return-1;let index=0;for(let i=0;i<anchorFractions.length;i++){if(progress+0.0001>=anchorFractions[i])index=i;}return index;}function updateFromScroll(self){const reached=self.isActive||self.progress>=1;setCurrentIndex(indexForProgress(reached,self.progress));}setCurrentIndex(-1);gsap.set(fill,{transformOrigin:"top",scaleY:0});const mediaQueries=gsap.matchMedia();mediaQueries.add("(prefers-reduced-motion: no-preference)",()=>{measureLine();ScrollTrigger.addEventListener("refreshInit",measureLine);if(items.length>1){gsap.fromTo(fill,{scaleY:0},{scaleY:1,ease:"none",scrollTrigger:{trigger:line,start:"top "+activationPercent+"%",end:"bottom "+activationPercent+"%",scrub:true,onUpdate:updateFromScroll,onToggle:updateFromScroll,onRefresh:updateFromScroll,}});}else{setCurrentIndex(0);}const refresh=()=>ScrollTrigger.refresh();window.addEventListener("load",refresh);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(refresh);ScrollTrigger.refresh();return()=>{window.removeEventListener("load",refresh);ScrollTrigger.removeEventListener("refreshInit",measureLine);};});mediaQueries.add("(prefers-reduced-motion: reduce)",()=>{measureLine();gsap.set(fill,{scaleY:1});setCurrentIndex(lastIndex);});}
+    document.addEventListener("DOMContentLoaded",()=>{initStepByStepTimeline();});
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="lenis-init.js"></script>
+</body>
+</html>
