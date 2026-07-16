@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="demo-chrome.css">
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    body{background:#0c0d10;font-family:'Inter',sans-serif;padding-top:50px;min-height:100dvh;-webkit-font-smoothing:antialiased;overflow:hidden}
+    body{background:#14273a;font-family:'Inter',sans-serif;padding-top:50px;min-height:100dvh;-webkit-font-smoothing:antialiased;overflow:hidden}
 
     /* ── Film Grain Overlay ── */
     .grain{
@@ -30,16 +30,43 @@
       80% {background-position:0.2em 0.5em}
     }
 
+    /* ── Background scene matching Osmo reference ── */
+    .grain-bg{
+      position:fixed;
+      inset:50px 0 0;
+      z-index:0;
+      background:
+        radial-gradient(ellipse at 30% 60%, #1e4a6e 0%, transparent 55%),
+        radial-gradient(ellipse at 75% 30%, #0d3352 0%, transparent 50%),
+        #0a1e30;
+    }
+    /* Fake image panels like the Osmo demo */
+    .grain-bg__panel{
+      position:absolute;
+      border-radius:1em;
+      overflow:hidden;
+      background:#1a3a50;
+    }
+    .grain-bg__panel img{
+      width:100%;height:100%;object-fit:cover;display:block;opacity:.7;
+    }
+    .grain-bg__panel--1{width:22%;aspect-ratio:3/4;top:12%;left:5%}
+    .grain-bg__panel--2{width:28%;aspect-ratio:4/5;top:8%;left:29%;transform:rotate(-2deg)}
+    .grain-bg__panel--3{width:20%;aspect-ratio:3/4;top:15%;left:59%}
+    .grain-bg__panel--4{width:18%;aspect-ratio:2/3;top:10%;right:4%;transform:rotate(1.5deg)}
+
     /* ── Page content underneath ── */
     .grain-demo{
-      min-height:calc(100dvh - 50px);
+      position:fixed;
+      inset:50px 0 0;
+      z-index:1;
       display:flex;
       flex-direction:column;
       align-items:center;
       justify-content:center;
-      gap:2em;
+      gap:1.5em;
       padding:40px 32px;
-      position:relative;
+      pointer-events:none;
     }
     .grain-demo__eyebrow{
       font-size:11px;
@@ -55,19 +82,19 @@
       letter-spacing:-.045em;
       color:#f0f0f2;
       text-align:center;
-      max-width:9ch;
+      max-width:10ch;
     }
     .grain-demo__heading em{
       font-style:italic;
-      color:rgba(240,240,242,.35);
+      color:rgba(240,240,242,.4);
     }
     .grain-demo__sub{
-      font-size:clamp(13px,1.2vw,16px);
+      font-size:clamp(13px,1.2vw,15px);
       font-weight:400;
-      color:rgba(240,240,242,.35);
+      color:rgba(240,240,242,.3);
       text-align:center;
-      max-width:380px;
-      line-height:1.6;
+      max-width:360px;
+      line-height:1.65;
     }
 
     /* ── Controls ── */
@@ -113,6 +140,14 @@
       <div class="demo-chrome__sep"></div><span class="demo-chrome__title">Film Grain Effect</span>
     </div>
     <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+
+  <!-- Background scene matching reference -->
+  <div class="grain-bg">
+    <div class="grain-bg__panel grain-bg__panel--1"><img src="https://cdn.prod.website-files.com/67db521fe639fd09f860b106/67dbf809f124211fa71791fa_osmo-slideshow-img-1.avif" alt=""></div>
+    <div class="grain-bg__panel grain-bg__panel--2"><img src="https://cdn.prod.website-files.com/67db521fe639fd09f860b106/67dbf80921b87fe739e3cbd2_osmo-slideshow-img-3.avif" alt=""></div>
+    <div class="grain-bg__panel grain-bg__panel--3"><img src="https://cdn.prod.website-files.com/67db521fe639fd09f860b106/67dbf809e5434a14205e65b2_osmo-slideshow-img-2.avif" alt=""></div>
+    <div class="grain-bg__panel grain-bg__panel--4"><img src="https://cdn.prod.website-files.com/67db521fe639fd09f860b106/67dbf809fb316a147c9d1dda_osmo-slideshow-img-4.avif" alt=""></div>
   </div>
 
   <!-- Grain overlay — sits above everything -->
