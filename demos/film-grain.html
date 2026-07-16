@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Film Grain Effect — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:#0c0d10;font-family:'Inter',sans-serif;padding-top:50px;min-height:100dvh;-webkit-font-smoothing:antialiased;overflow:hidden}
+
+    /* ── Film Grain Overlay ── */
+    .grain{
+      position:fixed;
+      inset:0%;
+      z-index:999;
+      pointer-events:none;
+      background:url("https://osmo.b-cdn.net/resource-media/noise.avif") 50% 50% / 7.8125em repeat;
+      opacity:0.5;
+      filter:contrast(125%) brightness(60%);
+    }
+    .grain[data-grain-animate="true"]{
+      animation:grain 0.6s steps(1,end) infinite;
+    }
+    @keyframes grain{
+      0%  {background-position:0em 0em}
+      20% {background-position:-0.5em 0.3em}
+      40% {background-position:0.4em -0.2em}
+      60% {background-position:-0.3em -0.4em}
+      80% {background-position:0.2em 0.5em}
+    }
+
+    /* ── Page content underneath ── */
+    .grain-demo{
+      min-height:calc(100dvh - 50px);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:2em;
+      padding:40px 32px;
+      position:relative;
+    }
+    .grain-demo__eyebrow{
+      font-size:11px;
+      font-weight:500;
+      letter-spacing:.2em;
+      text-transform:uppercase;
+      color:rgba(240,240,242,.35);
+    }
+    .grain-demo__heading{
+      font-size:clamp(48px,8vw,100px);
+      font-weight:200;
+      line-height:1.0;
+      letter-spacing:-.045em;
+      color:#f0f0f2;
+      text-align:center;
+      max-width:9ch;
+    }
+    .grain-demo__heading em{
+      font-style:italic;
+      color:rgba(240,240,242,.35);
+    }
+    .grain-demo__sub{
+      font-size:clamp(13px,1.2vw,16px);
+      font-weight:400;
+      color:rgba(240,240,242,.35);
+      text-align:center;
+      max-width:380px;
+      line-height:1.6;
+    }
+
+    /* ── Controls ── */
+    .grain-controls{
+      position:fixed;
+      bottom:28px;
+      left:50%;
+      transform:translateX(-50%);
+      z-index:1000;
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    .grain-btn{
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      color:rgba(240,240,242,.7);
+      border-radius:50em;
+      padding:8px 18px;
+      font-family:'Inter',sans-serif;
+      font-size:12px;
+      font-weight:500;
+      cursor:pointer;
+      transition:background .2s,color .2s,border-color .2s;
+      white-space:nowrap;
+    }
+    .grain-btn:hover,.grain-btn.active{
+      background:rgba(255,255,255,.14);
+      color:#f0f0f2;
+      border-color:rgba(255,255,255,.25);
+    }
+    .grain-btn.active{
+      background:rgba(0,100,231,.2);
+      border-color:rgba(0,100,231,.5);
+      color:#7ab8ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-chrome">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <div class="demo-chrome__sep"></div><span class="demo-chrome__title">Film Grain Effect</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+
+  <!-- Grain overlay — sits above everything -->
+  <div class="grain" id="grain" data-grain-animate="true"></div>
+
+  <!-- Content underneath -->
+  <div class="grain-demo">
+    <span class="grain-demo__eyebrow">Film Grain Effect</span>
+    <h1 class="grain-demo__heading">The texture<br>of <em>craft.</em></h1>
+    <p class="grain-demo__sub">A subtle animated noise overlay that adds depth and tactility — the difference between digital and analogue.</p>
+  </div>
+
+  <!-- Controls -->
+  <div class="grain-controls">
+    <button class="grain-btn active" id="btnAnimate">Animated</button>
+    <button class="grain-btn" id="btnStatic">Static</button>
+    <button class="grain-btn" id="btnSubtle">Subtle</button>
+    <button class="grain-btn" id="btnHeavy">Heavy</button>
+    <button class="grain-btn" id="btnOff">Off</button>
+  </div>
+
+  <script>
+    const grain = document.getElementById('grain');
+    const presets = {
+      animate: ()=>{ grain.style.opacity='0.5'; grain.style.filter='contrast(125%) brightness(60%)'; grain.setAttribute('data-grain-animate','true'); setActive('btnAnimate'); },
+      static:  ()=>{ grain.style.opacity='0.5'; grain.style.filter='contrast(125%) brightness(60%)'; grain.setAttribute('data-grain-animate','false'); setActive('btnStatic'); },
+      subtle:  ()=>{ grain.style.opacity='0.2'; grain.style.filter='contrast(110%) brightness(80%)'; grain.setAttribute('data-grain-animate','true'); setActive('btnSubtle'); },
+      heavy:   ()=>{ grain.style.opacity='0.8'; grain.style.filter='contrast(150%) brightness(50%)'; grain.setAttribute('data-grain-animate','true'); setActive('btnHeavy'); },
+      off:     ()=>{ grain.style.opacity='0'; setActive('btnOff'); },
+    };
+    function setActive(id){ document.querySelectorAll('.grain-btn').forEach(b=>b.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+    document.getElementById('btnAnimate').onclick = presets.animate;
+    document.getElementById('btnStatic').onclick  = presets.static;
+    document.getElementById('btnSubtle').onclick  = presets.subtle;
+    document.getElementById('btnHeavy').onclick   = presets.heavy;
+    document.getElementById('btnOff').onclick     = presets.off;
+  </script>
+</body>
+</html>

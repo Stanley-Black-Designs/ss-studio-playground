@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spotlight Cursor — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:#050508;font-family:'Inter',sans-serif;padding-top:50px;min-height:100dvh;-webkit-font-smoothing:antialiased;overflow:hidden}
+
+    /* ── Unicorn Studio full-screen ── */
+    .spotlight-wrap{
+      position:fixed;
+      inset:50px 0 0;
+      z-index:0;
+    }
+    .spotlight-cursor__wrap{
+      width:100%;
+      height:100%;
+    }
+
+    /* ── Content over the WebGL scene ── */
+    .spotlight-content{
+      position:fixed;
+      inset:50px 0 0;
+      z-index:1;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:1.5em;
+      padding:40px 32px;
+      pointer-events:none;
+    }
+    .spotlight-content__eyebrow{
+      font-size:11px;
+      font-weight:500;
+      letter-spacing:.2em;
+      text-transform:uppercase;
+      color:rgba(240,240,242,.3);
+    }
+    .spotlight-content__heading{
+      font-size:clamp(48px,7vw,90px);
+      font-weight:200;
+      line-height:1.0;
+      letter-spacing:-.04em;
+      color:#f0f0f2;
+      text-align:center;
+      max-width:10ch;
+    }
+    .spotlight-content__heading em{
+      font-style:italic;
+      color:rgba(240,240,242,.4);
+    }
+    .spotlight-content__hint{
+      font-size:12px;
+      color:rgba(240,240,242,.25);
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-top:1em;
+    }
+
+    /* Mobile fallback */
+    .spotlight-mobile-fallback{
+      display:none;
+      position:fixed;
+      inset:50px 0 0;
+      z-index:0;
+      background:radial-gradient(ellipse at 60% 40%,#1a1a3e 0%,#050508 70%);
+    }
+    @media(max-width:767px){
+      .spotlight-mobile-fallback{display:block}
+      .spotlight-wrap{display:none}
+      .spotlight-content__hint{display:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-chrome">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <div class="demo-chrome__sep"></div><span class="demo-chrome__title">Spotlight Cursor</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+
+  <!-- Mobile gradient fallback -->
+  <div class="spotlight-mobile-fallback"></div>
+
+  <!-- Unicorn Studio WebGL scene -->
+  <div class="spotlight-wrap">
+    <div
+      class="spotlight-cursor__wrap"
+      data-us-project-src="https://osmo.b-cdn.net/resource-media/osmo-unicorn-spotlight.json"
+      data-us-disablemobile="true"
+      data-us-scale="1"
+      data-us-dpi="1"
+      data-us-lazyload="false">
+    </div>
+  </div>
+
+  <!-- Text over the scene -->
+  <div class="spotlight-content">
+    <span class="spotlight-content__eyebrow">Spotlight Cursor</span>
+    <h1 class="spotlight-content__heading">Move your <em>cursor.</em></h1>
+    <p class="spotlight-content__hint">↑ Move your mouse to cast the light</p>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.2.7/dist/unicornStudio.umd.js"></script>
+  <script>
+    function initUnicornStudio(){
+      UnicornStudio.init()
+        .then(scenes=>{})
+        .catch(err=>console.error(err));
+    }
+    document.addEventListener('DOMContentLoaded',function(){initUnicornStudio();});
+  </script>
+</body>
+</html>
