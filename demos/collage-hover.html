@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collage Focus on Hover — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;padding-top:50px;-webkit-font-smoothing:antialiased}
+
+    .demo-section{
+      background-color:#ebe5dd;
+      justify-content:center;
+      align-items:center;
+      min-height:calc(100svh - 50px);
+      font-size:1vw;
+      display:flex;
+      overflow:clip;
+    }
+    .interactive-collage{width:63.75em;height:37em;flex:none}
+    .interactive-collage__collection{width:100%;height:100%}
+    .interactive-collage__list{width:100%;height:100%;position:relative}
+    .interactive-collage__item{z-index:0;position:absolute;top:0;left:0}
+    .interactive-collage__item.is--1{top:6em}
+    .interactive-collage__item.is--2{top:17em;left:5em}
+    .interactive-collage__item.is--3{z-index:1;top:14em;left:13.5em}
+    .interactive-collage__item.is--4{left:24em}
+    .interactive-collage__item.is--5{z-index:3;top:auto;bottom:0;left:26em}
+    .interactive-collage__item.is--6{z-index:2;top:9em;left:31.5em}
+    .interactive-collage__item.is--7{z-index:1;top:16em;left:39em}
+    .interactive-collage__item.is--8{top:5em;left:auto;right:0}
+
+    .demo-card{aspect-ratio:1;width:16.25em;position:relative}
+    .demo-card.is--landscape{aspect-ratio:4/3;width:20em}
+    .demo-card.is--portrait{aspect-ratio:3/4;width:15em}
+    .cover-image{object-fit:cover;width:100%;height:100%;position:absolute;top:0;left:0}
+
+    /* Focused card comes to front */
+    [data-interactive-collage-focus]{z-index:10!important}
+
+    @media screen and (max-width:991px){.demo-section{font-size:2.125vw}}
+    @media screen and (max-width:600px){.demo-section{font-size:3.5vw}}
+  </style>
+</head>
+<body>
+  <div class="demo-chrome" style="background:rgba(235,229,221,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.07);">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back" style="color:rgba(0,0,0,0.4);"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <div class="demo-chrome__sep" style="background:rgba(0,0,0,0.1);"></div>
+      <span class="demo-chrome__title" style="color:rgba(0,0,0,0.6);">Collage Focus on Hover</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+
+  <section class="demo-section">
+    <div data-interactive-collage-init="" class="interactive-collage">
+      <div class="interactive-collage__collection">
+        <div data-interactive-collage-list="" class="interactive-collage__list">
+
+          <div data-interactive-collage-item="" class="interactive-collage__item is--1">
+            <div data-interactive-collage-item-inner="" class="interactive-collage__item-inner">
+              <div class="demo-card is--landscape"><img src="https://cdn.prod.website-files.com/6a576f0450f1df5088ddbf79/6a5770741cba8fdcabbaf17f_Serene_Ocean_Waves_at_Dusk.avif" loading="lazy" alt="" class="cover-image"></div>
+            </div>
+          </div>
+
+          <div data-interactive-collage-item="" class="interactive-collage__item is--2">
+            <div data-interactive-collage-item-inner="" class="interactive-collage__item-inner">
+              <div class="demo-card"><img src="https://cdn.prod.website-files.com/6a576f0450f1df5088ddbf79/6a5770a32bb9b0a134f6d711_Elegant_Portrait_in_Minimalist_Style.avif" loading="lazy" alt="" class="cover-image"></div>
+            </div>
+          </div>
+
+          <div data-interactive-collage-item="" class="interactive-collage__item is--3">
+            <div data-interactive-collage-item-inner="" class="interactive-collage__item-inner">
+              <div class="demo-card is--landscape"><img src="https://cdn.prod.website-files.com/6a576f0450f1df5088ddbf79/6a5770641cba8fdcabbae91d_Textured_Green_Leaves_with_Soft_Shadows.avif" loading="lazy" alt="" class="cover-image"></div>
+            </div>
+          </div>
+
+          <div data-interactive-collage-item="" class="interactive-collage__item is--4">
+            <div data-interactive-collage-item-inner="" class="interactive-collage__item-inner">
+              <div class="demo-card is--portrait"><img src="https://cdn.prod.website-files.com/6a576f0450f1df5088ddbf79/6a577071404bdf1f4f53d4ed_Textured_Rock_Surface_with_Water_Reflection.avif" loading="lazy" alt="" class="cover-image"></div>
+            </div>
+          </div>
+
+          <div data-interactive-collage-item="" class="interactive-collage__item is--5">
+            <div data-interactive-collage-item-inner="" class="interactive-collage__item-inner">
+              <div class="demo-card"><img src="https://cdn.prod.website-files.com/6a576f0450f1df5088ddbf79/6a5770ae044cb36191106a20_Close-Up_Portrait_Emphasizing_Natural_Beauty_and_Texture.avif" loading="lazy" alt="" class="cover-image"></div>
+            </div>
+          </div>
+
+          <div data-interactive-collage-item="" class="interactive-collage__item is--6">
+            <div data-interactive-collage-item-inner="" class="interactive-collage__item-inner">
+              <div class="demo-card is--landscape"><img src="https://cdn.prod.website-files.com/6a576f0450f1df5088ddbf79/6a57707b3d9aeb81463f0abb_Soft_Pink_and_Cream_Cloudscape.avif" loading="lazy" alt="" class="cover-image"></div>
+            </div>
+          </div>
+
+          <div data-interactive-collage-item="" class="interactive-collage__item is--7">
+            <div data-interactive-collage-item-inner="" class="interactive-collage__item-inner">
+              <div class="demo-card is--landscape"><img src="https://cdn.prod.website-files.com/6a576f0450f1df5088ddbf79/6a57704f9d98fad1e4e6a88a_Elegant_Cream_Swirl_on_Soft_Blue_Background.avif" loading="lazy" alt="" class="cover-image"></div>
+            </div>
+          </div>
+
+          <div data-interactive-collage-item="" class="interactive-collage__item is--8">
+            <div data-interactive-collage-item-inner="" class="interactive-collage__item-inner">
+              <div class="demo-card"><img src="https://cdn.prod.website-files.com/6a576f0450f1df5088ddbf79/6a5770644b045d05577f1395_Serene_Freckled_Face_Floating_in_Water%2C_Low-Key_Portrait.avif" loading="lazy" alt="" class="cover-image"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/CustomEase.min.js"></script>
+  <script>
+    gsap.registerPlugin(CustomEase);
+    CustomEase.create("move","0.3, 0.075, 0, 1");
+    function initCollageFocusCardOnHover(){const activeScale=1.075;const inactiveScale=0.9;const gapPercent=3;const secondCardBoost=1.35;const centerPullPercent=25;const duration=0.8;const ease="move";document.querySelectorAll('[data-interactive-collage-init]').forEach(root=>{root._interactiveCollageAbort?.abort();const list=root.querySelector('[data-interactive-collage-list]');const items=[...root.querySelectorAll('[data-interactive-collage-item]')];const isTouch=!window.matchMedia('(hover: hover) and (pointer: fine)').matches;if(!list||!items.length)return;const controller=new AbortController();const{signal}=controller;let activeItem=null;const getInner=item=>item.querySelector('[data-interactive-collage-item-inner]');const getMoveStrength=distance=>{const strength=1/(1+Math.pow(distance-1,1.2)*0.45);return distance===2?strength*secondCardBoost:strength;};const animateItem=(item,xPercent,yPercent,scale)=>{gsap.to(getInner(item),{xPercent,yPercent,scale,duration,ease,overwrite:true});};const resetCollage=()=>{activeItem=null;items.forEach(item=>{item.removeAttribute('data-interactive-collage-focus');animateItem(item,0,0,1);});};const focusItem=active=>{if(activeItem===active)return;activeItem=active;items.forEach(item=>{if(item===active){item.setAttribute('data-interactive-collage-focus','');}else{item.removeAttribute('data-interactive-collage-focus');}});const listRect=list.getBoundingClientRect();const listCenterY=listRect.top+listRect.height/2;const gap=listRect.width*gapPercent/100;const orderedItems=[...items].sort((a,b)=>{const aRect=a.getBoundingClientRect();const bRect=b.getBoundingClientRect();return aRect.left+aRect.width/2-(bRect.left+bRect.width/2);});const activeIndex=orderedItems.indexOf(active);const activeRect=active.getBoundingClientRect();const activeCenterX=activeRect.left+activeRect.width/2;const activeLeft=activeCenterX-activeRect.width*activeScale/2;const activeRight=activeCenterX+activeRect.width*activeScale/2;const leftItem=orderedItems[activeIndex-1];const rightItem=orderedItems[activeIndex+1];let leftMove=0;let rightMove=0;if(leftItem){const rect=leftItem.getBoundingClientRect();const itemRight=rect.left+rect.width/2+rect.width*inactiveScale/2;leftMove=Math.min(0,activeLeft-gap-itemRight);}if(rightItem){const rect=rightItem.getBoundingClientRect();const itemLeft=rect.left+rect.width/2-rect.width*inactiveScale/2;rightMove=Math.max(0,activeRight+gap-itemLeft);}orderedItems.forEach((item,index)=>{if(item===active){animateItem(item,0,0,activeScale);return;}const rect=item.getBoundingClientRect();const difference=index-activeIndex;const distance=Math.abs(difference);const strength=getMoveStrength(distance);const itemCenterY=rect.top+rect.height/2;const centerProgress=(listCenterY-itemCenterY)/(listRect.height/2);const moveX=difference<0?leftMove*strength:rightMove*strength;const scale=inactiveScale-(1-strength)*0.12;animateItem(item,moveX/rect.width*100,centerPullPercent*centerProgress*strength,scale);});};const getHoveredItem=event=>{if(activeItem){const rect=getInner(activeItem).getBoundingClientRect();if(event.clientX>=rect.left&&event.clientX<=rect.right&&event.clientY>=rect.top&&event.clientY<=rect.bottom){return activeItem;}}return document.elementFromPoint(event.clientX,event.clientY)?.closest('[data-interactive-collage-item]')||null;};if(isTouch){items.forEach(item=>{item.addEventListener('click',event=>{event.stopPropagation();activeItem===item?resetCollage():focusItem(item);},{signal});});document.addEventListener('click',event=>{if(!root.contains(event.target))resetCollage();},{signal});}else{root.addEventListener('pointermove',event=>{const item=getHoveredItem(event);item?focusItem(item):resetCollage();},{signal});root.addEventListener('pointerleave',resetCollage,{signal});}root._interactiveCollageAbort=controller;});}
+    document.addEventListener('DOMContentLoaded',()=>{initCollageFocusCardOnHover();});
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="lenis-init.js"></script>
+</body>
+</html>
