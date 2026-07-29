@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bouncy Content Tabs — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:#b9bc9f;font-family:'Inter',sans-serif;padding-top:50px;min-height:100dvh;display:flex;align-items:center;justify-content:center;-webkit-font-smoothing:antialiased}
+
+    .demo-stage{display:flex;align-items:center;justify-content:center;width:100%;padding:40px 24px}
+
+    /* Exact Osmo CSS */
+    .bouncy-tabs{gap:3em;flex-flow:column;justify-content:flex-start;align-items:center;width:min(100%,50em);display:flex}
+    .bouncy-tabs__nav{background-color:#23241914;border-radius:100em;flex-flow:wrap;justify-content:center;align-items:flex-start;padding:.4em;display:inline-flex;position:relative}
+    .bouncy-tabs__ghost{z-index:1;opacity:0;pointer-events:none;visibility:hidden;background-color:#2324191a;border-radius:100em;width:2em;position:absolute;top:0;left:0}
+    .bouncy-tabs__indicator{z-index:2;pointer-events:none;background-color:#232419;border-radius:100em;width:3em;position:absolute;top:0;left:0}
+    .bouncy-tabs__button{z-index:3;color:#232419a6;appearance:none;background-color:#0000;border:none;border-radius:100em;padding:.65em 1.25em;font-family:'Inter',sans-serif;font-size:1em;cursor:pointer;transition:color .3s ease;position:relative}
+    [data-bouncy-tabs-button][data-active]{color:#f1efe2}
+    .bouncy-tabs__collection{background-color:#f1efe2;border-radius:1.5em;width:100%;padding:3em;overflow:hidden}
+    .bouncy-tabs__list{width:100%;position:relative}
+    .bouncy-tabs__item{gap:2em;grid-template-rows:auto auto;grid-template-columns:1fr 1fr;grid-auto-columns:1fr;justify-content:flex-start;align-items:center;display:flex;position:absolute;top:0;left:0;right:0}
+    [data-bouncy-tabs-panel]:not([data-active]){opacity:0;visibility:hidden}
+    .bouncy-tabs__item-visual{aspect-ratio:1;border-radius:1em;width:45%;overflow:hidden}
+    .bouncy-tabs__item-text{gap:1em;flex-flow:column;flex:1;justify-content:center;align-items:flex-start;display:flex}
+    .bouncy-tabs__heading{margin:0;font-size:1.5em;font-weight:600;line-height:1;color:#232419}
+    .bouncy-tabs__para{margin:0;font-size:1em;line-height:1.3;color:#232419}
+    .bouncy-tabs__cta{color:#f1efe2;background-color:#232419;border-radius:100em;padding:.75em 1.5em;font-size:1em;line-height:1.5;text-decoration:none;display:inline-block}
+    .bouncy-tabs__cta:hover{opacity:.85}
+    .bouncy-tabs__item-img{object-fit:cover;width:100%;height:100%;display:block}
+
+    @media screen and (max-width:767px){
+      .bouncy-tabs__nav{border-radius:1.25em}
+      .bouncy-tabs__collection{padding:2em}
+      .bouncy-tabs__item{flex-flow:column;justify-content:flex-start;align-items:stretch}
+      .bouncy-tabs__item-visual{width:100%}
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-chrome" style="background:rgba(185,188,159,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.07);">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back" style="color:rgba(35,36,25,0.45);"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <div class="demo-chrome__sep" style="background:rgba(0,0,0,0.1);"></div>
+      <span class="demo-chrome__title" style="color:rgba(35,36,25,0.6);">Bouncy Content Tabs</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+
+  <div class="demo-stage">
+    <div data-bouncy-tabs-init class="bouncy-tabs">
+      <div data-bouncy-tabs-nav role="tablist" class="bouncy-tabs__nav">
+        <div data-bouncy-tabs-ghost class="bouncy-tabs__ghost"></div>
+        <div data-bouncy-tabs-indicator class="bouncy-tabs__indicator"></div>
+        <button data-bouncy-tabs-button data-active role="tab" class="bouncy-tabs__button">Material</button>
+        <button data-bouncy-tabs-button role="tab" class="bouncy-tabs__button">Form</button>
+        <button data-bouncy-tabs-button role="tab" class="bouncy-tabs__button">Function</button>
+        <button data-bouncy-tabs-button role="tab" class="bouncy-tabs__button">Finish</button>
+        <button data-bouncy-tabs-button role="tab" class="bouncy-tabs__button">Home</button>
+      </div>
+      <div data-bouncy-tabs-card class="bouncy-tabs__collection">
+        <div data-bouncy-tabs-panels class="bouncy-tabs__list">
+          <div data-active data-bouncy-tabs-panel role="tabpanel" class="bouncy-tabs__item">
+            <div class="bouncy-tabs__item-text">
+              <h3 class="bouncy-tabs__heading">The material decides first</h3>
+              <p class="bouncy-tabs__para">Every piece begins in the timber stack, not the sketchbook. We buy whole boards, air-dried and full of character, and let the grain tell us what it wants to become.</p>
+              <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" class="bouncy-tabs__cta"><span>See materials</span></a>
+            </div>
+            <div class="bouncy-tabs__item-visual"><img src="https://cdn.prod.website-files.com/6a692a5b576e556970236140/6a693237bcc49cadcc329e63_Textured_Sandstone_Formation_with_Warm_Tones.avif" class="bouncy-tabs__item-img" alt=""></div>
+          </div>
+          <div role="tabpanel" data-bouncy-tabs-panel class="bouncy-tabs__item">
+            <div class="bouncy-tabs__item-text">
+              <h3 class="bouncy-tabs__heading">Drawn until it's quiet</h3>
+              <p class="bouncy-tabs__para">We sketch by hand until the shape stops asking for attention.</p>
+              <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" class="bouncy-tabs__cta"><span>Explore forms</span></a>
+            </div>
+            <div class="bouncy-tabs__item-visual"><img src="https://cdn.prod.website-files.com/6a692a5b576e556970236140/6a693237617b24a07e54f084_Sunlit_Hands_Writing_in_Minimalist_Notebook.avif" class="bouncy-tabs__item-img" alt=""></div>
+          </div>
+          <div role="tabpanel" data-bouncy-tabs-panel class="bouncy-tabs__item">
+            <div class="bouncy-tabs__item-text">
+              <h3 class="bouncy-tabs__heading">Built to be used</h3>
+              <p class="bouncy-tabs__para">A drawer should glide with one finger and a table should never wobble. Every proportion starts from the body that will use it — seat heights for long dinners, edges softened where hands actually fall.</p>
+              <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" class="bouncy-tabs__cta"><span>See it in use</span></a>
+            </div>
+            <div class="bouncy-tabs__item-visual"><img src="https://cdn.prod.website-files.com/6a692a5b576e556970236140/6a69323746ca596fd804d527_Furniture_Designer_Sketching_Plans_in_Sunlit_Woodworking_Studio.avif" class="bouncy-tabs__item-img" alt=""></div>
+          </div>
+          <div role="tabpanel" data-bouncy-tabs-panel class="bouncy-tabs__item">
+            <div class="bouncy-tabs__item-text">
+              <h3 class="bouncy-tabs__heading">Oil, wax, and time</h3>
+              <p class="bouncy-tabs__para">Three coats rubbed in by hand, days apart. The finish doesn't seal the wood so much as wake it up — the grain deepens, and the surface learns to age.</p>
+              <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" class="bouncy-tabs__cta"><span>About finishes</span></a>
+            </div>
+            <div class="bouncy-tabs__item-visual"><img src="https://cdn.prod.website-files.com/6a692a5b576e556970236140/6a693237b48431096abab8dd_Elegant_Wooden_Chair_Leg_with_Dramatic_Shadow_Play.avif" class="bouncy-tabs__item-img" alt=""></div>
+          </div>
+          <div role="tabpanel" data-bouncy-tabs-panel class="bouncy-tabs__item">
+            <div class="bouncy-tabs__item-text">
+              <h3 class="bouncy-tabs__heading">Made to be lived with</h3>
+              <p class="bouncy-tabs__para">A piece isn't done when it leaves the workshop; it's done when it has carried its first thousand mornings. We build for the scratch, the patina, the second generation.</p>
+              <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" class="bouncy-tabs__cta"><span>Find your piece</span></a>
+            </div>
+            <div class="bouncy-tabs__item-visual"><img src="https://cdn.prod.website-files.com/6a692a5b576e556970236140/6a693237f70d123b84413947_Worker_Silhouette_Within_Geometric_Steel_Framework.avif" class="bouncy-tabs__item-img" alt=""></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script>
+    function initBouncyContentTabs(){const config={travel:0.35,settle:0.25,squashDown:0.15,squashBack:0.45,overshoot:16,cardSquash:0.2,cardInflate:0.45};const reduceMotion=window.matchMedia("(prefers-reduced-motion: reduce)");let instanceCount=0;document.querySelectorAll("[data-bouncy-tabs-init]").forEach(root=>{const nav=root.querySelector("[data-bouncy-tabs-nav]");const indicator=root.querySelector("[data-bouncy-tabs-indicator]");const ghost=root.querySelector("[data-bouncy-tabs-ghost]");const buttons=nav?Array.from(nav.querySelectorAll("[data-bouncy-tabs-button]")):[];if(!nav||!indicator||buttons.length<2)return;const card=root.querySelector("[data-bouncy-tabs-card]");const panelsWrap=root.querySelector("[data-bouncy-tabs-panels]");const panels=panelsWrap?Array.from(panelsWrap.querySelectorAll("[data-bouncy-tabs-panel]")):[];const hasCard=Boolean(card&&panelsWrap&&panels.length);instanceCount+=1;buttons.forEach((button,i)=>{const panel=panels[i];if(!panel)return;if(!button.id)button.id="bouncy-tabs-"+instanceCount+"-tab-"+(i+1);if(!panel.id)panel.id="bouncy-tabs-"+instanceCount+"-panel-"+(i+1);button.setAttribute("aria-controls",panel.id);panel.setAttribute("aria-labelledby",button.id);});let activeIndex=Math.max(0,buttons.findIndex(b=>b.hasAttribute("data-active")));const pos={left:0,right:0};let ghostVisible=false;const dur=d=>reduceMotion.matches?0:d;function syncButtonState(){buttons.forEach((b,i)=>{b.toggleAttribute("data-active",i===activeIndex);b.setAttribute("aria-selected",i===activeIndex?"true":"false");b.tabIndex=i===activeIndex?0:-1;});}function rectFor(button){return{left:button.offsetLeft,right:button.offsetLeft+button.offsetWidth,top:button.offsetTop,height:button.offsetHeight};}function render(){gsap.set(indicator,{x:pos.left,width:pos.right-pos.left});}function place(index){const target=rectFor(buttons[index]);pos.left=target.left;pos.right=target.right;gsap.killTweensOf(pos);gsap.killTweensOf(indicator);gsap.set(indicator,{scaleY:1,y:target.top,height:target.height});render();}function setPanelsHeight(){if(hasCard)gsap.set(panelsWrap,{height:panels[activeIndex].offsetHeight});}function swapPanelsInstant(){if(!hasCard)return;panels.forEach((p,i)=>{gsap.killTweensOf(p);gsap.set(p,{autoAlpha:i===activeIndex?1:0,x:0});p.toggleAttribute("data-active",i===activeIndex);});gsap.set(card,{scaleX:1,scaleY:1,x:0});setPanelsHeight();}function transitionCard(prevIndex,movingRight){if(!hasCard)return;const direction=movingRight?1:-1;const incoming=panels[activeIndex];const outgoing=panels[prevIndex];if(!incoming||!outgoing)return;panels.forEach(p=>{if(p!==incoming&&p!==outgoing){gsap.killTweensOf(p);gsap.set(p,{autoAlpha:0,x:0});p.removeAttribute("data-active");}});incoming.setAttribute("data-active","");outgoing.removeAttribute("data-active");gsap.killTweensOf([card,panelsWrap,incoming,outgoing]);gsap.set(card,{transformOrigin:"50% 50%"});const targetHeight=incoming.offsetHeight;gsap.timeline().to(card,{scaleX:0.96,scaleY:1.02,x:direction*10,duration:config.cardSquash,ease:"power2.out"},0).to(outgoing,{x:direction*-35,autoAlpha:0,duration:0.2,ease:"power2.out"},0).to(panelsWrap,{height:targetHeight,duration:0.3,ease:"power2.inOut"},0.1).fromTo(incoming,{x:direction*35,autoAlpha:0},{x:0,autoAlpha:1,duration:0.3,ease:"power2.out"},config.cardSquash).to(card,{scaleX:1,scaleY:1,x:0,duration:config.cardInflate,ease:"back.out(2)"},config.cardSquash).set(outgoing,{x:0});}function goTo(index){if(index===activeIndex)return;const prevIndex=activeIndex;const movingRight=index>activeIndex;activeIndex=index;syncButtonState();if(reduceMotion.matches){place(index);swapPanelsInstant();return;}transitionCard(prevIndex,movingRight);const target=rectFor(buttons[index]);gsap.killTweensOf(pos);gsap.killTweensOf(indicator);const hDir=target.left===pos.left?(movingRight?1:-1):(target.left>pos.left?1:-1);const distance=Math.abs(target.left-pos.left);const maxOvershoot=Math.max(6,config.overshoot);let overshoot=gsap.utils.clamp(6,maxOvershoot,distance*0.08)*hDir;if(hDir>0){overshoot=Math.min(overshoot,nav.clientWidth-target.right);}else{overshoot=Math.max(overshoot,-target.left);}gsap.set(indicator,{transformOrigin:"50% 50%"});gsap.to(indicator,{y:target.top,height:target.height,duration:config.travel,ease:"power3.out"});gsap.timeline().to(pos,{left:target.left+overshoot,right:target.right+overshoot,duration:config.travel,ease:"power3.out",onUpdate:render}).to(pos,{left:target.left,right:target.right,duration:config.settle,ease:"power2.inOut",onUpdate:render});gsap.timeline().to(indicator,{scaleY:0.78,duration:config.squashDown,ease:"power2.out"}).to(indicator,{scaleY:1,duration:config.squashBack,ease:"back.out(2.5)"});}function moveGhost(button){if(!ghost)return;const target=rectFor(button);if(!ghostVisible){ghostVisible=true;gsap.killTweensOf(ghost);gsap.set(ghost,{x:target.left,y:target.top,width:target.right-target.left,height:target.height});gsap.to(ghost,{autoAlpha:1,duration:dur(0.25),ease:"power2.out"});}else{gsap.to(ghost,{x:target.left,y:target.top,width:target.right-target.left,height:target.height,autoAlpha:1,duration:dur(0.3),ease:"power3.out"});}}function hideGhost(){if(!ghost)return;ghostVisible=false;gsap.to(ghost,{autoAlpha:0,duration:dur(0.2),ease:"power1.out"});}function refreshLayout(){const rows=new Set(buttons.map(b=>b.offsetTop));nav.toggleAttribute("data-wrapped",rows.size>1);place(activeIndex);setPanelsHeight();}buttons.forEach((button,index)=>{button.addEventListener("click",()=>goTo(index));button.addEventListener("mouseenter",()=>moveGhost(button));});nav.addEventListener("mouseleave",hideGhost);nav.addEventListener("keydown",event=>{let next=null;if(event.key==="ArrowRight")next=Math.min(buttons.length-1,activeIndex+1);if(event.key==="ArrowLeft")next=Math.max(0,activeIndex-1);if(event.key==="Home")next=0;if(event.key==="End")next=buttons.length-1;if(next===null)return;event.preventDefault();if(next!==activeIndex){goTo(next);buttons[next].focus();}});window.addEventListener("resize",refreshLayout);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(refreshLayout);if(ghost)gsap.set(ghost,{autoAlpha:0});panels.forEach((p,i)=>gsap.set(p,{autoAlpha:i===activeIndex?1:0}));syncButtonState();refreshLayout();});}
+    document.addEventListener("DOMContentLoaded",()=>{initBouncyContentTabs();});
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="lenis-init.js"></script>
+</body>
+</html>
