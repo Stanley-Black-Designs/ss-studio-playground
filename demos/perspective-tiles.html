@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Perspective Tiles — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:#170d0b;font-family:'Inter',sans-serif;padding-top:50px;-webkit-font-smoothing:antialiased}
+
+    .demo-section{background-color:#170d0b;justify-content:center;align-items:center;min-height:calc(100svh - 50px);display:flex}
+    .perspective-tiles{justify-content:center;align-items:center;width:100%;height:calc(100dvh - 50px);display:flex;position:relative;overflow:clip}
+    .perspective-tiles__collection{justify-content:center;align-items:center;display:flex;position:relative}
+    .perspective-tiles__list{place-items:center;display:grid}
+    .perspective-tiles__item{will-change:transform,opacity,filter;grid-area:1/1;justify-content:center;align-items:center;width:max-content;height:max-content;display:flex}
+
+    .demo-card{aspect-ratio:4/3;color:#fff;border-radius:1em;justify-content:center;align-items:center;width:clamp(12em,20vw,26em);padding:1em;display:flex;position:relative;overflow:hidden}
+    .cover-image{object-fit:cover;border-radius:inherit;width:100%;height:100%;position:absolute;top:0;left:0}
+    .demo-card__h{letter-spacing:-.04em;text-transform:uppercase;margin:0;font-size:calc(clamp(12em,20vw,26em)/6);font-weight:900;position:absolute;transition:opacity 1.2s cubic-bezier(.625,.05,0,1),filter 1.2s cubic-bezier(.625,.05,0,1);opacity:0;filter:blur(.125em)}
+    [data-perspective-tiles-item-status="active"] .demo-card__h{opacity:1;filter:blur(0em)}
+    .demo-card__h.is--beige{color:#f7dac3}
+    .demo-card__h.is--blue{color:#c2d7e5}
+    .demo-card__h.is--green{color:#dee0ac}
+  </style>
+</head>
+<body>
+  <div class="demo-chrome">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <div class="demo-chrome__sep"></div><span class="demo-chrome__title">3D Perspective Tiles</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+
+  <section class="demo-section">
+    <div data-perspective-tiles-init="" data-perspective-tiles-pause-hover="false" data-perspective-tiles-tilt="true" data-perspective-tiles-flipped="false" class="perspective-tiles">
+      <div data-perspective-tiles-collection="" class="perspective-tiles__collection">
+        <div data-perspective-tiles-list="" class="perspective-tiles__list">
+          <div data-perspective-tiles-item-status="active" data-perspective-tiles-item="" class="perspective-tiles__item">
+            <div class="demo-card"><img src="https://cdn.prod.website-files.com/6a7076505d75991d6a0710ef/6a70a6baaa87a2c3a3c2b9f7_mountain.avif" loading="lazy" alt="" class="cover-image"><h3 class="demo-card__h is--beige">Rock</h3></div>
+          </div>
+          <div data-perspective-tiles-item-status="not-active" data-perspective-tiles-item="" class="perspective-tiles__item">
+            <div class="demo-card"><img src="https://cdn.prod.website-files.com/6a7076505d75991d6a0710ef/6a70a6bacf5e24a9901886d4_775143e96d53c49f32251190bfa62959_bed.avif" loading="lazy" alt="" class="cover-image"><h3 class="demo-card__h is--green">Relax</h3></div>
+          </div>
+          <div data-perspective-tiles-item-status="not-active" data-perspective-tiles-item="" class="perspective-tiles__item">
+            <div class="demo-card"><img src="https://cdn.prod.website-files.com/6a7076505d75991d6a0710ef/6a70a6bc9af13d6c34ab7a78_plant.avif" loading="lazy" alt="" class="cover-image"><h3 class="demo-card__h is--green">Grow</h3></div>
+          </div>
+          <div data-perspective-tiles-item-status="not-active" data-perspective-tiles-item="" class="perspective-tiles__item">
+            <div class="demo-card"><img src="https://cdn.prod.website-files.com/6a7076505d75991d6a0710ef/6a70a6bac47b8765b6453cb2_surf.avif" loading="lazy" alt="" class="cover-image"><h3 class="demo-card__h is--blue">Surf</h3></div>
+          </div>
+          <div data-perspective-tiles-item-status="not-active" data-perspective-tiles-item="" class="perspective-tiles__item">
+            <div class="demo-card"><img src="https://cdn.prod.website-files.com/6a7076505d75991d6a0710ef/6a70a6badc9226b0bc9d15b7_wave.avif" loading="lazy" alt="" class="cover-image"><h3 class="demo-card__h is--blue">Drift</h3></div>
+          </div>
+          <div data-perspective-tiles-item-status="not-active" data-perspective-tiles-item="" class="perspective-tiles__item">
+            <div class="demo-card"><img src="https://cdn.prod.website-files.com/6a7076505d75991d6a0710ef/6a70a6bc9af13d6c34ab7b0a_hand.avif" loading="lazy" alt="" class="cover-image"><h3 class="demo-card__h is--beige">Skin</h3></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/CustomEase.min.js"></script>
+  <script>
+    gsap.registerPlugin(CustomEase,ScrollTrigger);
+    CustomEase.create("osmo","M0,0 C0.625,0.05 0,1 1,1");
+    function init3dPerspectiveTiles(){document.querySelectorAll("[data-perspective-tiles-init]").forEach(container=>{const collection=container.querySelector("[data-perspective-tiles-collection]");const list=container.querySelector("[data-perspective-tiles-list]");const tiles=[...container.querySelectorAll("[data-perspective-tiles-item]")];const tileCount=tiles.length;if(!collection||!list||tileCount<2)return;const gapPercent=0.45;const perspectiveMultiplier=4;const blurMultiplier=0.005;const minOpacity=1;const minDarkness=0.75;const maxTiltX=8;const maxTiltY=8;const tiltMoveDuration=0.6;const moveDuration=2.5;const pauseDuration=0;const staggerAmount=moveDuration*0.005;const tiltEnabled=container.getAttribute("data-perspective-tiles-tilt")==="true";const pauseOnHover=container.getAttribute("data-perspective-tiles-pause-hover")==="true";const isFlipped=container.getAttribute("data-perspective-tiles-flipped")==="true";const direction=isFlipped?-1:1;const canHover=window.matchMedia("(hover: hover) and (pointer: fine)").matches;const fullCircle=Math.PI*2;const tileStates=tiles.map(()=>({progress:0}));let radius=0;let maxBlur=0;let isInView=false;let isHoveringActive=false;let stepTimeline;let delayedCall;let activeTileIndex=-1;gsap.set(collection,{transformStyle:"preserve-3d",transformOrigin:"50% 50%"});gsap.set(list,{transformStyle:"preserve-3d"});function updateMeasurements(){const tileWidth=tiles[0].offsetWidth;radius=tileWidth*(1+gapPercent)/(2*Math.tan(Math.PI/tileCount));maxBlur=tileWidth*blurMultiplier;gsap.set(collection,{transformPerspective:radius*perspectiveMultiplier});}function getActiveIndex(){return tileStates.reduce((closest,state,index)=>{const current=((index-state.progress)%tileCount+tileCount)%tileCount;const previous=((closest-tileStates[closest].progress)%tileCount+tileCount)%tileCount;const currentDistance=Math.min(current,tileCount-current);const previousDistance=Math.min(previous,tileCount-previous);return currentDistance<previousDistance?index:closest;},0);}function updateTileStatus(){const currentActiveIndex=getActiveIndex();if(currentActiveIndex===activeTileIndex)return;activeTileIndex=currentActiveIndex;tiles.forEach((tile,index)=>{tile.setAttribute("data-perspective-tiles-item-status",index===activeTileIndex?"active":"not-active");});}function renderPerspectiveTiles(){updateTileStatus();tiles.forEach((tile,index)=>{const angle=((index-tileStates[index].progress)/tileCount)*fullCircle*direction;const depth=(Math.cos(angle)+1)/2;const depthCurve=depth*depth*(3-2*depth);const opacity=gsap.utils.interpolate(minOpacity,1,depthCurve);const blur=gsap.utils.interpolate(maxBlur,0,depthCurve);const brightness=gsap.utils.interpolate(minDarkness,1,depthCurve);gsap.set(tile,{x:Math.sin(angle)*radius,z:Math.cos(angle)*radius,rotateY:angle*180/Math.PI,opacity,filter:`blur(${blur}px) brightness(${brightness})`,zIndex:Math.round(depth*1000)});});}function waitForNextTile(){delayedCall?.kill();if(!isInView||(pauseOnHover&&isHoveringActive))return;delayedCall=gsap.delayedCall(pauseDuration,goToNextTile);}function goToNextTile(){if(!isInView||(pauseOnHover&&isHoveringActive))return;const activeIndex=getActiveIndex();const orderedStates=tileStates.map((state,index)=>({state,offset:(index-activeIndex+tileCount)%tileCount})).sort((a,b)=>a.offset-b.offset);stepTimeline=gsap.timeline({paused:true,onComplete:waitForNextTile});orderedStates.forEach(({state},index)=>{stepTimeline.to(state,{progress:state.progress+1,duration:moveDuration,ease:"osmo",onUpdate:renderPerspectiveTiles},index*staggerAmount);});stepTimeline.play();}if(pauseOnHover&&canHover){tiles.forEach(tile=>{tile.addEventListener("pointerenter",()=>{if(tile.getAttribute("data-perspective-tiles-item-status")!=="active")return;isHoveringActive=true;delayedCall?.kill();});tile.addEventListener("pointerleave",()=>{if(!isHoveringActive)return;isHoveringActive=false;if(!stepTimeline||!stepTimeline.isActive()){waitForNextTile();}});});}if(tiltEnabled&&canHover){const tiltX=gsap.quickTo(collection,"rotationX",{duration:tiltMoveDuration,ease:"power3.out"});const tiltY=gsap.quickTo(collection,"rotationY",{duration:tiltMoveDuration,ease:"power3.out"});container.addEventListener("pointermove",event=>{const rect=container.getBoundingClientRect();const x=(event.clientX-rect.left)/rect.width-0.5;const y=(event.clientY-rect.top)/rect.height-0.5;tiltX(-y*maxTiltY*2);tiltY(x*maxTiltX*2);});container.addEventListener("pointerleave",()=>{if(!pauseOnHover)return;isHoveringActive=false;if(isInView&&(!stepTimeline||!stepTimeline.isActive())){waitForNextTile();}});}updateMeasurements();renderPerspectiveTiles();new ResizeObserver(()=>{updateMeasurements();renderPerspectiveTiles();}).observe(container);ScrollTrigger.create({trigger:container,start:"top bottom",end:"bottom top",onToggle:self=>{isInView=self.isActive;if(!isInView){delayedCall?.kill();return;}if(!stepTimeline||!stepTimeline.isActive()){waitForNextTile();}}});});}
+    document.addEventListener("DOMContentLoaded",()=>{init3dPerspectiveTiles();});
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="lenis-init.js"></script>
+</body>
+</html>
