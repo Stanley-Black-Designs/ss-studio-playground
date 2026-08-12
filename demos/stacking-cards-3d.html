@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stacking Cards 3D — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:#000;font-family:'Inter',sans-serif;padding-top:50px;-webkit-font-smoothing:antialiased}
+
+    .demo-section{justify-content:center;padding:10svh 2em;display:flex}
+
+    .card-stack{
+      --stack-row:100svh;
+      --stack-top:10svh;
+      --stack-card-height:calc(var(--stack-row) - 2 * var(--stack-top));
+      view-timeline-name:--card-stack;
+      grid-auto-rows:var(--stack-row);
+      width:100%;
+      max-width:60em;
+      display:grid;
+      position:relative;
+    }
+    .card-stack__item{
+      transform-origin:50% 100%;
+      color:#2b1a12;
+      top:var(--stack-top);
+      height:var(--stack-card-height);
+      background-color:#e8c4b8;
+      border-radius:2em;
+      padding:3em;
+      position:sticky;
+      overflow:hidden;
+    }
+    .card-stack__item.is--2{color:#1d2212;background-color:#dde3c0}
+    .card-stack__item.is--3{color:#121a24;background-color:#c9d6e8}
+    .card-stack__item.is--4{color:#241c0c;background-color:#e6d3a3}
+    .card-stack__item.is--5{color:#1c1224;background-color:#d8c7e8}
+    .card-stack__item-inner{
+      gap:4em;flex-flow:column;justify-content:space-between;align-items:stretch;height:100%;display:flex;
+    }
+    .card-stack__item-top{
+      gap:2em;grid-template-rows:auto;grid-template-columns:1fr 1fr;grid-auto-columns:1fr;place-items:end start;display:grid;
+    }
+    .card-stack__item-h{
+      letter-spacing:-.02em;max-width:5.5em;margin:0;font-size:3em;font-weight:500;line-height:.9;
+    }
+    .card-stack__item-p{margin:0;font-size:1em;line-height:1.3}
+    .card-stack__item-bottom{
+      background-color:#00000017;border-radius:1.25em;flex:1;width:100%;
+    }
+
+    .card-stack__item:nth-child(1){--stack-i:1}
+    .card-stack__item:nth-child(2){--stack-i:2}
+    .card-stack__item:nth-child(3){--stack-i:3}
+    .card-stack__item:nth-child(4){--stack-i:4}
+    .card-stack__item:nth-child(5){--stack-i:5}
+
+    @supports (width:calc(sibling-index() * 1px)){
+      .card-stack__item{--stack-i:sibling-index()}
+    }
+    @supports (animation-timeline:view()){
+      .card-stack__item{
+        animation:card-stack-away linear forwards;
+        animation-timeline:--card-stack;
+        animation-range:
+          exit-crossing calc(var(--stack-i,1) * var(--stack-row) - 100svh)
+          exit-crossing calc(var(--stack-i,1) * var(--stack-row) - var(--stack-top));
+      }
+      .card-stack__item:last-of-type{animation:none}
+    }
+    @keyframes card-stack-away{
+      to{transform:perspective(60em) rotateX(25deg) scale(0.85);filter:brightness(0.45)}
+    }
+    @media (prefers-reduced-motion:reduce){.card-stack__item{animation:none}}
+    @media screen and (max-width:767px){
+      .card-stack__item-top{grid-template-columns:1fr}
+      .card-stack__item-inner{gap:2em}
+      .card-stack__item{padding:2em}
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-chrome">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <div class="demo-chrome__sep"></div><span class="demo-chrome__title">Stacking Cards 3D</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+
+  <section class="demo-section">
+    <div class="card-stack">
+
+      <div class="card-stack__item">
+        <div class="card-stack__item-inner">
+          <div class="card-stack__item-top">
+            <h2 class="card-stack__item-h">Discovery</h2>
+            <p class="card-stack__item-p">We start by getting to know your brand, your goals, and the people you're trying to reach. One focused kickoff sets the direction for everything that follows.</p>
+          </div>
+          <div class="card-stack__item-bottom"></div>
+        </div>
+      </div>
+
+      <div class="card-stack__item is--2">
+        <div class="card-stack__item-inner">
+          <div class="card-stack__item-top">
+            <h2 class="card-stack__item-h">Strategy</h2>
+            <p class="card-stack__item-p">With the groundwork laid, we shape the plan — the story, the structure, and the decisions that turn a loose idea into something we can actually build.</p>
+          </div>
+          <div class="card-stack__item-bottom"></div>
+        </div>
+      </div>
+
+      <div class="card-stack__item is--3">
+        <div class="card-stack__item-inner">
+          <div class="card-stack__item-top">
+            <h2 class="card-stack__item-h">Design</h2>
+            <p class="card-stack__item-p">This is where it takes shape. We craft the visual language, the layouts, and the small details that make the work feel unmistakably yours.</p>
+          </div>
+          <div class="card-stack__item-bottom"></div>
+        </div>
+      </div>
+
+      <div class="card-stack__item is--4">
+        <div class="card-stack__item-inner">
+          <div class="card-stack__item-top">
+            <h2 class="card-stack__item-h">Build</h2>
+            <p class="card-stack__item-p">Designs come to life in the browser — animated, responsive, and tested across devices so nothing breaks between the mockup and the real thing.</p>
+          </div>
+          <div class="card-stack__item-bottom"></div>
+        </div>
+      </div>
+
+      <div class="card-stack__item is--5">
+        <div class="card-stack__item-inner">
+          <div class="card-stack__item-top">
+            <h2 class="card-stack__item-h">Launch</h2>
+            <p class="card-stack__item-p">We ship. Final checks, a clean handover, and your project goes live to the world exactly as it was meant to.</p>
+          </div>
+          <div class="card-stack__item-bottom"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="lenis-init.js"></script>
+</body>
+</html>
