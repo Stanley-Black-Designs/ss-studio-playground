@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section Anchor Dock — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter',sans-serif;background:#1a2035;color:#e9ecf6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+    /* Demo chrome */
+    .demo-chrome{position:fixed;top:0;left:0;right:0;z-index:200;height:50px;background:rgba(26,32,53,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;padding:0 20px;gap:12px}
+    .demo-chrome__back{color:rgba(233,236,246,0.45);font-size:13px;text-decoration:none;display:flex;align-items:center;gap:6px;transition:color .2s}
+    .demo-chrome__back:hover{color:#e9ecf6}
+    .demo-chrome__sep{width:1px;height:16px;background:rgba(255,255,255,0.1)}
+    .demo-chrome__title{color:rgba(233,236,246,0.6);font-size:13px}
+    .demo-chrome__cta{margin-left:auto;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:rgba(233,236,246,0.7);border-radius:50em;padding:6px 14px;font-size:12px;font-weight:500;text-decoration:none;transition:background .2s}
+    .demo-chrome__cta:hover{background:rgba(255,255,255,0.14);color:#e9ecf6}
+
+    /* Sections */
+    section{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px clamp(32px,8vw,120px);scroll-margin-top:80px;border-bottom:1px solid rgba(255,255,255,0.05)}
+    section:first-of-type{padding-top:140px}
+    .section-num{font-size:clamp(80px,15vw,180px);font-weight:200;line-height:1;letter-spacing:-.05em;color:rgba(255,255,255,0.06);margin-bottom:.25em}
+    .section-label{font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(233,236,246,0.35);margin-bottom:1em}
+    .section-heading{font-size:clamp(32px,5vw,64px);font-weight:300;line-height:1.05;letter-spacing:-.03em;margin-bottom:1.25em;max-width:12ch}
+    .section-body{font-size:clamp(15px,1.4vw,18px);font-weight:400;line-height:1.65;color:rgba(233,236,246,0.55);max-width:520px}
+
+    /* Footer hide zone */
+    footer{min-height:40vh;display:flex;align-items:center;justify-content:center;color:rgba(233,236,246,0.25);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+
+    /* === Section Dock — exact Osmo CSS === */
+    .section-dock{z-index:100;width:fit-content;margin-left:auto;margin-right:auto;position:fixed;bottom:2em;left:0;right:0;font-family:'Inter',sans-serif;font-size:15px;cursor:pointer}
+    .section-dock__pill{color:#161c33;background-color:#e9ecf6;border-radius:1.5em;overflow:hidden}
+    .section-dock__toggle{white-space:nowrap;appearance:none;background-color:#0000;border:none;padding:.85em 1.5em;display:block;cursor:pointer;font-family:'Inter',sans-serif;font-size:inherit}
+    .section-dock__label-wrap{height:1.5em;display:block;position:relative;overflow:hidden}
+    .section-dock__link-num{color:#161c338c;margin-right:.6em;font-size:.75em;line-height:1;display:inline-block;position:relative;bottom:.05em}
+    [data-section-dock-link][data-active] .section-dock__link-num{color:rgba(255,255,255,0.6)}
+    .section-dock__label{line-height:1.5;display:block}
+    .section-dock__list{opacity:0;visibility:hidden;width:max-content;padding:.5em;position:absolute;top:0;left:0}
+    .section-dock__indicator{z-index:1;pointer-events:none;background-color:#161c33;border-radius:100em;width:2em;height:2em;position:absolute;top:0;left:0}
+    .section-dock__items{flex-flow:column;margin-bottom:0;padding-left:0;list-style:none;display:flex}
+    .section-dock__link{z-index:2;white-space:nowrap;color:inherit;border-radius:100em;padding:.5em 1em;text-decoration:none;transition-property:color;transition-duration:.3s;transition-timing-function:ease;display:block;position:relative}
+    [data-section-dock-link][data-active]{color:#fff}
+  </style>
+</head>
+<body>
+  <div class="demo-chrome">
+    <a href="../index.html" class="demo-chrome__back"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+    <div class="demo-chrome__sep"></div>
+    <span class="demo-chrome__title">Section Anchor Dock</span>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+
+  <section id="discovery">
+    <p class="section-num">01</p>
+    <p class="section-label">Phase one</p>
+    <h2 class="section-heading">Discovery</h2>
+    <p class="section-body">We start by getting to know your brand, your goals, and the people you're trying to reach. One focused kickoff sets the direction for everything that follows. No assumptions, no templates — just listening.</p>
+  </section>
+
+  <section id="strategy">
+    <p class="section-num">02</p>
+    <p class="section-label">Phase two</p>
+    <h2 class="section-heading">Strategy</h2>
+    <p class="section-body">With the groundwork laid, we shape the plan — the story, the structure, and the decisions that turn a loose idea into something we can actually build. This is where direction becomes momentum.</p>
+  </section>
+
+  <section id="design">
+    <p class="section-num">03</p>
+    <p class="section-label">Phase three</p>
+    <h2 class="section-heading">Design</h2>
+    <p class="section-body">This is where it takes shape. We craft the visual language, the layouts, and the small details that make the work feel unmistakably yours. Every choice is intentional — nothing is decoration.</p>
+  </section>
+
+  <section id="development">
+    <p class="section-num">04</p>
+    <p class="section-label">Phase four</p>
+    <h2 class="section-heading">Development</h2>
+    <p class="section-body">Designs come to life in the browser — animated, responsive, and tested across devices so nothing breaks between the mockup and the real thing. Motion is engineered, not afterthought.</p>
+  </section>
+
+  <section id="launch">
+    <p class="section-num">05</p>
+    <p class="section-label">Phase five</p>
+    <h2 class="section-heading">Launch</h2>
+    <p class="section-body">We ship. Final checks, a clean handover, and your project goes live to the world exactly as it was meant to. Then we stick around — because great work is a relationship, not a transaction.</p>
+  </section>
+
+  <footer data-section-dock-hide>
+    <span>Stanley Smith Studios · Cape Town</span>
+  </footer>
+
+  <!-- Section Anchor Dock -->
+  <nav data-section-dock-init aria-label="on this page" class="section-dock">
+    <div data-section-dock-pill class="section-dock__pill">
+      <button data-section-dock-toggle aria-expanded="false" aria-controls="section-dock-list" class="section-dock__toggle">
+        <span data-section-dock-label-wrap class="section-dock__label-wrap">
+          <span class="section-dock__label">
+            <span class="section-dock__link-num">01</span>
+            <span>Discovery</span>
+          </span>
+        </span>
+      </button>
+      <div data-section-dock-list id="section-dock-list" class="section-dock__list">
+        <div data-section-dock-indicator class="section-dock__indicator"></div>
+        <ul class="section-dock__items">
+          <li><a data-active data-section-dock-link href="#discovery" class="section-dock__link"><span class="section-dock__link-num">01</span><span>Discovery</span></a></li>
+          <li><a data-section-dock-link href="#strategy" class="section-dock__link"><span class="section-dock__link-num">02</span><span>Strategy</span></a></li>
+          <li><a data-section-dock-link href="#design" class="section-dock__link"><span class="section-dock__link-num">03</span><span>Design</span></a></li>
+          <li><a data-section-dock-link href="#development" class="section-dock__link"><span class="section-dock__link-num">04</span><span>Development</span></a></li>
+          <li><a data-section-dock-link href="#launch" class="section-dock__link"><span class="section-dock__link-num">05</span><span>Launch</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+  <script>
+    function initSectionAnchorDock(){gsap.registerPlugin(ScrollTrigger);const reduceMotion=window.matchMedia("(prefers-reduced-motion: reduce)");const canHover=window.matchMedia("(hover: hover)");document.querySelectorAll("[data-section-dock-init]").forEach(dock=>{const pill=dock.querySelector("[data-section-dock-pill]");const toggle=dock.querySelector("[data-section-dock-toggle]");const labelWrap=dock.querySelector("[data-section-dock-label-wrap]");const list=dock.querySelector("[data-section-dock-list]");const indicator=dock.querySelector("[data-section-dock-indicator]");const links=list?Array.from(list.querySelectorAll("[data-section-dock-link]")):[];const sections=links.map(link=>document.querySelector(link.getAttribute("href")));const labelTemplate=labelWrap?labelWrap.firstElementChild:null;if(!pill||!toggle||!labelWrap||!labelTemplate||!list||!indicator||links.length<2||sections.some(s=>!s))return;let activeIndex=Math.max(0,links.findIndex(l=>l.hasAttribute("data-active")));let open=false;let dockTl=null;const rect={x:0,y:0,w:0,h:0};const motion="bouncy";const smooth=()=>motion==="smooth"||reduceMotion.matches;const dur=d=>reduceMotion.matches?0:d;const ease=(bouncy,calm)=>smooth()?calm:bouncy;gsap.set(pill,{transformOrigin:"50% 100%"});function syncLinkState(){links.forEach((l,i)=>{l.toggleAttribute("data-active",i===activeIndex);if(i===activeIndex)l.setAttribute("aria-current","location");else l.removeAttribute("aria-current");});}function buildLabel(index){const span=labelTemplate.cloneNode(false);span.innerHTML=links[index].innerHTML;return span;}function setLabel(index){labelWrap.textContent="";labelWrap.appendChild(buildLabel(index));gsap.set(labelWrap,{width:"auto"});}function swapLabel(index,movingDown){const olds=Array.from(labelWrap.children);const startWidth=labelWrap.offsetWidth;gsap.killTweensOf(labelWrap);olds.forEach(old=>{gsap.killTweensOf(old);gsap.set(old,{position:"absolute",top:0,left:0});gsap.to(old,{yPercent:movingDown?-120:120,autoAlpha:0,duration:dur(0.35),ease:"power2.out",onComplete:()=>old.remove()});});const next=buildLabel(index);labelWrap.appendChild(next);gsap.set(labelWrap,{width:"auto"});const targetWidth=next.offsetWidth;gsap.fromTo(labelWrap,{width:startWidth},{width:targetWidth,duration:dur(0.45),ease:ease("back.out(1.6)","power3.out")});gsap.fromTo(next,{yPercent:movingDown?120:-120,autoAlpha:0},{yPercent:0,autoAlpha:1,duration:dur(0.45),ease:"power3.out"});if(!smooth()){gsap.killTweensOf(pill,"scaleY");gsap.timeline().to(pill,{scaleY:0.85,duration:0.15,ease:"power2.out"}).to(pill,{scaleY:1,duration:0.45,ease:"back.out(2.5)"}); }}function rectFor(link){return{x:link.offsetLeft,y:link.offsetTop,w:link.offsetWidth,h:link.offsetHeight};}function render(){gsap.set(indicator,{x:rect.x,y:rect.y,width:rect.w,height:rect.h});}function placeIndicator(index){Object.assign(rect,rectFor(links[index]));gsap.killTweensOf(rect);gsap.killTweensOf(indicator);gsap.set(indicator,{scaleX:1,scaleY:1});render();}function hopIndicator(index){const target=rectFor(links[index]);gsap.killTweensOf(rect);gsap.killTweensOf(indicator);if(smooth()){gsap.set(indicator,{scaleX:1,scaleY:1});gsap.to(rect,{x:target.x,y:target.y,w:target.w,h:target.h,duration:dur(0.35),ease:"power3.out",onUpdate:render});return;}const delta=target.y-rect.y;const sign=delta===0?1:Math.sign(delta);const overshoot=gsap.utils.clamp(6,12,Math.abs(delta)*0.08)*sign;const apexY=gsap.utils.clamp(0,list.clientHeight-target.h,target.y+overshoot);gsap.set(indicator,{transformOrigin:"50% 50%"});gsap.timeline().to(rect,{x:target.x,y:apexY,w:target.w,h:target.h,duration:0.35,ease:"power3.out",onUpdate:render}).to(rect,{y:target.y,duration:0.25,ease:"power2.inOut",onUpdate:render});gsap.timeline().to(indicator,{scaleX:0.78,duration:0.15,ease:"power2.out"}).to(indicator,{scaleY:1,scaleX:1,duration:0.45,ease:"back.out(2.5)"});}function setActive(index,movingDown){if(index===activeIndex)return;activeIndex=index;syncLinkState();if(open){setLabel(index);hopIndicator(index);}else{swapLabel(index,movingDown);placeIndicator(index);}}function openDock(){if(open)return;open=true;toggle.setAttribute("aria-expanded","true");placeIndicator(activeIndex);const fromW=pill.offsetWidth;const fromH=pill.offsetHeight;if(dockTl)dockTl.kill();gsap.set(list,{visibility:"inherit"});gsap.set(pill,{width:fromW,height:fromH});gsap.set(links[activeIndex],{yPercent:0,opacity:1});dockTl=gsap.timeline().to(pill,{width:list.offsetWidth,height:list.offsetHeight,duration:dur(0.45),ease:ease("back.out(1.4)","power3.out")},0).to(toggle,{autoAlpha:0,duration:dur(0.15),ease:"power1.out"},0).to(list,{opacity:1,duration:dur(0.25),ease:"power1.out"},dur(0.05)).fromTo(links.filter((l,i)=>i!==activeIndex),{yPercent:40,opacity:0},{yPercent:0,opacity:1,duration:dur(0.25),ease:"power2.out",stagger:{each:dur(0.05),from:"end"}},dur(0.05));}function closeDock(){if(!open)return;open=false;toggle.setAttribute("aria-expanded","false");if(dockTl)dockTl.kill();dockTl=gsap.timeline({onComplete:()=>{gsap.set(pill,{clearProps:"width,height"});gsap.set(list,{visibility:"hidden"});gsap.set(links,{yPercent:0,opacity:1});}}).to(pill,{width:toggle.offsetWidth,height:toggle.offsetHeight,duration:dur(0.3),ease:"power3.out"},0).to(list,{opacity:0,duration:dur(0.15),ease:"power1.out"},0).to(toggle,{autoAlpha:1,duration:dur(0.25),ease:"power1.out"},dur(0.1));}sections.forEach((section,i)=>{ScrollTrigger.create({trigger:section,start:"top 45%",end:"bottom 45%",onToggle:self=>{if(self.isActive)setActive(i,self.direction!==-1);}});});let isHidden=true;let hideTriggers=[];let rangeTrigger=null;gsap.set(dock,{yPercent:40,autoAlpha:0});dock.toggleAttribute("data-hidden",true);function updateHidden(){const inRange=rangeTrigger?rangeTrigger.isActive:true;const hidden=!inRange||hideTriggers.some(t=>t.isActive);if(hidden===isHidden)return;isHidden=hidden;if(hidden&&open)closeDock();dock.toggleAttribute("data-hidden",hidden);gsap.to(dock,{yPercent:hidden?40:0,autoAlpha:hidden?0:1,duration:dur(0.3),ease:hidden?"power2.out":ease("back.out(1.4)","power3.out")});}rangeTrigger=ScrollTrigger.create({trigger:sections[0],endTrigger:sections[sections.length-1],start:"top 45%",end:"bottom 45%",onToggle:updateHidden});hideTriggers=Array.from(document.querySelectorAll("[data-section-dock-hide]")).map(zone=>{const offset=parseFloat(zone.getAttribute("data-section-dock-hide"));const line=100-gsap.utils.clamp(0,100,Number.isNaN(offset)?10:offset);return ScrollTrigger.create({trigger:zone,start:"top "+line+"%",end:"bottom top",onToggle:updateHidden});});links.forEach(link=>{link.addEventListener("click",()=>closeDock());});toggle.addEventListener("click",()=>{if(open){closeDock();return;}openDock();links[activeIndex].focus();});if(canHover.matches){dock.addEventListener("mouseenter",openDock);dock.addEventListener("mouseleave",closeDock);}document.addEventListener("keydown",event=>{if(event.key==="Escape"&&open){closeDock();gsap.delayedCall(0.15,()=>toggle.focus());}});document.addEventListener("click",event=>{if(open&&!dock.contains(event.target))closeDock();});dock.addEventListener("focusout",event=>{if(open&&!dock.contains(event.relatedTarget))closeDock();});function refreshLayout(){setLabel(activeIndex);placeIndicator(activeIndex);if(open)gsap.set(pill,{width:list.offsetWidth,height:list.offsetHeight});}window.addEventListener("resize",refreshLayout);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(refreshLayout);syncLinkState();refreshLayout();});}
+    document.addEventListener("DOMContentLoaded",()=>{initSectionAnchorDock();});
+  </script>
+</body>
+</html>
