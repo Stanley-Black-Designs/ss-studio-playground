@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Hotspot Modal — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;padding-top:50px;-webkit-font-smoothing:antialiased}
+
+    .hotspot-section{color:#201d1d;background-color:#abaf98;justify-content:center;align-items:center;height:calc(100svh - 50px);display:flex;overflow:hidden}
+    .hotspot-area{aspect-ratio:4/3;flex:none;justify-content:center;align-items:center;width:min(125vw,153.333svh);max-width:125vw;max-height:115svh;display:flex;position:relative}
+    .hotspot-area__media{width:100%;height:100%;position:absolute;top:0;left:0}
+    .cover-image{object-fit:cover;width:100%;height:100%;position:absolute;top:0;left:0}
+    .hotspot-area__close{width:100vw;height:100%;position:absolute}
+    .hotspot-area__collection{pointer-events:none;width:100%;height:100%;position:relative}
+    .hotspot-area__list{width:100%;height:100%;position:relative}
+    .hotspot-area__item{pointer-events:auto;justify-content:center;align-items:center;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+    .hotspot-area__item.is--belt-drive{top:62%;left:30%}
+    .hotspot-area__item.is--interface{top:34%;left:62%}
+    .hotspot-area__item.is--saddle{z-index:1;top:37%;left:41%}
+    .hotspot-area__item.is--drive-unit{top:58%;left:47%}
+    .hotspot-area__item.is--lighting{top:51%;left:16%}
+
+    .hotspot-plus-btn{cursor:pointer;appearance:none;background-color:#ede9e4;border:0 solid #000;border-radius:50em;justify-content:center;align-items:center;width:3.5em;height:3.5em;margin:0;padding:1.25em;display:flex;transition:transform .3s cubic-bezier(.38,.005,.215,1),background-color .3s cubic-bezier(.38,.005,.215,1);transform:scale(1) rotate(-45deg)}
+    .hotspot-plus-btn:hover,.hotspot-plus-btn[data-hotspot-status="active"]{transform:scale(1.1) rotate(45deg)}
+    .hotspot-plus-btn[data-hotspot-status="active"]{background-color:#F6FF4C}
+
+    .hotspot-modal{z-index:100;pointer-events:none;position:fixed;inset:50px 0 0;overflow:hidden}
+    .hotspot-modal__side{align-items:center;width:100%;max-width:32em;height:100%;padding:2.5em;display:flex;position:absolute;top:0;right:0;transition:transform .6s cubic-bezier(.625,.05,0,1);transform:translateX(100%) rotate(.001deg)}
+    [data-hotspot-modal-status="active"] .hotspot-modal__side{transform:translateX(0%) rotate(.001deg)}
+    .hotspot-modal__tile{pointer-events:auto;background-color:#ede9e4;border-radius:2.5em;flex-flow:column;flex:1;width:100%;max-width:100%;height:100%;max-height:54em;display:flex;position:relative;overflow:scroll}
+    .hotspot-modal__collection{flex:1;position:relative;overflow:hidden}
+    .hotspot-modal__list{grid-template-rows:auto;grid-template-columns:1fr;grid-auto-columns:1fr;width:100%;height:100%;display:grid;position:relative}
+    .hotspot-modal__item{flex-flow:column;grid-area:1/1;padding:.75em .75em 0;display:flex;position:relative}
+    [data-hotspot-name]{transition:opacity .6s cubic-bezier(.625,.05,0,1),transform .6s cubic-bezier(.625,.05,0,1)}
+    [data-hotspot-name][data-hotspot-status="not-active"]{opacity:0;visibility:hidden;transform:translateX(0em) rotate(.001deg)}
+    [data-hotspot-name][data-hotspot-status="active"]{opacity:1;visibility:visible;transform:translateX(0em) rotate(.001deg)}
+    [data-hotspot-name][data-hotspot-status="transition-in-right"]{opacity:0;visibility:visible;transform:translateX(1em) rotate(.001deg);transition:none}
+    [data-hotspot-name][data-hotspot-status="transition-in-left"]{opacity:0;visibility:visible;transform:translateX(-1em) rotate(.001deg);transition:none}
+    [data-hotspot-name][data-hotspot-status="transition-out-right"]{opacity:0;visibility:visible;transform:translateX(1em) rotate(.001deg)}
+    [data-hotspot-name][data-hotspot-status="transition-out-left"]{opacity:0;visibility:visible;transform:translateX(-1em) rotate(.001deg)}
+    .hotspot-modal__top{z-index:1;pointer-events:none;justify-content:flex-end;width:100%;height:0%;padding:0 2em;display:flex;position:sticky;top:2em}
+    .hotspot-close-btn{pointer-events:auto;color:#201d1d;cursor:pointer;appearance:none;background-color:#fff;border:0;border-radius:50em;justify-content:center;align-items:center;width:2.75em;height:2.75em;padding:.8625em;display:flex}
+    .hotspot-modal__media{aspect-ratio:4/3;border-radius:1.75em;position:relative;overflow:hidden}
+    .hotspot-modal__info{gap:1.5em;flex-flow:column;flex:1;justify-content:flex-start;padding:2.25em 1.25em;display:flex}
+    .hotspot-modal__h{letter-spacing:-.04em;margin:0;font-size:2.375em;font-weight:600;line-height:.95}
+    .hotspot-modal__p{margin:0;font-size:1em;line-height:1.5}
+    .hotspot-modal__bottom{width:100%;padding:0 2em 2em;position:relative}
+    .hotspot-modal__controls{justify-content:space-between;display:flex}
+    .hotspot-arrow-btn{color:#fff;cursor:pointer;appearance:none;background-color:#201d1d;border:0;border-radius:50em;justify-content:center;align-items:center;width:2.75em;height:2.75em;padding:.8625em;display:flex}
+    .hotspot-arrow-btn.is--prev{color:#201d1d;background-color:#fff;transform:scaleX(-1)}
+    .hotspot-modal__dots{justify-content:center;align-items:center;display:flex}
+    .hotspot-dot{color:#c4c0bc;cursor:pointer;appearance:none;background-color:currentColor;border:.15625em solid #ede9e4;border-radius:50em;width:.75em;height:.75em;padding:0;font-size:1em;display:block;position:relative;overflow:hidden;outline:0!important;box-shadow:0 0 #0000!important}
+    .hotspot-dot[data-hotspot-control-status="active"]{color:#201d1d}
+
+    @media screen and (max-width:991px){.hotspot-plus-btn{width:2.5em;height:2.5em;padding:.875em}.hotspot-modal__side{max-width:28.5em;padding:.75em}}
+  </style>
+</head>
+<body>
+  <div class="demo-chrome">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <div class="demo-chrome__sep"></div><span class="demo-chrome__title">Product Hotspot Modal</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+
+  <!-- Modal (fixed, outside section) -->
+  <div data-hotspot-modal-init="" data-hotspot-modal-status="not-active" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Product details" class="hotspot-modal">
+    <div class="hotspot-modal__side">
+      <div class="hotspot-modal__tile">
+        <div class="hotspot-modal__top">
+          <button data-hotspot-control="close" aria-label="Close product details" class="hotspot-close-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none"><path d="M19 5L5 19" stroke="currentColor" stroke-miterlimit="10" stroke-width="2.5"></path><path d="M5 5L19 19" stroke="currentColor" stroke-miterlimit="10" stroke-width="2.5"></path></svg>
+          </button>
+        </div>
+        <div class="hotspot-modal__collection">
+          <div class="hotspot-modal__list">
+
+            <div data-hotspot-status="active" data-hotspot-name="lighting" class="hotspot-modal__item">
+              <div class="hotspot-modal__media"><img src="https://cdn.prod.website-files.com/6a82c1e26db580f9e9d900a5/6a82c52e6842daee07ff5984_Rear%20Light%20Shots.avif" loading="lazy" alt="" class="cover-image"></div>
+              <div class="hotspot-modal__info">
+                <h3 class="hotspot-modal__h">Integrated visibility from every angle</h3>
+                <p class="hotspot-modal__p">The rear light is built directly into the fender, keeping it protected while preserving the bike's uninterrupted silhouette.<br><br>A wide LED surface creates a clear, consistent signal to traffic behind you, powered directly by the bike so there is nothing extra to charge or attach.</p>
+              </div>
+            </div>
+
+            <div data-hotspot-status="not-active" data-hotspot-name="belt-drive" class="hotspot-modal__item">
+              <div class="hotspot-modal__media"><img src="https://cdn.prod.website-files.com/6a82c1e26db580f9e9d900a5/6a82c52e3983a9375ddc24d1_Product%20Detail%20Shots.avif" loading="lazy" alt="" class="cover-image"></div>
+              <div class="hotspot-modal__info">
+                <h3 class="hotspot-modal__h">Quiet power, built into every rotation</h3>
+                <p class="hotspot-modal__p">The carbon belt drive replaces the traditional chain with a clean, low-maintenance system designed for everyday riding. No grease, no exposed drivetrain and almost no noise.<br><br>Paired with the integrated rear hub, power delivery feels smooth and immediate while keeping the silhouette of the bike remarkably simple.</p>
+              </div>
+            </div>
+
+            <div data-hotspot-status="not-active" data-hotspot-name="saddle" class="hotspot-modal__item">
+              <div class="hotspot-modal__media"><img src="https://cdn.prod.website-files.com/6a82c1e26db580f9e9d900a5/6a82c52e6842daee07ff5997_Saddle%20Zoom%20Shots.avif" loading="lazy" alt="" class="cover-image"></div>
+              <div class="hotspot-modal__info">
+                <h3 class="hotspot-modal__h">Comfort shaped around the everyday ride</h3>
+                <p class="hotspot-modal__p">A carefully contoured saddle provides support without adding unnecessary bulk. Its soft-touch surface and subtle padding balance comfort with a slim, refined profile.<br><br>The integrated seatpost connection continues the frame's flowing geometry, creating a seamless transition from frame to rider.</p>
+              </div>
+            </div>
+
+            <div data-hotspot-status="not-active" data-hotspot-name="drive-unit" class="hotspot-modal__item">
+              <div class="hotspot-modal__media"><img src="https://cdn.prod.website-files.com/6a82c1e26db580f9e9d900a5/6a82c52ea2c7f848fe14812a_Engine%20Part%20Shots.avif" loading="lazy" alt="" class="cover-image"></div>
+              <div class="hotspot-modal__info">
+                <h3 class="hotspot-modal__h">Power that feels natural, not electric</h3>
+                <p class="hotspot-modal__p">The compact mid-drive system delivers assistance directly through the drivetrain for smooth acceleration and responsive handling.<br><br>Its low, central position keeps weight where it belongs, helping the bike feel balanced and predictable whether assistance is active or not.</p>
+              </div>
+            </div>
+
+            <div data-hotspot-status="not-active" data-hotspot-name="interface" class="hotspot-modal__item">
+              <div class="hotspot-modal__media"><img src="https://cdn.prod.website-files.com/6a82c1e26db580f9e9d900a5/6a82c52edc6e18815bb49ecc_Steering%20Product%20Shots.avif" loading="lazy" alt="" class="cover-image"></div>
+              <div class="hotspot-modal__info">
+                <h3 class="hotspot-modal__h">Everything you need, right where you need it</h3>
+                <p class="hotspot-modal__p">The integrated cockpit brings speed, battery level and ride controls into a single display positioned naturally within your line of sight.<br><br>Controls remain close to your hands, while cables are carefully routed through the frame to keep the cockpit clean and distraction-free.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="hotspot-modal__bottom">
+          <div class="hotspot-modal__controls">
+            <button data-hotspot-control="prev" aria-label="Previous product detail" class="hotspot-arrow-btn is--prev">
+              <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none"><path d="M14 19L21 12L14 5" stroke="currentColor" stroke-miterlimit="10" stroke-width="2.5"></path><path d="M21 12H2" stroke="currentColor" stroke-miterlimit="10" stroke-width="2.5"></path></svg>
+            </button>
+            <div data-hotspot-generate-dots="" class="hotspot-modal__dots">
+              <button data-hotspot-control="1" data-hotspot-control-status="active" aria-label="Go to product detail 1" aria-current="true" class="hotspot-dot"></button>
+            </div>
+            <button data-hotspot-control="next" aria-label="Next product detail" class="hotspot-arrow-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none"><path d="M14 19L21 12L14 5" stroke="currentColor" stroke-miterlimit="10" stroke-width="2.5"></path><path d="M21 12H2" stroke="currentColor" stroke-miterlimit="10" stroke-width="2.5"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product section with hotspots -->
+  <section class="hotspot-section">
+    <div class="hotspot-area">
+      <div class="hotspot-area__media">
+        <img src="https://cdn.prod.website-files.com/6a82c1e26db580f9e9d900a5/6a82c3e33138f2a061225c5e_ef693092420db4122ded457d284e1f26_bike-full-2880x2150.avif" loading="lazy" alt="" class="cover-image">
+      </div>
+      <div data-hotspot-control="close" class="hotspot-area__close"></div>
+      <div class="hotspot-area__collection">
+        <div class="hotspot-area__list">
+          <div class="hotspot-area__item is--lighting">
+            <button data-hotspot-target="lighting" data-hotspot-status="not-active" aria-label="View lighting details" aria-expanded="false" class="hotspot-plus-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none"><path d="M19 5L5 19" stroke="currentColor" stroke-miterlimit="10" stroke-width="2.5"></path><path d="M5 5L19 19" stroke="currentColor" stroke-miterlimit="10" stroke-width="2.5"></path></svg>
+            </button>
+          </div>
+          <div class="hotspot-area__item is--belt-drive">
+            <button data-hotspot-target="belt-drive" data-hotspot-status="not-active" aria-label="View belt drive details" aria-expanded="false" class="hotspot-plus-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none"><path d="M19 5L5 19" stroke="currentColor" stroke-miterlimit="10" stroke-width="2.5"></path><path d="M5 5L19 19" stroke="currentColor" stroke-miterlimit="10" stroke-width="2.5"></path></svg>
+            </button>
+          </div>
+          <div class="hotspot-area__item is--saddle">
+            <button data-hotspot-target="saddle" data-hotspot-status="not-active" aria-label="View saddle details" aria-expanded="false" class="hotspot-plus-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none"><path d="M19 5L5 19" stroke="currentColor" stroke-miterlimit="10" stroke-width="2.5"></path><path d="M5 5L19 19" stroke="currentColor" stroke-miterlimit="10" stroke-width="2.5"></path></svg>
+            </button>
+          </div>
+          <div class="hotspot-area__item is--drive-unit">
+            <button data-hotspot-target="drive-unit" data-hotspot-status="not-active" aria-label="View drive unit details" aria-expanded="false" class="hotspot-plus-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none"><path d="M19 5L5 19" stroke="currentColor" stroke-miterlimit="10" stroke-width="2.5"></path><path d="M5 5L19 19" stroke="currentColor" stroke-miterlimit="10" stroke-width="2.5"></path></svg>
+            </button>
+          </div>
+          <div class="hotspot-area__item is--interface">
+            <button data-hotspot-target="interface" data-hotspot-status="not-active" aria-label="View interface details" aria-expanded="false" class="hotspot-plus-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none"><path d="M19 5L5 19" stroke="currentColor" stroke-miterlimit="10" stroke-width="2.5"></path><path d="M5 5L19 19" stroke="currentColor" stroke-miterlimit="10" stroke-width="2.5"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function initProductHotspotModal(){const transitionDuration=600;const transitionOffset=0;const modals=Array.from(document.querySelectorAll('[data-hotspot-modal-init]'));const triggers=Array.from(document.querySelectorAll('[data-hotspot-target]'));const closeAll=()=>{modals.forEach(modal=>{modal.setAttribute('data-hotspot-modal-status','not-active');modal.setAttribute('aria-hidden','true');});triggers.forEach(trigger=>{trigger.setAttribute('data-hotspot-status','not-active');trigger.setAttribute('aria-expanded','false');});};modals.forEach(modal=>{const cards=Array.from(modal.querySelectorAll('[data-hotspot-name]'));const dotsParent=modal.querySelector('[data-hotspot-generate-dots]');if(!cards.length)return;let activeIndex=Math.max(0,cards.findIndex(card=>card.getAttribute('data-hotspot-status')==='active'));let offsetTimeout;let transitionTimeout;const getName=index=>cards[index].getAttribute('data-hotspot-name');const getDots=()=>Array.from(modal.querySelectorAll('[data-hotspot-control]')).filter(control=>/^\d+$/.test(control.getAttribute('data-hotspot-control')));function updateControls(){const activeName=getName(activeIndex);triggers.forEach(trigger=>{const isActive=trigger.getAttribute('data-hotspot-target')===activeName;trigger.setAttribute('data-hotspot-status',isActive?'active':'not-active');trigger.setAttribute('aria-expanded',isActive?'true':'false');});getDots().forEach((dot,index)=>{const isActive=index===activeIndex;dot.setAttribute('data-hotspot-control-status',isActive?'active':'not-active');dot.setAttribute('aria-current',isActive?'true':'false');});}function showCard(index,direction){if(index===activeIndex)return;clearTimeout(offsetTimeout);clearTimeout(transitionTimeout);const currentCard=cards[activeIndex];const nextCard=cards[index];currentCard.setAttribute('data-hotspot-status',direction==='next'?'transition-out-left':'transition-out-right');nextCard.setAttribute('data-hotspot-status',direction==='next'?'transition-in-right':'transition-in-left');nextCard.offsetHeight;activeIndex=index;updateControls();offsetTimeout=setTimeout(()=>{nextCard.setAttribute('data-hotspot-status','active');},transitionOffset);transitionTimeout=setTimeout(()=>{currentCard.setAttribute('data-hotspot-status','not-active');},transitionOffset+transitionDuration);}function openModal(name){const index=cards.findIndex(card=>card.getAttribute('data-hotspot-name')===name);if(index<0)return;closeAll();cards.forEach((card,i)=>{card.setAttribute('data-hotspot-status',i===index?'active':'not-active');});activeIndex=index;updateControls();modal.setAttribute('data-hotspot-modal-status','active');modal.setAttribute('aria-hidden','false');}if(dotsParent){const template=dotsParent.querySelector('[data-hotspot-control]');if(template){dotsParent.innerHTML='';cards.forEach((card,index)=>{const dot=template.cloneNode(true);dot.setAttribute('data-hotspot-control',index+1);dot.setAttribute('data-hotspot-control-status',index===activeIndex?'active':'not-active');dot.setAttribute('aria-current',index===activeIndex?'true':'false');dot.setAttribute('aria-label',`Go to product detail ${index+1}`);dotsParent.appendChild(dot);});}}cards.forEach((card,index)=>{card.setAttribute('data-hotspot-status',index===activeIndex?'active':'not-active');});modal.setAttribute('aria-hidden',modal.getAttribute('data-hotspot-modal-status')==='active'?'false':'true');triggers.forEach(trigger=>{trigger.setAttribute('aria-expanded',trigger.getAttribute('data-hotspot-status')==='active'?'true':'false');trigger.addEventListener('click',()=>{const name=trigger.getAttribute('data-hotspot-target');const index=cards.findIndex(card=>card.getAttribute('data-hotspot-name')===name);if(index<0)return;if(trigger.getAttribute('data-hotspot-status')==='active')return closeAll();modal.getAttribute('data-hotspot-modal-status')==='active'?showCard(index,index>activeIndex?'next':'prev'):openModal(name);});});modal.addEventListener('click',event=>{const control=event.target.closest('[data-hotspot-control]');if(!control)return;const value=control.getAttribute('data-hotspot-control');if(value==='next')return showCard((activeIndex+1)%cards.length,'next');if(value==='prev')return showCard((activeIndex-1+cards.length)%cards.length,'prev');if(/^\d+$/.test(value)){const index=Number(value)-1;if(index>=0&&index<cards.length&&index!==activeIndex){showCard(index,index>activeIndex?'next':'prev');}}});});document.addEventListener('click',event=>{if(event.target.closest('[data-hotspot-control="close"]'))closeAll();});document.addEventListener('keydown',event=>event.key==='Escape'&&closeAll());}
+    document.addEventListener('DOMContentLoaded',()=>{initProductHotspotModal();});
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="lenis-init.js"></script>
+</body>
+</html>
