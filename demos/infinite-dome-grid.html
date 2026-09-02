@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infinite Dome Grid — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;overflow:hidden}
+    body{font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+
+    /* Demo chrome — fixed over the grid */
+    .demo-chrome{position:fixed;top:0;left:0;right:0;z-index:200;height:50px;background:rgba(0,0,0,0.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;padding:0 20px;gap:12px}
+    .demo-chrome__back{color:rgba(255,255,255,0.4);font-size:13px;text-decoration:none;display:flex;align-items:center;gap:6px;transition:color .2s}
+    .demo-chrome__back:hover{color:#fff}
+    .demo-chrome__sep{width:1px;height:16px;background:rgba(255,255,255,0.1)}
+    .demo-chrome__title{color:rgba(255,255,255,0.5);font-size:13px}
+    .demo-chrome__cta{margin-left:auto;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.6);border-radius:50em;padding:6px 14px;font-size:12px;font-weight:500;text-decoration:none;transition:background .2s}
+    .demo-chrome__cta:hover{background:rgba(255,255,255,0.14);color:#fff}
+
+    /* Grid fills the full page under the chrome */
+    .dome-grid-wrap{position:fixed;inset:50px 0 0;overflow:hidden}
+
+    .dome-grid{--panel-gap:-2em;cursor:grab;touch-action:none;overscroll-behavior:none;-webkit-user-select:none;user-select:none;background-color:#000;width:100%;height:100%;position:relative;overflow:hidden}
+    .dome-grid[data-dragging]{cursor:grabbing}
+    .dome-grid__list{grid-template-columns:repeat(5,1fr);gap:2em;width:100%;display:grid}
+    .dome-grid__item{--slide:0;--dim:0;aspect-ratio:1;transform-origin:0 0;will-change:transform;position:relative}
+    .dome-grid__item[data-lifted]{z-index:10}
+    .dome-grid__item[data-active] .dome-grid__caption{opacity:0}
+    .dome-grid__item .dome-grid__content{display:none}
+    .dome-grid__panel{pointer-events:none;transform:translateX(calc((100% + var(--panel-gap)) * var(--slide)));background-color:#fff;border-radius:1em;position:absolute;inset:0%}
+    .dome-grid__media{background-color:#111;border-radius:1em;width:100%;height:100%;position:relative;overflow:hidden}
+    .dome-grid__image{pointer-events:none;object-fit:cover;width:100%;height:100%;position:absolute;inset:0%;transform:scale(1.1)}
+    .dome-grid__caption{z-index:1;pointer-events:none;color:#fff;transform-style:preserve-3d;background-image:linear-gradient(#fff0 40%,#0009);justify-content:space-between;align-items:flex-end;padding:1.25em;transition-property:opacity;transition-duration:.35s;transition-timing-function:ease-out;display:flex;position:absolute;inset:0%;transform:translateZ(0)}
+    .dome-grid__text{margin:0;font-size:1em;line-height:1.2}
+    .dome-grid__text.is--faded{opacity:.6}
+    .dome-grid__dim{z-index:1;pointer-events:none;opacity:var(--dim);transform-style:preserve-3d;background-color:#000;position:absolute;inset:0%;transform:translateZ(0)}
+    .dome-grid__content{gap:1.5em;flex-flow:column;justify-content:center;align-items:flex-start;min-height:100%;padding:2.5em;display:flex}
+    .dome-grid__title{letter-spacing:-.02em;margin:0;font-size:2em;font-weight:500;line-height:1}
+    .dome-grid__shade{--fx:50%;--fy:50%;opacity:.7;pointer-events:none;-webkit-mask-image:radial-gradient(circle at var(--fx) var(--fy),transparent 25%,#000 75%);mask-image:radial-gradient(circle at var(--fx) var(--fy),transparent 25%,#000 75%);background-color:#000;position:absolute;inset:0%}
+    .dome-grid__cover{z-index:20;pointer-events:none;background-color:#000;transition:opacity .3s ease-out;position:absolute;inset:0%}
+    .dome-grid[data-loaded] .dome-grid__cover{opacity:0;pointer-events:none}
+    .dome-grid__lightbox{z-index:10;opacity:0;pointer-events:none;color:#201d1d;top:50%;left:calc(50% + var(--lightbox-gap,0px)/2);width:var(--lightbox-size,70vh);height:var(--lightbox-size,70vh);transition-property:opacity;transition-duration:.2s;transition-timing-function:ease-out;display:block;position:absolute;transform:translateY(-50%)}
+    .dome-grid__lightbox[data-open]{opacity:1;transition:opacity .35s ease-out .15s}
+    .dome-grid__lightbox-inner{top:0%;bottom:0%;right:0%;left:calc(0px - var(--lightbox-gap,0px));overscroll-behavior:contain;touch-action:none;position:absolute;overflow-y:auto}
+    .dome-grid__lightbox[data-open] .dome-grid__lightbox-inner{pointer-events:auto}
+    .dome-grid__meta{opacity:.6;margin:0;font-size:.75em;line-height:1.2}
+    @media (orientation:portrait){.dome-grid__panel{transform:translateY(calc((100% + var(--panel-gap)) * var(--slide)))}.dome-grid__lightbox{top:calc(50% + var(--lightbox-gap,0px)/2);left:50%;width:var(--lightbox-size,80vw);height:var(--lightbox-size,80vw);transform:translateX(-50%)}.dome-grid__lightbox-inner{left:0;top:calc(0px - var(--lightbox-gap,0px))}.dome-grid__content{padding:2em}}
+    @media (max-width:767px){.dome-grid__item .dome-grid__text.is--faded{display:none}}
+  </style>
+</head>
+<body>
+  <div class="demo-chrome">
+    <a href="../index.html" class="demo-chrome__back"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+    <div class="demo-chrome__sep"></div>
+    <span class="demo-chrome__title">Infinite Dome Grid</span>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+
+  <div class="dome-grid-wrap">
+    <section data-dome-grid class="dome-grid">
+      <div class="dome-grid__collection">
+        <div data-dome-grid-list class="dome-grid__list">
+
+          <div data-dome-grid-item class="dome-grid__item">
+            <div class="dome-grid__panel"></div>
+            <div class="dome-grid__media">
+              <img src="https://cdn.prod.website-files.com/6a97e98f5fe6b2ea23ddb644/6a97f141c4384719ab05a42b_silhouette-of-a-figure-against-a-vibrant-blue-background-medium.avif" loading="eager" data-dome-grid-image draggable="false" alt="Azure identity project" class="dome-grid__image">
+              <div class="dome-grid__caption"><p class="dome-grid__text">Azure</p><p class="dome-grid__meta">Identity, 2026</p></div>
+              <div class="dome-grid__dim"></div>
+            </div>
+            <div data-dome-grid-content class="dome-grid__content">
+              <h2 class="dome-grid__title">Azure</h2>
+              <p class="dome-grid__text is--faded">An identity for a fashion label, built on one blue and the shapes a body makes against it in stark light.</p>
+            </div>
+          </div>
+
+          <div data-dome-grid-item class="dome-grid__item">
+            <div class="dome-grid__panel"></div>
+            <div class="dome-grid__media">
+              <img src="https://cdn.prod.website-files.com/6a97e98f5fe6b2ea23ddb644/6a97f141318d4486e044aaee_sunlit-oak-canopy-at-golden-hour-medium.avif" loading="eager" data-dome-grid-image draggable="false" alt="Oak forestry website" class="dome-grid__image">
+              <div class="dome-grid__caption"><p class="dome-grid__text">Oak</p><p class="dome-grid__meta">Web, 2025</p></div>
+              <div class="dome-grid__dim"></div>
+            </div>
+            <div data-dome-grid-content class="dome-grid__content">
+              <h2 class="dome-grid__title">Oak</h2>
+              <p class="dome-grid__text is--faded">A website for a forestry trust, paced like a slow walk under the trees.</p>
+            </div>
+          </div>
+
+          <div data-dome-grid-item class="dome-grid__item">
+            <div class="dome-grid__panel"></div>
+            <div class="dome-grid__media">
+              <img src="https://cdn.prod.website-files.com/6a97e98f5fe6b2ea23ddb644/6a97f141f39736d8a89f10f1_silhouette-of-a-pump-bottle-against-an-orange-gradient-medium.avif" loading="eager" data-dome-grid-image draggable="false" alt="Pump skincare packaging" class="dome-grid__image">
+              <div class="dome-grid__caption"><p class="dome-grid__text">Pump</p><p class="dome-grid__meta">Packaging, 2026</p></div>
+              <div class="dome-grid__dim"></div>
+            </div>
+            <div data-dome-grid-content class="dome-grid__content">
+              <h2 class="dome-grid__title">Pump</h2>
+              <p class="dome-grid__text is--faded">Packaging for a skincare line, reduced to a silhouette and a gradient that changes per scent.</p>
+            </div>
+          </div>
+
+          <div data-dome-grid-item class="dome-grid__item">
+            <div class="dome-grid__panel"></div>
+            <div class="dome-grid__media">
+              <img src="https://cdn.prod.website-files.com/6a97e98f5fe6b2ea23ddb644/6a97f1411ece7880dec290f9_elegant-black-horse-portrait-against-rich-red-background-medium.avif" loading="eager" data-dome-grid-image draggable="false" alt="Stallion saddlery campaign" class="dome-grid__image">
+              <div class="dome-grid__caption"><p class="dome-grid__text">Stallion</p><p class="dome-grid__meta">Campaign, 2026</p></div>
+              <div class="dome-grid__dim"></div>
+            </div>
+            <div data-dome-grid-content class="dome-grid__content">
+              <h2 class="dome-grid__title">Stallion</h2>
+              <p class="dome-grid__text is--faded">A launch campaign for a saddlery, shot in the studio against a single field of red.</p>
+            </div>
+          </div>
+
+          <div data-dome-grid-item class="dome-grid__item">
+            <div class="dome-grid__panel"></div>
+            <div class="dome-grid__media">
+              <img src="https://cdn.prod.website-files.com/6a97e98f5fe6b2ea23ddb644/6a97f1415d6ac0d982ccd132_delicate-green-stem-with-buds-medium.avif" loading="eager" data-dome-grid-image draggable="false" alt="Stem botanical identity" class="dome-grid__image">
+              <div class="dome-grid__caption"><p class="dome-grid__text">Stem</p><p class="dome-grid__meta">Botanical, 2025</p></div>
+              <div class="dome-grid__dim"></div>
+            </div>
+            <div data-dome-grid-content class="dome-grid__content">
+              <h2 class="dome-grid__title">Stem</h2>
+              <p class="dome-grid__text is--faded">A visual language for a plant nursery, grown from the quiet detail of a single stem.</p>
+            </div>
+          </div>
+
+          <div data-dome-grid-item class="dome-grid__item">
+            <div class="dome-grid__panel"></div>
+            <div class="dome-grid__media">
+              <img src="https://cdn.prod.website-files.com/6a97e98f5fe6b2ea23ddb644/6a97f14151f90341d975ebde_elegant-businesswoman-driving-vintage-convertible-medium.avif" loading="eager" data-dome-grid-image draggable="false" alt="Drive heritage carmaker campaign" class="dome-grid__image">
+              <div class="dome-grid__caption"><p class="dome-grid__text">Drive</p><p class="dome-grid__meta">Campaign, 2025</p></div>
+              <div class="dome-grid__dim"></div>
+            </div>
+            <div data-dome-grid-content class="dome-grid__content">
+              <h2 class="dome-grid__title">Drive</h2>
+              <p class="dome-grid__text is--faded">A film and stills campaign for a heritage carmaker, cut into three thirty-second stories.</p>
+            </div>
+          </div>
+
+          <div data-dome-grid-item class="dome-grid__item">
+            <div class="dome-grid__panel"></div>
+            <div class="dome-grid__media">
+              <img src="https://cdn.prod.website-files.com/6a97e98f5fe6b2ea23ddb644/6a97f141dc2bb83ea217000b_sunlit-glass-stem-base-with-prism-refractions-on-linen-medium.avif" loading="eager" data-dome-grid-image draggable="false" alt="Prism glassworks photography" class="dome-grid__image">
+              <div class="dome-grid__caption"><p class="dome-grid__text">Prism</p><p class="dome-grid__meta">Product, 2026</p></div>
+              <div class="dome-grid__dim"></div>
+            </div>
+            <div data-dome-grid-content class="dome-grid__content">
+              <h2 class="dome-grid__title">Prism</h2>
+              <p class="dome-grid__text is--faded">Product photography for a glassworks, letting the light do the styling.</p>
+            </div>
+          </div>
+
+          <div data-dome-grid-item class="dome-grid__item">
+            <div class="dome-grid__panel"></div>
+            <div class="dome-grid__media">
+              <img src="https://cdn.prod.website-files.com/6a97e98f5fe6b2ea23ddb644/6a97f1418238e562d4998aa2_moody-botanical-portrait-framed-by-tropical-leaves-medium.avif" loading="eager" data-dome-grid-image draggable="false" alt="Tropic travel editorial" class="dome-grid__image">
+              <div class="dome-grid__caption"><p class="dome-grid__text">Tropic</p><p class="dome-grid__meta">Editorial, 2025</p></div>
+              <div class="dome-grid__dim"></div>
+            </div>
+            <div data-dome-grid-content class="dome-grid__content">
+              <h2 class="dome-grid__title">Tropic</h2>
+              <p class="dome-grid__text is--faded">An editorial story for a travel magazine, framed through the leaves of the places it visits.</p>
+            </div>
+          </div>
+
+          <div data-dome-grid-item class="dome-grid__item">
+            <div class="dome-grid__panel"></div>
+            <div class="dome-grid__media">
+              <img src="https://cdn.prod.website-files.com/6a97e98f5fe6b2ea23ddb644/6a97f141d7f28d0c0969b419_minimal-black-padel-racket-studio-close-up-medium.avif" loading="eager" data-dome-grid-image draggable="false" alt="Padel product photography" class="dome-grid__image">
+              <div class="dome-grid__caption"><p class="dome-grid__text">Padel</p><p class="dome-grid__meta">Product, 2024</p></div>
+              <div class="dome-grid__dim"></div>
+            </div>
+            <div data-dome-grid-content class="dome-grid__content">
+              <h2 class="dome-grid__title">Padel</h2>
+              <p class="dome-grid__text is--faded">A product line for a padel brand, photographed close enough to feel the grip.</p>
+            </div>
+          </div>
+
+          <div data-dome-grid-item class="dome-grid__item">
+            <div class="dome-grid__panel"></div>
+            <div class="dome-grid__media">
+              <img src="https://cdn.prod.website-files.com/6a97e98f5fe6b2ea23ddb644/6a97f1411ece7880dec290b6_ethereal-motion-portrait-with-soft-color-palette-medium.avif" loading="eager" data-dome-grid-image draggable="false" alt="Blur motion identity" class="dome-grid__image">
+              <div class="dome-grid__caption"><p class="dome-grid__text">Blur</p><p class="dome-grid__meta">Motion, 2026</p></div>
+              <div class="dome-grid__dim"></div>
+            </div>
+            <div data-dome-grid-content class="dome-grid__content">
+              <h2 class="dome-grid__title">Blur</h2>
+              <p class="dome-grid__text is--faded">A motion identity for a music festival, where nothing ever holds still long enough to read.</p>
+            </div>
+          </div>
+
+          <div data-dome-grid-item class="dome-grid__item">
+            <div class="dome-grid__panel"></div>
+            <div class="dome-grid__media">
+              <img src="https://cdn.prod.website-files.com/6a97e98f5fe6b2ea23ddb644/6a97f14151f90341d975ebf2_sunlit-seascape-framed-by-stone-balustrade-medium.avif" loading="eager" data-dome-grid-image draggable="false" alt="Riviera coastal hotel campaign" class="dome-grid__image">
+              <div class="dome-grid__caption"><p class="dome-grid__text">Riviera</p><p class="dome-grid__meta">Campaign, 2026</p></div>
+              <div class="dome-grid__dim"></div>
+            </div>
+            <div data-dome-grid-content class="dome-grid__content">
+              <h2 class="dome-grid__title">Riviera</h2>
+              <p class="dome-grid__text is--faded">A summer campaign for a coastal hotel, shot from the terrace on a single afternoon.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div aria-hidden="true" data-dome-grid-shade class="dome-grid__shade"></div>
+      <aside data-dome-grid-lightbox class="dome-grid__lightbox">
+        <div data-dome-grid-lightbox-inner class="dome-grid__lightbox-inner">
+          <div class="dome-grid__content">
+            <h2 class="dome-grid__title">Heading</h2>
+            <p class="dome-grid__text">Click any card to open its detail panel.</p>
+          </div>
+        </div>
+      </aside>
+      <div aria-hidden="true" data-dome-grid-cover class="dome-grid__cover"></div>
+    </section>
+  </div>
+
+  <script>
+function initInfiniteDomeGrid(){const stages=document.querySelectorAll("[data-dome-grid]");if(!stages.length)return;const columns=4;const columnsMobile=2;const mobileBreakpoint=767;const bow=0.15;const bulge=0.25;const bulgeReach=1.5;const torchRadius=0.75;const torchRadiusTouch=1.5;const parallax=12;const lightboxSize=0.7;const lightboxSizePortrait=0.8;const lightboxPairMax=0.9;const dragSpeed=1.5;const dragSpeedTouch=2.5;const clickSlop=10;const panEase=0.1;const cursorEase=0.12;const bulgeEase=0.08;const lightboxEase=0.14;const coverTimeout=4000;const wrap=(min,max,v)=>{const r=max-min;return min+(((v-min)%r+r)%r);};const clamp=(min,max,v)=>Math.min(Math.max(v,min),max);const damp=(from,to,rate,dt)=>from+(to-from)*(1-Math.pow(1-rate,dt*60));const smooth=(t)=>t*t*(3-2*t);function setupInstance(stage){const list=stage.querySelector("[data-dome-grid-list]");const shade=stage.querySelector("[data-dome-grid-shade]");const lightbox=stage.querySelector("[data-dome-grid-lightbox]");const lightboxInner=stage.querySelector("[data-dome-grid-lightbox-inner]");const sources=[...list.querySelectorAll("[data-dome-grid-item]")];if(!sources.length||stage.getAttribute("data-dome-grid")==="active")return;stage.setAttribute("data-dome-grid","active");const x={t:0,c:0};const y={t:0,c:0};const size={w:0,h:0,left:0,top:0};const mid={x:0,y:0};const max={x:0,y:0};const margin={x:0,y:0};const cursor={x:0,y:0,cx:0,cy:0};const lens={t:0,c:0};const open={cell:null,t:0,c:0};const lit={x:-1,y:-1};const drag={x:0,y:0,tx:0,ty:0};let cells=[];let card=0;let gap=0;let cols=0;let rows=0;let count=0;let boxHalf=0;let shift=0;let hole=0;let edge=0;let darkness=0;let portrait=false;let fine=false;let speed=dragSpeed;let dragging=false;let generation=0;let prev=0;let frame=0;let timer=0;const fill=(n)=>{const items=[];for(let i=0;i<n;i++){const source=sources[i%sources.length];if(i<sources.length){items.push(source);continue;}const clone=source.cloneNode(true);clone.setAttribute("aria-hidden","true");items.push(clone);}list.replaceChildren(...items);};const resetOpen=()=>{if(!open.cell)return;open.cell.el.removeAttribute("data-active");open.cell.el.removeAttribute("data-lifted");open.cell.el.style.setProperty("--slide","0");open.cell.el.style.setProperty("--dim","0");open.cell=null;open.t=open.c=0;lightbox.removeAttribute("data-open");lightboxInner.replaceChildren();};const resize=async()=>{const run=++generation;const r=stage.getBoundingClientRect();if(!r.width||!r.height)return;size.w=r.width;size.h=r.height;size.left=r.left;size.top=r.top;resetOpen();const visible=size.w<mobileBreakpoint?columnsMobile:columns;const period=size.w/visible;gap=parseFloat(getComputedStyle(list).columnGap)||0;card=period-gap;cols=visible+2;list.style.gridTemplateColumns=`repeat(${cols}, ${card}px)`;fine=matchMedia("(pointer: fine)").matches;speed=fine?dragSpeed:dragSpeedTouch;mid.x=size.w/2;mid.y=size.h/2;portrait=size.h>size.w;const raw=getComputedStyle(stage).getPropertyValue("--panel-gap").trim();const unit=raw.endsWith("rem")?parseFloat(getComputedStyle(document.documentElement).fontSize):raw.endsWith("em")?parseFloat(getComputedStyle(stage).fontSize):1;const panelGap=(parseFloat(raw)||0)*unit;darkness=parseFloat(getComputedStyle(shade).opacity)||0;const share=portrait?lightboxSizePortrait:lightboxSize;const box=Math.min(Math.min(size.w,size.h)*share,(Math.max(size.w,size.h)*lightboxPairMax)/2);const pair=(panelGap*box)/card;boxHalf=box/2;shift=-(boxHalf+pair/2);stage.style.setProperty("--lightbox-size",`${box}px`);stage.style.setProperty("--lightbox-gap",`${pair}px`);hole=period*(fine?torchRadius:torchRadiusTouch);edge=hole*2;const stops=[`transparent ${hole.toFixed(1)}px`];for(let i=1;i<=12;i++){const t=i/12;stops.push(`rgba(0,0,0,${smooth(t).toFixed(4)}) ${(hole+t*(edge-hole)).toFixed(1)}px`);}shade.style.maskImage=`radial-gradient(circle at var(--fx) var(--fy), ${stops.join(", ")})`;shade.style.webkitMaskImage=shade.style.maskImage;shade.style.setProperty("--fx",`${mid.x+cursor.cx}px`);shade.style.setProperty("--fy",`${mid.y+cursor.cy}px`);const need=Math.ceil(Math.max(cols*(Math.ceil(size.h/period)+2),sources.length)/cols)*cols;if(need!==count)fill(count=need);rows=count/cols;await new Promise(requestAnimationFrame);if(run!==generation)return;const items=[...list.querySelectorAll("[data-dome-grid-item]")];items.forEach(el=>{el.style.transform="translate3d(0, 0, 0)";});const origin=stage.getBoundingClientRect();cells=items.map(el=>{const b=el.getBoundingClientRect();return{el,img:el.querySelector("[data-dome-grid-image]"),content:el.querySelector("[data-dome-grid-content]"),end:{x:b.right-origin.left,y:b.bottom-origin.top},mid:{x:b.left-origin.left+b.width/2,y:b.top-origin.top+b.height/2},out:true};});max.x=cols*period;max.y=rows*period;margin.x=(max.x-size.w)/2;margin.y=(max.y-size.h)/2;render(true);};const warpPoint=(px,py)=>{const nx=px/mid.x;const ny=py/mid.y;const f=1+bow*(nx*nx+ny*ny);let wx=px*f;let wy=py*f;if(lens.c>0.001){const dx=wx-cursor.cx;const dy=wy-cursor.cy;const reach=bulgeReach*(card+gap);const push=bulge*lens.c*Math.exp(-(dx*dx+dy*dy)/(reach*reach));wx+=dx*push;wy+=dy*push;}return{x:wx,y:wy};};const inset=(c,a,b,by)=>{const la=Math.hypot(a.x-c.x,a.y-c.y)||1;const lb=Math.hypot(b.x-c.x,b.y-c.y)||1;return{x:c.x+(by*(a.x-c.x))/la+(by*(b.x-c.x))/lb,y:c.y+(by*(a.y-c.y))/la+(by*(b.y-c.y))/lb};};const quad=(c)=>{const ph=(card+gap)/2;const tx=wrap(c.end.x+margin.x-max.x,c.end.x+margin.x,x.c);const ty=wrap(c.end.y+margin.y-max.y,c.end.y+margin.y,y.c);const ox=c.mid.x-tx-mid.x;const oy=c.mid.y-ty-mid.y;return{tl:warpPoint(ox-ph,oy-ph),tr:warpPoint(ox+ph,oy-ph),bl:warpPoint(ox-ph,oy+ph),br:warpPoint(ox+ph,oy+ph)};};const matfn=(c,q0,q1,q2,q3)=>{const rx=c.mid.x-card/2-mid.x;const ry=c.mid.y-card/2-mid.y;const x0=q0.x-rx,y0=q0.y-ry;const x1=q1.x-rx,y1=q1.y-ry;const x2=q2.x-rx,y2=q2.y-ry;const x3=q3.x-rx,y3=q3.y-ry;const dx1=x1-x3,dy1=y1-y3;const dx2=x2-x3,dy2=y2-y3;const sx=x0-x1-x2+x3;const sy=y0-y1-y2+y3;const den=dx1*dy2-dx2*dy1;const g=den?(sx*dy2-dx2*sy)/den:0;const h=den?(dx1*sy-sx*dy1)/den:0;const a=x1-x0+g*x1;const b=x2-x0+h*x2;const d=y1-y0+g*y1;const e=y2-y0+h*y2;return`matrix3d(${a/card}, ${d/card}, 0, ${g/card}, ${b/card}, ${e/card}, 0, ${h/card}, 0, 0, 1, 0, ${x0}, ${y0}, 0, 1)`;};const cellMatrix=(c,q=quad(c))=>{const g2=gap/2;return matfn(c,inset(q.tl,q.tr,q.bl,g2),inset(q.tr,q.tl,q.br,g2),inset(q.bl,q.tl,q.br,g2),inset(q.br,q.bl,q.tr,g2));};const dimAt=(q)=>{const dx=(q.tl.x+q.br.x)/2-cursor.cx;const dy=(q.tl.y+q.br.y)/2-cursor.cy;const d=Math.hypot(dx,dy);return darkness*smooth(clamp(0,1,(d-hole)/(edge-hole)));};const drift=(c,q,ease=1)=>{if(!c.img)return;const reach=bulgeReach*(card+gap);const px=clamp(-1,1,(cursor.cx-(q.tl.x+q.br.x)/2)/reach)*parallax*ease;const py=clamp(-1,1,(cursor.cy-(q.tl.y+q.br.y)/2)/reach)*parallax*ease;c.img.style.transform=`translate3d(${px}px, ${py}px, 0) scale(1.1)`;};const render=(all=false)=>{const pad=card+gap;for(const c of cells){const q=quad(c);if(c===open.cell){const k=open.c;const h=boxHalf+gap/2;const sx=portrait?0:shift;const sy=portrait?shift:0;q.tl={x:q.tl.x+(sx-h-q.tl.x)*k,y:q.tl.y+(sy-h-q.tl.y)*k};q.tr={x:q.tr.x+(sx+h-q.tr.x)*k,y:q.tr.y+(sy-h-q.tr.y)*k};q.bl={x:q.bl.x+(sx-h-q.bl.x)*k,y:q.bl.y+(sy+h-q.bl.y)*k};q.br={x:q.br.x+(sx+h-q.br.x)*k,y:q.br.y+(sy+h-q.br.y)*k};c.out=false;c.el.style.transform=cellMatrix(c,q);c.el.style.setProperty("--dim",`${dimAt(q)*(1-k)}`);drift(c,q,1-k);continue;}const visible=Math.max(q.tl.x,q.tr.x,q.bl.x,q.br.x)>-mid.x-pad&&Math.min(q.tl.x,q.tr.x,q.bl.x,q.br.x)<mid.x+pad&&Math.max(q.tl.y,q.tr.y,q.bl.y,q.br.y)>-mid.y-pad&&Math.min(q.tl.y,q.tr.y,q.bl.y,q.br.y)<mid.y+pad;if(visible||all){c.out=false;}else if(c.out){continue;}else{c.out=true;}c.el.style.transform=cellMatrix(c,q);drift(c,q);}};const tick=(time)=>{if(!stage.isConnected)return destroy();frame=requestAnimationFrame(tick);const dt=Math.min((time-prev)/1000,1/30);prev=time;x.c=damp(x.c,x.t,panEase,dt);y.c=damp(y.c,y.t,panEase,dt);cursor.cx=damp(cursor.cx,cursor.x,cursorEase,dt);cursor.cy=damp(cursor.cy,cursor.y,cursorEase,dt);const fx=Math.round(mid.x+cursor.cx);const fy=Math.round(mid.y+cursor.cy);if(fx!==lit.x||fy!==lit.y){lit.x=fx;lit.y=fy;shade.style.setProperty("--fx",`${fx}px`);shade.style.setProperty("--fy",`${fy}px`);}const vel=Math.abs(x.t-x.c)+Math.abs(y.t-y.c);const calm=1/(1+vel/40);lens.c=damp(lens.c,lens.t*calm,bulgeEase,dt);open.c=damp(open.c,open.t,lightboxEase,dt);if(open.cell){open.cell.el.style.setProperty("--slide",`${clamp(0,1,(open.c-0.25)/0.75)}`);if(!open.t&&open.c<0.001)resetOpen();}const still=Math.abs(x.t-x.c)<0.1&&Math.abs(y.t-y.c)<0.1&&Math.abs(cursor.x-cursor.cx)<0.1&&Math.abs(cursor.y-cursor.cy)<0.1&&Math.abs(lens.t*calm-lens.c)<0.001&&Math.abs(open.t-open.c)<0.0005;if(!still)render();};const openCard=(cell)=>{open.cell=cell;open.t=1;cell.el.style.setProperty("--dim",`${dimAt(quad(cell))}`);cell.el.setAttribute("data-lifted","");cell.el.setAttribute("data-active","");if(cell.content)lightboxInner.replaceChildren(cell.content.cloneNode(true));lightboxInner.scrollTop=0;lightbox.setAttribute("data-open","");};const closeCard=()=>{if(!open.cell||!open.t)return;open.t=0;open.cell.el.removeAttribute("data-active");lightbox.removeAttribute("data-open");};const onWheel=(e)=>{if(open.t)return;e.preventDefault();const unit=e.deltaMode===1?16:e.deltaMode===2?size.h:1;x.t+=e.deltaX*unit;y.t+=e.deltaY*unit;};const onKey=(e)=>{if(e.key==="Escape")closeCard();if(open.t)return;if(e.key===" "){e.preventDefault();y.t+=mid.y*1.6*(e.shiftKey?-1:1);}if(e.key.startsWith("Arrow")){e.preventDefault();const step=card+gap;if(e.key==="ArrowLeft")x.t-=step;if(e.key==="ArrowRight")x.t+=step;if(e.key==="ArrowUp")y.t-=step;if(e.key==="ArrowDown")y.t+=step;}};const onDown=(e)=>{if(e.target.closest("[data-dome-grid-lightbox]"))return;dragging=true;stage.setAttribute("data-dragging","");closeCard();drag.x=e.clientX;drag.y=e.clientY;drag.tx=x.t;drag.ty=y.t;};const onMove=(e)=>{if(fine){cursor.x=e.clientX-size.left-mid.x;cursor.y=e.clientY-size.top-mid.y;lens.t=1;}if(!dragging||open.t)return;x.t=drag.tx-(e.clientX-drag.x)*speed;y.t=drag.ty-(e.clientY-drag.y)*speed;};const onUp=(e)=>{if(!dragging)return;dragging=false;stage.removeAttribute("data-dragging");if(Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>clickSlop)return;if(open.cell)return;const hit=e.target.closest?.("[data-dome-grid-item]");const cell=hit&&cells.find(c=>c.el===hit);if(cell)openCard(cell);};const onLeave=()=>{lens.t=0;};const onResize=()=>{clearTimeout(timer);timer=setTimeout(resize,100);};const destroy=()=>{cancelAnimationFrame(frame);clearTimeout(timer);window.removeEventListener("pointermove",onMove);window.removeEventListener("pointerup",onUp);window.removeEventListener("pointercancel",onUp);window.removeEventListener("keydown",onKey);window.removeEventListener("resize",onResize);stage.setAttribute("data-dome-grid","");};const start=async()=>{await resize();stage.addEventListener("pointerdown",onDown);stage.addEventListener("pointerleave",onLeave);stage.addEventListener("wheel",onWheel,{passive:false});window.addEventListener("pointermove",onMove);window.addEventListener("pointerup",onUp);window.addEventListener("pointercancel",onUp);window.addEventListener("keydown",onKey);window.addEventListener("resize",onResize);prev=performance.now();frame=requestAnimationFrame(tick);const images=[...stage.querySelectorAll("img")];await Promise.race([Promise.all(images.map(img=>img.complete||new Promise(r=>{img.addEventListener("load",r,{once:true});img.addEventListener("error",r,{once:true});}))),new Promise(r=>setTimeout(r,coverTimeout))]);stage.setAttribute("data-loaded","");};start();}stages.forEach(setupInstance);}
+document.addEventListener("DOMContentLoaded",()=>{initInfiniteDomeGrid();});
+  </script>
+</body>
+</html>
