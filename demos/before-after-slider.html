@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Before/After Split Slider — Stanley Smith Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo-chrome.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:#ede8e0;font-family:'Inter',sans-serif;padding-top:50px;min-height:100dvh;display:flex;align-items:center;justify-content:center;-webkit-font-smoothing:antialiased}
+
+    .demo-stage{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3em;padding:40px 24px;width:100%}
+
+    /* Labels */
+    .splitter-labels{display:flex;justify-content:center;gap:1em;font-size:13px;color:rgba(0,0,0,0.45);letter-spacing:.04em}
+    .splitter-labels span{display:flex;align-items:center;gap:.5em}
+    .splitter-labels span::before{content:'';width:24px;height:1px;background:currentColor;display:block}
+
+    /* Wrapper 1 — architecture */
+    .splitter-wrapper{
+      aspect-ratio:3/2;
+      border-radius:2rem;
+      width:min(95vw,60em);
+      position:relative;
+      overflow:hidden;
+      box-shadow:0 24px 64px rgba(0,0,0,.15);
+    }
+    .splitter-content{z-index:0;width:100%;height:100%;position:absolute;inset:0%}
+    .splitter-content.is--after{-webkit-clip-path:inset(0 0 0 25%);clip-path:inset(0 0 0 25%)}
+    .splitter-content__img{object-fit:cover;width:100%;height:100%}
+
+    .splitter-handle{z-index:2;cursor:ew-resize;background-color:#fff;justify-content:center;align-items:center;width:.25em;height:100%;display:flex;position:absolute;top:0;bottom:0;left:25%}
+    .splitter-handle__center{background-color:#fff;border-radius:100em;flex:none;justify-content:center;align-items:center;width:2.5em;height:2.5em;display:flex;position:relative}
+    .splitter-handle__icon{justify-content:center;align-items:center;width:1.25em;display:flex}
+    img::selection{background:none}
+    .splitter-handle__center::after{content:'';position:absolute;z-index:1;width:100%;height:100%;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:100em;opacity:1;border:1px solid white;transition:all .4s cubic-bezier(.35,1,.6,1)}
+    .splitter-handle:hover .splitter-handle__center::after{width:130%;height:130%;opacity:.5}
+
+    /* Wrapper 2 — dental (portrait) */
+    .splitter-wrapper.is--dental{
+      aspect-ratio:3/4;
+      width:min(60vw,22em);
+    }
+    .splitter-wrapper.is--dental .splitter-content.is--after{
+      -webkit-clip-path:inset(0 0 0 50%);
+      clip-path:inset(0 0 0 50%);
+    }
+    .splitter-wrapper.is--dental .splitter-handle{left:50%}
+
+    /* Label tags on images */
+    .splitter-tag{position:absolute;bottom:1em;z-index:3;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.8);padding:.3em .75em;background:rgba(0,0,0,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-radius:50em}
+    .splitter-tag.is--before{left:1em}
+    .splitter-tag.is--after{right:1em}
+  </style>
+</head>
+<body>
+  <div class="demo-chrome" style="background:rgba(237,232,224,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.06);">
+    <div class="demo-chrome__left">
+      <a href="../index.html" class="demo-chrome__back" style="color:rgba(0,0,0,0.4);"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Back to Playground</a>
+      <div class="demo-chrome__sep" style="background:rgba(0,0,0,0.1);"></div>
+      <span class="demo-chrome__title" style="color:rgba(0,0,0,0.5);">Before/After Split Slider</span>
+    </div>
+    <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" rel="noopener" class="demo-chrome__cta">Have a project in mind?</a>
+  </div>
+
+  <div class="demo-stage">
+
+    <!-- Architecture example — starts at 25% -->
+    <div data-splitter-initial="25" data-splitter="wrap" class="splitter-wrapper">
+      <div class="splitter-content">
+        <img src="https://cdn.prod.website-files.com/6a97e98f5fe6b2ea23ddb644/6a97f141c4384719ab05a42b_silhouette-of-a-figure-against-a-vibrant-blue-background-medium.avif" loading="eager" alt="Before" class="splitter-content__img" style="filter:grayscale(1) contrast(1.1)">
+        <span class="splitter-tag is--before">Before</span>
+      </div>
+      <div data-splitter="after" class="splitter-content is--after">
+        <img src="https://cdn.prod.website-files.com/6a97e98f5fe6b2ea23ddb644/6a97f141318d4486e044aaee_sunlit-oak-canopy-at-golden-hour-medium.avif" loading="eager" alt="After" class="splitter-content__img">
+        <span class="splitter-tag is--after">After</span>
+      </div>
+      <div data-splitter="handle" class="splitter-handle">
+        <div class="splitter-handle__center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="splitter-handle__icon"><path d="M20.7931 11.5L15.2931 5.99995L16.0002 5.29285L22.3537 11.6464V12.3535L16.0002 18.7071L15.2931 18L20.793 12.5L3.20719 12.5L8.70714 18L8.00004 18.7071L1.64648 12.3535L1.64648 11.6464L8.00004 5.29285L8.70714 5.99995L3.2071 11.5L20.7931 11.5Z" fill="currentColor"></path></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dental example — starts at 50%, portrait -->
+    <div data-splitter-initial="50" data-splitter="wrap" class="splitter-wrapper is--dental">
+      <div class="splitter-content">
+        <img src="splitter-before.avif" loading="eager" alt="Before treatment" class="splitter-content__img">
+        <span class="splitter-tag is--before">Before</span>
+      </div>
+      <div data-splitter="after" class="splitter-content is--after">
+        <img src="splitter-after.avif" loading="eager" alt="After treatment" class="splitter-content__img">
+        <span class="splitter-tag is--after">After</span>
+      </div>
+      <div data-splitter="handle" class="splitter-handle">
+        <div class="splitter-handle__center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="splitter-handle__icon"><path d="M20.7931 11.5L15.2931 5.99995L16.0002 5.29285L22.3537 11.6464V12.3535L16.0002 18.7071L15.2931 18L20.793 12.5L3.20719 12.5L8.70714 18L8.00004 18.7071L1.64648 12.3535L1.64648 11.6464L8.00004 5.29285L8.70714 5.99995L3.2071 11.5L20.7931 11.5Z" fill="currentColor"></path></svg>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/Draggable.min.js"></script>
+  <script>
+    gsap.registerPlugin(Draggable);
+    function initBeforeAfterSplitSlider(){const splitters=document.querySelectorAll('[data-splitter="wrap"]');const setupSplitter=(splitter)=>{const handle=splitter.querySelector('[data-splitter="handle"]');const after=splitter.querySelector('[data-splitter="after"]');let bounds=splitter.getBoundingClientRect();let currentPercent=parseFloat(splitter.getAttribute('data-splitter-initial'))||50;const setPositions=(percent)=>{bounds=splitter.getBoundingClientRect();const positionX=(percent/100)*bounds.width;gsap.set(handle,{x:positionX,left:"unset"});gsap.set(after,{clipPath:`inset(0 0 0 ${percent}%)`});};setPositions(currentPercent);Draggable.create(handle,{type:'x',bounds:splitter,cursor:'ew-resize',activeCursor:'grabbing',onDrag(){currentPercent=(this.x/bounds.width)*100;gsap.set(after,{clipPath:`inset(0 0 0 ${currentPercent}%)`});}});window.addEventListener('resize',()=>setPositions(currentPercent));};splitters.forEach(setupSplitter);}
+    document.addEventListener("DOMContentLoaded",()=>{initBeforeAfterSplitSlider();});
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="lenis-init.js"></script>
+</body>
+</html>
