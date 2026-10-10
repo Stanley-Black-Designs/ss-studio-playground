@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Numbered Nav Menu — SS Studio</title>
+<link rel="stylesheet" href="demo-chrome.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0d10;
+    --surface: #12141a;
+    --accent: #0064E7;
+    --text: #f0f0f2;
+    --muted: rgba(240,240,242,0.42);
+    --border: rgba(255,255,255,0.09);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; scroll-behavior: smooth; }
+  body {
+    background: #1c2035;
+    color: var(--text);
+    font-family: 'DM Sans', system-ui, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ---- DEMO LAYOUT ---- */
+  .demo-wrap {
+    padding-top: 50px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 80px;
+  }
+
+  /* ---- COPY SECTION ---- */
+  .copy-section {
+    text-align: left;
+    max-width: 600px;
+    width: 90%;
+  }
+  .copy-section p {
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    line-height: 1.65;
+    color: rgba(255,255,255,0.75);
+    font-weight: 300;
+  }
+
+  /* ---- NAV MENU ---- */
+  .nav-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    max-width: 600px;
+    min-height: 240px;
+  }
+
+  /* step number floating above */
+  .active-step-label {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.35);
+    font-weight: 400;
+    transition: opacity 0.3s;
+  }
+
+  .nav-menu {
+    background: #fff;
+    border-radius: 1.5rem;
+    padding: 0.5rem;
+    width: 100%;
+    max-width: 340px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.45), 0 8px 24px rgba(0,0,0,0.25);
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.9rem 1.1rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+    position: relative;
+    user-select: none;
+  }
+  .nav-item:hover { background: rgba(0,0,0,0.04); transform: translateX(2px); }
+
+  .nav-item.active {
+    background: #1e1e2e;
+    transform: none;
+  }
+
+  .nav-num {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: #aaa;
+    min-width: 1.4rem;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+  .nav-item.active .nav-num { color: rgba(255,255,255,0.4); }
+
+  .nav-label {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: #1a1a2e;
+    transition: color 0.2s;
+    letter-spacing: -0.01em;
+  }
+  .nav-item.active .nav-label { color: #fff; }
+
+  /* active indicator dot */
+  .nav-item.active::after {
+    content: '';
+    position: absolute;
+    right: 1.1rem;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.35);
+  }
+
+  /* ---- CONTENT PANELS ---- */
+  .panels {
+    width: 90%;
+    max-width: 600px;
+    min-height: 200px;
+    position: relative;
+  }
+
+  .panel {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.35s, transform 0.35s;
+    pointer-events: none;
+  }
+  .panel.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    position: relative;
+  }
+
+  .panel h2 {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 1rem;
+    letter-spacing: -0.03em;
+  }
+  .panel p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.5);
+  }
+  .panel .pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+  }
+  .pill {
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.15);
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.55);
+  }
+</style>
+</head>
+<body>
+
+<header class="demo-chrome">
+  <div class="demo-chrome__left">
+    <a href="../index.html" class="demo-chrome__back">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Playground
+    </a>
+    <span class="demo-chrome__sep"></span>
+    <span class="demo-chrome__title">Numbered Nav Menu</span>
+  </div>
+  <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" class="demo-chrome__cta">
+    Book a call
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</header>
+
+<div class="demo-wrap">
+
+  <div class="copy-section">
+    <p>Two feedback rounds per screen keeps things moving and keeps them honest.</p>
+  </div>
+
+  <div class="nav-container">
+    <div class="active-step-label" id="stepLabel">03</div>
+    <nav class="nav-menu" id="navMenu">
+      <div class="nav-item" data-index="0" data-panel="discovery">
+        <span class="nav-num">01</span>
+        <span class="nav-label">Discovery</span>
+      </div>
+      <div class="nav-item" data-index="1" data-panel="strategy">
+        <span class="nav-num">02</span>
+        <span class="nav-label">Strategy</span>
+      </div>
+      <div class="nav-item active" data-index="2" data-panel="design">
+        <span class="nav-num">03</span>
+        <span class="nav-label">Design</span>
+      </div>
+      <div class="nav-item" data-index="3" data-panel="development">
+        <span class="nav-num">04</span>
+        <span class="nav-label">Development</span>
+      </div>
+      <div class="nav-item" data-index="4" data-panel="launch">
+        <span class="nav-num">05</span>
+        <span class="nav-label">Launch</span>
+      </div>
+    </nav>
+  </div>
+
+  <div class="panels" id="panels">
+    <div class="panel" data-panel="discovery">
+      <h2>Discovery</h2>
+      <p>We audit your existing presence, define the problem, and align on what success looks like — before a single pixel is moved.</p>
+      <div class="pill-row">
+        <span class="pill">Stakeholder interviews</span>
+        <span class="pill">Heuristic audit</span>
+        <span class="pill">Competitive analysis</span>
+      </div>
+    </div>
+    <div class="panel" data-panel="strategy">
+      <h2>Strategy</h2>
+      <p>Sitemap, IA, content strategy, and conversion goals. Everything mapped before we design so there are no surprises.</p>
+      <div class="pill-row">
+        <span class="pill">Information architecture</span>
+        <span class="pill">Content mapping</span>
+        <span class="pill">CRO goals</span>
+      </div>
+    </div>
+    <div class="panel active" data-panel="design">
+      <h2>Design</h2>
+      <p>High-fidelity screens built in Figma. Two feedback rounds per screen keeps things moving and keeps them honest.</p>
+      <div class="pill-row">
+        <span class="pill">Figma components</span>
+        <span class="pill">Two-round review</span>
+        <span class="pill">Responsive at 3 breakpoints</span>
+      </div>
+    </div>
+    <div class="panel" data-panel="development">
+      <h2>Development</h2>
+      <p>Built in Webflow, Framer or custom code — whichever fits. Pixel-perfect to the Figma handoff, production-ready on day one.</p>
+      <div class="pill-row">
+        <span class="pill">Webflow / Framer</span>
+        <span class="pill">GSAP animations</span>
+        <span class="pill">Core Web Vitals</span>
+      </div>
+    </div>
+    <div class="panel" data-panel="launch">
+      <h2>Launch</h2>
+      <p>DNS, redirects, Analytics, Search Console — all wired up. You go live with a proper handoff doc and 30-day support window.</p>
+      <div class="pill-row">
+        <span class="pill">Launch checklist</span>
+        <span class="pill">GSC setup</span>
+        <span class="pill">30-day support</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const items = document.querySelectorAll('.nav-item');
+  const panels = document.querySelectorAll('.panel');
+  const stepLabel = document.getElementById('stepLabel');
+  const nums = ['01','02','03','04','05'];
+
+  items.forEach((item, i) => {
+    item.addEventListener('click', () => {
+      items.forEach(el => el.classList.remove('active'));
+      panels.forEach(el => el.classList.remove('active'));
+      item.classList.add('active');
+      const panelId = item.dataset.panel;
+      document.querySelector(`.panel[data-panel="${panelId}"]`).classList.add('active');
+      stepLabel.textContent = nums[i];
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rive Character Cards — SS Studio</title>
+<link rel="stylesheet" href="demo-chrome.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<!-- Rive runtime -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rive/2.21.6/rive.umd.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #111118;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 1.5rem 2rem;
+    gap: 2rem;
+  }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .cards-grid {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 860px;
+    width: 100%;
+  }
+
+  .char-card {
+    background: #fff;
+    border-radius: 1.5rem;
+    width: min(340px, 90vw);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.4s;
+    cursor: pointer;
+    position: relative;
+  }
+  .char-card:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 40px 80px rgba(0,0,0,0.55);
+  }
+
+  .card-tag {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: rgba(240,240,242,0.85);
+    backdrop-filter: blur(8px);
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: #444;
+    letter-spacing: 0.02em;
+  }
+
+  .card-canvas-wrap {
+    width: 100%;
+    aspect-ratio: 1/1;
+    background: #f5f5f3;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .card-canvas-wrap canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  /* Fallback illustration when Rive not available */
+  .char-fallback {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 7rem;
+    line-height: 1;
+    user-select: none;
+    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .char-card:hover .char-fallback {
+    transform: scale(1.08) rotate(-3deg);
+  }
+
+  /* Shadow under character */
+  .char-shadow {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    height: 10px;
+    background: rgba(0,0,0,0.12);
+    border-radius: 50%;
+    filter: blur(6px);
+    transition: opacity 0.3s;
+  }
+  .char-card:hover .char-shadow { opacity: 0.7; }
+
+  .card-footer {
+    padding: 1.5rem 1.75rem 1.75rem;
+  }
+  .card-footer h3 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+  .card-footer p {
+    font-size: 0.85rem;
+    color: rgba(0,0,0,0.45);
+    margin-top: 0.35rem;
+    line-height: 1.5;
+  }
+
+  /* State machine indicator */
+  .state-pills {
+    display: flex;
+    gap: 0.4rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+  .state-pill {
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    border: 1.5px solid rgba(0,0,0,0.1);
+    color: rgba(0,0,0,0.45);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .state-pill.active {
+    background: #111;
+    color: #fff;
+    border-color: #111;
+  }
+  .state-pill:hover:not(.active) { border-color: rgba(0,0,0,0.3); color: rgba(0,0,0,0.7); }
+
+  /* Info strip */
+  .info-strip {
+    max-width: 680px;
+    text-align: center;
+    color: rgba(255,255,255,0.4);
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+  .info-strip a { color: rgba(255,255,255,0.6); }
+</style>
+</head>
+<body>
+
+<header class="demo-chrome">
+  <div class="demo-chrome__left">
+    <a href="../index.html" class="demo-chrome__back">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Playground
+    </a>
+    <span class="demo-chrome__sep"></span>
+    <span class="demo-chrome__title">Rive Character Cards</span>
+  </div>
+  <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" class="demo-chrome__cta">
+    Book a call
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</header>
+
+<p class="eyebrow">Rive Interactive Animations</p>
+
+<div class="cards-grid">
+
+  <!-- Card 1 — Robot -->
+  <div class="char-card" id="card1">
+    <div class="card-tag">Animation #001</div>
+    <div class="card-canvas-wrap">
+      <canvas id="canvas1"></canvas>
+      <!-- Fallback SVG robot -->
+      <div class="char-fallback" id="fallback1">🤖</div>
+      <div class="char-shadow"></div>
+    </div>
+    <div class="card-footer">
+      <h3>Robot</h3>
+      <p>Idle, wave, and dance states. Click to trigger.</p>
+      <div class="state-pills">
+        <div class="state-pill active" data-card="1" data-state="idle">Idle</div>
+        <div class="state-pill" data-card="1" data-state="wave">Wave</div>
+        <div class="state-pill" data-card="1" data-state="dance">Dance</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 2 — Marty -->
+  <div class="char-card" id="card2">
+    <div class="card-tag">Animation #002</div>
+    <div class="card-canvas-wrap">
+      <canvas id="canvas2"></canvas>
+      <div class="char-fallback" id="fallback2">🛹</div>
+      <div class="char-shadow"></div>
+    </div>
+    <div class="card-footer">
+      <h3>Marty</h3>
+      <p>Hover-triggered balance animation with state machine.</p>
+      <div class="state-pills">
+        <div class="state-pill active" data-card="2" data-state="stand">Stand</div>
+        <div class="state-pill" data-card="2" data-state="ride">Ride</div>
+        <div class="state-pill" data-card="2" data-state="trick">Trick</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<p class="info-strip">
+  Rive animations run natively in the browser via WebGL — no video files, no GIFs. Drop any .riv file from <a href="https://rive.app/community/" target="_blank">rive.app</a> to swap characters.
+</p>
+
+<script>
+// ---- Animated emoji fallback (since no .riv files are available in demo) ----
+// When real Rive files are provided, replace the fallback divs with Rive canvas animations.
+
+const emojis = {
+  1: { idle: '🤖', wave: '🦾', dance: '🕺' },
+  2: { stand: '🛹', ride: '⚡', trick: '🌀' }
+};
+
+const animTimers = {};
+
+function setEmoji(cardNum, state) {
+  const el = document.getElementById('fallback' + cardNum);
+  el.textContent = emojis[cardNum][state] || '🤖';
+  // bounce animation
+  el.style.transform = 'scale(1.2) rotate(5deg)';
+  clearTimeout(animTimers[cardNum]);
+  animTimers[cardNum] = setTimeout(() => {
+    el.style.transition = 'transform 0.4s cubic-bezier(0.34,1.56,0.64,1)';
+    el.style.transform = '';
+  }, 80);
+}
+
+// idle animation loop
+let robotFrame = 0;
+const robotFrames = ['🤖','🦿','🤖','🦿'];
+setInterval(() => {
+  const activePill1 = document.querySelector('[data-card="1"].active');
+  if (activePill1?.dataset.state === 'idle') {
+    const el = document.getElementById('fallback1');
+    robotFrame = (robotFrame + 1) % robotFrames.length;
+    const tiny = robotFrame % 2 === 0 ? 'translateY(0)' : 'translateY(-6px)';
+    el.style.transform = tiny;
+  }
+}, 600);
+
+let martyFrame = 0;
+setInterval(() => {
+  const activePill2 = document.querySelector('[data-card="2"].active');
+  if (activePill2?.dataset.state === 'stand') {
+    const el = document.getElementById('fallback2');
+    martyFrame = (martyFrame + 1) % 2;
+    el.style.transform = martyFrame === 0 ? 'rotate(-3deg)' : 'rotate(3deg)';
+  }
+}, 700);
+
+// State pill clicks
+document.querySelectorAll('.state-pill').forEach(pill => {
+  pill.addEventListener('click', e => {
+    e.stopPropagation();
+    const card = pill.dataset.card;
+    const state = pill.dataset.state;
+    document.querySelectorAll(`[data-card="${card}"]`).forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    const fallback = document.getElementById('fallback' + card);
+    fallback.style.transition = 'transform 0.3s cubic-bezier(0.34,1.56,0.64,1)';
+    setEmoji(parseInt(card), state);
+  });
+});
+
+// Hide canvases (no .riv available) — show fallbacks
+document.querySelectorAll('canvas').forEach(c => c.style.display = 'none');
+document.querySelectorAll('.char-fallback').forEach(f => {
+  f.style.position = 'absolute';
+  f.style.inset = '0';
+  f.style.display = 'flex';
+  f.style.alignItems = 'center';
+  f.style.justifyContent = 'center';
+  f.style.fontSize = '7rem';
+  f.style.transition = 'transform 0.4s cubic-bezier(0.34,1.56,0.64,1)';
+});
+
+/* ---- When you have real .riv files, use this pattern: ----
+const r = new rive.Rive({
+  src: 'path/to/character.riv',
+  canvas: document.getElementById('canvas1'),
+  autoplay: true,
+  stateMachines: 'State Machine 1',
+  onLoad: () => r.resizeDrawingSurfaceToCanvas(),
+});
+-------------------------------------------- */
+</script>
+</body>
+</html>

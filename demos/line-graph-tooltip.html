@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Line Graph — SS Studio</title>
+<link rel="stylesheet" href="demo-chrome.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #e8e5e0;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 1.5rem 2rem;
+  }
+
+  .chart-card {
+    background: #fff;
+    border-radius: 1.25rem;
+    padding: 1.75rem;
+    width: 100%;
+    max-width: 760px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+  }
+
+  .chart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+  .chart-header h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #111;
+    letter-spacing: -0.02em;
+  }
+
+  .legend {
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    color: #666;
+    font-weight: 500;
+  }
+  .legend-line {
+    width: 28px; height: 2.5px;
+    border-radius: 2px;
+  }
+
+  .chart-wrap {
+    position: relative;
+    width: 100%;
+    user-select: none;
+  }
+
+  canvas {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Tooltip */
+  .tooltip {
+    position: absolute;
+    background: #1a1a1a;
+    color: #fff;
+    border-radius: 0.75rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.8rem;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+    white-space: nowrap;
+    transform: translate(-50%, -115%);
+    min-width: 140px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+  .tooltip.visible { opacity: 1; }
+  .tooltip-month { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.4rem; }
+  .tooltip-row { display: flex; justify-content: space-between; gap: 1.25rem; align-items: center; margin-top: 0.25rem; }
+  .tooltip-label { display: flex; align-items: center; gap: 0.4rem; color: rgba(255,255,255,0.65); }
+  .tooltip-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .tooltip-val { font-weight: 700; }
+</style>
+</head>
+<body>
+
+<header class="demo-chrome">
+  <div class="demo-chrome__left">
+    <a href="../index.html" class="demo-chrome__back">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Playground
+    </a>
+    <span class="demo-chrome__sep"></span>
+    <span class="demo-chrome__title">Interactive Line Graph</span>
+  </div>
+  <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" class="demo-chrome__cta">
+    Book a call
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</header>
+
+<div class="chart-card">
+  <div class="chart-header">
+    <h2>Views per month</h2>
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-line" style="background:#e8622a;"></div>
+        2026
+      </div>
+      <div class="legend-item">
+        <div class="legend-line" style="background:#b0b0b0;"></div>
+        2025
+      </div>
+    </div>
+  </div>
+  <div class="chart-wrap" id="chartWrap">
+    <canvas id="chart"></canvas>
+    <div class="tooltip" id="tooltip">
+      <div class="tooltip-month" id="ttMonth">Apr</div>
+      <div class="tooltip-row">
+        <div class="tooltip-label"><div class="tooltip-dot" style="background:#e8622a;"></div>2026 views</div>
+        <div class="tooltip-val" id="ttVal26"></div>
+      </div>
+      <div class="tooltip-row">
+        <div class="tooltip-label"><div class="tooltip-dot" style="background:#b0b0b0;"></div>2025 views</div>
+        <div class="tooltip-val" id="ttVal25"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const data26 = [5200, 7800, 12500, 21500, 20500, 18200, 22800, 29500, 29000, 25500, 30800, 38500];
+const data25 = [25200, 20100, 30000, 35000, 19000, 9200, 17800, 20400, 19500, 16200, 18500, 21800];
+
+const canvas = document.getElementById('chart');
+const ctx = canvas.getContext('2d');
+const tooltip = document.getElementById('tooltip');
+const ttMonth = document.getElementById('ttMonth');
+const ttVal26 = document.getElementById('ttVal26');
+const ttVal25 = document.getElementById('ttVal25');
+const wrap = document.getElementById('chartWrap');
+
+const DPR = window.devicePixelRatio || 1;
+const W_LOGICAL = 720;
+const H_LOGICAL = 380;
+const PAD_L = 56, PAD_R = 24, PAD_T = 24, PAD_B = 44;
+
+canvas.width = W_LOGICAL * DPR;
+canvas.height = H_LOGICAL * DPR;
+canvas.style.width = '100%';
+canvas.style.height = 'auto';
+ctx.scale(DPR, DPR);
+
+const allVals = [...data26, ...data25];
+const maxVal = Math.ceil(Math.max(...allVals) / 10000) * 10000;
+const minVal = 0;
+
+function toX(i) { return PAD_L + i * (W_LOGICAL - PAD_L - PAD_R) / (months.length - 1); }
+function toY(v) { return PAD_T + (1 - (v - minVal) / (maxVal - minVal)) * (H_LOGICAL - PAD_T - PAD_B); }
+
+function fmtK(v) { return v >= 1000 ? (v / 1000).toFixed(0) + 'K' : v; }
+
+function drawChart(highlightIdx = -1) {
+  ctx.clearRect(0, 0, W_LOGICAL, H_LOGICAL);
+
+  // Grid lines + Y labels
+  const ticks = [0, 10000, 20000, 30000, 40000, 50000];
+  ctx.font = '11px DM Sans, sans-serif';
+  ctx.fillStyle = '#999';
+  ctx.textAlign = 'right';
+  ticks.forEach(t => {
+    const y = toY(t);
+    ctx.beginPath();
+    ctx.strokeStyle = '#e8e5e0';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4, 0]);
+    ctx.moveTo(PAD_L, y);
+    ctx.lineTo(W_LOGICAL - PAD_R, y);
+    ctx.stroke();
+    ctx.fillText(fmtK(t), PAD_L - 8, y + 4);
+  });
+
+  // X labels
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#999';
+  months.forEach((m, i) => {
+    ctx.fillText(m, toX(i), H_LOGICAL - PAD_B + 20);
+  });
+
+  // Vertical cursor line
+  if (highlightIdx >= 0) {
+    ctx.beginPath();
+    ctx.strokeStyle = 'rgba(0,0,0,0.12)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([0]);
+    ctx.moveTo(toX(highlightIdx), PAD_T);
+    ctx.lineTo(toX(highlightIdx), H_LOGICAL - PAD_B);
+    ctx.stroke();
+  }
+
+  // Draw smooth line
+  function drawLine(data, color, dotIdx) {
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2.5;
+    ctx.lineJoin = 'round';
+    ctx.setLineDash([0]);
+    data.forEach((v, i) => {
+      const x = toX(i), y = toY(v);
+      if (i === 0) ctx.moveTo(x, y);
+      else {
+        const px = toX(i - 1), py = toY(data[i - 1]);
+        const cpx = (px + x) / 2;
+        ctx.bezierCurveTo(cpx, py, cpx, y, x, y);
+      }
+    });
+    ctx.stroke();
+
+    // dots
+    data.forEach((v, i) => {
+      const x = toX(i), y = toY(v);
+      const isHl = i === dotIdx;
+      const r = isHl ? 6 : 3.5;
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fillStyle = isHl ? color : '#fff';
+      ctx.fill();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    });
+  }
+
+  drawLine(data25, '#b0b0b0', highlightIdx);
+  drawLine(data26, '#e8622a', highlightIdx);
+}
+
+drawChart();
+
+// Mouse interaction
+wrap.addEventListener('mousemove', e => {
+  const rect = canvas.getBoundingClientRect();
+  const scaleX = W_LOGICAL / rect.width;
+  const mx = (e.clientX - rect.left) * scaleX;
+
+  // Find nearest month index
+  let nearest = 0, minDist = Infinity;
+  months.forEach((_, i) => {
+    const d = Math.abs(mx - toX(i));
+    if (d < minDist) { minDist = d; nearest = i; }
+  });
+
+  drawChart(nearest);
+
+  const xPct = (toX(nearest) / W_LOGICAL) * rect.width + rect.left - wrap.getBoundingClientRect().left;
+  const yPct = (toY(data26[nearest]) / H_LOGICAL) * rect.height;
+
+  tooltip.style.left = xPct + 'px';
+  tooltip.style.top = yPct + 'px';
+  ttMonth.textContent = months[nearest];
+  ttVal26.textContent = data26[nearest].toLocaleString();
+  ttVal25.textContent = data25[nearest].toLocaleString();
+  tooltip.classList.add('visible');
+});
+
+wrap.addEventListener('mouseleave', () => {
+  tooltip.classList.remove('visible');
+  drawChart();
+});
+</script>
+</body>
+</html>
