@@ -33,7 +33,7 @@
     height: 120px;
     display: block;
     overflow: visible;
-    color: rgba(240, 240, 242, 0.35);
+    color: #e53935;
   }
 
   .line-wrap {
@@ -80,7 +80,13 @@
 
   <div class="line-wrap">
     <svg class="elastic-line-svg" data-elastic-line="" viewBox="0 0 1000 120" preserveAspectRatio="none" aria-hidden="true">
-      <path d="M0 60 Q500 60 1000 60" fill="none" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"></path>
+      <!-- Dashed resting reference line -->
+      <line x1="0" y1="60" x2="1000" y2="60" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="12 8" vector-effect="non-scaling-stroke"/>
+      <!-- Elastic bezier path -->
+      <path d="M0 60 Q500 60 1000 60" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"></path>
+      <!-- Endpoint circles -->
+      <circle cx="0" cy="60" r="5" fill="currentColor" vector-effect="non-scaling-stroke"/>
+      <circle cx="1000" cy="60" r="5" fill="currentColor" vector-effect="non-scaling-stroke"/>
     </svg>
   </div>
 

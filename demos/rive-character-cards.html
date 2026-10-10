@@ -243,8 +243,8 @@ function initRiveSetup() {
         artboard: artboardName,
         stateMachine: stateMachineName,
         autoplay: !reduceMotion,
-        isTouchScrollEnabled: true,
-        layout: new rive.Layout({ fit: fit }),
+        isTouchScrollEnabled: false,
+        layout: new rive.Layout({ fit: rive.Fit.Cover }),
         onLoad: handleLoad,
         onLoadError: handleError,
       });

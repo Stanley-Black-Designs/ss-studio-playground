@@ -13,7 +13,7 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    background: #0d0d0d;
+    background: #111118;
     font-family: 'DM Sans', system-ui, sans-serif;
     min-height: 100vh;
     padding-top: 50px;
@@ -23,171 +23,121 @@
     color: #f0f0f2;
   }
 
-  /* ---- Osmo Logo Card Testimonials ---- */
-  [data-logo-testimonials-init] {
+  .demo-wrap {
     width: 100%;
     max-width: 560px;
-    margin: 0 auto;
-    padding: 2rem;
+    padding: 2rem 1.5rem;
   }
 
-  [data-logo-testimonials-card] {
-    background: #1a1a1a;
-    border: 1px solid rgba(255,255,255,0.08);
+  /* ---- Osmo Logo Testimonials ---- */
+  .logo-testimonials {
+    width: 100%;
+  }
+
+  .logo-testimonials__card {
+    background: #1a1a24;
     border-radius: 1.5rem;
     padding: 2.5rem;
-    position: relative;
-    overflow: hidden;
-    user-select: none;
+    border: 1px solid rgba(255,255,255,0.07);
   }
 
-  /* Logo section */
-  [data-logo-testimonials-logo-wrap] {
-    height: 2rem;
-    margin-bottom: 2rem;
-    position: relative;
+  .logo-testimonials__collection {
     overflow: hidden;
   }
 
-  [data-logo-testimonials-item] [data-logo-testimonials-logo] {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
+  .logo-testimonials__list {
+    display: grid;
+  }
+
+  .logo-testimonials__item {
+    grid-area: 1 / 1;
+    align-self: start;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .logo-testimonials__logo-slot {
+    overflow: hidden;
+    height: 2em;
     display: flex;
     align-items: center;
-    gap: 0.625rem;
-    will-change: transform, opacity;
   }
 
-  [data-logo-testimonials-item][data-logo-testimonials-status="inactive"] [data-logo-testimonials-logo],
-  [data-logo-testimonials-item][data-logo-testimonials-status="leaving"] [data-logo-testimonials-logo] {
-    pointer-events: none;
+  .logo-testimonials__logo-slot svg {
+    display: block;
+    height: 1.5em;
+    width: auto;
   }
 
-  .logo-icon {
-    width: 1.75rem;
-    height: 1.75rem;
-    border-radius: 0.35rem;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .logo-name {
-    font-size: 0.9375rem;
-    font-weight: 600;
-    color: rgba(255,255,255,0.9);
-    letter-spacing: -0.01em;
-  }
-
-  /* Quote */
-  [data-logo-testimonials-quote] {
-    font-size: 1.2rem;
+  .logo-testimonials__quote {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: rgba(240,240,242,0.85);
     font-weight: 400;
-    line-height: 1.55;
-    color: rgba(255,255,255,0.82);
-    letter-spacing: -0.015em;
-    min-height: 7.5em;
-    position: relative;
   }
 
-  [data-logo-testimonials-item][data-logo-testimonials-status="inactive"] [data-logo-testimonials-quote],
-  [data-logo-testimonials-item][data-logo-testimonials-status="leaving"] [data-logo-testimonials-quote] {
-    position: absolute;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-  }
-
-  /* Author */
-  [data-logo-testimonials-author] {
-    margin-top: 1.75rem;
+  .logo-testimonials__details {
     display: flex;
-    align-items: center;
-    gap: 0.875rem;
+    flex-direction: column;
+    gap: 0.125rem;
   }
 
-  .author-avatar {
-    width: 2.25rem;
-    height: 2.25rem;
-    border-radius: 50%;
-    flex-shrink: 0;
-    background: #2c2c2c;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.8125rem;
-    font-weight: 700;
-    color: rgba(255,255,255,0.7);
-    letter-spacing: 0.01em;
-  }
-
-  [data-logo-testimonials-name] {
+  .logo-testimonials__name {
     font-size: 0.9375rem;
     font-weight: 600;
-    color: rgba(255,255,255,0.9);
+    color: #f0f0f2;
   }
 
-  [data-logo-testimonials-role] {
-    font-size: 0.8125rem;
-    color: rgba(255,255,255,0.38);
-    margin-top: 0.125rem;
+  .logo-testimonials__role {
+    font-size: 0.875rem;
+    color: rgba(240,240,242,0.45);
   }
 
-  /* Navigation dots */
-  [data-logo-testimonials-dots] {
+  .logo-testimonials__footer {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .logo-testimonials__dots {
     display: flex;
     gap: 0.5rem;
-    margin-top: 2rem;
     align-items: center;
   }
 
-  .testimonials-dot {
-    position: relative;
-    width: 0.375rem;
-    height: 0.375rem;
-    border-radius: 100px;
-    background: rgba(255,255,255,0.15);
-    cursor: pointer;
+  .logo-testimonials__dot {
+    background: none;
     border: none;
-    padding: 0;
-    flex-shrink: 0;
-    transition: width 0.3s cubic-bezier(0.34,1.56,0.64,1), background 0.25s;
+    padding: 0.25rem 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+
+  .logo-testimonials__dot-bar {
+    display: block;
+    height: 3px;
+    width: 0.5em;
+    background: rgba(240,240,242,0.2);
+    border-radius: 100px;
     overflow: hidden;
+    transition: width 0.4s ease;
   }
 
-  .testimonials-dot[aria-selected="true"] {
-    width: 2rem;
-    background: rgba(255,255,255,0.18);
+  [data-logo-testimonials-status="active"] .logo-testimonials__dot-bar {
+    width: 2.5em;
+    background: rgba(240,240,242,0.2);
   }
 
-  [data-logo-testimonials-dot-fill] {
-    position: absolute;
-    inset: 0;
-    background: rgba(255,255,255,0.75);
+  .logo-testimonials__dot-fill {
+    display: block;
+    height: 100%;
+    width: 100%;
+    background: #f0f0f2;
     transform-origin: left center;
     transform: scaleX(0);
-    border-radius: inherit;
-  }
-
-  /* SplitText line overflow clip */
-  .split-line-clip {
-    overflow: hidden;
-    display: block;
-  }
-
-  /* Items layering */
-  [data-logo-testimonials-item] {
-    position: relative;
-  }
-
-  [data-logo-testimonials-item]:not(:first-child) {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
   }
 </style>
 </head>
@@ -208,324 +158,219 @@
   </a>
 </header>
 
-<div data-logo-testimonials-init data-logo-testimonials-autoplay="6">
-  <div data-logo-testimonials-card>
+<div class="demo-wrap">
+  <div data-logo-testimonials-init data-logo-testimonials-autoplay="6" class="logo-testimonials">
+    <div class="logo-testimonials__card">
+      <div class="logo-testimonials__collection">
+        <div role="list" class="logo-testimonials__list">
 
-    <!-- Dot template (hidden, cloned by JS) -->
-    <template data-logo-testimonials-dot-template>
-      <button class="testimonials-dot" role="tab" aria-selected="false">
-        <span data-logo-testimonials-dot-fill></span>
-      </button>
-    </template>
-
-    <!-- Items wrapper (relative-positioned container) -->
-    <div style="position:relative;">
-
-      <!-- Item 0: Northbay -->
-      <div data-logo-testimonials-item data-logo-testimonials-status="active">
-        <div data-logo-testimonials-logo-wrap>
-          <div data-logo-testimonials-logo>
-            <span class="logo-icon" style="background:#1a3a5c;">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 14L7 7L11 12L13.5 9L17 14H3Z" fill="#4a9edd"/></svg>
-            </span>
-            <span class="logo-name">Northbay</span>
+          <!-- Item 1 -->
+          <div role="listitem" data-logo-testimonials-item class="logo-testimonials__item">
+            <div class="logo-testimonials__logo-slot">
+              <svg data-logo-testimonials-logo viewBox="0 0 120 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Northbay">
+                <rect x="0" y="6" width="16" height="16" rx="3" fill="#4f8ef7"/>
+                <text x="22" y="20" font-family="DM Sans, sans-serif" font-size="14" font-weight="700" fill="#f0f0f2">Northbay</text>
+              </svg>
+            </div>
+            <p data-logo-testimonials-split class="logo-testimonials__quote">"The motion work elevated our brand in ways we didn't think were possible. Every interaction feels intentional and alive."</p>
+            <div class="logo-testimonials__details">
+              <p data-logo-testimonials-split class="logo-testimonials__name">Sarah Chen</p>
+              <p data-logo-testimonials-split class="logo-testimonials__role">Head of Design, Northbay</p>
+            </div>
           </div>
-        </div>
-        <div data-logo-testimonials-quote>
-          <p data-logo-testimonials-split>"Stanley's work elevated our product page in ways we didn't think were possible. The motion feels native, not bolted on — exactly what we needed."</p>
-        </div>
-        <div data-logo-testimonials-author>
-          <div class="author-avatar">ML</div>
-          <div>
-            <p data-logo-testimonials-name data-logo-testimonials-split>Maya Lin</p>
-            <p data-logo-testimonials-role data-logo-testimonials-split>Head of Design · Northbay</p>
+
+          <!-- Item 2 -->
+          <div role="listitem" data-logo-testimonials-item class="logo-testimonials__item">
+            <div class="logo-testimonials__logo-slot">
+              <svg data-logo-testimonials-logo viewBox="0 0 120 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Kestrel">
+                <circle cx="10" cy="14" r="8" fill="#e05a3a"/>
+                <circle cx="10" cy="14" r="4" fill="#f0f0f2"/>
+                <text x="26" y="20" font-family="DM Sans, sans-serif" font-size="14" font-weight="700" fill="#f0f0f2">Kestrel</text>
+              </svg>
+            </div>
+            <p data-logo-testimonials-split class="logo-testimonials__quote">"Working with the team was seamless. They translated our vision into fluid, responsive animations that our users love."</p>
+            <div class="logo-testimonials__details">
+              <p data-logo-testimonials-split class="logo-testimonials__name">Marcus Webb</p>
+              <p data-logo-testimonials-split class="logo-testimonials__role">CPO, Kestrel</p>
+            </div>
           </div>
+
+          <!-- Item 3 -->
+          <div role="listitem" data-logo-testimonials-item class="logo-testimonials__item">
+            <div class="logo-testimonials__logo-slot">
+              <svg data-logo-testimonials-logo viewBox="0 0 140 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Harborview">
+                <polygon points="0,24 10,4 20,24" fill="#2ecc8f"/>
+                <text x="28" y="20" font-family="DM Sans, sans-serif" font-size="14" font-weight="700" fill="#f0f0f2">Harborview</text>
+              </svg>
+            </div>
+            <p data-logo-testimonials-split class="logo-testimonials__quote">"The attention to detail in the micro-interactions set our product apart. Customers consistently remark on how polished it feels."</p>
+            <div class="logo-testimonials__details">
+              <p data-logo-testimonials-split class="logo-testimonials__name">Priya Anand</p>
+              <p data-logo-testimonials-split class="logo-testimonials__role">Founder, Harborview</p>
+            </div>
+          </div>
+
+          <!-- Item 4 -->
+          <div role="listitem" data-logo-testimonials-item class="logo-testimonials__item">
+            <div class="logo-testimonials__logo-slot">
+              <svg data-logo-testimonials-logo viewBox="0 0 120 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Redstone">
+                <rect x="0" y="4" width="20" height="20" rx="0" fill="#c0392b" transform="rotate(45 10 14)"/>
+                <text x="30" y="20" font-family="DM Sans, sans-serif" font-size="14" font-weight="700" fill="#f0f0f2">Redstone</text>
+              </svg>
+            </div>
+            <p data-logo-testimonials-split class="logo-testimonials__quote">"Absolutely transformed the way our platform communicates. The animations guide users naturally through every flow."</p>
+            <div class="logo-testimonials__details">
+              <p data-logo-testimonials-split class="logo-testimonials__name">Tom Lawson</p>
+              <p data-logo-testimonials-split class="logo-testimonials__role">VP Product, Redstone</p>
+            </div>
+          </div>
+
+          <!-- Item 5 -->
+          <div role="listitem" data-logo-testimonials-item class="logo-testimonials__item">
+            <div class="logo-testimonials__logo-slot">
+              <svg data-logo-testimonials-logo viewBox="0 0 120 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Juniper">
+                <line x1="10" y1="4" x2="10" y2="24" stroke="#7c5cbf" stroke-width="3" stroke-linecap="round"/>
+                <line x1="0" y1="14" x2="20" y2="14" stroke="#7c5cbf" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="10" cy="4" r="3" fill="#7c5cbf"/>
+                <circle cx="10" cy="24" r="3" fill="#7c5cbf"/>
+                <text x="30" y="20" font-family="DM Sans, sans-serif" font-size="14" font-weight="700" fill="#f0f0f2">Juniper</text>
+              </svg>
+            </div>
+            <p data-logo-testimonials-split class="logo-testimonials__quote">"The results speak for themselves — our engagement metrics jumped after the redesign. Motion design is now core to our identity."</p>
+            <div class="logo-testimonials__details">
+              <p data-logo-testimonials-split class="logo-testimonials__name">Alex Rivera</p>
+              <p data-logo-testimonials-split class="logo-testimonials__role">Creative Director, Juniper</p>
+            </div>
+          </div>
+
         </div>
       </div>
 
-      <!-- Item 1: Kestrel -->
-      <div data-logo-testimonials-item data-logo-testimonials-status="inactive">
-        <div data-logo-testimonials-logo-wrap>
-          <div data-logo-testimonials-logo>
-            <span class="logo-icon" style="background:#2d1a4a;">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3L14 9H17L13 13L14.5 17L10 14.5L5.5 17L7 13L3 9H6L10 3Z" fill="#9b6dd6"/></svg>
+      <div class="logo-testimonials__footer">
+        <div data-logo-testimonials-dots class="logo-testimonials__dots">
+          <!-- Blueprint dot — cloned by JS -->
+          <button data-logo-testimonials-dot class="logo-testimonials__dot" aria-label="Go to testimonial">
+            <span class="logo-testimonials__dot-bar">
+              <span data-logo-testimonials-dot-fill class="logo-testimonials__dot-fill"></span>
             </span>
-            <span class="logo-name">Kestrel</span>
-          </div>
-        </div>
-        <div data-logo-testimonials-quote>
-          <p data-logo-testimonials-split>"Working with Stanley Studio was a game-changer. They translated our brand into motion with precision and craft we hadn't seen before."</p>
-        </div>
-        <div data-logo-testimonials-author>
-          <div class="author-avatar">JA</div>
-          <div>
-            <p data-logo-testimonials-name data-logo-testimonials-split>James Adler</p>
-            <p data-logo-testimonials-role data-logo-testimonials-split>Product Lead · Kestrel</p>
-          </div>
+          </button>
         </div>
       </div>
 
-      <!-- Item 2: Harborview -->
-      <div data-logo-testimonials-item data-logo-testimonials-status="inactive">
-        <div data-logo-testimonials-logo-wrap>
-          <div data-logo-testimonials-logo>
-            <span class="logo-icon" style="background:#0d3320;">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="5" stroke="#3dba7a" stroke-width="2"/><circle cx="10" cy="10" r="2" fill="#3dba7a"/></svg>
-            </span>
-            <span class="logo-name">Harborview</span>
-          </div>
-        </div>
-        <div data-logo-testimonials-quote>
-          <p data-logo-testimonials-split>"The animations are subtle but powerful. Every transition tells the story of how our product works — beautifully and without distraction."</p>
-        </div>
-        <div data-logo-testimonials-author>
-          <div class="author-avatar">SC</div>
-          <div>
-            <p data-logo-testimonials-name data-logo-testimonials-split>Sofia Chen</p>
-            <p data-logo-testimonials-role data-logo-testimonials-split>Creative Director · Harborview</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Item 3: Redstone -->
-      <div data-logo-testimonials-item data-logo-testimonials-status="inactive">
-        <div data-logo-testimonials-logo-wrap>
-          <div data-logo-testimonials-logo>
-            <span class="logo-icon" style="background:#3d0f0f;">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="4" y="4" width="5" height="12" rx="1.5" fill="#e05252"/><rect x="11" y="4" width="5" height="7" rx="1.5" fill="#e05252"/></svg>
-            </span>
-            <span class="logo-name">Redstone</span>
-          </div>
-        </div>
-        <div data-logo-testimonials-quote>
-          <p data-logo-testimonials-split>"Incredible attention to detail. Our users constantly comment on how smooth and delightful the experience feels. Conversion is up 34%."</p>
-        </div>
-        <div data-logo-testimonials-author>
-          <div class="author-avatar">RP</div>
-          <div>
-            <p data-logo-testimonials-name data-logo-testimonials-split>Ravi Patel</p>
-            <p data-logo-testimonials-role data-logo-testimonials-split>Design Systems · Redstone</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Item 4: Juniper -->
-      <div data-logo-testimonials-item data-logo-testimonials-status="inactive">
-        <div data-logo-testimonials-logo-wrap>
-          <div data-logo-testimonials-logo>
-            <span class="logo-icon" style="background:#1a2d1a;">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 4C10 4 5 8 5 12C5 14.76 7.24 17 10 17C12.76 17 15 14.76 15 12C15 8 10 4 10 4Z" fill="#5ab85a"/></svg>
-            </span>
-            <span class="logo-name">Juniper</span>
-          </div>
-        </div>
-        <div data-logo-testimonials-quote>
-          <p data-logo-testimonials-split>"From concept to delivery, the process was seamless. The interactive demos alone converted three enterprise clients within the first week."</p>
-        </div>
-        <div data-logo-testimonials-author>
-          <div class="author-avatar">EW</div>
-          <div>
-            <p data-logo-testimonials-name data-logo-testimonials-split>Ella Wright</p>
-            <p data-logo-testimonials-role data-logo-testimonials-split>VP Design · Juniper</p>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- /items wrapper -->
-
-    <!-- Dots container -->
-    <div data-logo-testimonials-dots role="tablist" aria-label="Testimonials navigation"></div>
-
+    </div>
   </div>
 </div>
 
 <script>
+gsap.registerPlugin(SplitText);
+
 function initLogoTestimonials() {
-  const containers = document.querySelectorAll('[data-logo-testimonials-init]');
-  if (!containers.length) return;
+  document.querySelectorAll('[data-logo-testimonials-init]').forEach((root) => {
+    const autoplaySeconds = parseFloat(root.getAttribute('data-logo-testimonials-autoplay') || '6');
 
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const list = root.querySelector('.logo-testimonials__list');
+    const dotsContainer = root.querySelector('[data-logo-testimonials-dots]');
+    const dotTemplate = dotsContainer.querySelector('[data-logo-testimonials-dot]');
+    const items = Array.from(root.querySelectorAll('[data-logo-testimonials-item]'));
 
-  containers.forEach((container) => {
-    const autoplaySeconds = parseFloat(container.getAttribute('data-logo-testimonials-autoplay') || '6');
-    const items = [...container.querySelectorAll('[data-logo-testimonials-item]')];
-    const dotsContainer = container.querySelector('[data-logo-testimonials-dots]');
-    const dotTemplate = container.querySelector('[data-logo-testimonials-dot-template]');
-    if (!items.length) return;
-
-    // Build dots from template
-    const dots = [];
-    const fills = [];
-    items.forEach((_, i) => {
-      const dotEl = dotTemplate.content.cloneNode(true).querySelector('.testimonials-dot');
-      dotEl.setAttribute('aria-label', `Testimonial ${i + 1}`);
-      if (i === 0) dotEl.setAttribute('aria-selected', 'true');
-      dotsContainer.appendChild(dotEl);
-      dots.push(dotEl);
-      fills.push(dotEl.querySelector('[data-logo-testimonials-dot-fill]'));
+    // Remove blueprint dot; clone one per item
+    dotsContainer.removeChild(dotTemplate);
+    const dots = items.map((_, i) => {
+      const dot = dotTemplate.cloneNode(true);
+      dot.addEventListener('click', () => goTo(i));
+      dotsContainer.appendChild(dot);
+      return dot;
     });
 
-    // SplitText all [data-logo-testimonials-split] elements
-    const splitInstances = new Map();
-    container.querySelectorAll('[data-logo-testimonials-split]').forEach((el) => {
-      const split = SplitText.create(el, { type: 'lines', autoSplit: true, linesClass: 'split-line-clip' });
-      splitInstances.set(el, split);
-    });
-
-    // Hide all items except first
-    items.forEach((item, i) => {
-      if (i === 0) {
-        item.setAttribute('data-logo-testimonials-status', 'active');
-      } else {
-        item.setAttribute('data-logo-testimonials-status', 'inactive');
-        gsap.set(item.querySelector('[data-logo-testimonials-logo]'), { yPercent: 110, opacity: 0 });
-        const splitEls = item.querySelectorAll('[data-logo-testimonials-split]');
-        splitEls.forEach((el) => {
-          const split = splitInstances.get(el);
-          if (split) gsap.set(split.lines, { opacity: 0, yPercent: 40 });
-        });
-      }
+    // Split text for each item
+    const splitItems = items.map((item) => {
+      const splitEls = Array.from(item.querySelectorAll('[data-logo-testimonials-split]'));
+      return splitEls.map((el) => SplitText.create(el, { type: 'lines', autoSplit: true }));
     });
 
     let current = 0;
-    let fillTween = null;
-    let isHeld = false;
-    let isAnimating = false;
+    let timerTween = null;
 
-    function startFill(dotFill, onComplete) {
-      if (fillTween) fillTween.kill();
-      gsap.set(dotFill, { scaleX: 0 });
-      fillTween = gsap.fromTo(dotFill,
+    function setStatus(index, status) {
+      items[index].setAttribute('data-logo-testimonials-status', status);
+      dots[index].setAttribute('data-logo-testimonials-status', status);
+      if (status === 'active') {
+        items[index].removeAttribute('aria-hidden');
+      } else {
+        items[index].setAttribute('aria-hidden', 'true');
+      }
+    }
+
+    function getAllLines(index) {
+      return splitItems[index].flatMap((st) => st.lines);
+    }
+
+    function startTimer(dotFill) {
+      if (timerTween) timerTween.kill();
+      timerTween = gsap.fromTo(dotFill,
         { scaleX: 0 },
         {
           scaleX: 1,
           duration: autoplaySeconds,
           ease: 'none',
-          onComplete,
+          onComplete: () => goTo((current + 1) % items.length),
         }
       );
     }
 
-    function goTo(next) {
-      if (next === current || isAnimating) return;
-      isAnimating = true;
-
+    function goTo(index) {
+      if (index === current) return;
       const prev = current;
-      current = next;
+      current = index;
 
-      const prevItem = items[prev];
-      const nextItem = items[next];
+      const logo = items[index].querySelector('[data-logo-testimonials-logo]');
+      const prevLogo = items[prev].querySelector('[data-logo-testimonials-logo]');
+      const lines = getAllLines(index);
+      const prevLines = getAllLines(prev);
 
-      // Update dots
-      dots.forEach((dot, i) => {
-        dot.setAttribute('aria-selected', i === next ? 'true' : 'false');
-        if (i !== next) gsap.set(fills[i], { scaleX: 0 });
-      });
-
-      if (!isHeld) startFill(fills[next], () => goTo((next + 1) % items.length));
-
-      prevItem.setAttribute('data-logo-testimonials-status', 'leaving');
-      nextItem.setAttribute('data-logo-testimonials-status', 'active');
-
-      const prevLogo = prevItem.querySelector('[data-logo-testimonials-logo]');
-      const nextLogo = nextItem.querySelector('[data-logo-testimonials-logo]');
+      if (timerTween) timerTween.kill();
 
       const tl = gsap.timeline({
         onComplete: () => {
-          prevItem.setAttribute('data-logo-testimonials-status', 'inactive');
-          gsap.set(prevLogo, { yPercent: 110, opacity: 0 });
-          const prevSplitEls = prevItem.querySelectorAll('[data-logo-testimonials-split]');
-          prevSplitEls.forEach((el) => {
-            const split = splitInstances.get(el);
-            if (split) gsap.set(split.lines, { opacity: 0, yPercent: 40 });
-          });
-          isAnimating = false;
+          setStatus(prev, 'idle');
+          const activeFill = dots[current].querySelector('[data-logo-testimonials-dot-fill]');
+          startTimer(activeFill);
         }
       });
 
-      if (reduceMotion) {
-        tl.set(prevLogo, { opacity: 0 });
-        tl.set(nextLogo, { opacity: 1, yPercent: 0 });
-      } else {
-        // Logo out
-        tl.to(prevLogo, { yPercent: -110, opacity: 0, duration: 0.5, ease: 'power4.inOut' }, 0);
-        // Logo in
-        tl.fromTo(nextLogo,
-          { yPercent: 110, opacity: 0 },
-          { yPercent: 0, opacity: 1, duration: 0.55, ease: 'power4.inOut' },
-          0.05
-        );
+      // Out: previous logo rolls up, lines fade+slide up
+      tl.to(prevLogo, { yPercent: -110, duration: 0.4, ease: 'power2.in' }, 0);
+      tl.to(prevLines, { opacity: 0, yPercent: -20, duration: 0.3, ease: 'power2.in', stagger: 0.03 }, 0);
 
-        // Quote + author lines: prev out
-        const prevSplitEls = prevItem.querySelectorAll('[data-logo-testimonials-split]');
-        prevSplitEls.forEach((el) => {
-          const split = splitInstances.get(el);
-          if (!split) return;
-          tl.to(split.lines, {
-            opacity: 0,
-            yPercent: -40,
-            duration: 0.35,
-            ease: 'power2.in',
-            stagger: 0.03,
-          }, 0);
-        });
+      // Prep incoming
+      tl.call(() => {
+        setStatus(index, 'active');
+        gsap.set(logo, { yPercent: 110 });
+        gsap.set(lines, { opacity: 0, yPercent: 20 });
+      });
 
-        // Next in
-        const nextSplitEls = nextItem.querySelectorAll('[data-logo-testimonials-split]');
-        nextSplitEls.forEach((el) => {
-          const split = splitInstances.get(el);
-          if (!split) return;
-          tl.fromTo(split.lines,
-            { opacity: 0, yPercent: 40 },
-            { opacity: 1, yPercent: 0, duration: 0.55, ease: 'power2.out', stagger: 0.04 },
-            0.18
-          );
-        });
-      }
+      // In: logo rolls in from below
+      tl.to(logo, { yPercent: 0, duration: 0.5, ease: 'power2.out' });
+      tl.to(lines, { opacity: 1, yPercent: 0, duration: 0.4, ease: 'power2.out', stagger: 0.04 }, '<0.1');
     }
 
-    // Dots click
-    dots.forEach((dot, i) => {
-      dot.addEventListener('click', () => {
-        if (i === current) return;
-        if (fillTween) fillTween.kill();
-        goTo(i);
-      });
+    // Init: show first item
+    items.forEach((item, i) => {
+      const logo = item.querySelector('[data-logo-testimonials-logo]');
+      const lines = getAllLines(i);
+      if (i === 0) {
+        setStatus(0, 'active');
+        gsap.set(logo, { yPercent: 0 });
+        gsap.set(lines, { opacity: 1, yPercent: 0 });
+      } else {
+        setStatus(i, 'idle');
+        gsap.set(logo, { yPercent: 110 });
+        gsap.set(lines, { opacity: 0, yPercent: 20 });
+      }
     });
 
-    // Hover/focus hold
-    const card = container.querySelector('[data-logo-testimonials-card]');
-    card.addEventListener('mouseenter', () => {
-      isHeld = true;
-      if (fillTween) fillTween.pause();
-    });
-    card.addEventListener('mouseleave', () => {
-      isHeld = false;
-      if (fillTween) fillTween.resume();
-    });
-    card.addEventListener('focusin', () => {
-      isHeld = true;
-      if (fillTween) fillTween.pause();
-    });
-    card.addEventListener('focusout', () => {
-      isHeld = false;
-      if (fillTween) fillTween.resume();
-    });
-
-    // IntersectionObserver — pause when off-screen
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          if (fillTween && !isHeld) fillTween.resume();
-        } else {
-          if (fillTween) fillTween.pause();
-        }
-      });
-    }, { threshold: 0.1 });
-    observer.observe(container);
-
-    // Start first fill
-    startFill(fills[0], () => goTo(1));
+    const activeFill = dots[0].querySelector('[data-logo-testimonials-dot-fill]');
+    startTimer(activeFill);
   });
 }
 

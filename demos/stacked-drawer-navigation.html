@@ -8,251 +8,321 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/CustomEase.min.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  :root {
-    --drawer-nav-width: 30em;
-    --drawer-nav-edge: 3.5em;
-  }
-
   body {
-    background: #111118;
+    background: #f2f1ee;
     font-family: 'DM Sans', system-ui, sans-serif;
     min-height: 100vh;
     padding-top: 50px;
-    color: #f0f0f2;
+    color: #111;
+  }
+
+  .page-content {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  /* ---- Osmo Stacked Drawer Navigation ---- */
-  [data-drawer-nav] {
-    position: relative;
-    width: var(--drawer-nav-width);
-    max-width: calc(100vw - 3rem);
-    height: 580px;
-    font-size: clamp(13px, 1.8vw, 16px);
-    user-select: none;
-  }
-
-  /* Each level is a horizontal slide */
-  [data-drawer-level] {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 1.25em;
-    overflow: hidden;
-    will-change: transform;
-    background: #1c1c26;
-    border: 1px solid rgba(255,255,255,0.08);
-    display: flex;
-  }
-
-  [data-drawer-level="0"] {
-    z-index: 1;
-  }
-  [data-drawer-level="1"] {
-    z-index: 2;
-  }
-  [data-drawer-level="2"] {
-    z-index: 3;
-  }
-
-  /* Edge strip — clickable "back" on left side */
-  [data-drawer-edge] {
-    width: var(--drawer-nav-edge);
-    flex-shrink: 0;
-    display: flex;
+    min-height: calc(100vh - 50px);
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255,255,255,0.03);
-    border-right: 1px solid rgba(255,255,255,0.06);
-    cursor: pointer;
-    gap: 0.5em;
-    opacity: 0;
-    transition: opacity 0.2s;
-    padding: 0;
-    border-radius: 0;
-    border-left: none;
-    border-top: none;
-    border-bottom: none;
-    color: inherit;
-    font-family: inherit;
+    gap: 1rem;
+    padding: 2rem;
+    text-align: center;
   }
 
-  [data-drawer-level].is-sub [data-drawer-edge] {
-    opacity: 1;
-  }
-
-  [data-drawer-edge]:hover {
-    background: rgba(255,255,255,0.06);
-  }
-
-  .edge-back-arrow {
-    color: rgba(255,255,255,0.35);
-  }
-
-  .edge-label {
-    font-size: 0.625em;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.25);
-    font-weight: 600;
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-  }
-
-  /* Main content area */
-  [data-drawer-content] {
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-
-  /* Header */
-  .drawer-header {
-    padding: 1.75em 1.75em 1.25em;
-    border-bottom: 1px solid rgba(255,255,255,0.07);
-    flex-shrink: 0;
-  }
-
-  .drawer-header__eyebrow {
-    font-size: 0.6875em;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.3);
-    font-weight: 600;
-    margin-bottom: 0.375em;
-  }
-
-  .drawer-header__title {
-    font-size: 1.25em;
+  .page-content h1 {
+    font-size: clamp(2rem, 5vw, 4rem);
     font-weight: 700;
-    letter-spacing: -0.025em;
-    color: rgba(255,255,255,0.92);
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    color: #111;
   }
 
-  /* Nav list */
-  .drawer-nav-list {
-    list-style: none;
-    flex: 1;
-    overflow-y: auto;
-    padding: 0.75em 0;
-    scrollbar-width: none;
+  .page-content p {
+    font-size: 1.05rem;
+    color: rgba(0,0,0,0.45);
+    max-width: 380px;
   }
-  .drawer-nav-list::-webkit-scrollbar { display: none; }
 
-  .drawer-nav-item {
+  /* ============================================================
+     DRAWER NAV
+  ============================================================ */
+  [data-drawer-nav-init] {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+  }
+
+  .drawer-nav__bar {
+    position: fixed;
+    top: 50px;
+    left: 0;
+    right: 0;
+    z-index: 101;
+    height: 4rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.875em 1.75em;
-    cursor: pointer;
-    border-radius: 0;
-    transition: background 0.15s;
-    gap: 0.75em;
+    padding: 0 1.5rem;
+    pointer-events: auto;
   }
 
-  .drawer-nav-item:hover {
-    background: rgba(255,255,255,0.04);
+  .drawer-nav__logo {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: #111;
+    text-decoration: none;
   }
 
-  .drawer-nav-item__label {
-    font-size: 1em;
-    font-weight: 500;
-    color: rgba(255,255,255,0.85);
-    letter-spacing: -0.01em;
-    flex: 1;
-    min-width: 0;
-  }
-
-  .drawer-nav-item__meta {
-    font-size: 0.75em;
-    color: rgba(255,255,255,0.28);
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  .drawer-nav-item__chevron {
-    color: rgba(255,255,255,0.25);
-    flex-shrink: 0;
-  }
-
-  /* Section headings inside sub-drawers */
-  .drawer-nav-section {
-    padding: 0.5em 1.75em 0.25em;
-    font-size: 0.6875em;
+  .drawer-nav__toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #111;
+    color: #fff;
+    border: none;
+    border-radius: 100px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
     font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    pointer-events: auto;
+    transition: background 0.2s;
+  }
+
+  .drawer-nav__toggle:hover { background: #333; }
+
+  [data-drawer-nav-open="true"] .drawer-nav__toggle-open { display: none; }
+  [data-drawer-nav-open="false"] .drawer-nav__toggle-close { display: none; }
+
+  [data-drawer-nav-backdrop] {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    opacity: 0;
+    pointer-events: none;
+    backdrop-filter: blur(2px);
+  }
+
+  [data-drawer-nav-drawer] {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(30em, 90vw);
+    background: #fff;
+    border-radius: 1.25rem 0 0 1.25rem;
+    overflow: hidden;
+    display: flex;
+    visibility: hidden;
+    pointer-events: auto;
+  }
+
+  [data-drawer-nav-edge] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    border-right: 1px solid rgba(0,0,0,0.06);
+    cursor: pointer;
+    opacity: 0;
+    z-index: 10;
+    transition: background 0.2s;
+  }
+
+  [data-drawer-nav-edge]:hover { background: rgba(0,0,0,0.04); }
+
+  [data-drawer-nav-edge] svg { color: rgba(0,0,0,0.4); }
+
+  .drawer-nav__content {
+    position: absolute;
+    inset: 0;
+    overflow-y: auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .drawer-nav__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.5rem;
+  }
+
+  .drawer-nav__close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    color: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    border-radius: 0.5rem;
+    transition: color 0.2s, background 0.2s;
+  }
+
+  .drawer-nav__close:hover { color: #111; background: rgba(0,0,0,0.06); }
+
+  .drawer-nav__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .drawer-nav__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.875rem 0.75rem;
+    font-size: 1.0625rem;
+    font-weight: 500;
+    color: #111;
+    text-decoration: none;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: background 0.15s;
+    border: none;
+    background: none;
+    width: 100%;
+    font-family: inherit;
+    text-align: left;
+  }
+
+  .drawer-nav__link:hover { background: rgba(0,0,0,0.05); }
+
+  .drawer-nav__link-arrow { color: rgba(0,0,0,0.3); flex-shrink: 0; }
+
+  .drawer-nav__divider {
+    height: 1px;
+    background: rgba(0,0,0,0.07);
+    margin: 0.25rem 0;
+  }
+
+  .drawer-nav__promo {
+    background: #111;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .drawer-nav__promo-label {
+    font-size: 0.75rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.22);
+    color: rgba(255,255,255,0.45);
+    font-weight: 500;
   }
 
-  .drawer-nav-divider {
-    height: 1px;
-    background: rgba(255,255,255,0.06);
-    margin: 0.5em 0;
+  .drawer-nav__promo h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.25;
   }
 
-  /* Footer */
-  .drawer-footer {
-    padding: 1.25em 1.75em;
-    border-top: 1px solid rgba(255,255,255,0.07);
-    flex-shrink: 0;
-    display: flex;
-    gap: 0.75em;
-  }
-
-  .drawer-footer-btn {
-    flex: 1;
-    padding: 0.6875em 1em;
-    border-radius: 0.625em;
-    font-size: 0.8125em;
-    font-weight: 600;
-    font-family: 'DM Sans', system-ui, sans-serif;
-    cursor: pointer;
-    letter-spacing: -0.01em;
-    transition: background 0.15s, transform 0.15s;
-    border: none;
-  }
-
-  .drawer-footer-btn:active { transform: scale(0.97); }
-
-  .drawer-footer-btn--secondary {
-    background: rgba(255,255,255,0.07);
-    color: rgba(255,255,255,0.7);
-    border: 1px solid rgba(255,255,255,0.1);
-  }
-  .drawer-footer-btn--secondary:hover { background: rgba(255,255,255,0.1); }
-
-  .drawer-footer-btn--primary {
+  .drawer-nav__promo-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
     background: #fff;
     color: #111;
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 100px;
+    text-decoration: none;
+    width: fit-content;
+    font-family: inherit;
   }
-  .drawer-footer-btn--primary:hover { background: rgba(255,255,255,0.9); }
 
-  /* New + Sale tags */
-  .nav-tag {
-    display: inline-block;
-    font-size: 0.625em;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    padding: 0.2em 0.5em;
-    border-radius: 100em;
-    vertical-align: middle;
-    margin-left: 0.4em;
+  .drawer-nav__footer {
+    margin-top: auto;
+    padding-top: 1rem;
+    display: flex;
+    gap: 1rem;
+    font-size: 0.8125rem;
+    color: rgba(0,0,0,0.35);
   }
-  .nav-tag--new { background: rgba(80,200,120,0.15); color: #50c878; }
-  .nav-tag--sale { background: rgba(255,80,80,0.15); color: #ff5050; }
+
+  .drawer-nav__footer a { color: inherit; text-decoration: none; }
+  .drawer-nav__footer a:hover { color: #111; }
+
+  /* Sheets */
+  [data-drawer-nav-sheet] {
+    position: absolute;
+    inset: 0;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+  }
+
+  .drawer-nav__sheet-content {
+    padding: 1.5rem 2rem 2rem;
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .drawer-nav__sheet-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-top: 0.5rem;
+  }
+
+  .drawer-nav__sheet-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: rgba(0,0,0,0.45);
+  }
+
+  .drawer-nav__sheet-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .drawer-nav__sheet-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    padding: 0.875rem 0.75rem;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+
+  .drawer-nav__sheet-item:hover { background: rgba(0,0,0,0.05); }
+
+  .drawer-nav__sheet-item-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111;
+  }
+
+  .drawer-nav__sheet-item-desc {
+    font-size: 0.8125rem;
+    color: rgba(0,0,0,0.4);
+    line-height: 1.4;
+  }
 </style>
 </head>
 <body>
@@ -272,317 +342,227 @@
   </a>
 </header>
 
-<!-- Drawer Nav -->
-<div data-drawer-nav>
+<div class="page-content">
+  <h1>Stacked Drawer Nav</h1>
+  <p>Click "Menu" in the top right to open the navigation drawer with nested sheets.</p>
+</div>
 
-  <!-- Level 0: Main categories -->
-  <div data-drawer-level="0">
-    <button data-drawer-edge aria-label="Go back" disabled>
-      <svg class="edge-back-arrow" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span class="edge-label">Back</span>
+<nav data-drawer-nav-init data-drawer-nav-open="false" aria-label="Main navigation">
+
+  <div class="drawer-nav__bar">
+    <a href="#" class="drawer-nav__logo">SS Studio</a>
+    <button class="drawer-nav__toggle" data-drawer-nav-toggle aria-expanded="false">
+      <span class="drawer-nav__toggle-open">Menu</span>
+      <span class="drawer-nav__toggle-close">Close</span>
     </button>
-    <div data-drawer-content>
-      <div class="drawer-header">
-        <p class="drawer-header__eyebrow">Navigation</p>
-        <p class="drawer-header__title">Shop</p>
-      </div>
-      <ul class="drawer-nav-list">
-        <li class="drawer-nav-item" data-open-level="1" data-target-category="women">
-          <span class="drawer-nav-item__label">Women</span>
-          <svg class="drawer-nav-item__chevron" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </li>
-        <li class="drawer-nav-item" data-open-level="1" data-target-category="men">
-          <span class="drawer-nav-item__label">Men</span>
-          <svg class="drawer-nav-item__chevron" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </li>
-        <li class="drawer-nav-item" data-open-level="1" data-target-category="kids">
-          <span class="drawer-nav-item__label">Kids</span>
-          <svg class="drawer-nav-item__chevron" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </li>
-        <li class="drawer-nav-divider"></li>
-        <li class="drawer-nav-item" data-open-level="1" data-target-category="sale">
-          <span class="drawer-nav-item__label">Sale <span class="nav-tag nav-tag--sale">Up to 60% off</span></span>
-          <svg class="drawer-nav-item__chevron" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </li>
-        <li class="drawer-nav-item" data-open-level="1" data-target-category="new">
-          <span class="drawer-nav-item__label">New Arrivals <span class="nav-tag nav-tag--new">New</span></span>
-          <svg class="drawer-nav-item__chevron" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </li>
-      </ul>
-      <div class="drawer-footer">
-        <button class="drawer-footer-btn drawer-footer-btn--secondary">Sign in</button>
-        <button class="drawer-footer-btn drawer-footer-btn--primary">Bag (3)</button>
-      </div>
-    </div>
   </div>
 
-  <!-- Level 1: Category sub-nav -->
-  <div data-drawer-level="1" data-category-panel style="transform: translateX(100%);">
-    <button data-drawer-edge aria-label="Go back" class="is-sub">
-      <svg class="edge-back-arrow" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span class="edge-label">Back</span>
+  <div data-drawer-nav-backdrop aria-hidden="true"></div>
+
+  <div data-drawer-nav-drawer role="dialog" aria-modal="true" aria-label="Navigation">
+
+    <button data-drawer-nav-edge aria-label="Go back">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
     </button>
-    <div data-drawer-content>
-      <div class="drawer-header">
-        <p class="drawer-header__eyebrow">Category</p>
-        <p class="drawer-header__title" data-category-title>Women</p>
+
+    <div class="drawer-nav__content">
+      <div class="drawer-nav__header">
+        <span style="font-size:0.875rem; font-weight:600; color:rgba(0,0,0,0.35);">Navigation</span>
+        <button class="drawer-nav__close" data-drawer-nav-toggle aria-label="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+        </button>
       </div>
-      <ul class="drawer-nav-list" data-category-list>
-        <!-- filled by JS -->
-      </ul>
-      <div class="drawer-footer">
-        <button class="drawer-footer-btn drawer-footer-btn--secondary">View All</button>
-        <button class="drawer-footer-btn drawer-footer-btn--primary">Bag (3)</button>
+
+      <nav class="drawer-nav__nav">
+        <button class="drawer-nav__link" data-drawer-nav-open-sheet="services-sheet">
+          Services
+          <svg class="drawer-nav__link-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="drawer-nav__link" data-drawer-nav-open-sheet="work-sheet">
+          Work
+          <svg class="drawer-nav__link-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <a href="#" class="drawer-nav__link">About</a>
+        <a href="#" class="drawer-nav__link">Journal</a>
+        <div class="drawer-nav__divider"></div>
+        <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" class="drawer-nav__link">
+          Book a call
+          <svg class="drawer-nav__link-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </nav>
+
+      <div class="drawer-nav__promo">
+        <p class="drawer-nav__promo-label">New</p>
+        <h3>Motion Playground — 68 demos and growing</h3>
+        <a href="../index.html" class="drawer-nav__promo-cta">
+          Explore
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+      <div class="drawer-nav__footer">
+        <a href="mailto:hello@stanleysmithstudios.com">Email</a>
+        <a href="https://stanleysmithstudios.com" target="_blank">Website</a>
+        <span>Cape Town, SA</span>
       </div>
     </div>
-  </div>
 
-  <!-- Level 2: Sub-category -->
-  <div data-drawer-level="2" data-subcategory-panel style="transform: translateX(100%);">
-    <button data-drawer-edge aria-label="Go back" class="is-sub">
-      <svg class="edge-back-arrow" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span class="edge-label">Back</span>
-    </button>
-    <div data-drawer-content>
-      <div class="drawer-header">
-        <p class="drawer-header__eyebrow" data-subcategory-eyebrow>Women</p>
-        <p class="drawer-header__title" data-subcategory-title>Tops</p>
-      </div>
-      <ul class="drawer-nav-list" data-subcategory-list>
-        <!-- filled by JS -->
-      </ul>
-      <div class="drawer-footer">
-        <button class="drawer-footer-btn drawer-footer-btn--secondary">View All</button>
-        <button class="drawer-footer-btn drawer-footer-btn--primary">Bag (3)</button>
+    <!-- Services sheet -->
+    <div id="services-sheet" data-drawer-nav-sheet aria-label="Services">
+      <div class="drawer-nav__sheet-content">
+        <div class="drawer-nav__sheet-header">
+          <span class="drawer-nav__sheet-title">Services</span>
+        </div>
+        <div class="drawer-nav__sheet-items">
+          <a href="#" class="drawer-nav__sheet-item">
+            <span class="drawer-nav__sheet-item-label">Motion Design</span>
+            <span class="drawer-nav__sheet-item-desc">Scroll-driven, cursor-reactive, and state-based animations for web.</span>
+          </a>
+          <a href="#" class="drawer-nav__sheet-item">
+            <span class="drawer-nav__sheet-item-label">Interaction Design</span>
+            <span class="drawer-nav__sheet-item-desc">Micro-interactions, transitions, and UI motion systems.</span>
+          </a>
+          <a href="#" class="drawer-nav__sheet-item">
+            <span class="drawer-nav__sheet-item-label">Creative Direction</span>
+            <span class="drawer-nav__sheet-item-desc">Brand motion language, style guides, and animation principles.</span>
+          </a>
+          <a href="#" class="drawer-nav__sheet-item">
+            <span class="drawer-nav__sheet-item-label">Rive Animation</span>
+            <span class="drawer-nav__sheet-item-desc">State-machine animations for interactive, real-time experiences.</span>
+          </a>
+        </div>
       </div>
     </div>
+
+    <!-- Work sheet -->
+    <div id="work-sheet" data-drawer-nav-sheet aria-label="Work">
+      <div class="drawer-nav__sheet-content">
+        <div class="drawer-nav__sheet-header">
+          <span class="drawer-nav__sheet-title">Selected Work</span>
+        </div>
+        <div class="drawer-nav__sheet-items">
+          <a href="#" class="drawer-nav__sheet-item">
+            <span class="drawer-nav__sheet-item-label">Northbay — Brand Motion</span>
+            <span class="drawer-nav__sheet-item-desc">Full site motion system and scroll interactions.</span>
+          </a>
+          <a href="#" class="drawer-nav__sheet-item">
+            <span class="drawer-nav__sheet-item-label">Kestrel — Product UI</span>
+            <span class="drawer-nav__sheet-item-desc">Micro-interactions and component animation library.</span>
+          </a>
+          <a href="#" class="drawer-nav__sheet-item">
+            <span class="drawer-nav__sheet-item-label">Harborview — Launch</span>
+            <span class="drawer-nav__sheet-item-desc">Marketing site with scroll-driven storytelling.</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
   </div>
 
-</div><!-- /drawer-nav -->
+</nav>
 
 <script>
-CustomEase.create('osmo', 'M0,0 C0.625,0.05 0,1 1,1');
+function initDrawerNav() {
+  const root = document.querySelector('[data-drawer-nav-init]');
+  if (!root) return;
 
-const NAV_DATA = {
-  women: {
-    label: 'Women',
-    items: [
-      { label: 'Tops', count: 142, sub: ['T-Shirts', 'Blouses', 'Tanks', 'Shirts', 'Bodysuits', 'Sweaters', 'Hoodies', 'Crop Tops'] },
-      { label: 'Bottoms', count: 98, sub: ['Jeans', 'Trousers', 'Shorts', 'Skirts', 'Leggings', 'Joggers'] },
-      { label: 'Dresses', count: 76, sub: ['Mini', 'Midi', 'Maxi', 'Wrap', 'Slip', 'Shirt Dresses'] },
-      { label: 'Outerwear', count: 54, sub: ['Coats', 'Jackets', 'Blazers', 'Puffer', 'Trench', 'Leather'] },
-      { label: 'Swimwear', count: 33, sub: ['Bikinis', 'One-Pieces', 'Cover-Ups', 'Rash Guards'] },
-      { label: 'Shoes', count: 87, sub: ['Sneakers', 'Heels', 'Boots', 'Sandals', 'Flats', 'Loafers'] },
-      { label: 'Accessories', count: 112, sub: ['Bags', 'Belts', 'Hats', 'Scarves', 'Jewellery', 'Sunglasses'] },
-    ],
-  },
-  men: {
-    label: 'Men',
-    items: [
-      { label: 'Tops', count: 118, sub: ['T-Shirts', 'Shirts', 'Polo', 'Sweaters', 'Hoodies', 'Tank Tops'] },
-      { label: 'Bottoms', count: 85, sub: ['Jeans', 'Chinos', 'Shorts', 'Joggers', 'Trousers', 'Cargos'] },
-      { label: 'Outerwear', count: 62, sub: ['Jackets', 'Coats', 'Puffer', 'Bomber', 'Blazers', 'Overshirts'] },
-      { label: 'Activewear', count: 44, sub: ['Gym Tops', 'Shorts', 'Tights', 'Tracksuits', 'Vests'] },
-      { label: 'Shoes', count: 73, sub: ['Sneakers', 'Boots', 'Loafers', 'Sandals', 'Dress Shoes', 'Slides'] },
-      { label: 'Accessories', count: 96, sub: ['Caps', 'Belts', 'Bags', 'Watches', 'Wallets', 'Sunglasses'] },
-    ],
-  },
-  kids: {
-    label: 'Kids',
-    items: [
-      { label: 'Girls (2–14)', count: 88, sub: ['Tops', 'Dresses', 'Bottoms', 'Outerwear', 'Swimwear', 'Shoes'] },
-      { label: 'Boys (2–14)', count: 76, sub: ['Tops', 'Bottoms', 'Outerwear', 'Activewear', 'Shoes'] },
-      { label: 'Baby (0–24m)', count: 64, sub: ['Onesies', 'Sets', 'Outerwear', 'Footwear', 'Accessories'] },
-      { label: 'School Uniform', count: 38, sub: ['Shirts', 'Trousers', 'Skirts', 'Blazers', 'Shoes', 'Bags'] },
-    ],
-  },
-  sale: {
-    label: 'Sale',
-    items: [
-      { label: 'Women\'s Sale', count: 204, sub: ['Tops', 'Dresses', 'Bottoms', 'Shoes', 'Accessories'] },
-      { label: 'Men\'s Sale', count: 178, sub: ['Tops', 'Bottoms', 'Outerwear', 'Shoes', 'Accessories'] },
-      { label: 'Kids\' Sale', count: 95, sub: ['Girls', 'Boys', 'Baby', 'School'] },
-      { label: 'Up to 30% off', count: 312, sub: [] },
-      { label: 'Up to 50% off', count: 187, sub: [] },
-      { label: 'Up to 60% off', count: 94, sub: [] },
-    ],
-  },
-  new: {
-    label: 'New In',
-    items: [
-      { label: 'Women\'s New In', count: 56, sub: ['Tops', 'Dresses', 'Bottoms', 'Shoes'] },
-      { label: 'Men\'s New In', count: 43, sub: ['Tops', 'Bottoms', 'Outerwear', 'Shoes'] },
-      { label: 'Kids\' New In', count: 28, sub: ['Girls', 'Boys', 'Baby'] },
-      { label: 'Trending Now', count: 34, sub: [] },
-      { label: 'Designer Drops', count: 22, sub: [] },
-    ],
-  },
-};
+  const drawer = root.querySelector('[data-drawer-nav-drawer]');
+  const backdrop = root.querySelector('[data-drawer-nav-backdrop]');
+  const edge = root.querySelector('[data-drawer-nav-edge]');
+  const toggleBtns = root.querySelectorAll('[data-drawer-nav-toggle]');
+  const sheets = Array.from(root.querySelectorAll('[data-drawer-nav-sheet]'));
+  const openSheetBtns = Array.from(root.querySelectorAll('[data-drawer-nav-open-sheet]'));
 
-function initStackedDrawerNav() {
-  const navEls = document.querySelectorAll('[data-drawer-nav]');
-  if (!navEls.length) return;
+  // Move sheets inside the drawer element
+  sheets.forEach((sheet) => drawer.appendChild(sheet));
 
-  const ease = 'osmo';
-  const duration = 0.55;
+  let isOpen = false;
+  let stack = [drawer];
 
-  navEls.forEach((nav) => {
-    const levels = [...nav.querySelectorAll('[data-drawer-level]')];
-    const level1 = nav.querySelector('[data-drawer-level="1"]');
-    const level2 = nav.querySelector('[data-drawer-level="2"]');
-    const categoryTitle = nav.querySelector('[data-category-title]');
-    const categoryList = nav.querySelector('[data-category-list]');
-    const subcategoryEyebrow = nav.querySelector('[data-subcategory-eyebrow]');
-    const subcategoryTitle = nav.querySelector('[data-subcategory-title]');
-    const subcategoryList = nav.querySelector('[data-subcategory-list]');
+  function updateEdge() {
+    const hasSubLevel = stack.length > 1;
+    gsap.to(edge, {
+      opacity: hasSubLevel ? 1 : 0,
+      duration: 0.25,
+      ease: 'power2.out',
+      pointerEvents: hasSubLevel ? 'auto' : 'none'
+    });
+  }
 
-    // stack: array of open level indices
-    const stack = [];
+  function setOpen(open) {
+    isOpen = open;
+    root.setAttribute('data-drawer-nav-open', open ? 'true' : 'false');
+    toggleBtns.forEach((btn) => btn.setAttribute('aria-expanded', open ? 'true' : 'false'));
 
-    function addPause(tl) {
-      tl.addPause();
-      return tl;
-    }
-
-    function setInert(el, isInert) {
-      const children = el.querySelector('[data-drawer-content]');
-      if (children) {
-        if (isInert) children.setAttribute('inert', '');
-        else children.removeAttribute('inert');
-      }
-    }
-
-    function openLevel(levelIndex) {
-      const el = nav.querySelector(`[data-drawer-level="${levelIndex}"]`);
-      if (!el) return;
-
-      stack.push(levelIndex);
-      setInert(el, false);
-
-      gsap.to(el, {
-        xPercent: 0,
-        duration,
-        ease,
-      });
-
-      // Compress previous levels slightly
-      levels.forEach((lvl, i) => {
-        if (i < levelIndex) {
-          const compression = (stack.length - 1) * 2;
-          gsap.to(lvl, {
-            xPercent: -Math.min(compression, 8),
-            scale: 1 - 0.012 * (stack.length - 1),
-            duration,
-            ease,
-          });
-        }
-      });
-    }
-
-    function closeLevel() {
-      if (stack.length === 0) return;
-      const levelIndex = stack.pop();
-      const el = nav.querySelector(`[data-drawer-level="${levelIndex}"]`);
-      if (!el) return;
-
-      setInert(el, true);
-      gsap.to(el, {
+    if (open) {
+      root.style.pointerEvents = 'auto';
+      drawer.style.visibility = 'visible';
+      gsap.to(backdrop, { opacity: 1, duration: 0.4, ease: 'power2.out', pointerEvents: 'auto' });
+      gsap.fromTo(drawer, { xPercent: 100 }, { xPercent: 0, duration: 0.5, ease: 'power3.out' });
+    } else {
+      gsap.to(backdrop, { opacity: 0, duration: 0.35, ease: 'power2.in', pointerEvents: 'none' });
+      gsap.to(drawer, {
         xPercent: 100,
-        duration,
-        ease,
-      });
-
-      // Restore previous levels
-      levels.forEach((lvl, i) => {
-        if (i < levelIndex) {
-          const compression = stack.length * 2;
-          gsap.to(lvl, {
-            xPercent: -Math.min(compression, 8),
-            scale: 1 - 0.012 * stack.length,
-            duration,
-            ease,
-          });
+        duration: 0.45,
+        ease: 'power3.in',
+        onComplete: () => {
+          drawer.style.visibility = 'hidden';
+          root.style.pointerEvents = 'none';
+          sheets.forEach((s) => gsap.set(s, { xPercent: 100 }));
+          stack = [drawer];
+          updateEdge();
         }
       });
     }
+  }
 
-    // Set initial inert on sub-levels
-    setInert(level1, true);
-    setInert(level2, true);
+  function openSheet(sheet) {
+    stack.push(sheet);
+    gsap.fromTo(sheet, { xPercent: 100 }, { xPercent: 0, duration: 0.45, ease: 'power3.out' });
+    updateEdge();
+  }
 
-    // Level-0 item clicks → open level 1
-    nav.querySelectorAll('[data-open-level="1"]').forEach((item) => {
-      item.addEventListener('click', () => {
-        const cat = item.getAttribute('data-target-category');
-        const data = NAV_DATA[cat];
-        if (!data) return;
+  function closeTopSheet() {
+    if (stack.length <= 1) {
+      setOpen(false);
+      return;
+    }
+    const top = stack.pop();
+    gsap.to(top, { xPercent: 100, duration: 0.4, ease: 'power3.in' });
+    updateEdge();
+  }
 
-        // Populate level 1
-        categoryTitle.textContent = data.label;
-        categoryList.innerHTML = '';
-        data.items.forEach((entry) => {
-          const li = document.createElement('li');
-          li.className = 'drawer-nav-item';
-          if (entry.sub && entry.sub.length) {
-            li.setAttribute('data-open-sub', '');
-            li.dataset.subLabel = entry.label;
-            li.dataset.subParent = data.label;
-            li.dataset.subItems = JSON.stringify(entry.sub);
-            li.innerHTML = `
-              <span class="drawer-nav-item__label">${entry.label}</span>
-              <span class="drawer-nav-item__meta">${entry.count}</span>
-              <svg class="drawer-nav-item__chevron" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            `;
-          } else {
-            li.innerHTML = `
-              <span class="drawer-nav-item__label">${entry.label}</span>
-              <span class="drawer-nav-item__meta">${entry.count}</span>
-            `;
-          }
-          categoryList.appendChild(li);
-        });
-
-        // Bind sub-category clicks
-        categoryList.querySelectorAll('[data-open-sub]').forEach((subItem) => {
-          subItem.addEventListener('click', () => {
-            const label = subItem.dataset.subLabel;
-            const parent = subItem.dataset.subParent;
-            const items = JSON.parse(subItem.dataset.subItems || '[]');
-
-            subcategoryEyebrow.textContent = parent;
-            subcategoryTitle.textContent = label;
-            subcategoryList.innerHTML = '';
-            items.forEach((name) => {
-              const li = document.createElement('li');
-              li.className = 'drawer-nav-item';
-              li.innerHTML = `<span class="drawer-nav-item__label">${name}</span>`;
-              subcategoryList.appendChild(li);
-            });
-
-            if (stack.includes(2)) closeLevel();
-            openLevel(2);
-          });
-        });
-
-        if (stack.includes(1)) {
-          // already open, just update content
-        } else {
-          openLevel(1);
-        }
-      });
-    });
-
-    // Edge (back) button clicks
-    nav.querySelectorAll('[data-drawer-edge]').forEach((edge) => {
-      edge.addEventListener('click', () => {
-        closeLevel();
-      });
-    });
+  toggleBtns.forEach((btn) => {
+    btn.addEventListener('click', () => setOpen(!isOpen));
   });
+
+  backdrop.addEventListener('click', () => setOpen(false));
+  edge.addEventListener('click', () => closeTopSheet());
+
+  openSheetBtns.forEach((btn) => {
+    const sheetId = btn.getAttribute('data-drawer-nav-open-sheet');
+    const sheet = document.getElementById(sheetId);
+    if (!sheet) return;
+    btn.addEventListener('click', () => openSheet(sheet));
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen) closeTopSheet();
+  });
+
+  // Init state
+  root.style.pointerEvents = 'none';
+  gsap.set(drawer, { xPercent: 100 });
+  gsap.set(backdrop, { opacity: 0, pointerEvents: 'none' });
+  gsap.set(edge, { opacity: 0, pointerEvents: 'none' });
+  drawer.style.visibility = 'hidden';
+  sheets.forEach((s) => gsap.set(s, { xPercent: 100 }));
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  initStackedDrawerNav();
+  initDrawerNav();
 });
 </script>
 </body>
