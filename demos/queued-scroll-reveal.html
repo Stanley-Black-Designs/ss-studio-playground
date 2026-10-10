@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Queued Scroll Reveal — SS Studio</title>
+<link rel="stylesheet" href="demo-chrome.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #f5f3ef;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    min-height: 100vh;
+    padding-top: 50px;
+    color: #111;
+  }
+
+  /* ---- Demo layout ---- */
+  .page-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    padding: 4rem 2rem;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .hero-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.4);
+    font-weight: 500;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    max-width: 700px;
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: rgba(0,0,0,0.5);
+    max-width: 500px;
+    line-height: 1.6;
+  }
+
+  .scroll-hint {
+    font-size: 0.8rem;
+    color: rgba(0,0,0,0.3);
+    margin-top: 2rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* ---- Grid section ---- */
+  .grid-section {
+    padding: 4rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.35);
+    font-weight: 500;
+    margin-bottom: 2rem;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  @media (max-width: 768px) {
+    .card-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .card-item {
+    background: #fff;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  .card-item__image {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: #e8e4df;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+  }
+
+  .card-item__body {
+    padding: 1.25rem;
+  }
+
+  .card-item__title {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.375rem;
+  }
+
+  .card-item__desc {
+    font-size: 0.875rem;
+    color: rgba(0,0,0,0.45);
+    line-height: 1.55;
+  }
+
+  /* ---- List section ---- */
+  .list-section {
+    padding: 4rem 2rem 6rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .list-item {
+    display: flex;
+    gap: 1.25rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    align-items: flex-start;
+  }
+
+  .list-item:first-child {
+    border-top: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .list-item__num {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: rgba(0,0,0,0.25);
+    letter-spacing: 0.08em;
+    padding-top: 0.2em;
+    min-width: 2.5rem;
+  }
+
+  .list-item__title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin-bottom: 0.25rem;
+  }
+
+  .list-item__text {
+    font-size: 0.875rem;
+    color: rgba(0,0,0,0.45);
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<header class="demo-chrome">
+  <div class="demo-chrome__left">
+    <a href="../index.html" class="demo-chrome__back">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Playground
+    </a>
+    <span class="demo-chrome__sep"></span>
+    <span class="demo-chrome__title">Queued Scroll Reveal</span>
+  </div>
+  <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" class="demo-chrome__cta">
+    Book a call
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</header>
+
+<!-- Hero — not revealed (already visible) -->
+<section class="page-hero">
+  <p class="hero-label">Scroll Animation</p>
+  <h1 class="hero-title">Elements reveal one by one as you scroll</h1>
+  <p class="hero-sub">Items queue up and animate sequentially with a 75ms stagger — smooth, natural, and buttery.</p>
+  <p class="scroll-hint">↓ Scroll to see the effect</p>
+</section>
+
+<!-- Card grid — children revealed -->
+<section class="grid-section">
+  <p class="section-label">Featured work</p>
+  <div class="card-grid" data-queued-reveal-group data-queued-reveal-children>
+    <div class="card-item">
+      <div class="card-item__image">🎨</div>
+      <div class="card-item__body">
+        <p class="card-item__title">Brand Identity</p>
+        <p class="card-item__desc">Visual language that speaks before words do. Crafted with intention.</p>
+      </div>
+    </div>
+    <div class="card-item">
+      <div class="card-item__image">✦</div>
+      <div class="card-item__body">
+        <p class="card-item__title">Motion Design</p>
+        <p class="card-item__desc">Animation that feels native, not bolted on. Every frame intentional.</p>
+      </div>
+    </div>
+    <div class="card-item">
+      <div class="card-item__image">⬡</div>
+      <div class="card-item__body">
+        <p class="card-item__title">Interaction Design</p>
+        <p class="card-item__desc">Micro-interactions that delight without distracting. Subtle and precise.</p>
+      </div>
+    </div>
+    <div class="card-item">
+      <div class="card-item__image">◈</div>
+      <div class="card-item__body">
+        <p class="card-item__title">Web Development</p>
+        <p class="card-item__desc">Production-ready code, hand-crafted. Performance and polish together.</p>
+      </div>
+    </div>
+    <div class="card-item">
+      <div class="card-item__image">⬦</div>
+      <div class="card-item__body">
+        <p class="card-item__title">Design Systems</p>
+        <p class="card-item__desc">Scalable foundations that grow with your product and your team.</p>
+      </div>
+    </div>
+    <div class="card-item">
+      <div class="card-item__image">◎</div>
+      <div class="card-item__body">
+        <p class="card-item__title">Art Direction</p>
+        <p class="card-item__desc">Strategic creative vision that aligns aesthetics with business goals.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- List — individual items revealed -->
+<section class="list-section">
+  <p class="section-label">Our process</p>
+  <div data-queued-reveal-group>
+    <div class="list-item" data-queued-reveal-item>
+      <span class="list-item__num">01</span>
+      <div>
+        <p class="list-item__title">Discovery & Strategy</p>
+        <p class="list-item__text">We start by understanding your brand, your audience, and what makes your product worth building. Deep listening before any doing.</p>
+      </div>
+    </div>
+    <div class="list-item" data-queued-reveal-item>
+      <span class="list-item__num">02</span>
+      <div>
+        <p class="list-item__title">Creative Exploration</p>
+        <p class="list-item__text">Wide creative territory, then rapid convergence. We explore many directions so the final one feels inevitable.</p>
+      </div>
+    </div>
+    <div class="list-item" data-queued-reveal-item>
+      <span class="list-item__num">03</span>
+      <div>
+        <p class="list-item__title">Design & Prototyping</p>
+        <p class="list-item__text">High-fidelity design paired with interactive prototypes. You see and feel the product before a line of code is written.</p>
+      </div>
+    </div>
+    <div class="list-item" data-queued-reveal-item>
+      <span class="list-item__num">04</span>
+      <div>
+        <p class="list-item__title">Build & Deliver</p>
+        <p class="list-item__text">Precision development with attention to performance, accessibility, and every pixel. Shipped with care and documentation.</p>
+      </div>
+    </div>
+    <div class="list-item" data-queued-reveal-item>
+      <span class="list-item__num">05</span>
+      <div>
+        <p class="list-item__title">Refine & Evolve</p>
+        <p class="list-item__text">After launch, we gather signals and iterate. Great digital products are never truly finished — they grow.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+function initQueuedScrollReveal() {
+  const queue = [];
+  let isRunning = false;
+
+  document.querySelectorAll('[data-queued-reveal-group]').forEach((group) => {
+    const items = group.hasAttribute('data-queued-reveal-children')
+      ? [...group.children]
+      : [...group.querySelectorAll('[data-queued-reveal-item]')];
+    if (!items.length) return;
+
+    items.forEach((item) => {
+      if (item.getBoundingClientRect().bottom <= 0) return;
+
+      gsap.set(item, {autoAlpha: 0, y: "4em"});
+
+      ScrollTrigger.create({
+        trigger: item,
+        start: 'top 100%',
+        once: true,
+        onEnter: () => {
+          queue.push(item);
+          if (queue.length > 12) reveal(queue.shift());
+          if (!isRunning) {
+            isRunning = true;
+            gsap.delayedCall(0.1, revealNext);
+          }
+        }
+      });
+    });
+  });
+
+  function reveal(item) {
+    gsap.to(item, {autoAlpha: 1, duration: 1.2, ease: 'power1.out', clearProps: "opacity,visibility"});
+    gsap.to(item, {y: "0em", duration: 1.2, ease: 'expo.out', clearProps: "transform"});
+  }
+
+  function revealNext() {
+    const item = queue.shift();
+    if (!item) { isRunning = false; return; }
+    reveal(item);
+    gsap.delayedCall(0.075, revealNext);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initQueuedScrollReveal();
+});
+</script>
+</body>
+</html>

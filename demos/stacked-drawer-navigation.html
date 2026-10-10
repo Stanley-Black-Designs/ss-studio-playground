@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stacked Drawer Navigation — SS Studio</title>
+<link rel="stylesheet" href="demo-chrome.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/CustomEase.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --drawer-nav-width: 30em;
+    --drawer-nav-edge: 3.5em;
+  }
+
+  body {
+    background: #111118;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    min-height: 100vh;
+    padding-top: 50px;
+    color: #f0f0f2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ---- Osmo Stacked Drawer Navigation ---- */
+  [data-drawer-nav] {
+    position: relative;
+    width: var(--drawer-nav-width);
+    max-width: calc(100vw - 3rem);
+    height: 580px;
+    font-size: clamp(13px, 1.8vw, 16px);
+    user-select: none;
+  }
+
+  /* Each level is a horizontal slide */
+  [data-drawer-level] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 1.25em;
+    overflow: hidden;
+    will-change: transform;
+    background: #1c1c26;
+    border: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+  }
+
+  [data-drawer-level="0"] {
+    z-index: 1;
+  }
+  [data-drawer-level="1"] {
+    z-index: 2;
+  }
+  [data-drawer-level="2"] {
+    z-index: 3;
+  }
+
+  /* Edge strip — clickable "back" on left side */
+  [data-drawer-edge] {
+    width: var(--drawer-nav-edge);
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.03);
+    border-right: 1px solid rgba(255,255,255,0.06);
+    cursor: pointer;
+    gap: 0.5em;
+    opacity: 0;
+    transition: opacity 0.2s;
+    padding: 0;
+    border-radius: 0;
+    border-left: none;
+    border-top: none;
+    border-bottom: none;
+    color: inherit;
+    font-family: inherit;
+  }
+
+  [data-drawer-level].is-sub [data-drawer-edge] {
+    opacity: 1;
+  }
+
+  [data-drawer-edge]:hover {
+    background: rgba(255,255,255,0.06);
+  }
+
+  .edge-back-arrow {
+    color: rgba(255,255,255,0.35);
+  }
+
+  .edge-label {
+    font-size: 0.625em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+    font-weight: 600;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  /* Main content area */
+  [data-drawer-content] {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Header */
+  .drawer-header {
+    padding: 1.75em 1.75em 1.25em;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    flex-shrink: 0;
+  }
+
+  .drawer-header__eyebrow {
+    font-size: 0.6875em;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    font-weight: 600;
+    margin-bottom: 0.375em;
+  }
+
+  .drawer-header__title {
+    font-size: 1.25em;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: rgba(255,255,255,0.92);
+  }
+
+  /* Nav list */
+  .drawer-nav-list {
+    list-style: none;
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.75em 0;
+    scrollbar-width: none;
+  }
+  .drawer-nav-list::-webkit-scrollbar { display: none; }
+
+  .drawer-nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.875em 1.75em;
+    cursor: pointer;
+    border-radius: 0;
+    transition: background 0.15s;
+    gap: 0.75em;
+  }
+
+  .drawer-nav-item:hover {
+    background: rgba(255,255,255,0.04);
+  }
+
+  .drawer-nav-item__label {
+    font-size: 1em;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+    letter-spacing: -0.01em;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .drawer-nav-item__meta {
+    font-size: 0.75em;
+    color: rgba(255,255,255,0.28);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .drawer-nav-item__chevron {
+    color: rgba(255,255,255,0.25);
+    flex-shrink: 0;
+  }
+
+  /* Section headings inside sub-drawers */
+  .drawer-nav-section {
+    padding: 0.5em 1.75em 0.25em;
+    font-size: 0.6875em;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.22);
+  }
+
+  .drawer-nav-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.06);
+    margin: 0.5em 0;
+  }
+
+  /* Footer */
+  .drawer-footer {
+    padding: 1.25em 1.75em;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    flex-shrink: 0;
+    display: flex;
+    gap: 0.75em;
+  }
+
+  .drawer-footer-btn {
+    flex: 1;
+    padding: 0.6875em 1em;
+    border-radius: 0.625em;
+    font-size: 0.8125em;
+    font-weight: 600;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    cursor: pointer;
+    letter-spacing: -0.01em;
+    transition: background 0.15s, transform 0.15s;
+    border: none;
+  }
+
+  .drawer-footer-btn:active { transform: scale(0.97); }
+
+  .drawer-footer-btn--secondary {
+    background: rgba(255,255,255,0.07);
+    color: rgba(255,255,255,0.7);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .drawer-footer-btn--secondary:hover { background: rgba(255,255,255,0.1); }
+
+  .drawer-footer-btn--primary {
+    background: #fff;
+    color: #111;
+  }
+  .drawer-footer-btn--primary:hover { background: rgba(255,255,255,0.9); }
+
+  /* New + Sale tags */
+  .nav-tag {
+    display: inline-block;
+    font-size: 0.625em;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.2em 0.5em;
+    border-radius: 100em;
+    vertical-align: middle;
+    margin-left: 0.4em;
+  }
+  .nav-tag--new { background: rgba(80,200,120,0.15); color: #50c878; }
+  .nav-tag--sale { background: rgba(255,80,80,0.15); color: #ff5050; }
+</style>
+</head>
+<body>
+
+<header class="demo-chrome">
+  <div class="demo-chrome__left">
+    <a href="../index.html" class="demo-chrome__back">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Playground
+    </a>
+    <span class="demo-chrome__sep"></span>
+    <span class="demo-chrome__title">Stacked Drawer Navigation</span>
+  </div>
+  <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" class="demo-chrome__cta">
+    Book a call
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</header>
+
+<!-- Drawer Nav -->
+<div data-drawer-nav>
+
+  <!-- Level 0: Main categories -->
+  <div data-drawer-level="0">
+    <button data-drawer-edge aria-label="Go back" disabled>
+      <svg class="edge-back-arrow" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="edge-label">Back</span>
+    </button>
+    <div data-drawer-content>
+      <div class="drawer-header">
+        <p class="drawer-header__eyebrow">Navigation</p>
+        <p class="drawer-header__title">Shop</p>
+      </div>
+      <ul class="drawer-nav-list">
+        <li class="drawer-nav-item" data-open-level="1" data-target-category="women">
+          <span class="drawer-nav-item__label">Women</span>
+          <svg class="drawer-nav-item__chevron" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </li>
+        <li class="drawer-nav-item" data-open-level="1" data-target-category="men">
+          <span class="drawer-nav-item__label">Men</span>
+          <svg class="drawer-nav-item__chevron" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </li>
+        <li class="drawer-nav-item" data-open-level="1" data-target-category="kids">
+          <span class="drawer-nav-item__label">Kids</span>
+          <svg class="drawer-nav-item__chevron" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </li>
+        <li class="drawer-nav-divider"></li>
+        <li class="drawer-nav-item" data-open-level="1" data-target-category="sale">
+          <span class="drawer-nav-item__label">Sale <span class="nav-tag nav-tag--sale">Up to 60% off</span></span>
+          <svg class="drawer-nav-item__chevron" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </li>
+        <li class="drawer-nav-item" data-open-level="1" data-target-category="new">
+          <span class="drawer-nav-item__label">New Arrivals <span class="nav-tag nav-tag--new">New</span></span>
+          <svg class="drawer-nav-item__chevron" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </li>
+      </ul>
+      <div class="drawer-footer">
+        <button class="drawer-footer-btn drawer-footer-btn--secondary">Sign in</button>
+        <button class="drawer-footer-btn drawer-footer-btn--primary">Bag (3)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Level 1: Category sub-nav -->
+  <div data-drawer-level="1" data-category-panel style="transform: translateX(100%);">
+    <button data-drawer-edge aria-label="Go back" class="is-sub">
+      <svg class="edge-back-arrow" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="edge-label">Back</span>
+    </button>
+    <div data-drawer-content>
+      <div class="drawer-header">
+        <p class="drawer-header__eyebrow">Category</p>
+        <p class="drawer-header__title" data-category-title>Women</p>
+      </div>
+      <ul class="drawer-nav-list" data-category-list>
+        <!-- filled by JS -->
+      </ul>
+      <div class="drawer-footer">
+        <button class="drawer-footer-btn drawer-footer-btn--secondary">View All</button>
+        <button class="drawer-footer-btn drawer-footer-btn--primary">Bag (3)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Level 2: Sub-category -->
+  <div data-drawer-level="2" data-subcategory-panel style="transform: translateX(100%);">
+    <button data-drawer-edge aria-label="Go back" class="is-sub">
+      <svg class="edge-back-arrow" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="edge-label">Back</span>
+    </button>
+    <div data-drawer-content>
+      <div class="drawer-header">
+        <p class="drawer-header__eyebrow" data-subcategory-eyebrow>Women</p>
+        <p class="drawer-header__title" data-subcategory-title>Tops</p>
+      </div>
+      <ul class="drawer-nav-list" data-subcategory-list>
+        <!-- filled by JS -->
+      </ul>
+      <div class="drawer-footer">
+        <button class="drawer-footer-btn drawer-footer-btn--secondary">View All</button>
+        <button class="drawer-footer-btn drawer-footer-btn--primary">Bag (3)</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /drawer-nav -->
+
+<script>
+CustomEase.create('osmo', 'M0,0 C0.625,0.05 0,1 1,1');
+
+const NAV_DATA = {
+  women: {
+    label: 'Women',
+    items: [
+      { label: 'Tops', count: 142, sub: ['T-Shirts', 'Blouses', 'Tanks', 'Shirts', 'Bodysuits', 'Sweaters', 'Hoodies', 'Crop Tops'] },
+      { label: 'Bottoms', count: 98, sub: ['Jeans', 'Trousers', 'Shorts', 'Skirts', 'Leggings', 'Joggers'] },
+      { label: 'Dresses', count: 76, sub: ['Mini', 'Midi', 'Maxi', 'Wrap', 'Slip', 'Shirt Dresses'] },
+      { label: 'Outerwear', count: 54, sub: ['Coats', 'Jackets', 'Blazers', 'Puffer', 'Trench', 'Leather'] },
+      { label: 'Swimwear', count: 33, sub: ['Bikinis', 'One-Pieces', 'Cover-Ups', 'Rash Guards'] },
+      { label: 'Shoes', count: 87, sub: ['Sneakers', 'Heels', 'Boots', 'Sandals', 'Flats', 'Loafers'] },
+      { label: 'Accessories', count: 112, sub: ['Bags', 'Belts', 'Hats', 'Scarves', 'Jewellery', 'Sunglasses'] },
+    ],
+  },
+  men: {
+    label: 'Men',
+    items: [
+      { label: 'Tops', count: 118, sub: ['T-Shirts', 'Shirts', 'Polo', 'Sweaters', 'Hoodies', 'Tank Tops'] },
+      { label: 'Bottoms', count: 85, sub: ['Jeans', 'Chinos', 'Shorts', 'Joggers', 'Trousers', 'Cargos'] },
+      { label: 'Outerwear', count: 62, sub: ['Jackets', 'Coats', 'Puffer', 'Bomber', 'Blazers', 'Overshirts'] },
+      { label: 'Activewear', count: 44, sub: ['Gym Tops', 'Shorts', 'Tights', 'Tracksuits', 'Vests'] },
+      { label: 'Shoes', count: 73, sub: ['Sneakers', 'Boots', 'Loafers', 'Sandals', 'Dress Shoes', 'Slides'] },
+      { label: 'Accessories', count: 96, sub: ['Caps', 'Belts', 'Bags', 'Watches', 'Wallets', 'Sunglasses'] },
+    ],
+  },
+  kids: {
+    label: 'Kids',
+    items: [
+      { label: 'Girls (2–14)', count: 88, sub: ['Tops', 'Dresses', 'Bottoms', 'Outerwear', 'Swimwear', 'Shoes'] },
+      { label: 'Boys (2–14)', count: 76, sub: ['Tops', 'Bottoms', 'Outerwear', 'Activewear', 'Shoes'] },
+      { label: 'Baby (0–24m)', count: 64, sub: ['Onesies', 'Sets', 'Outerwear', 'Footwear', 'Accessories'] },
+      { label: 'School Uniform', count: 38, sub: ['Shirts', 'Trousers', 'Skirts', 'Blazers', 'Shoes', 'Bags'] },
+    ],
+  },
+  sale: {
+    label: 'Sale',
+    items: [
+      { label: 'Women\'s Sale', count: 204, sub: ['Tops', 'Dresses', 'Bottoms', 'Shoes', 'Accessories'] },
+      { label: 'Men\'s Sale', count: 178, sub: ['Tops', 'Bottoms', 'Outerwear', 'Shoes', 'Accessories'] },
+      { label: 'Kids\' Sale', count: 95, sub: ['Girls', 'Boys', 'Baby', 'School'] },
+      { label: 'Up to 30% off', count: 312, sub: [] },
+      { label: 'Up to 50% off', count: 187, sub: [] },
+      { label: 'Up to 60% off', count: 94, sub: [] },
+    ],
+  },
+  new: {
+    label: 'New In',
+    items: [
+      { label: 'Women\'s New In', count: 56, sub: ['Tops', 'Dresses', 'Bottoms', 'Shoes'] },
+      { label: 'Men\'s New In', count: 43, sub: ['Tops', 'Bottoms', 'Outerwear', 'Shoes'] },
+      { label: 'Kids\' New In', count: 28, sub: ['Girls', 'Boys', 'Baby'] },
+      { label: 'Trending Now', count: 34, sub: [] },
+      { label: 'Designer Drops', count: 22, sub: [] },
+    ],
+  },
+};
+
+function initStackedDrawerNav() {
+  const navEls = document.querySelectorAll('[data-drawer-nav]');
+  if (!navEls.length) return;
+
+  const ease = 'osmo';
+  const duration = 0.55;
+
+  navEls.forEach((nav) => {
+    const levels = [...nav.querySelectorAll('[data-drawer-level]')];
+    const level1 = nav.querySelector('[data-drawer-level="1"]');
+    const level2 = nav.querySelector('[data-drawer-level="2"]');
+    const categoryTitle = nav.querySelector('[data-category-title]');
+    const categoryList = nav.querySelector('[data-category-list]');
+    const subcategoryEyebrow = nav.querySelector('[data-subcategory-eyebrow]');
+    const subcategoryTitle = nav.querySelector('[data-subcategory-title]');
+    const subcategoryList = nav.querySelector('[data-subcategory-list]');
+
+    // stack: array of open level indices
+    const stack = [];
+
+    function addPause(tl) {
+      tl.addPause();
+      return tl;
+    }
+
+    function setInert(el, isInert) {
+      const children = el.querySelector('[data-drawer-content]');
+      if (children) {
+        if (isInert) children.setAttribute('inert', '');
+        else children.removeAttribute('inert');
+      }
+    }
+
+    function openLevel(levelIndex) {
+      const el = nav.querySelector(`[data-drawer-level="${levelIndex}"]`);
+      if (!el) return;
+
+      stack.push(levelIndex);
+      setInert(el, false);
+
+      gsap.to(el, {
+        xPercent: 0,
+        duration,
+        ease,
+      });
+
+      // Compress previous levels slightly
+      levels.forEach((lvl, i) => {
+        if (i < levelIndex) {
+          const compression = (stack.length - 1) * 2;
+          gsap.to(lvl, {
+            xPercent: -Math.min(compression, 8),
+            scale: 1 - 0.012 * (stack.length - 1),
+            duration,
+            ease,
+          });
+        }
+      });
+    }
+
+    function closeLevel() {
+      if (stack.length === 0) return;
+      const levelIndex = stack.pop();
+      const el = nav.querySelector(`[data-drawer-level="${levelIndex}"]`);
+      if (!el) return;
+
+      setInert(el, true);
+      gsap.to(el, {
+        xPercent: 100,
+        duration,
+        ease,
+      });
+
+      // Restore previous levels
+      levels.forEach((lvl, i) => {
+        if (i < levelIndex) {
+          const compression = stack.length * 2;
+          gsap.to(lvl, {
+            xPercent: -Math.min(compression, 8),
+            scale: 1 - 0.012 * stack.length,
+            duration,
+            ease,
+          });
+        }
+      });
+    }
+
+    // Set initial inert on sub-levels
+    setInert(level1, true);
+    setInert(level2, true);
+
+    // Level-0 item clicks → open level 1
+    nav.querySelectorAll('[data-open-level="1"]').forEach((item) => {
+      item.addEventListener('click', () => {
+        const cat = item.getAttribute('data-target-category');
+        const data = NAV_DATA[cat];
+        if (!data) return;
+
+        // Populate level 1
+        categoryTitle.textContent = data.label;
+        categoryList.innerHTML = '';
+        data.items.forEach((entry) => {
+          const li = document.createElement('li');
+          li.className = 'drawer-nav-item';
+          if (entry.sub && entry.sub.length) {
+            li.setAttribute('data-open-sub', '');
+            li.dataset.subLabel = entry.label;
+            li.dataset.subParent = data.label;
+            li.dataset.subItems = JSON.stringify(entry.sub);
+            li.innerHTML = `
+              <span class="drawer-nav-item__label">${entry.label}</span>
+              <span class="drawer-nav-item__meta">${entry.count}</span>
+              <svg class="drawer-nav-item__chevron" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            `;
+          } else {
+            li.innerHTML = `
+              <span class="drawer-nav-item__label">${entry.label}</span>
+              <span class="drawer-nav-item__meta">${entry.count}</span>
+            `;
+          }
+          categoryList.appendChild(li);
+        });
+
+        // Bind sub-category clicks
+        categoryList.querySelectorAll('[data-open-sub]').forEach((subItem) => {
+          subItem.addEventListener('click', () => {
+            const label = subItem.dataset.subLabel;
+            const parent = subItem.dataset.subParent;
+            const items = JSON.parse(subItem.dataset.subItems || '[]');
+
+            subcategoryEyebrow.textContent = parent;
+            subcategoryTitle.textContent = label;
+            subcategoryList.innerHTML = '';
+            items.forEach((name) => {
+              const li = document.createElement('li');
+              li.className = 'drawer-nav-item';
+              li.innerHTML = `<span class="drawer-nav-item__label">${name}</span>`;
+              subcategoryList.appendChild(li);
+            });
+
+            if (stack.includes(2)) closeLevel();
+            openLevel(2);
+          });
+        });
+
+        if (stack.includes(1)) {
+          // already open, just update content
+        } else {
+          openLevel(1);
+        }
+      });
+    });
+
+    // Edge (back) button clicks
+    nav.querySelectorAll('[data-drawer-edge]').forEach((edge) => {
+      edge.addEventListener('click', () => {
+        closeLevel();
+      });
+    });
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initStackedDrawerNav();
+});
+</script>
+</body>
+</html>
