@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elastic Line — SS Studio</title>
+<link rel="stylesheet" href="demo-chrome.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #111118;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    min-height: 100vh;
+    padding-top: 50px;
+    color: #f0f0f2;
+  }
+
+  .demo-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 50px);
+    padding: 2rem;
+    gap: 3rem;
+  }
+
+  .elastic-line-svg {
+    width: 100%;
+    height: 0.0625em;
+    display: block;
+    overflow: visible !important;
+    color: rgba(240, 240, 242, 0.4);
+    font-size: 2px;
+  }
+
+  .line-wrap {
+    width: 100%;
+    max-width: 900px;
+    padding: 4rem 0;
+    cursor: crosshair;
+  }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .hint {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.25);
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<header class="demo-chrome">
+  <div class="demo-chrome__left">
+    <a href="../index.html" class="demo-chrome__back">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Playground
+    </a>
+    <span class="demo-chrome__sep"></span>
+    <span class="demo-chrome__title">Elastic Line</span>
+  </div>
+  <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" class="demo-chrome__cta">
+    Book a call
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</header>
+
+<section class="demo-section">
+  <p class="eyebrow">Cursor Interaction</p>
+
+  <div class="line-wrap">
+    <svg class="elastic-line-svg" data-elastic-line="" viewbox="0 0 100 1" preserveaspectratio="none" aria-hidden="true">
+      <path d="M0 0.5 Q50 0.5 100 0.5" fill="none" stroke="currentColor" stroke-width="0.0625em" vector-effect="non-scaling-stroke" stroke-linejoin="round" linecap="round"></path>
+    </svg>
+  </div>
+
+  <p class="hint">Move your cursor across the line quickly to stretch it</p>
+</section>
+
+<script>
+function initElasticLine() {
+  var sensitivity = 40;
+  var stretch = 0.1;
+
+  document.querySelectorAll('[data-elastic-line]').forEach((svg) => {
+    const path = svg.querySelector('path');
+    const viewBox = svg.viewBox.baseVal;
+    if (!path || !viewBox.width || !viewBox.height) return;
+
+    const center = viewBox.y + viewBox.height * 0.5;
+    const start = viewBox.x;
+    const end = viewBox.x + viewBox.width;
+
+    let previous, tl;
+    const state = { x: viewBox.x + viewBox.width * 0.5, y: 0 };
+
+    function render() {
+      path.setAttribute('d', `M${start} ${center} Q${state.x} ${center + state.y * 2} ${end} ${center}`);
+    }
+
+    function toSVG(x, y) {
+      const point = new DOMPoint(x, y);
+      return point.matrixTransform(svg.getScreenCTM().inverse());
+    }
+
+    function onPointerMove(e) {
+      if (!previous) {
+        previous = e;
+        return;
+      }
+
+      const prev = previous;
+      previous = e;
+
+      if (e.timeStamp - prev.timeStamp > 150) return;
+
+      const bounds = svg.getBoundingClientRect();
+      const lineY = bounds.top + bounds.height * 0.5;
+      const from = prev.clientY - lineY;
+      const to = e.clientY - lineY;
+
+      if (from * to > 0) return;
+
+      const dx = e.clientX - prev.clientX;
+      const dy = e.clientY - prev.clientY;
+      if (!dy) return;
+
+      const progress = -from / dy;
+      const screenX = prev.clientX + dx * progress;
+      if (screenX <= bounds.left || screenX >= bounds.right) return;
+
+      const point = toSVG(screenX, lineY);
+      const velocity = Math.abs(dy) / Math.max(1, e.timeStamp - prev.timeStamp);
+      const amount = Math.min(bounds.width * stretch, velocity * sensitivity);
+
+      const fromSVG = toSVG(screenX, lineY);
+      const toSVGPoint = toSVG(screenX, lineY + amount);
+      const svgAmount = Math.abs(toSVGPoint.y - fromSVG.y);
+
+      tl?.kill();
+      state.x = point.x;
+
+      tl = gsap.timeline({ onUpdate: render });
+      tl.to(state, { y: Math.sign(dy) * svgAmount, duration: 0.1, ease: 'power2.out' });
+      tl.to(state, { y: 0, duration: 1.5, ease: 'elastic.out(1, 0.3)' });
+    }
+
+    render();
+
+    const mm = gsap.matchMedia();
+
+    mm.add('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)', () => {
+      window.addEventListener('pointermove', onPointerMove);
+
+      return () => {
+        window.removeEventListener('pointermove', onPointerMove);
+        previous = null;
+      };
+    });
+  });
+}
+
+// Initialize Elastic Line
+document.addEventListener('DOMContentLoaded', () => {
+  initElasticLine();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wavy Marquee — SS Studio</title>
+<link rel="stylesheet" href="demo-chrome.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/Observer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #e8e5e0;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    min-height: 100vh;
+    padding-top: 50px;
+  }
+
+  .demo-section {
+    justify-content: center;
+    align-items: center;
+    min-height: 100svh;
+    display: flex;
+    overflow: clip;
+  }
+
+  .wavy-marquee {
+    width: 100%;
+    position: relative;
+  }
+
+  .wavy-marquee__collection {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .wavy-marquee__list {
+    touch-action: pan-y;
+    gap: clamp(.75em, 1.125vw, 2.25em);
+    align-items: center;
+    width: max-content;
+    height: 100%;
+    display: flex;
+    position: relative;
+  }
+
+  .wavy-marquee__item {
+    flex: none;
+    position: relative;
+  }
+
+  .logo-card {
+    aspect-ratio: 1;
+    -webkit-user-select: none;
+    user-select: none;
+    background-color: #f4f4f4;
+    border-radius: 50em;
+    justify-content: center;
+    align-items: center;
+    width: clamp(7.5em, 10vw, 20em);
+    display: flex;
+    position: relative;
+  }
+
+  .logo-card__box {
+    justify-content: center;
+    align-items: center;
+    width: 65%;
+    height: 30%;
+    display: flex;
+    position: absolute;
+  }
+
+  .logo-card__box-img {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+  }
+</style>
+</head>
+<body>
+
+<header class="demo-chrome">
+  <div class="demo-chrome__left">
+    <a href="../index.html" class="demo-chrome__back">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Playground
+    </a>
+    <span class="demo-chrome__sep"></span>
+    <span class="demo-chrome__title">Wavy Marquee</span>
+  </div>
+  <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" class="demo-chrome__cta">
+    Book a call
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</header>
+
+<section class="demo-section">
+  <div data-wavy-marquee-init="" class="wavy-marquee">
+    <div class="wavy-marquee__collection">
+      <div data-wavy-marquee-list="" class="wavy-marquee__list">
+        <div data-wavy-marquee-item="" class="wavy-marquee__item">
+          <div draggable="false" class="logo-card">
+            <div data-logo-wall-target="" class="logo-card__box">
+              <img src="https://cdn.prod.website-files.com/6aa7c41a924cd6e9d5014e50/6aa7d9074ee63a9657998b09_logo-webflow.svg" loading="lazy" width="Auto" draggable="false" alt="" class="logo-card__box-img">
+            </div>
+          </div>
+        </div>
+        <div data-wavy-marquee-item="" class="wavy-marquee__item">
+          <div draggable="false" class="logo-card">
+            <div data-logo-wall-target="" class="logo-card__box">
+              <img src="https://cdn.prod.website-files.com/6aa7c41a924cd6e9d5014e50/6aa7d906757d8f0d92aa6785_logo-osmo.svg" loading="lazy" width="Auto" draggable="false" alt="" class="logo-card__box-img">
+            </div>
+          </div>
+        </div>
+        <div data-wavy-marquee-item="" class="wavy-marquee__item">
+          <div draggable="false" class="logo-card">
+            <div data-logo-wall-target="" class="logo-card__box">
+              <img src="https://cdn.prod.website-files.com/6aa7c41a924cd6e9d5014e50/6aa7d907989c9f8e73eae161_logo-asana.svg" loading="lazy" width="Auto" draggable="false" alt="" class="logo-card__box-img">
+            </div>
+          </div>
+        </div>
+        <div data-wavy-marquee-item="" class="wavy-marquee__item">
+          <div draggable="false" class="logo-card">
+            <div data-logo-wall-target="" class="logo-card__box">
+              <img src="https://cdn.prod.website-files.com/6aa7c41a924cd6e9d5014e50/6aa7d907989c9f8e73eae17f_logo-behance.svg" loading="lazy" width="Auto" draggable="false" alt="" class="logo-card__box-img">
+            </div>
+          </div>
+        </div>
+        <div data-wavy-marquee-item="" class="wavy-marquee__item">
+          <div draggable="false" class="logo-card">
+            <div data-logo-wall-target="" class="logo-card__box">
+              <img src="https://cdn.prod.website-files.com/6aa7c41a924cd6e9d5014e50/6aa7d9073150d47c1d1ae896_logo-twitter.svg" loading="lazy" width="Auto" draggable="false" alt="" class="logo-card__box-img">
+            </div>
+          </div>
+        </div>
+        <div data-wavy-marquee-item="" class="wavy-marquee__item">
+          <div draggable="false" class="logo-card">
+            <div data-logo-wall-target="" class="logo-card__box">
+              <img src="https://cdn.prod.website-files.com/6aa7c41a924cd6e9d5014e50/6aa7d907e5143ea32266b761_logo-codepen.svg" loading="lazy" width="Auto" draggable="false" alt="" class="logo-card__box-img">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+gsap.registerPlugin(Observer, ScrollTrigger);
+
+function initWavyMarquee() {
+  document.querySelectorAll('[data-wavy-marquee-init]').forEach((container) => {
+    const autoSpeed = 100;
+    const viewport = [
+      [992, 1, 1],
+      [768, 0.75, 1],
+      [480, 0.6, 0.75],
+      [0, 0.5, 0.75]
+    ];
+    const scrollSpeed = 0.0075;
+    const dragSpeed = 0.5;
+    const maxDragSpeed = 75;
+    const dragEase = 0.1;
+    const waveY = 0.25;
+    const waveBoost = 0.01;
+    const itemsPerWave = 10;
+    const waveTravel = 0.25;
+
+    const getViewport = () => viewport.find(([min]) => innerWidth >= min).slice(1);
+
+    container._wavyMarqueeObserver?.kill();
+    container._wavyMarqueeTrigger?.kill();
+
+    if (container._wavyMarqueeTick) gsap.ticker.remove(container._wavyMarqueeTick);
+    if (container._wavyMarqueeResize) window.removeEventListener('resize', container._wavyMarqueeResize);
+
+    const list = container.querySelector('[data-wavy-marquee-list]');
+    if (!list) return;
+
+    const originals = [...list.querySelectorAll('[data-wavy-marquee-item]')].map((item) => item.cloneNode(true));
+    if (!originals.length) return;
+
+    const baseDirection = container.dataset.wavyMarqueeDirection === 'flipped' ? 1 : -1;
+    const setX = gsap.quickSetter(list, 'x', 'px');
+    const fullCircle = Math.PI * 2;
+
+    let items = [];
+    let loopWidth = 0, waveLength = 0, averageWidth = 1, travel = 0, pausePadding = 0;
+    let speed = 1, targetSpeed = 1, direction = baseDirection;
+    let isActive = false, isDragging = false;
+    let [speedScale, waveScale] = getViewport();
+
+    function addBatch() {
+      const fragment = document.createDocumentFragment();
+      originals.forEach((item) => fragment.appendChild(item.cloneNode(true)));
+      list.appendChild(fragment);
+    }
+
+    function buildLoop() {
+      list.innerHTML = '';
+
+      addBatch();
+      addBatch();
+
+      const firstItems = [...list.querySelectorAll('[data-wavy-marquee-item]')];
+      loopWidth = firstItems[originals.length].offsetLeft - firstItems[0].offsetLeft;
+
+      for (let i = 2; i < Math.max(2, Math.ceil(container.offsetWidth / loopWidth) + 1); i++) {
+        addBatch();
+      }
+
+      items = [...list.querySelectorAll('[data-wavy-marquee-item]')];
+
+      const originalItems = firstItems.slice(0, originals.length);
+      averageWidth = originalItems.reduce((sum, item) => sum + item.offsetWidth, 0) / originals.length;
+      waveLength = Math.max(container.offsetWidth, averageWidth * itemsPerWave) * waveScale;
+
+      let maxHeight = 0;
+
+      for (const item of items) {
+        item._x = item.offsetLeft;
+        item._width = item.offsetWidth;
+        item._height = item.offsetHeight;
+        item._setY = gsap.quickSetter(item, 'y', 'px');
+        maxHeight = Math.max(maxHeight, item._height);
+      }
+
+      pausePadding = maxHeight * (Math.abs(waveY) + 1);
+      render();
+    }
+
+    function render() {
+      if (!loopWidth || !waveLength) return;
+
+      const x = gsap.utils.wrap(-loopWidth, 0, travel);
+      const dynamicWaveY = waveY + (speed - 1) * waveBoost;
+      const phaseTravel = travel / waveLength * fullCircle * waveTravel;
+      const containerWidth = container.offsetWidth;
+
+      setX(x);
+
+      for (const item of items) {
+        const itemX = item._x + x;
+        if (itemX + item._width < 0 || itemX > containerWidth) continue;
+
+        const phase = itemX / waveLength * fullCircle + phaseTravel;
+        item._setY(Math.sin(phase) * item._height * dynamicWaveY);
+      }
+    }
+
+    function tick(_, deltaTime) {
+      if (!isActive || !loopWidth) return;
+
+      speed += ((targetSpeed !== 1 ? targetSpeed : 1) - speed) * dragEase;
+      if (targetSpeed !== 1) targetSpeed += (1 - targetSpeed) * dragEase;
+
+      travel += autoSpeed * speedScale * speed * direction * deltaTime / 1000;
+      render();
+    }
+
+    container._wavyMarqueeObserver = Observer.create({
+      target: container,
+      type: 'touch,pointer',
+      lockAxis: true,
+      onChangeX: (self) => {
+        if (!isActive || !self.deltaX) return;
+
+        isDragging = true;
+        container.style.cursor = 'grabbing';
+        direction = self.deltaX > 0 ? 1 : -1;
+
+        const dragAmount = Math.abs(self.deltaX) / averageWidth * 100 * dragSpeed;
+        targetSpeed = Math.min(1 + dragAmount, maxDragSpeed);
+      },
+      onRelease: () => {
+        isDragging = false;
+        container.style.cursor = 'grab';
+      }
+    });
+
+    container._wavyMarqueeTrigger = ScrollTrigger.create({
+      trigger: container,
+      start: () => `top-=${pausePadding}px bottom`,
+      end: () => `bottom+=${pausePadding}px top`,
+      invalidateOnRefresh: true,
+      onToggle: (self) => isActive = self.isActive,
+      onUpdate: (self) => {
+        if (isDragging) return;
+
+        direction = self.direction === 1 ? -baseDirection : baseDirection;
+        speed = 1 + Math.abs(self.getVelocity()) * scrollSpeed;
+      }
+    });
+
+    buildLoop();
+
+    isActive = ScrollTrigger.isInViewport(container);
+    container._wavyMarqueeTick = tick;
+    gsap.ticker.add(tick);
+
+    container._wavyMarqueeResize = debounceOnWidthChange(() => {
+      [speedScale, waveScale] = getViewport();
+      buildLoop();
+      ScrollTrigger.refresh();
+    }, 150);
+
+    window.addEventListener('resize', container._wavyMarqueeResize);
+  });
+}
+
+function debounceOnWidthChange(fn, ms) {
+  let last = innerWidth, timer;
+  return function (...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      if (innerWidth !== last) {
+        last = innerWidth;
+        fn.apply(this, args);
+      }
+    }, ms);
+  };
+}
+
+// Initialize Wavy Marquee
+document.addEventListener('DOMContentLoaded', () => {
+  initWavyMarquee();
+});
+</script>
+</body>
+</html>
