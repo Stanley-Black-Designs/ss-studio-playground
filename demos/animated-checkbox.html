@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animated Checkbox — SS Studio</title>
+<link rel="stylesheet" href="demo-chrome.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #c8b89a;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    min-height: 100vh;
+    padding-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ---- Osmo Animated Checkbox styles ---- */
+  .checkbox-group {
+    color: #f4f4f4;
+    background-color: #302019;
+    border: none;
+    border-radius: 1.4375em;
+    flex-flow: column;
+    min-width: 0;
+    max-width: 20em;
+    margin: 0;
+    padding: 1.25em;
+    display: flex;
+    position: relative;
+  }
+
+  .checkbox-group__legend {
+    float: left;
+    margin: .25em .625em .375em .375em;
+    padding: 0;
+    font-size: 1.25em;
+    font-weight: 500;
+    line-height: 1.2;
+    display: block;
+  }
+
+  .checkbox {
+    grid-column-gap: .5em;
+    grid-row-gap: .5em;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    background-color: #0000;
+    border-radius: .6875em;
+    align-items: center;
+    min-width: 12em;
+    margin-bottom: 0;
+    padding: .5em;
+    display: flex;
+    position: relative;
+    transition: background-color 0.15s ease;
+  }
+
+  .checkbox:hover,
+  .checkbox:has(.checkbox__input:focus-visible){
+    background-color: rgba(201, 181, 159, 0.1);
+  }
+
+  .checkbox__custom {
+    color: #221710;
+    background-color: #0000;
+    border: .09375em solid #c9b59f33;
+    border-radius: .3125em;
+    justify-content: center;
+    align-items: center;
+    width: 1.5em;
+    height: 1.5em;
+    display: flex;
+    transition: background-color 0.15s ease, border-color 0.1s ease;
+    transform: scale(1) rotate(0.001deg);
+  }
+
+  .checkbox:has(.checkbox__input:checked) .checkbox__custom {
+    background-color: #ff9f2e;
+    border-color: transparent;
+    animation: checkbox-jump 0.4s cubic-bezier(0.35, 1.5, 0.6, 1);
+  }
+
+  @keyframes checkbox-jump {
+    50% {
+      transform: scale(1.25) rotate(0.001deg);
+    }
+  }
+
+  .checkbox__input {
+    box-sizing: border-box;
+    width: 0;
+    height: 0;
+    margin: 0;
+    position: absolute;
+  }
+
+  .checkbox__custom-check {
+    aspect-ratio: 2 / 3;
+    width: .4375em;
+    position: relative;
+    transform: translateY(-12.5%)rotate(45deg);
+  }
+
+  .checkbox__custom-check::before,
+  .checkbox__custom-check::after {
+    content: "";
+    position: absolute;
+    background-color: currentColor;
+    width: 0.125em;
+    height: 0.125em;
+    opacity: 0;
+    transition: opacity 0.15s ease, transform 0.15s ease 0.15s;
+  }
+
+  .checkbox__custom-check::before {
+    width: 100%;
+    bottom: 0;
+    transform-origin: left center;
+    transform: scaleX(0);
+  }
+
+  .checkbox__custom-check::after {
+    height: 100%;
+    right: 0;
+    transform-origin: bottom center;
+    transform: scaleY(0);
+  }
+
+  .checkbox:has(.checkbox__input:checked) .checkbox__custom-check::before {
+    transition: transform 0.2s cubic-bezier(0.76, 0, 0.24, 1);
+    transform: scaleX(1);
+    opacity: 1;
+  }
+
+  .checkbox:has(.checkbox__input:checked) .checkbox__custom-check::after {
+    transition: transform 0.4s cubic-bezier(0.35, 1.5, 0.6, 1);
+    transform: scaleY(1);
+    transition-delay: 0.15s;
+    opacity: 1;
+  }
+
+  .checkbox__label {
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 400;
+    line-height: 1.2;
+    position: relative;
+  }
+</style>
+</head>
+<body>
+
+<header class="demo-chrome">
+  <div class="demo-chrome__left">
+    <a href="../index.html" class="demo-chrome__back">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Playground
+    </a>
+    <span class="demo-chrome__sep"></span>
+    <span class="demo-chrome__title">Animated Checkbox</span>
+  </div>
+  <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" class="demo-chrome__cta">
+    Book a call
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</header>
+
+<fieldset class="checkbox-group">
+  <legend class="checkbox-group__legend">Animated Checkbox</legend>
+  <label class="checkbox">
+    <input type="checkbox" name="services" value="concept" class="checkbox__input" checked>
+    <div aria-hidden="true" class="checkbox__custom">
+      <div class="checkbox__custom-check"></div>
+    </div>
+    <span class="checkbox__label">Concept</span>
+  </label>
+  <label class="checkbox">
+    <input type="checkbox" name="services" value="branding" class="checkbox__input">
+    <div aria-hidden="true" class="checkbox__custom">
+      <div class="checkbox__custom-check"></div>
+    </div>
+    <span class="checkbox__label">Branding</span>
+  </label>
+  <label class="checkbox">
+    <input type="checkbox" name="services" value="design" class="checkbox__input">
+    <div aria-hidden="true" class="checkbox__custom">
+      <div class="checkbox__custom-check"></div>
+    </div>
+    <span class="checkbox__label">Design</span>
+  </label>
+  <label class="checkbox">
+    <input type="checkbox" name="services" value="development" class="checkbox__input">
+    <div aria-hidden="true" class="checkbox__custom">
+      <div class="checkbox__custom-check"></div>
+    </div>
+    <span class="checkbox__label">Development</span>
+  </label>
+</fieldset>
+
+</body>
+</html>
