@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wavy Accordion — SS Studio</title>
+<link rel="stylesheet" href="demo-chrome.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #111118;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    min-height: 100vh;
+    padding-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #f0f0f2;
+  }
+
+  .demo-wrap {
+    width: 100%;
+    max-width: 1100px;
+    padding: 2rem 1.5rem;
+  }
+
+  /* ---- Wavy Accordion ---- */
+  .wavy-accordion {
+    position: relative;
+    width: 100%;
+    height: 36em;
+  }
+
+  .wavy-accordion__canvas {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .wavy-accordion__collection {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .wavy-accordion__list {
+    display: flex;
+    gap: 0.5em;
+    width: 100%;
+    height: 100%;
+  }
+
+  .wavy-accordion__item {
+    position: relative;
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    border-radius: 0.5em;
+  }
+
+  .wavy-accordion__link {
+    position: absolute;
+    inset: 0;
+    display: block;
+    color: #ffffff;
+    text-decoration: none;
+    outline: none;
+  }
+
+  .wavy-accordion__link:focus-visible {
+    box-shadow: inset 0 0 0 0.125em #ffffff;
+    border-radius: 0.5em;
+  }
+
+  .wavy-accordion__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  [data-wavy-accordion-init][data-wavy-accordion-status="ready"] .wavy-accordion__image {
+    opacity: 0;
+  }
+
+  .wavy-accordion__label {
+    position: absolute;
+    left: 1.5em;
+    bottom: 1.25em;
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translate(0, 0.5em);
+    transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+  }
+
+  [data-wavy-accordion-item][data-wavy-accordion-item-status="active"] .wavy-accordion__label {
+    opacity: 1;
+    transform: translate(0, 0);
+    transition-delay: 0.15s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wavy-accordion__label {
+      transition: none;
+    }
+  }
+
+  .wavy-accordion__title {
+    font-size: 1.5em;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .wavy-accordion__meta {
+    font-size: 1em;
+    line-height: 1.4;
+    opacity: 0.7;
+  }
+
+  @media screen and (max-width: 767px) {
+    .wavy-accordion {
+      height: 40em;
+    }
+
+    .wavy-accordion__list {
+      flex-direction: column;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header class="demo-chrome">
+  <div class="demo-chrome__left">
+    <a href="../index.html" class="demo-chrome__back">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Playground
+    </a>
+    <span class="demo-chrome__sep"></span>
+    <span class="demo-chrome__title">Wavy Accordion</span>
+  </div>
+  <a href="https://calendly.com/stanleysmithstudios/30min" target="_blank" class="demo-chrome__cta">
+    Book a call
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</header>
+
+<div class="demo-wrap">
+  <div data-wavy-accordion-init class="wavy-accordion">
+    <canvas data-wavy-accordion-canvas aria-hidden="true" class="wavy-accordion__canvas"></canvas>
+    <div class="wavy-accordion__collection">
+      <div data-wavy-accordion-list role="list" class="wavy-accordion__list">
+        <div data-wavy-accordion-item role="listitem" class="wavy-accordion__item">
+          <a href="#" class="wavy-accordion__link">
+            <img data-wavy-accordion-image src="https://cdn.prod.website-files.com/6acd1e6d522d19e562928ed9/6acd25d0a1f6c941ae190dbf_abstract-warm-tones-with-soft-gradients-large.avif" alt="Soft abstract gradient in warm orange tones" class="wavy-accordion__image">
+            <span class="wavy-accordion__label"><span class="wavy-accordion__title">Ember</span><span class="wavy-accordion__meta">Identity, 2026</span></span>
+          </a>
+        </div>
+        <div data-wavy-accordion-item role="listitem" class="wavy-accordion__item">
+          <a href="#" class="wavy-accordion__link">
+            <img data-wavy-accordion-image src="https://cdn.prod.website-files.com/6acd1e6d522d19e562928ed9/6acd25d08cd1ba3f3086f507_dramatic-desert-river-bend-through-red-canyon-large.avif" alt="River bending through a red desert canyon, seen from above" class="wavy-accordion__image">
+            <span class="wavy-accordion__label"><span class="wavy-accordion__title">Meander</span><span class="wavy-accordion__meta">Editorial, 2025</span></span>
+          </a>
+        </div>
+        <div data-wavy-accordion-item role="listitem" class="wavy-accordion__item">
+          <a href="#" class="wavy-accordion__link">
+            <img data-wavy-accordion-image src="https://cdn.prod.website-files.com/6acd1e6d522d19e562928ed9/6acd25d0c962c71c6e42eb4b_san-francisco-skyline-in-amber-haze-large.avif" alt="San Francisco skyline in amber haze" class="wavy-accordion__image">
+            <span class="wavy-accordion__label"><span class="wavy-accordion__title">Haze</span><span class="wavy-accordion__meta">Architecture, 2026</span></span>
+          </a>
+        </div>
+        <div data-wavy-accordion-item role="listitem" class="wavy-accordion__item">
+          <a href="#" class="wavy-accordion__link">
+            <img data-wavy-accordion-image src="https://cdn.prod.website-files.com/6acd1e6d522d19e562928ed9/6acd25d1629722b38b738bba_silhouette-portrait-against-vibrant-orange-background-large.avif" alt="Silhouette of a woman in profile against an orange background" class="wavy-accordion__image">
+            <span class="wavy-accordion__label"><span class="wavy-accordion__title">Profile</span><span class="wavy-accordion__meta">Portrait, 2026</span></span>
+          </a>
+        </div>
+        <div data-wavy-accordion-item role="listitem" class="wavy-accordion__item">
+          <a href="#" class="wavy-accordion__link">
+            <img data-wavy-accordion-image src="https://cdn.prod.website-files.com/6acd1e6d522d19e562928ed9/6acd25d047bd0dd62b14aed5_vibrant-red-dune-landscape-large.avif" alt="Red dune covered in low shrubs" class="wavy-accordion__image">
+            <span class="wavy-accordion__label"><span class="wavy-accordion__title">Dune</span><span class="wavy-accordion__meta">Landscape, 2025</span></span>
+          </a>
+        </div>
+        <div data-wavy-accordion-item role="listitem" class="wavy-accordion__item">
+          <a href="#" class="wavy-accordion__link">
+            <img data-wavy-accordion-image src="https://cdn.prod.website-files.com/6acd1e6d522d19e562928ed9/6acd25d0c197405295cff82c_sleek-sports-car-silhouette-against-gradient-sunset-large.avif" alt="Sports car silhouette with an open door against a sunset gradient" class="wavy-accordion__image">
+            <span class="wavy-accordion__label"><span class="wavy-accordion__title">Coupe</span><span class="wavy-accordion__meta">Campaign, 2026</span></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+async function initWavyAccordion() {
+  const roots = document.querySelectorAll("[data-wavy-accordion-init]");
+  if (!roots.length) return;
+
+  const THREE = await import("https://cdn.jsdelivr.net/npm/three@0.184.0/build/three.module.min.js");
+
+  const openSize = 6;
+  const springStiffness = 160;
+  const springDamping = 20;
+  const bend = 1.6;
+  const bendStiffness = 300;
+  const bendDamping = 40;
+  const drag = 0.6;
+  const dragReach = 90;
+  const closedDim = 0.15;
+  const textureDetail = 1.25;
+
+  const vertexShader = `void main() { gl_Position = vec4(position.xy, 0.0, 1.0); }`;
+
+  const fragmentShader = `
+    precision highp float;
+
+    uniform sampler2D uMaps[8];
+    uniform vec2 uSizes[8];
+    uniform float uEdges[9];
+    uniform float uBows[9];
+    uniform float uOpen[8];
+    uniform int uCount;
+    uniform vec2 uResolution;
+    uniform float uDpr, uVertical, uOpenLength, uGap, uRadius, uDrag, uDragReach, uDim;
+
+    vec3 sampleMap(int i, vec2 uv, vec2 gx, vec2 gy) {
+      uv = clamp(uv, 0.0, 1.0);
+      if (i == 0) return textureGrad(uMaps[0], uv, gx, gy).rgb;
+      if (i == 1) return textureGrad(uMaps[1], uv, gx, gy).rgb;
+      if (i == 2) return textureGrad(uMaps[2], uv, gx, gy).rgb;
+      if (i == 3) return textureGrad(uMaps[3], uv, gx, gy).rgb;
+      if (i == 4) return textureGrad(uMaps[4], uv, gx, gy).rgb;
+      if (i == 5) return textureGrad(uMaps[5], uv, gx, gy).rgb;
+      if (i == 6) return textureGrad(uMaps[6], uv, gx, gy).rgb;
+      return textureGrad(uMaps[7], uv, gx, gy).rgb;
+    }
+
+    float edgeAt(int k, float bulge) {
+      return uEdges[k] + uBows[k] * bulge;
+    }
+
+    float inset(int k) {
+      if (k <= 0 || k >= uCount) return 0.0;
+      return uGap > 0.0 ? 0.5 * uGap : -1.0;
+    }
+
+    void main() {
+      vec2 p = vec2(gl_FragCoord.x, uResolution.y * uDpr - gl_FragCoord.y) / uDpr;
+      bool vertical = uVertical > 0.5;
+      float along = vertical ? p.y : p.x;
+      float across = vertical ? p.x : p.y;
+      float crossSize = vertical ? uResolution.x : uResolution.y;
+      float bulge = sin(clamp(across / crossSize, 0.0, 1.0) * 3.14159265);
+
+      int i = 0;
+      for (int k = 1; k < 8; k++) {
+        if (k >= uCount) break;
+        if (along >= edgeAt(k, bulge)) i = k;
+      }
+      float start = edgeAt(i, bulge);
+      float end = edgeAt(i + 1, bulge);
+
+      float pull = uBows[i] * exp(-abs(along - start) / uDragReach) + uBows[i + 1] * exp(-abs(along - end) / uDragReach);
+      vec2 offset = vec2(along - pull * bulge * uDrag - 0.5 * (start + end), across - 0.5 * crossSize);
+      vec2 box = vec2(uOpenLength, crossSize);
+      if (vertical) {
+        offset = offset.yx;
+        box = box.yx;
+      }
+      vec2 size = uSizes[i];
+      vec2 perPixel = 1.0 / (size * max(box.x / size.x, box.y / size.y));
+      vec2 uv = offset * perPixel + 0.5;
+      uv.y = 1.0 - uv.y;
+      vec3 color = sampleMap(i, uv, vec2(perPixel.x / uDpr, 0.0), vec2(0.0, perPixel.y / uDpr));
+      color *= 1.0 - uDim * (1.0 - clamp(uOpen[i], 0.0, 1.0));
+
+      float cardStart = start + inset(i);
+      float cardEnd = end - inset(i + 1);
+      vec2 halfSize = vec2(max(0.5 * (cardEnd - cardStart), 0.0), 0.5 * crossSize);
+      float radius = min(uRadius, halfSize.x);
+      vec2 corner = abs(vec2(along - 0.5 * (cardStart + cardEnd), across - 0.5 * crossSize)) - halfSize + radius;
+      float shapeDistance = length(max(corner, 0.0)) + min(max(corner.x, corner.y), 0.0) - radius;
+      float alpha = clamp(0.5 - shapeDistance * uDpr, 0.0, 1.0);
+
+      gl_FragColor = vec4(color * alpha, alpha);
+    }
+  `;
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  roots.forEach((root) => {
+    const canvas = root.querySelector("[data-wavy-accordion-canvas]");
+    const list = root.querySelector("[data-wavy-accordion-list]");
+    const items = [...root.querySelectorAll("[data-wavy-accordion-item]")];
+    const count = items.length;
+    if (count > 8) return console.warn("Wavy Accordion supports up to 8 items");
+
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false });
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+    const uniforms = {
+      uMaps: { value: Array(8).fill(null) },
+      uSizes: { value: Array.from({ length: 8 }, () => new THREE.Vector2(1, 1)) },
+      uEdges: { value: new Float32Array(9) },
+      uBows: { value: new Float32Array(9) },
+      uOpen: { value: new Float32Array(8) },
+      uCount: { value: count },
+      uResolution: { value: new THREE.Vector2(1, 1) },
+      uDpr: { value: 1 },
+      uVertical: { value: 0 },
+      uOpenLength: { value: 1 },
+      uGap: { value: 0 },
+      uRadius: { value: 0 },
+      uDrag: { value: drag },
+      uDragReach: { value: dragReach },
+      uDim: { value: closedDim },
+    };
+
+    scene.add(new THREE.Mesh(
+      new THREE.PlaneGeometry(2, 2),
+      new THREE.ShaderMaterial({ vertexShader, fragmentShader, uniforms, depthTest: false, depthWrite: false })
+    ));
+
+    const weights = items.map((_, index) => (index === 0 ? openSize : 1));
+    const weightVelocities = items.map(() => 0);
+    const edges = new Float32Array(count + 1);
+    const edgeVelocities = new Float32Array(count + 1);
+    const bows = new Float32Array(count + 1);
+    const bowVelocities = new Float32Array(count + 1);
+    let active = 0;
+    let width = 1;
+    let height = 1;
+    let vertical = false;
+    let gap = 0;
+    let resetVelocity = true;
+    let needsRender = true;
+    let visible = true;
+    let loaded = 0;
+    let frameId = 0;
+    let last = 0;
+    const sources = [];
+    const textureScales = [];
+
+    function openLength() {
+      const available = Math.max((vertical ? height : width) - gap * (count - 1), 1);
+      return (openSize / (openSize + count - 1)) * available;
+    }
+
+    function resize() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const listStyle = getComputedStyle(list);
+      width = Math.max(root.clientWidth, 1);
+      height = Math.max(root.clientHeight, 1);
+      vertical = listStyle.flexDirection.startsWith("column");
+      gap = parseFloat(vertical ? listStyle.rowGap : listStyle.columnGap) || 0;
+      renderer.setPixelRatio(dpr);
+      renderer.setSize(width, height, false);
+      uniforms.uResolution.value.set(width, height);
+      uniforms.uDpr.value = dpr;
+      uniforms.uVertical.value = vertical ? 1 : 0;
+      uniforms.uGap.value = gap;
+      uniforms.uRadius.value = parseFloat(getComputedStyle(items[0]).borderTopLeftRadius) || 0;
+      resetVelocity = true;
+      needsRender = true;
+      sources.forEach((_, index) => fitImage(index));
+      wake();
+    }
+
+    function fitImage(index) {
+      const image = sources[index];
+      const boxWidth = vertical ? width : openLength();
+      const boxHeight = vertical ? openLength() : height;
+      const scale = Math.min(Math.max(boxWidth / image.width, boxHeight / image.height) * uniforms.uDpr.value * textureDetail, 1);
+      if (textureScales[index] && scale <= textureScales[index] * textureDetail) return;
+      textureScales[index] = scale;
+      let source = image;
+      if (scale < 1) {
+        source = document.createElement("canvas");
+        source.width = Math.max(Math.round(image.width * scale), 1);
+        source.height = Math.max(Math.round(image.height * scale), 1);
+        source.getContext("2d").drawImage(image, 0, 0, source.width, source.height);
+      }
+      const texture = new THREE.Texture(source);
+      texture.minFilter = THREE.LinearMipmapLinearFilter;
+      texture.needsUpdate = true;
+      uniforms.uMaps.value[index]?.dispose();
+      uniforms.uMaps.value[index] = texture;
+      needsRender = true;
+      wake();
+    }
+
+    function activate(index) {
+      if (index < 0) return;
+      active = index;
+      items.forEach((item, k) => item.setAttribute("data-wavy-accordion-item-status", k === index ? "active" : "inactive"));
+      needsRender = true;
+      wake();
+    }
+
+    function wake() {
+      if (frameId) return;
+      last = performance.now();
+      frameId = requestAnimationFrame(frame);
+    }
+
+    resize();
+    activate(0);
+
+    const loader = new THREE.ImageLoader();
+    items.forEach((item, index) => {
+      const img = item.querySelector("[data-wavy-accordion-image]");
+      loader.load(img.currentSrc || img.src, (image) => {
+        sources[index] = image;
+        uniforms.uSizes.value[index].set(image.width, image.height);
+        fitImage(index);
+        loaded += 1;
+        if (loaded === count) root.setAttribute("data-wavy-accordion-status", "ready");
+      }, undefined, () => console.warn("Wavy Accordion could not load", img.currentSrc || img.src));
+
+      item.addEventListener("pointerenter", (event) => {
+        if (event.pointerType === "mouse") activate(index);
+      });
+      item.addEventListener("focusin", () => activate(index));
+      item.addEventListener("click", (event) => {
+        if (index === active) return;
+        event.preventDefault();
+        activate(index);
+      });
+    });
+
+    new ResizeObserver(resize).observe(root);
+    new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      wake();
+    }).observe(root);
+
+    function frame(now) {
+      frameId = 0;
+      const dt = Math.min((now - last) / 1000, 1 / 30) || 1 / 60;
+      last = now;
+      if (!visible) return;
+
+      const snap = reduceMotion.matches;
+      const bendAmount = snap ? 0 : bend;
+      let total = 0;
+      let motion = 0;
+      weights.forEach((weight, i) => {
+        const target = i === active ? openSize : 1;
+        weightVelocities[i] = snap ? 0 : weightVelocities[i] + (springStiffness * (target - weight) - springDamping * weightVelocities[i]) * dt;
+        weights[i] = snap ? target : Math.max(weight + weightVelocities[i] * dt, 0.05);
+        total += weights[i];
+        motion += Math.abs(weightVelocities[i]);
+      });
+
+      const available = Math.max((vertical ? height : width) - gap * (count - 1), 1);
+      let position = 0;
+      for (let k = 0; k <= count; k++) {
+        const edge = k === 0 ? 0 : k === count ? position - gap : position - gap / 2;
+        const inner = k > 0 && k < count;
+        const speed = resetVelocity || !inner ? 0 : (edge - edges[k]) / dt / 60;
+        edgeVelocities[k] = resetVelocity ? 0 : edgeVelocities[k] + (speed - edgeVelocities[k]) * 0.35;
+        edges[k] = edge;
+        const bowTarget = inner ? -edgeVelocities[k] * bendAmount : 0;
+        bowVelocities[k] += (bendStiffness * (bowTarget - bows[k]) - bendDamping * bowVelocities[k]) * dt;
+        bows[k] += bowVelocities[k] * dt;
+        motion += Math.abs(bows[k]) + Math.abs(bowVelocities[k]);
+        if (k < count) position += (weights[k] / total) * available + gap;
+      }
+      resetVelocity = false;
+
+      if (motion < 0.002 && !needsRender) return;
+      needsRender = false;
+
+      items.forEach((item, i) => {
+        item.style.flexGrow = weights[i];
+        uniforms.uOpen.value[i] = (weights[i] - 1) / (openSize - 1);
+      });
+      uniforms.uEdges.value.set(edges);
+      uniforms.uBows.value.set(bows);
+      uniforms.uOpenLength.value = openLength();
+      renderer.render(scene, camera);
+      frameId = requestAnimationFrame(frame);
+    }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initWavyAccordion();
+});
+</script>
+</body>
+</html>
